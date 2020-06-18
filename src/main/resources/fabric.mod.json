@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "lookingglass",
+  "version": "${version}",
+
+  "name": "Through the Looking Glass",
+  "description": "For all your furry shit!",
+  "authors": [
+    "Azazelthedemonlord"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Dragonoidzero/Through-the-Looking-Glass",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "azzy.fabric.lookingglass.LookingGlass"
+    ],
+    "client": [
+      "azzy.fabric.lookingglass.ClientInit"
+    ]
+  },
+  "mixins": [
+    "lookingglass.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.15.x",
+    "libgui": "*"
+  },
+  "suggests": {
+  }
+}
