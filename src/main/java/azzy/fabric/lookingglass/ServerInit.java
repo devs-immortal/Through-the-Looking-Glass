@@ -1,4 +1,4 @@
-package azzy.fabric.azzyfruits;
+package azzy.fabric.lookingglass;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 
