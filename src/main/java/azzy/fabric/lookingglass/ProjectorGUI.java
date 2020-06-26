@@ -1,20 +1,21 @@
 package azzy.fabric.lookingglass;
 
-import io.github.cottonmc.cotton.gui.CottonCraftingController;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
-import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.container.BlockContext;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-public class ProjectorGUI extends CottonCraftingController {
+public class ProjectorGUI extends SyncedGuiDescription {
 
     private WPlainPanel root = new WPlainPanel();
     private ExtendedPropertyDelegate delegate;
@@ -22,7 +23,7 @@ public class ProjectorGUI extends CottonCraftingController {
     private int state;
     private String label;
 
-    public ProjectorGUI(RecipeType<?> recipeType, int syncId, PlayerInventory playerInventory, BlockContext context) {
+    public ProjectorGUI(ScreenHandlerType recipeType, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(recipeType, syncId, playerInventory, getBlockInventory(context), getBlockPropertyDelegate(context));
         delegate = (ExtendedPropertyDelegate) getPropertyDelegate();
         state = delegate.get(0);
@@ -43,7 +44,7 @@ public class ProjectorGUI extends CottonCraftingController {
         if(world.isClient) {
             stateLabel = new WDynamicLabel(() -> I18n.translate("label.lookingglass.mode", label));
             stateLabel.setSize(100, 20);
-            stateLabel.setAlignment(Alignment.CENTER);
+            stateLabel.setAlignment(HorizontalAlignment.CENTER);
 
             root.add(stateLabel, 72, 10);
             if (state == 0) {

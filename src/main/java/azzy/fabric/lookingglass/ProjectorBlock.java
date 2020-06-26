@@ -45,15 +45,10 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
                     case(4): label = "Player (TBD)"; break;
                 }
 
-                MinecraftClient.getInstance().player.sendMessage(new LiteralText("§aSwitched mode to: "+label));
+                MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText("§aSwitched mode to: "+label), null);
             }
         }
         return ActionResult.SUCCESS;
-    }
-
-    @Override
-    public boolean hasBlockEntity() {
-        return true;
     }
 
     @Override

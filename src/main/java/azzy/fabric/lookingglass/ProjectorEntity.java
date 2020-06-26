@@ -2,14 +2,15 @@ package azzy.fabric.lookingglass;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.container.PropertyDelegate;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
 import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
@@ -61,7 +62,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     }
 
     @Override
-    public void fromTag(CompoundTag tag) {
+    public void fromTag(BlockState state, CompoundTag tag) {
         Inventories.fromTag(tag, inventory);
 
         rotX = tag.getInt("rotX");
@@ -77,7 +78,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         url = tag.getString("image");
 
         displayState = tag.getInt("state");
-        super.fromTag(tag);
+        super.fromTag(state, tag);
     }
 
     @Override

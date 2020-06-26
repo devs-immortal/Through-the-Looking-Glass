@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass;
 
-import net.minecraft.container.PropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 
 public interface ExtendedPropertyDelegate extends PropertyDelegate {
     public String getString(int index);

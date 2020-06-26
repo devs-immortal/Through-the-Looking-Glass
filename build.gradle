@@ -12,10 +12,6 @@ group = project.maven_group
 
 repositories {
 	maven {
-		name = "BuildCraft"
-		url = "https://mod-buildcraft.com/maven"
-	}
-	maven {
 		name = "CottonMC"
 		url = "http://server.bbkr.space:8081/artifactory/libs-release"
 	}
@@ -23,23 +19,16 @@ repositories {
 
 dependencies {
 	//to change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:1.15.2"
-	mappings "net.fabricmc:yarn:1.15.2+build.15:v2"
-	modImplementation "net.fabricmc:fabric-loader:0.8.2+build.194"
+	minecraft "com.mojang:minecraft:1.16.1"
+	mappings "net.fabricmc:yarn:1.16.1+build.4:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.8.8+build.202"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation  "net.fabricmc.fabric-api:fabric-api:0.5.1+build.294-1.15"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.14.0+build.371-1.16"
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 
-	//REQUIRED LIBRARIES
-	modCompile "alexiil.mc.lib:libblockattributes-all:0.6.6"
-	modImplementation "io.github.cottonmc:LibGui:1.8.0+1.15.2"
-
-	//NOTE, TESTING ONLY, NOT LIBRARIES, DO NOT IMPLEMENT AS LIBRARIES, DO NOT USE IN CODE
-	modCompile "alexiil.mc.lib:libmultipart-all:0.3.6"
-	modCompile "alexiil.mc.lib:libnetworkstack-base:0.3.6"
-	modCompile "alexiil.mc.mod:simplepipes-all:0.3.6"
+	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 
 }
 
