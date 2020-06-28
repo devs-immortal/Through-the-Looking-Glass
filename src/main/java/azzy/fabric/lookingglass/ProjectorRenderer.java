@@ -16,6 +16,8 @@ import net.minecraft.util.Identifier;
 
 public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
+    //hoi
+
     public ProjectorRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
