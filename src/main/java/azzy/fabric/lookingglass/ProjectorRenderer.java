@@ -4,12 +4,11 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.sun.jna.Function;
 import net.fabricmc.fabric.impl.client.indigo.renderer.IndigoRenderer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -21,6 +20,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import java.io.IOException;
+import java.net.URL;
 
 import static azzy.fabric.lookingglass.LookingGlass.FFLog;
 
@@ -40,6 +40,14 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
     @Override
     public void render(ProjectorEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
+        NativeImageBackedTexture image;
+
+        try {
+            image = new NativeImageBackedTexture(NativeImage.read(new URL("https://imgur.com/B5cpFjT").openStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         matrices.push();
         matrices.translate(blockEntity.disX, blockEntity.disY, blockEntity.disZ);
         matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(blockEntity.rotX));
@@ -48,7 +56,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         matrices.scale((float) blockEntity.scale, (float) blockEntity.scale, (float) blockEntity.scale);
 
 
-        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
+        //VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
         MatrixStack.Entry matrix = matrices.peek();
 
         Resource resource = null;
@@ -60,16 +68,20 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             e.printStackTrace();
         }
 
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder consumer = tessellator.getBuffer();
+        consumer.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+
         java.util.function.Function<Identifier, RenderLayer> layerFactory = a -> RenderLayer.getCutoutMipped();
 
         SpriteIdentifier spriteIdentifier = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier("minecraft:textures/block/allium.png"));
-        consumer = spriteIdentifier.getVertexConsumer(vertexConsumers, layerFactory);
+        //consumer = spriteIdentifier.getVertexConsumer(vertexConsumers, layerFactory);
 
         if (blockEntity.displayState == 0) {
-            consumer.vertex(matrix.getModel(), 0, 0, 0).color(255, 255, 255, 255).texture(0, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-            consumer.vertex(matrix.getModel(), 0, 1, 0).color(255, 255, 255, 255).texture(0, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-            consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-            consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+        //    consumer.vertex(matrix.getModel(), 0, 0, 0).color(255, 255, 255, 255).texture(0, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+        //    consumer.vertex(matrix.getModel(), 0, 1, 0).color(255, 255, 255, 255).texture(0, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+        //    consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+        //    consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
 
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
             matrices.translate(-1, 0, 0);
@@ -92,6 +104,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
         }
         matrices.pop();
+        tessellator.draw();
 
     }
 }
