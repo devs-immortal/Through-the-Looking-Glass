@@ -48,7 +48,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
         if(future.isPresent())
             image = future.get();
-        
+
         else{
             image = CompletableFuture.supplyAsync(() -> {
                 try {
@@ -65,7 +65,6 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         }
 
         //VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
-        MatrixStack.Entry matrix = matrices.peek();
 
         Resource resource = null;
 
@@ -102,6 +101,8 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(blockEntity.rotZ));
         matrices.scale((float) blockEntity.scale, (float) blockEntity.scale, (float) blockEntity.scale);
 
+        MatrixStack.Entry matrix = matrices.peek();
+
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder consumer = tessellator.getBuffer();
         consumer.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
@@ -112,13 +113,15 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
             consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
 
-        //    matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
-        //    matrices.translate(-1, 0, 0);
+            tessellator.draw();
 
-        //    consumer.vertex(matrix.getModel(), 0, 0, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMinU(), sprite.getMinV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-        //    consumer.vertex(matrix.getModel(), 0, 1, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMinU(), sprite.getMaxV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-        //    consumer.vertex(matrix.getModel(), 1, 1, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMaxU(), sprite.getMaxV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-        //    consumer.vertex(matrix.getModel(), 1, 0, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMaxU(), sprite.getMinV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+            matrices.translate(-1, 0, 0);
+
+            consumer.vertex(matrix.getModel(), 0, 0, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMinU(), sprite.getMinV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+            consumer.vertex(matrix.getModel(), 0, 1, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMinU(), sprite.getMaxV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+            consumer.vertex(matrix.getModel(), 1, 1, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMaxU(), sprite.getMaxV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+            consumer.vertex(matrix.getModel(), 1, 0, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMaxU(), sprite.getMinV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
         }
         else if(blockEntity.displayState == 1){
 
