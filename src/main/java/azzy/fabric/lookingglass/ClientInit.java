@@ -25,6 +25,8 @@ import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 @Environment(EnvType.CLIENT)
 public class ClientInit implements ClientModInitializer {
 
+
+
     @Override
     public void onInitializeClient() {
         BlockEntityRendererRegistry.INSTANCE.register(PROJECTORENTITY, ProjectorRenderer::new);
