@@ -8,10 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.NativeImageBackedTexture;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.texture.*;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
@@ -22,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -43,22 +41,27 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
     @Override
     public void render(ProjectorEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
-        CompletableFuture<NativeImageBackedTexture> image = null;
-        NativeImageBackedTexture texture = null;
+        CompletableFuture<AbstractTexture> image = null;
+        AbstractTexture texture = null;
+        String rawUrl = "https://i.imgur.com/B5cpFjT.jpg";
+        Optional<CompletableFuture<AbstractTexture>> future = CacheCrimes.getFuture(rawUrl);
 
-        try {
-            final InputStream imageUrl = new URL("https://i.imgur.com/B5cpFjT.jpg").openStream();
+        if(future.isPresent())
+            image = future.get();
+        
+        else{
             image = CompletableFuture.supplyAsync(() -> {
                 try {
-                    return new NativeImageBackedTexture(NativeImage.read(imageUrl));
+                    InputStream imageUrl = new URL(rawUrl).openStream();
+                    AbstractTexture futureTexture = new NativeImageBackedTexture(NativeImage.read(imageUrl));
+                    imageUrl.close();
+                    return futureTexture;
                 } catch (IOException e) {
                     e.printStackTrace();
                     return null;
                 }
             });
-            imageUrl.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            CacheCrimes.putFuture(rawUrl, image);
         }
 
         //VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getSolid());
@@ -129,7 +132,6 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         else if(blockEntity.displayState == 4){
 
         }
-        texture.close();
         matrices.pop();
         tessellator.draw();
 
