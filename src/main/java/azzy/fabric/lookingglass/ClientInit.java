@@ -25,7 +25,7 @@ import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 @Environment(EnvType.CLIENT)
 public class ClientInit implements ClientModInitializer {
 
-
+    public static int textureIdCounter = 1;
 
     @Override
     public void onInitializeClient() {

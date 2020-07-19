@@ -4,6 +4,7 @@
   "package": "azzy.fabric.lookingglass.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "TextureUnregister"
   ],
   "client": [
   ],

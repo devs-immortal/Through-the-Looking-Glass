@@ -1,18 +1,25 @@
 package azzy.fabric.lookingglass;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static azzy.fabric.lookingglass.LookingGlass.FFLog;
 import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
@@ -39,6 +46,21 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     @Override
     public void tick() {
         markDirty();
+        if(world.getTime() % 100 == 0)
+            FFLog.error(url);
+        if(!inventory.get(0).isEmpty()) {
+            url = getName(inventory.get(0));
+            FFLog.error(getName(inventory.get(0)));
+        }
+        if(inventory.isEmpty())
+            url = "";
+    }
+
+    private String getName(ItemStack item){
+        if(item.hasCustomName()){
+                return item.getName().asString();
+        }
+        return "";
     }
 
     @Override
@@ -59,6 +81,10 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
 
         tag.putInt("state", displayState);
         return super.toTag(tag);
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -150,7 +176,11 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         public void setString(int index, String value) {
             switch(index){
                 case(0): sign = value; break;
-                case(1): url = value; break;
+                case(1): PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
+                packet.writeString(value, 128).writeBlockPos(pos);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.STRING_TO_SERVER_PACKET, packet);
+                //    url = value;
+                break;
             }
         }
 
@@ -174,10 +204,19 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         }
 
         @Override
+        public BlockEntity getEntity() {
+            return getThis();
+        }
+
+        @Override
         public int size() {
             return 5;
         }
     };
+
+    private BlockEntity getThis(){
+        return this;
+    }
 
     @Override
     public DefaultedList<ItemStack> getItems() {
