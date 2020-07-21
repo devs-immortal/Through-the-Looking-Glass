@@ -22,6 +22,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import net.minecraft.util.registry.Registry;
 import org.apache.commons.logging.impl.Log4JLogger;
@@ -37,19 +38,54 @@ public class LookingGlass implements ModInitializer {
 	public static final Block PROJECTORBLOCK = new ProjectorBlock(FabricBlockSettings.of(Material.METAL).lightLevel(6).nonOpaque().resistance(1f).sounds(BlockSoundGroup.GLASS).build());
 	public static final BlockEntityType<ProjectorEntity> PROJECTORENTITY = BlockEntityType.Builder.create(ProjectorEntity::new, PROJECTORBLOCK).build(null);
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
+	public static final Identifier INTS_TO_SERVER_PACKET = new Identifier(MODID, "intstoserver");
 
 	@Override
 	public void onInitialize() {
 		FFLog.info("Eye see you");
 
 		ServerSidePacketRegistry.INSTANCE.register(STRING_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
+
+			String url = packetByteBuf.readString(4096);
 			BlockPos pos = packetByteBuf.readBlockPos();
-			String url = packetByteBuf.readString(128);
+			int index = packetByteBuf.readInt();
+			World world = packetContext.getPlayer().getEntityWorld();
+
 			packetContext.getTaskQueue().execute(() -> {
-				if(packetContext.getPlayer().getEntityWorld().getBlockState(pos).getBlock() == PROJECTORBLOCK){
+				if(world.isChunkLoaded(pos) && world.getBlockState(pos).getBlock() == PROJECTORBLOCK){
 					ProjectorEntity projector = (ProjectorEntity) packetContext.getPlayer().getEntityWorld().getBlockEntity(pos);
 					assert projector != null;
-					projector.setUrl(url);
+					if(index == 0)
+						projector.sign = url;
+					else
+						projector.setUrl(url);
+					projector.sync();
+				}
+			});
+		}));
+
+		ServerSidePacketRegistry.INSTANCE.register(INTS_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
+
+			int index = packetByteBuf.readInt();
+			int value = packetByteBuf.readInt();
+			BlockPos pos = packetByteBuf.readBlockPos();
+			World world = packetContext.getPlayer().getEntityWorld();
+
+			packetContext.getTaskQueue().execute(() -> {
+				if(world.isChunkLoaded(pos) && world.getBlockState(pos).getBlock() == PROJECTORBLOCK){
+					ProjectorEntity projector = (ProjectorEntity) packetContext.getPlayer().getEntityWorld().getBlockEntity(pos);
+					assert projector != null;
+
+					switch(index){
+						case (1): projector.rotX = value; break;
+						case (2): projector.rotY = value; break;
+						case (3): projector.rotZ = value; break;
+						case (4): projector.disX = value; break;
+						case (5): projector.disY = value; break;
+						case (6): projector.disZ = value; break;
+						case (7): projector.scale = value; break;
+					}
+					projector.sync();
 				}
 			});
 		}));
@@ -59,11 +95,5 @@ public class LookingGlass implements ModInitializer {
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, "projector_entity"), PROJECTORENTITY);
 		ContainerProviderRegistry.INSTANCE.registerFactory(new Identifier(MODID, "projector_gui"), (syncID, id, player, buf) -> new ProjectorGUI(ScreenHandlerType.ANVIL, syncID, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 
-
-
-		//Registries
-
-	}
-	public void onInitializing(){
 	}
 }

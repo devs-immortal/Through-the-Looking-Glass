@@ -11,10 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,8 +27,8 @@ import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
 
     public int displayState;
-    public int rotY, rotX, rotZ, oneSided;
-    public double disY, disX, disZ, scale;
+    public int rotY, rotX, rotZ, disY, disX, disZ, scale;
+    private boolean syncNeeded;
     public String sign;
     public String url;
     public DefaultedList<ItemStack> inventory;
@@ -37,30 +39,19 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         displayState = 0;
         sign = "";
         url = "";
-        disX = 0.5;
-        disY = 10.5;
-        disZ = 0.5;
-        scale = 10;
+        disX = 1;
+        disY = 1;
+        disZ = 1;
+        scale = 1;
     }
 
     @Override
     public void tick() {
-        markDirty();
-        if(world.getTime() % 100 == 0)
-            FFLog.error(url);
-        if(!inventory.get(0).isEmpty()) {
-            url = getName(inventory.get(0));
-            FFLog.error(getName(inventory.get(0)));
-        }
-        if(inventory.isEmpty())
-            url = "";
     }
 
-    private String getName(ItemStack item){
-        if(item.hasCustomName()){
-                return item.getName().asString();
-        }
-        return "";
+    @Override
+    public void sync() {
+        BlockEntityClientSerializable.super.sync();
     }
 
     @Override
@@ -71,10 +62,10 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         tag.putInt("rotY", rotY);
         tag.putInt("rotZ", rotZ);
 
-        tag.putDouble("disX", disX);
-        tag.putDouble("disY", disY);
-        tag.putDouble("disZ", disZ);
-        tag.putDouble("scale", scale);
+        tag.putInt("disX", disX);
+        tag.putInt("disY", disY);
+        tag.putInt("disZ", disZ);
+        tag.putInt("scale", scale);
 
         tag.putString("sign", sign);
         tag.putString("image", url);
@@ -95,10 +86,10 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         rotY = tag.getInt("rotY");
         rotZ = tag.getInt("rotZ");
 
-        disX = tag.getDouble("disX");
-        disY = tag.getDouble("disY");
-        disZ = tag.getDouble("disZ");
-        scale = tag.getDouble("scale");
+        disX = tag.getInt("disX");
+        disY = tag.getInt("disY");
+        disZ = tag.getInt("disZ");
+        scale = tag.getInt("scale");
 
         sign = tag.getString("sign");
         url = tag.getString("image");
@@ -107,16 +98,21 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         super.fromTag(state, tag);
     }
 
+    public void requestSync(){
+        syncNeeded = true;
+    }
+
     @Override
     public CompoundTag toClientTag(CompoundTag compoundTag) {
+        Inventories.toTag(compoundTag, inventory);
         compoundTag.putInt("rotX", rotX);
         compoundTag.putInt("rotY", rotY);
         compoundTag.putInt("rotZ", rotZ);
 
-        compoundTag.putDouble("disX", disX);
-        compoundTag.putDouble("disY", disY);
-        compoundTag.putDouble("disZ", disZ);
-        compoundTag.putDouble("scale", scale);
+        compoundTag.putInt("disX", disX);
+        compoundTag.putInt("disY", disY);
+        compoundTag.putInt("disZ", disZ);
+        compoundTag.putInt("scale", scale);
 
         compoundTag.putInt("state", displayState);
         compoundTag.putString("sign", sign);
@@ -126,14 +122,15 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
 
     @Override
     public void fromClientTag(CompoundTag compoundTag) {
+        Inventories.fromTag(compoundTag, inventory);
         rotX = compoundTag.getInt("rotX");
         rotY = compoundTag.getInt("rotY");
         rotZ = compoundTag.getInt("rotZ");
 
-        disX = compoundTag.getDouble("disX");
-        disY = compoundTag.getDouble("disY");
-        disZ = compoundTag.getDouble("disZ");
-        scale = compoundTag.getDouble("scale");
+        disX = compoundTag.getInt("disX");
+        disY = compoundTag.getInt("disY");
+        disZ = compoundTag.getInt("disZ");
+        scale = compoundTag.getInt("scale");
 
         displayState = compoundTag.getInt("state");
         sign = compoundTag.getString("sign");
@@ -144,79 +141,78 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         @Override
         public int get(int index) {
             switch(index){
-                case(0): return displayState;
-                case(1): return Registry.ITEM.getRawId(inventory.get(0).getItem());
-                case(2): return inventory.get(0).getCount();
-                case(3): return rotX;
-                case(4): return rotY;
-                case(5): return rotZ;
+                case (0): return displayState;
+                case (1): return Registry.ITEM.getRawId(inventory.get(0).getItem());
+                case (2): return inventory.get(0).getCount();
+                case (3): return rotX;
+                case (4): return rotY;
+                case (5): return rotZ;
+                case (6): return disX;
+                case (7): return disY;
+                case (8): return disZ;
+                case (9): return scale;
             }
             return -1;
         }
         @Override
         public void set(int index, int value) {
+
+            PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
+            packet.writeInt(index).writeInt(value);
+            packet.writeBlockPos(pos);
+            ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.INTS_TO_SERVER_PACKET, packet);
+
             switch(index){
-                case(0): displayState = value; break;
-                case(1): rotX = value; break;
-                case(2): rotY = value; break;
-                case(3): rotZ = value; break;
+                case (0): displayState = value; break;
+                case (1): rotX = value; break;
+                case (2): rotY = value; break;
+                case (3): rotZ = value; break;
+                case (4): disX = value; break;
+                case (5): disY = value; break;
+                case (6): disZ = value; break;
+                case (7): scale = value; break;
             }
+            if(!world.isClient)
+                sync();
         }
 
         @Override
         public String getString(int index) {
             switch(index){
-                case(0): return sign;
-                case(1): return url;
+                case (0): return sign;
+                case (1): return url;
             }
             return null;
         }
 
         @Override
         public void setString(int index, String value) {
-            switch(index){
-                case(0): sign = value; break;
-                case(1): PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-                packet.writeString(value, 128).writeBlockPos(pos);
+
+            if(world.isClient()){
+                PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
+                packet.writeString(value).writeBlockPos(pos).writeInt(index);
                 ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.STRING_TO_SERVER_PACKET, packet);
-                //    url = value;
-                break;
             }
-        }
 
-        @Override
-        public double getDouble(int index) {
             switch(index){
-                case(0): return disX;
-                case(1): return disY;
-                case(2): return disZ;
+                case (0): sign = value; break;
+                case (1): url = value; break;
             }
-            return -1;
+
+            if(!world.isClient)
+                sync();
         }
 
         @Override
-        public void setDouble(int index, double value) {
-            switch(index){
-                case(0): disX = value; break;
-                case(1): disY = value; break;
-                case(2): disZ = value; break;
-            }
-        }
-
-        @Override
-        public BlockEntity getEntity() {
-            return getThis();
+        public BlockPos getPos() {
+            return pos;
         }
 
         @Override
         public int size() {
-            return 5;
+            return 9;
         }
     };
-
-    private BlockEntity getThis(){
-        return this;
-    }
 
     @Override
     public DefaultedList<ItemStack> getItems() {
@@ -227,4 +223,5 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     public PropertyDelegate getPropertyDelegate() {
         return referenceHolder;
     }
+
 }
