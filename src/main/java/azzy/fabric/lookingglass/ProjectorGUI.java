@@ -106,6 +106,9 @@ public class ProjectorGUI extends SyncedGuiDescription {
     @Override
     public void close(PlayerEntity player) {
 
+        if(!world.isClient())
+            super.close(player);
+
         delegate.set(1, rotX.getValue());
         delegate.set(2, rotY.getValue());
         delegate.set(3, rotZ.getValue());

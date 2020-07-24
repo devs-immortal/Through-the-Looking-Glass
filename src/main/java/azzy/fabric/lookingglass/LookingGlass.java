@@ -53,7 +53,7 @@ public class LookingGlass implements ModInitializer {
 
 			packetContext.getTaskQueue().execute(() -> {
 				if(world.isChunkLoaded(pos) && world.getBlockState(pos).getBlock() == PROJECTORBLOCK){
-					ProjectorEntity projector = (ProjectorEntity) packetContext.getPlayer().getEntityWorld().getBlockEntity(pos);
+					ProjectorEntity projector = (ProjectorEntity) world.getBlockEntity(pos);
 					assert projector != null;
 					if(index == 0)
 						projector.sign = url;
@@ -73,7 +73,7 @@ public class LookingGlass implements ModInitializer {
 
 			packetContext.getTaskQueue().execute(() -> {
 				if(world.isChunkLoaded(pos) && world.getBlockState(pos).getBlock() == PROJECTORBLOCK){
-					ProjectorEntity projector = (ProjectorEntity) packetContext.getPlayer().getEntityWorld().getBlockEntity(pos);
+					ProjectorEntity projector = (ProjectorEntity) world.getBlockEntity(pos);
 					assert projector != null;
 
 					switch(index){
