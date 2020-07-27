@@ -10,7 +10,9 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
 
@@ -22,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static azzy.fabric.lookingglass.ClientInit.textureIdCounter;
+import static azzy.fabric.lookingglass.LookingGlass.FFLog;
 import static azzy.fabric.lookingglass.LookingGlass.MODID;
 
 public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
@@ -75,7 +78,10 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             e.printStackTrace();
         }
 
+        renderSpeen(blockEntity, tickDelta, matrices, vertexConsumers, light, overlay);
+
         matrices.push();
+
         matrices.translate(blockEntity.disX, blockEntity.disY, blockEntity.disZ);
         matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(blockEntity.rotX));
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(blockEntity.rotY));
@@ -95,6 +101,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
             consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
 
+
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
             matrices.translate(-1, 0, 0);
 
@@ -110,7 +117,13 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
         }
         else if(blockEntity.displayState == 2){
-
+            matrices.scale(0.1f, 0.1f, 0.1f);
+            matrices.translate(0, 2f, 0);
+            matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
+            try {
+                MinecraftClient.getInstance().textRenderer.draw(matrices, blockEntity.sign, -(blockEntity.sign.length() * 6f) / 2f, 0f, Integer.parseInt(blockEntity.color.replace("0x", ""), 16));
+            }
+            catch (Exception ignored){}
         }
         else if(blockEntity.displayState == 3){
 
@@ -120,6 +133,41 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         matrices.pop();
         renderLayer = null;
     }
+
+    private void renderSpeen(ProjectorEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay){
+
+        matrices.push();
+        double offset = Math.sin((blockEntity.getWorld().getTime() + tickDelta) / 16.0) / 6.0;
+
+        int state = blockEntity.displayState;
+        Item display;
+
+        switch(state){
+            case (1): display = Items.HONEY_BLOCK; break;
+            case (2): display = Items.REDSTONE_BLOCK; break;
+            case (3):
+            case (4):
+                display = Items.BLACK_STAINED_GLASS; break;
+            default: display = Items.GLASS;
+        }
+
+        ItemStack speen = new ItemStack(display);
+
+        matrices.translate(0.5, 1+offset, 0.5);
+        matrices.scale(0.2f, 0.2f, 0.2f);
+        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        matrices.multiply(Vector3f.NEGATIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+        matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        matrices.multiply(Vector3f.NEGATIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 1));
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+
+        matrices.pop();
+    }
+
     static private Identifier generateId() {
         final int id = textureIdCounter++;
         return new Identifier(MODID, "dynamic/dispmod_" + id);

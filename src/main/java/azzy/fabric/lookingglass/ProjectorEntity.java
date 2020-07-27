@@ -28,9 +28,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
 
     public int displayState;
     public int rotY, rotX, rotZ, disY, disX, disZ, scale;
-    private boolean syncNeeded;
-    public String sign;
-    public String url;
+    public String sign, url, color;
     public DefaultedList<ItemStack> inventory;
 
     public ProjectorEntity() {
@@ -39,9 +37,13 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         displayState = 0;
         sign = "";
         url = "";
-        disX = 1;
+        color = "0xffffff";
+        rotX = 0;
+        rotY = 0;
+        rotZ = 0;
+        disX = 0;
         disY = 1;
-        disZ = 1;
+        disZ = 0;
         scale = 1;
     }
 
@@ -98,10 +100,6 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         super.fromTag(state, tag);
     }
 
-    public void requestSync(){
-        syncNeeded = true;
-    }
-
     @Override
     public CompoundTag toClientTag(CompoundTag compoundTag) {
         Inventories.toTag(compoundTag, inventory);
@@ -118,6 +116,11 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         compoundTag.putString("sign", sign);
         compoundTag.putString("image", url);
         return compoundTag;
+    }
+
+    @Override
+    public double getSquaredRenderDistance() {
+        return 2048D;
     }
 
     @Override
@@ -157,10 +160,12 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         @Override
         public void set(int index, int value) {
 
-            PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-            packet.writeInt(index).writeInt(value);
-            packet.writeBlockPos(pos);
-            ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.INTS_TO_SERVER_PACKET, packet);
+            if(world.isClient()){
+                PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
+                packet.writeInt(index).writeInt(value);
+                packet.writeBlockPos(pos);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.INTS_TO_SERVER_PACKET, packet);
+            }
 
             switch(index){
                 case (0): displayState = value; break;
@@ -172,8 +177,6 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
                 case (6): disZ = value; break;
                 case (7): scale = value; break;
             }
-            if(!world.isClient)
-                sync();
         }
 
         @Override
@@ -181,6 +184,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
             switch(index){
                 case (0): return sign;
                 case (1): return url;
+                case (2): return color;
             }
             return null;
         }
@@ -197,6 +201,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
             switch(index){
                 case (0): sign = value; break;
                 case (1): url = value; break;
+                case (2): color = value; break;
             }
 
             if(!world.isClient)
@@ -210,7 +215,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
 
         @Override
         public int size() {
-            return 9;
+            return 10;
         }
     };
 

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
@@ -35,7 +36,7 @@ public class LookingGlass implements ModInitializer {
 
 	public static final Logger FFLog = LogManager.getLogger(MODID);
 
-	public static final Block PROJECTORBLOCK = new ProjectorBlock(FabricBlockSettings.of(Material.METAL).lightLevel(6).nonOpaque().resistance(1f).sounds(BlockSoundGroup.GLASS).build());
+	public static final Block PROJECTORBLOCK = new ProjectorBlock(FabricBlockSettings.of(Material.METAL).lightLevel(7).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES, 2).strength(2f, 8f).build());
 	public static final BlockEntityType<ProjectorEntity> PROJECTORENTITY = BlockEntityType.Builder.create(ProjectorEntity::new, PROJECTORBLOCK).build(null);
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
 	public static final Identifier INTS_TO_SERVER_PACKET = new Identifier(MODID, "intstoserver");
@@ -57,6 +58,8 @@ public class LookingGlass implements ModInitializer {
 					assert projector != null;
 					if(index == 0)
 						projector.sign = url;
+					else if(index == 2)
+						projector.color = url;
 					else
 						projector.setUrl(url);
 					projector.sync();

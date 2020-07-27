@@ -30,15 +30,16 @@ public class ProjectorGUI extends SyncedGuiDescription {
     private WPlainPanel root = new WPlainPanel();
     private ExtendedPropertyDelegate delegate;
     private WDynamicLabel stateLabel;
-    private WTextField url = new WTextField();
-    private WTextField disX = new WTextField().setMaxLength(3);
-    private WTextField disY = new WTextField().setMaxLength(3);
-    private WTextField disZ = new WTextField().setMaxLength(3);
-    private WTextField sign = new WTextField().setMaxLength(512);
-    private WSlider rotX = new WSlider(0, 180, Axis.HORIZONTAL);
-    private WSlider rotY = new WSlider(0, 180, Axis.HORIZONTAL);
-    private WSlider rotZ = new WSlider(0, 180, Axis.HORIZONTAL);
-    private WSlider scale = new WSlider(1, 100, Axis.HORIZONTAL);
+    private WTextField url = new WTextField().setMaxLength(512);
+    private WTextField disX = new WTextField().setMaxLength(4);
+    private WTextField disY = new WTextField().setMaxLength(4);
+    private WTextField disZ = new WTextField().setMaxLength(4);
+    private WTextField sign = new WTextField().setMaxLength(2048);
+    private WTextField color = new WTextField().setMaxLength(32);
+    private WSlider rotX = new WSlider(0, 360, Axis.HORIZONTAL);
+    private WSlider rotY = new WSlider(0, 360, Axis.HORIZONTAL);
+    private WSlider rotZ = new WSlider(0, 360, Axis.HORIZONTAL);
+    private WSlider scale = new WSlider(1, 200, Axis.HORIZONTAL);
 
     private int state;
     private String label;
@@ -56,6 +57,7 @@ public class ProjectorGUI extends SyncedGuiDescription {
         disY.setText(String.valueOf(delegate.get(7)));
         disZ.setText(String.valueOf(delegate.get(8)));
         sign.setText(delegate.getString(0));
+        color.setText(delegate.getString(2));
         rotX.setValue(delegate.get(3));
         rotY.setValue(delegate.get(4));
         rotZ.setValue(delegate.get(5));
@@ -82,9 +84,9 @@ public class ProjectorGUI extends SyncedGuiDescription {
             case(3): label = "Video (TBD)"; break;
             case(4): label = "Player (TBD)"; break;
         }
-        if(state == 1){
+        if(state == 1)
             root.add(new WItemSlot(blockInventory, 0, 1, 1, true), 70, 27);
-        }
+
 
         if(world.isClient) {
             stateLabel = new WDynamicLabel(() -> I18n.translate("label.lookingglass.mode", label));
@@ -94,10 +96,18 @@ public class ProjectorGUI extends SyncedGuiDescription {
             root.add(stateLabel, 72, 10);
             if (state == 0) {
                 url.setSuggestion("URL");
-                url.setMaxLength(400);
                 url.setSize(160, 5);
                 url.setText(delegate.getString(1));
                 root.add(url, 2, 23, 160, 5);
+            }
+
+            if(state == 2){
+                sign.setSuggestion("Message");
+                sign.setSize(160, 5);
+                sign.setText(delegate.getString(0));
+                color.setSuggestion("Hex color");
+                root.add(sign, 2, 23, 160, 5);
+                root.add(color, 53, 150, 60, 5);
             }
         }
         root.validate(this);
@@ -117,12 +127,17 @@ public class ProjectorGUI extends SyncedGuiDescription {
             delegate.set(5, Integer.parseInt(disY.getText()));
             delegate.set(6, Integer.parseInt(disZ.getText()));
         } catch (NumberFormatException e){
-            MinecraftClient.getInstance().player.sendChatMessage("Distances must be numerical");
+            MinecraftClient.getInstance().player.sendSystemMessage(new TranslatableText("label.lookingglass.wrong"), null);
         }
         delegate.set(7, scale.getValue());
 
         if(state == 0)
             delegate.setString(1, url.getText());
+
+        else if(state == 2) {
+            delegate.setString(0, sign.getText());
+            delegate.setString(2, color.getText());
+        }
 
         super.close(player);
     }
