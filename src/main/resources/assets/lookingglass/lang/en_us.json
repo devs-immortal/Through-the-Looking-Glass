@@ -1,5 +1,5 @@
 {
-	"item.lookingglass.projector": "Looking Glass",
+	"block.lookingglass.chunkloader": "Perception Anchor",
 	"block.lookingglass.projector": "Looking Glass",
 	"label.lookingglass.mode": "Display Mode: %d",
 	"label.lookingglass.wrong": "§cDistances must be numerical"

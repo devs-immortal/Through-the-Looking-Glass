@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.util;
 
 import net.minecraft.client.texture.AbstractTexture;
 

@@ -1,11 +1,13 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.render;
 
-import net.minecraft.block.entity.BlockEntity;
+import azzy.fabric.lookingglass.util.CacheCrimes;
+import azzy.fabric.lookingglass.util.FunkedUpTextureManager;
+import azzy.fabric.lookingglass.util.RenderCrimes;
+import azzy.fabric.lookingglass.entity.ProjectorEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,7 +15,6 @@ import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.resource.Resource;
 import net.minecraft.util.Identifier;
 
 import java.io.IOException;
@@ -24,7 +25,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static azzy.fabric.lookingglass.ClientInit.textureIdCounter;
-import static azzy.fabric.lookingglass.LookingGlass.FFLog;
 import static azzy.fabric.lookingglass.LookingGlass.MODID;
 
 public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {

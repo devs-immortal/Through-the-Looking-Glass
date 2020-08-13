@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
@@ -78,11 +78,6 @@ public interface InventoryWrapper extends Inventory {
     default ItemStack removeStack(int slot) {
         return Inventories.removeStack(getItems(), slot);
     }
-    /**
-     * Replaces the current stack in the {@code slot} with the provided stack.
-     * <p>If the stack is too big for this inventory ({@link Inventory#getInvMaxStackAmount()}),
-     * it gets resized to this inventory's maximum amount.
-     */
     @Override
     default void setStack(int slot, ItemStack stack) {
         getItems().set(slot, stack);

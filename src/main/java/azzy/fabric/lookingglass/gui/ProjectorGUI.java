@@ -1,28 +1,18 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.gui;
 
+import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
-import io.github.cottonmc.cotton.gui.client.NinePatch;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.StringRenderable;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
-
-import java.util.function.Consumer;
 
 
 public class ProjectorGUI extends SyncedGuiDescription {
@@ -41,7 +31,7 @@ public class ProjectorGUI extends SyncedGuiDescription {
     private WSlider rotZ = new WSlider(0, 360, Axis.HORIZONTAL);
     private WSlider scale = new WSlider(1, 200, Axis.HORIZONTAL);
 
-    private int state;
+    private final int state;
     private String label;
 
     public ProjectorGUI(ScreenHandlerType recipeType, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
@@ -63,9 +53,9 @@ public class ProjectorGUI extends SyncedGuiDescription {
         rotZ.setValue(delegate.get(5));
         scale.setValue(delegate.get(9));
 
-        root.add(new WText(StringRenderable.plain("X")), 5, 66, 26, 10);
-        root.add(new WText(StringRenderable.plain("Y")), 5, 96, 26, 10);
-        root.add(new WText(StringRenderable.plain("Z")), 5, 126, 26, 10);
+        root.add(new WText(new LiteralText("X")), 5, 66, 26, 10);
+        root.add(new WText(new LiteralText("Y")), 5, 96, 26, 10);
+        root.add(new WText(new LiteralText("Z")), 5, 126, 26, 10);
 
         root.add(rotX, 55, 65, 90, 10);
         root.add(rotY, 55, 95, 90, 10);

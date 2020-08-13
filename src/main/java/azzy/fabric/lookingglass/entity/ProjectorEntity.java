@@ -1,5 +1,8 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.entity;
 
+import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
+import azzy.fabric.lookingglass.util.InventoryWrapper;
+import azzy.fabric.lookingglass.LookingGlass;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -11,17 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static azzy.fabric.lookingglass.LookingGlass.FFLog;
 import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {

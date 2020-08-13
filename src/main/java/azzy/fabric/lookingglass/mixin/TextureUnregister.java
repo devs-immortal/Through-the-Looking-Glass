@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
-import azzy.fabric.lookingglass.FunkedUpTextureManager;
+import azzy.fabric.lookingglass.util.FunkedUpTextureManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.texture.AbstractTexture;

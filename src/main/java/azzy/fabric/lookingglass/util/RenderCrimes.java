@@ -1,5 +1,6 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.util;
 
+import azzy.fabric.lookingglass.render.ProjectorRenderer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.RenderLayer;

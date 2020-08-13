@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass;
+package azzy.fabric.lookingglass.util;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
