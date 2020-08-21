@@ -22,7 +22,6 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
@@ -46,7 +45,7 @@ public class LookingGlass implements ModInitializer {
 
 
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
-	public static final Identifier INTS_TO_SERVER_PACKET = new Identifier(MODID, "intstoserver");
+	public static final Identifier DOUBLES_TO_SERVER_PACKET = new Identifier(MODID, "doubletoserver");
 
 	@Override
 	public void onInitialize() {
@@ -74,10 +73,10 @@ public class LookingGlass implements ModInitializer {
 			});
 		}));
 
-		ServerSidePacketRegistry.INSTANCE.register(INTS_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
+		ServerSidePacketRegistry.INSTANCE.register(DOUBLES_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
 
 			int index = packetByteBuf.readInt();
-			int value = packetByteBuf.readInt();
+			double value = packetByteBuf.readDouble();
 			BlockPos pos = packetByteBuf.readBlockPos();
 			World world = packetContext.getPlayer().getEntityWorld();
 

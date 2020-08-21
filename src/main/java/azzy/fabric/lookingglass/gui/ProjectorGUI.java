@@ -29,7 +29,7 @@ public class ProjectorGUI extends SyncedGuiDescription {
     private WSlider rotX = new WSlider(0, 360, Axis.HORIZONTAL);
     private WSlider rotY = new WSlider(0, 360, Axis.HORIZONTAL);
     private WSlider rotZ = new WSlider(0, 360, Axis.HORIZONTAL);
-    private WSlider scale = new WSlider(1, 200, Axis.HORIZONTAL);
+    private WSlider scale = new WSlider(16, 320, Axis.HORIZONTAL);
 
     private final int state;
     private String label;
@@ -43,15 +43,15 @@ public class ProjectorGUI extends SyncedGuiDescription {
         setRootPanel(root);
         root.add(this.createPlayerInventoryPanel(), 1, 212);
 
-        disX.setText(String.valueOf(delegate.get(6)));
-        disY.setText(String.valueOf(delegate.get(7)));
-        disZ.setText(String.valueOf(delegate.get(8)));
+        disX.setText(String.valueOf(delegate.getDouble(6)));
+        disY.setText(String.valueOf(delegate.getDouble(7)));
+        disZ.setText(String.valueOf(delegate.getDouble(8)));
         sign.setText(delegate.getString(0));
         color.setText(delegate.getString(2));
-        rotX.setValue(delegate.get(3));
-        rotY.setValue(delegate.get(4));
-        rotZ.setValue(delegate.get(5));
-        scale.setValue(delegate.get(9));
+        rotX.setValue((int) delegate.getDouble(3));
+        rotY.setValue((int) delegate.getDouble(4));
+        rotZ.setValue((int) delegate.getDouble(5));
+        scale.setValue((int) (delegate.getDouble(9) * 10));
 
         root.add(new WText(new LiteralText("X")), 5, 66, 26, 10);
         root.add(new WText(new LiteralText("Y")), 5, 96, 26, 10);
@@ -109,17 +109,17 @@ public class ProjectorGUI extends SyncedGuiDescription {
         if(!world.isClient())
             super.close(player);
 
-        delegate.set(1, rotX.getValue());
-        delegate.set(2, rotY.getValue());
-        delegate.set(3, rotZ.getValue());
+        delegate.setDouble(1, rotX.getValue());
+        delegate.setDouble(2, rotY.getValue());
+        delegate.setDouble(3, rotZ.getValue());
         try{
-            delegate.set(4, Integer.parseInt(disX.getText()));
-            delegate.set(5, Integer.parseInt(disY.getText()));
-            delegate.set(6, Integer.parseInt(disZ.getText()));
+            delegate.setDouble(4, Double.parseDouble(disX.getText()));
+            delegate.setDouble(5, Double.parseDouble(disY.getText()));
+            delegate.setDouble(6, Double.parseDouble(disZ.getText()));
         } catch (NumberFormatException e){
             MinecraftClient.getInstance().player.sendSystemMessage(new TranslatableText("label.lookingglass.wrong"), null);
         }
-        delegate.set(7, scale.getValue());
+        delegate.setDouble(7, scale.getValue() / 10.0);
 
         if(state == 0)
             delegate.setString(1, url.getText());

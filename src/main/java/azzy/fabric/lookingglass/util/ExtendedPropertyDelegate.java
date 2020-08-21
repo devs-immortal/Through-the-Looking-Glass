@@ -5,7 +5,9 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.math.BlockPos;
 
 public interface ExtendedPropertyDelegate extends PropertyDelegate {
-    public String getString(int index);
-    public void setString(int index, String value);
-    public BlockPos getPos();
+    String getString(int index);
+    void setString(int index, String value);
+    double getDouble(int index);
+    void setDouble(int index, double value);
+    BlockPos getPos();
 }

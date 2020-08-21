@@ -83,9 +83,9 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         matrices.push();
 
         matrices.translate(blockEntity.disX, blockEntity.disY, blockEntity.disZ);
-        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(blockEntity.rotX));
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(blockEntity.rotY));
-        matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(blockEntity.rotZ));
+        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) blockEntity.rotX));
+        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) blockEntity.rotY));
+        matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) blockEntity.rotZ));
         matrices.scale((float) blockEntity.scale, (float) blockEntity.scale, (float) blockEntity.scale);
 
         if (blockEntity.displayState == 0 && texture != null) {

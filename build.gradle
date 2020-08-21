@@ -12,9 +12,15 @@ group = project.maven_group
 
 repositories {
 	maven {
-		name = "CottonMC"
-		url = "http://server.bbkr.space:8081/artifactory/libs-release"
+		name = "dblsaiko"
+		url = "https://maven.dblsaiko.net/"
 	}
+	maven {
+		name = "Cotton"
+		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
+	}
+
+	jcenter()
 }
 
 dependencies {
@@ -29,8 +35,10 @@ dependencies {
 	// You may need to force-disable transitiveness on them.
 
 	modImplementation "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
-
 	include "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
+
+	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
+	//modCompile "grondag:canvas-mc116:1.0.+"
 
 }
 

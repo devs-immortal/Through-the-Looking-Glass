@@ -24,7 +24,7 @@ import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
 
     public int displayState;
-    public int rotY, rotX, rotZ, disY, disX, disZ, scale;
+    public double rotY, rotX, rotZ, disY, disX, disZ, scale;
     public String sign, url, color;
     public DefaultedList<ItemStack> inventory;
 
@@ -57,14 +57,14 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     public CompoundTag toTag(CompoundTag tag) {
         Inventories.toTag(tag, inventory);
 
-        tag.putInt("rotX", rotX);
-        tag.putInt("rotY", rotY);
-        tag.putInt("rotZ", rotZ);
+        tag.putDouble("rotX", rotX);
+        tag.putDouble("rotY", rotY);
+        tag.putDouble("rotZ", rotZ);
 
-        tag.putInt("disX", disX);
-        tag.putInt("disY", disY);
-        tag.putInt("disZ", disZ);
-        tag.putInt("scale", scale);
+        tag.putDouble("disX", disX);
+        tag.putDouble("disY", disY);
+        tag.putDouble("disZ", disZ);
+        tag.putDouble("scale", scale);
 
         tag.putString("sign", sign);
         tag.putString("image", url);
@@ -81,14 +81,14 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     public void fromTag(BlockState state, CompoundTag tag) {
         Inventories.fromTag(tag, inventory);
 
-        rotX = tag.getInt("rotX");
-        rotY = tag.getInt("rotY");
-        rotZ = tag.getInt("rotZ");
+        rotX = tag.getDouble("rotX");
+        rotY = tag.getDouble("rotY");
+        rotZ = tag.getDouble("rotZ");
 
-        disX = tag.getInt("disX");
-        disY = tag.getInt("disY");
-        disZ = tag.getInt("disZ");
-        scale = tag.getInt("scale");
+        disX = tag.getDouble("disX");
+        disY = tag.getDouble("disY");
+        disZ = tag.getDouble("disZ");
+        scale = tag.getDouble("scale");
 
         sign = tag.getString("sign");
         url = tag.getString("image");
@@ -100,14 +100,14 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     @Override
     public CompoundTag toClientTag(CompoundTag compoundTag) {
         Inventories.toTag(compoundTag, inventory);
-        compoundTag.putInt("rotX", rotX);
-        compoundTag.putInt("rotY", rotY);
-        compoundTag.putInt("rotZ", rotZ);
+        compoundTag.putDouble("rotX", rotX);
+        compoundTag.putDouble("rotY", rotY);
+        compoundTag.putDouble("rotZ", rotZ);
 
-        compoundTag.putInt("disX", disX);
-        compoundTag.putInt("disY", disY);
-        compoundTag.putInt("disZ", disZ);
-        compoundTag.putInt("scale", scale);
+        compoundTag.putDouble("disX", disX);
+        compoundTag.putDouble("disY", disY);
+        compoundTag.putDouble("disZ", disZ);
+        compoundTag.putDouble("scale", scale);
 
         compoundTag.putInt("state", displayState);
         compoundTag.putString("sign", sign);
@@ -123,13 +123,13 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     @Override
     public void fromClientTag(CompoundTag compoundTag) {
         Inventories.fromTag(compoundTag, inventory);
-        rotX = compoundTag.getInt("rotX");
-        rotY = compoundTag.getInt("rotY");
-        rotZ = compoundTag.getInt("rotZ");
+        rotX = compoundTag.getDouble("rotX");
+        rotY = compoundTag.getDouble("rotY");
+        rotZ = compoundTag.getDouble("rotZ");
 
-        disX = compoundTag.getInt("disX");
-        disY = compoundTag.getInt("disY");
-        disZ = compoundTag.getInt("disZ");
+        disX = compoundTag.getDouble("disX");
+        disY = compoundTag.getDouble("disY");
+        disZ = compoundTag.getDouble("disZ");
         scale = compoundTag.getInt("scale");
 
         displayState = compoundTag.getInt("state");
@@ -138,12 +138,10 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     }
 
     private ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {
+
         @Override
-        public int get(int index) {
+        public double getDouble(int index) {
             switch(index){
-                case (0): return displayState;
-                case (1): return Registry.ITEM.getRawId(inventory.get(0).getItem());
-                case (2): return inventory.get(0).getCount();
                 case (3): return rotX;
                 case (4): return rotY;
                 case (5): return rotZ;
@@ -154,18 +152,17 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
             }
             return -1;
         }
-        @Override
-        public void set(int index, int value) {
 
+        @Override
+        public void setDouble(int index, double value) {
             if(world.isClient()){
                 PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-                packet.writeInt(index).writeInt(value);
+                packet.writeInt(index).writeDouble(value);
                 packet.writeBlockPos(pos);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.INTS_TO_SERVER_PACKET, packet);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.DOUBLES_TO_SERVER_PACKET, packet);
             }
 
             switch(index){
-                case (0): displayState = value; break;
                 case (1): rotX = value; break;
                 case (2): rotY = value; break;
                 case (3): rotZ = value; break;
@@ -173,6 +170,22 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
                 case (5): disY = value; break;
                 case (6): disZ = value; break;
                 case (7): scale = value; break;
+            }
+        }
+
+        @Override
+        public int get(int index) {
+            switch(index){
+                case (0): return displayState;
+                case (1): return Registry.ITEM.getRawId(inventory.get(0).getItem());
+                case (2): return inventory.get(0).getCount();
+            }
+            return -1;
+        }
+        @Override
+        public void set(int index, int value) {
+            if (index == 0) {
+                displayState = value;
             }
         }
 
