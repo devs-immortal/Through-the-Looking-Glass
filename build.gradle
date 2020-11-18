@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
+	id 'fabric-loom' version '0.5-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -19,23 +19,34 @@ repositories {
 		name = "Cotton"
 		url = "http://server.bbkr.space:8081/artifactory/libs-release/"
 	}
-
+	maven {
+		url = "http://maven.fabricmc.net/"
+		name = "Fabric"
+	}
+	maven {
+		name = "Ladysnake Libs"
+		url = "https://dl.bintray.com/ladysnake/libs"
+	}
 	jcenter()
 }
 
 dependencies {
 	//to change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:1.16.2"
-	mappings "net.fabricmc:yarn:1.16.2+build.1:v2"
-	modImplementation "net.fabricmc:fabric-loader:0.9.1+build.205"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:0.17.2+build.396-1.16"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 
-	modImplementation "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
-	include "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
+	modImplementation(include("io.github.cottonmc:LibGui:${project.libgui_version}"))
+	modImplementation(include("io.github.ladysnake:Satin:${project.satin_version}"))
+	modImplementation(include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"))
+	modImplementation(include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_version}"))
+	modImplementation( include(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.4.0+build.1"))
+	modRuntime "me.shedaniel:RoughlyEnoughItems:5.6.2"
 
 	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
 	//modCompile "grondag:canvas-mc116:1.0.+"

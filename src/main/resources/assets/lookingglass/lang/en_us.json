@@ -1,6 +1,8 @@
 {
 	"block.lookingglass.chunkloader": "Perception Anchor",
 	"block.lookingglass.projector": "Looking Glass",
+	"block.lookingglass.wormhole": "Null Gateway",
+	"item.lookingglass.data_shard": "Data Shard",
 	"label.lookingglass.mode": "Display Mode: %d",
 	"label.lookingglass.wrong": "§cDistances must be numerical"
 }

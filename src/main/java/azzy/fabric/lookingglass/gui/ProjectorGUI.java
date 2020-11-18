@@ -14,22 +14,24 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
+import javax.swing.*;
+import java.awt.*;
+
 
 public class ProjectorGUI extends SyncedGuiDescription {
 
-    private WPlainPanel root = new WPlainPanel();
-    private ExtendedPropertyDelegate delegate;
-    private WDynamicLabel stateLabel;
-    private WTextField url = new WTextField().setMaxLength(512);
-    private WTextField disX = new WTextField().setMaxLength(4);
-    private WTextField disY = new WTextField().setMaxLength(4);
-    private WTextField disZ = new WTextField().setMaxLength(4);
-    private WTextField sign = new WTextField().setMaxLength(2048);
-    private WTextField color = new WTextField().setMaxLength(32);
-    private WSlider rotX = new WSlider(0, 360, Axis.HORIZONTAL);
-    private WSlider rotY = new WSlider(0, 360, Axis.HORIZONTAL);
-    private WSlider rotZ = new WSlider(0, 360, Axis.HORIZONTAL);
-    private WSlider scale = new WSlider(16, 320, Axis.HORIZONTAL);
+    private final WPlainPanel root = new WPlainPanel();
+    private final ExtendedPropertyDelegate delegate;
+    private final WTextField url = new WTextField().setMaxLength(512);
+    private final WTextField disX = new WTextField().setMaxLength(4);
+    private final WTextField disY = new WTextField().setMaxLength(4);
+    private final WTextField disZ = new WTextField().setMaxLength(4);
+    private final WTextField sign = new WTextField().setMaxLength(2048);
+    private final WTextField color = new WTextField().setMaxLength(32);
+    private final WSlider rotX = new WSlider(0, 360, Axis.HORIZONTAL);
+    private final WSlider rotY = new WSlider(0, 360, Axis.HORIZONTAL);
+    private final WSlider rotZ = new WSlider(0, 360, Axis.HORIZONTAL);
+    private final WSlider scale = new WSlider(16, 320, Axis.HORIZONTAL);
 
     private final int state;
     private String label;
@@ -79,7 +81,7 @@ public class ProjectorGUI extends SyncedGuiDescription {
 
 
         if(world.isClient) {
-            stateLabel = new WDynamicLabel(() -> I18n.translate("label.lookingglass.mode", label));
+            WDynamicLabel stateLabel = new WDynamicLabel(() -> I18n.translate("label.lookingglass.mode", label));
             stateLabel.setSize(100, 20);
             stateLabel.setAlignment(HorizontalAlignment.CENTER);
 

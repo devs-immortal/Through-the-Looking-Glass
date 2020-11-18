@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.block.entity.EndPortalBlockEntityRenderer;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
@@ -31,5 +32,19 @@ public abstract class RenderCrimes extends RenderLayer{
         return RenderLayer.of(CURSED_RENDERLAYER + renderer.hashCode(),
                 VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
                 GL11.GL_QUADS, 256, false, true, parameters);
+    }
+
+    public static RenderLayer getPortalLayer(Identifier texture, int blendMode) {
+        Transparency transparency2;
+        Texture texture2;
+        if (blendMode <= 1) {
+            transparency2 = TRANSLUCENT_TRANSPARENCY;
+            texture2 = new Texture(texture, false, false);
+        } else {
+            transparency2 = ADDITIVE_TRANSPARENCY;
+            texture2 = new Texture(texture, false, false);
+        }
+
+        return of("ff_portal_layer", VertexFormats.POSITION_COLOR, 7, 256, false, true, RenderLayer.MultiPhaseParameters.builder().transparency(transparency2).texture(texture2).texturing(new PortalTexturing(blendMode)).fog(BLACK_FOG).build(false));
     }
 }

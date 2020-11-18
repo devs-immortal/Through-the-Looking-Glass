@@ -105,7 +105,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
             matrices.translate(-1, 0, 0);
 
-            Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEX).apply(new Identifier("minecraft:block/obsidian"));
+            Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).apply(new Identifier("minecraft:block/obsidian"));
             VertexConsumer backface = vertexConsumers.getBuffer(RenderLayer.getSolid());
 
             backface.vertex(matrix.getModel(), 0, 0, (float) (0.01 / blockEntity.scale)).color(255, 255, 255, 255).texture(sprite.getMinU(), sprite.getMinV()).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
