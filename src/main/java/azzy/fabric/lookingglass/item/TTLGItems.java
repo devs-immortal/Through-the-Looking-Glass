@@ -20,6 +20,7 @@ public class TTLGItems {
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(new Item.Settings().group(LOOKINGGLASS_ITEMS)));
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
+    
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
 
     private static Item registerItem(String name, Item item) {
