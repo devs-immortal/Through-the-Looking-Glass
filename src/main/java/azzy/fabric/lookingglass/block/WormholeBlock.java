@@ -20,6 +20,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import static azzy.fabric.lookingglass.item.TTLGItems.DATA_SHARD;
+
 public class WormholeBlock extends Block implements BlockEntityProvider {
 
     public WormholeBlock(Settings settings) {
@@ -30,7 +32,7 @@ public class WormholeBlock extends Block implements BlockEntityProvider {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
         BlockEntity entity = world.getBlockEntity(pos);
-        if(entity instanceof WormholeEntity && stack.getItem() == LookingGlass.DATA_SHARD && stack.getOrCreateTag().contains("pos")){
+        if(entity instanceof WormholeEntity && stack.getItem() == DATA_SHARD && stack.getOrCreateTag().contains("pos")){
             if (((WormholeEntity) entity).tryAssign(stack))
                 world.playSound(null, pos, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundCategory.BLOCKS, 0.5f, 2f);
         }

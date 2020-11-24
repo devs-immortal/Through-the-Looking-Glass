@@ -3,7 +3,6 @@ package azzy.fabric.lookingglass.entity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -18,10 +17,9 @@ import net.minecraft.util.math.Box;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static azzy.fabric.lookingglass.LookingGlass.WORMHOLE_ENTITY;
+import static azzy.fabric.lookingglass.block.TTLGBlocks.WORMHOLE_ENTITY;
 
 public class WormholeEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable {
 

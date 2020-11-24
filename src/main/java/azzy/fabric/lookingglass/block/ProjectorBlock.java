@@ -26,7 +26,7 @@ import static azzy.fabric.lookingglass.LookingGlass.MODID;
 
 public class ProjectorBlock extends Block implements BlockEntityProvider {
 
-    private VoxelShape shape = VoxelShapes.cuboid(0, 0, 0, 1, 0.375, 1);
+    private final VoxelShape shape = VoxelShapes.cuboid(0, 0, 0, 1, 0.375, 1);
 
     public ProjectorBlock(Settings settings) {
         super(settings);

@@ -2,7 +2,11 @@
 	"block.lookingglass.chunkloader": "Perception Anchor",
 	"block.lookingglass.projector": "Looking Glass",
 	"block.lookingglass.wormhole": "Null Gateway",
+	"block.lookingglass.eldenmetal_block": "Eldenmetal Block",
 	"item.lookingglass.data_shard": "Data Shard",
+	"item.lookingglass.eldenmetal_drop": "Drop of Eldenmetal",
+	"item.lookingglass.eldenmetal_tear": "Eldenmetal Tear",
+	"item.lookingglass.eldenmetal_gem": "Lacuna Crystal",
 	"label.lookingglass.mode": "Display Mode: %d",
 	"label.lookingglass.wrong": "§cDistances must be numerical"
 }

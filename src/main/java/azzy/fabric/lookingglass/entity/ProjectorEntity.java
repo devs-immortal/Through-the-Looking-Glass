@@ -19,7 +19,8 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
-import static azzy.fabric.lookingglass.LookingGlass.PROJECTORENTITY;
+import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
+
 
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
 
@@ -137,7 +138,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         url = compoundTag.getString("image");
     }
 
-    private ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {
+    private final ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {
 
         @Override
         public double getDouble(int index) {

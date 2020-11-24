@@ -17,8 +17,8 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 
-
 import static azzy.fabric.lookingglass.LookingGlass.*;
+import static azzy.fabric.lookingglass.block.TTLGBlocks.*;
 
 @Environment(EnvType.CLIENT)
 public class ClientInit implements ClientModInitializer {
