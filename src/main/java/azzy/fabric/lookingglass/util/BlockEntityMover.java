@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.util;
 
+import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -19,7 +20,10 @@ public class BlockEntityMover {
     private static Field beRemoved;
 
     public static boolean tryMoveEntity(World world, BlockPos pos, Direction facing) {
-        BlockPos newPos = pos.offset(facing);
+        return directEntityMove(world, pos, pos.offset(facing));
+    }
+
+    public static boolean directEntityMove(World world, BlockPos pos, BlockPos newPos) {
         BlockState state = world.getBlockState(pos);
         BlockEntity entity = world.getBlockEntity(pos);
         if(entity != null && !(entity instanceof PistonBlockEntity)) {
@@ -36,6 +40,8 @@ public class BlockEntityMover {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+            if(newEntity instanceof ChunkLoaderEntity)
+                ((ChunkLoaderEntity) newEntity).requestCheck();
             if(!world.isClient() && entity instanceof BlockEntityClientSerializable)
                 ((BlockEntityClientSerializable) newEntity).sync();
             return true;

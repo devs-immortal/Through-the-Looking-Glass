@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.entity;
+package azzy.fabric.lookingglass.blockentity;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;

@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.util;
 
-import azzy.fabric.lookingglass.LookingGlass;
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import com.google.common.collect.Lists;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.Formatting;
@@ -60,7 +60,7 @@ public class EnumHelper {
             newFieldAccessor = Class.forName("sun.reflect.ReflectionFactory").getDeclaredMethod("newFieldAccessor", Field.class, boolean.class);
             fieldAccessorSet = Class.forName("sun.reflect.FieldAccessor").getDeclaredMethod("set", Object.class, Object.class);
         } catch (Exception e) {
-            LookingGlass.FFLog.error("Error setting up EnumHelper.", e);
+            LookingGlassCommon.FFLog.error("Error setting up EnumHelper.", e);
         }
 
         isSetup = true;
@@ -204,7 +204,7 @@ public class EnumHelper {
             }
 
             for (String line : lines)
-                LookingGlass.FFLog.fatal(line);
+                LookingGlassCommon.FFLog.fatal(line);
 
             if (test) {
                 throw new Exception("Could not find $VALUES field for enum: " + enumType.getName());
@@ -236,7 +236,7 @@ public class EnumHelper {
 
             return newValue;
         } catch (Exception e) {
-            LookingGlass.FFLog.error("Error adding enum with EnumHelper.", e);
+            LookingGlassCommon.FFLog.error("Error adding enum with EnumHelper.", e);
             throw new RuntimeException(e);
         }
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/core_all",
+  "textures": {
+    "all": "lookingglass:block/growth_core_4"
+  }
+}

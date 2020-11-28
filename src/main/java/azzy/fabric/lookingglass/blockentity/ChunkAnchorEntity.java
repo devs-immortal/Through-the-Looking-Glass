@@ -1,6 +1,7 @@
-package azzy.fabric.lookingglass.entity;
+package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.util.InventoryWrapper;
+import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity.UnloadAction;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,13 +20,13 @@ import java.util.Set;
 
 import static azzy.fabric.lookingglass.block.TTLGBlocks.CHUNKLOADER_ENTITY;
 
-public class ChunkLoaderEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, Tickable {
+public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity, BlockEntityClientSerializable, InventoryWrapper, Tickable {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private boolean check = true;
     private int lastRadius;
 
-    public ChunkLoaderEntity() {
+    public ChunkAnchorEntity() {
         super(CHUNKLOADER_ENTITY);
         lastRadius = 0;
     }
@@ -122,7 +123,7 @@ public class ChunkLoaderEntity extends BlockEntity implements BlockEntityClientS
     }
 
     public void requestCheck() {
-        this.check = check;
+        this.check = true;
     }
 
     @Override
@@ -142,11 +143,5 @@ public class ChunkLoaderEntity extends BlockEntity implements BlockEntityClientS
     public CompoundTag toClientTag(CompoundTag compoundTag) {
         Inventories.toTag(compoundTag, inventory);
         return compoundTag;
-    }
-
-    public enum UnloadAction{
-        NONE,
-        FORCEUNLOAD,
-        BREAKUNLOAD
     }
 }

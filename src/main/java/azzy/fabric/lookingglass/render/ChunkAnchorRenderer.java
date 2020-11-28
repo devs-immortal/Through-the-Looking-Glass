@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.render;
 
-import azzy.fabric.lookingglass.entity.ChunkLoaderEntity;
+import azzy.fabric.lookingglass.blockentity.ChunkAnchorEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -13,17 +13,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.world.World;
 
-public class ChunkLoaderRenderer extends BlockEntityRenderer<ChunkLoaderEntity> {
+public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> {
 
     private static final ItemStack item = new ItemStack(Items.NETHER_STAR);
 
-    public ChunkLoaderRenderer(BlockEntityRenderDispatcher dispatcher) {
+    public ChunkAnchorRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
         item.addEnchantment(Enchantments.SHARPNESS, 1);
     }
 
     @Override
-    public void render(ChunkLoaderEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(ChunkAnchorEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         World world = entity.getWorld();
 
         double bounce = Math.sin((world.getTime() + tickDelta) / 18);
@@ -67,5 +67,10 @@ public class ChunkLoaderRenderer extends BlockEntityRenderer<ChunkLoaderEntity> 
             matrices.translate(-offset, 0, 0);
         }
         matrices.pop();
+    }
+
+    @Override
+    public boolean rendersOutsideBoundingBox(ChunkAnchorEntity blockEntity) {
+        return true;
     }
 }

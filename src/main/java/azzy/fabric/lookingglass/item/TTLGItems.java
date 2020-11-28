@@ -2,19 +2,18 @@ package azzy.fabric.lookingglass.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
-import static azzy.fabric.lookingglass.LookingGlass.*;
+import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 
+@SuppressWarnings("unused")
 public class TTLGItems {
 
     public static void init() {}
 
     private static FabricItemSettings eldenmetalSettings() {
-        return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).fireproof().rarity(NOLL);
+        return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).fireproof().rarity(NULL_RARITY);
     }
 
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(new Item.Settings().group(LOOKINGGLASS_ITEMS)));

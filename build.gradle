@@ -27,6 +27,7 @@ repositories {
 		name = "Ladysnake Libs"
 		url = "https://dl.bintray.com/ladysnake/libs"
 	}
+	maven { url 'https://maven.blamejared.com' }
 	jcenter()
 }
 
@@ -43,10 +44,10 @@ dependencies {
 
 	modImplementation(include("io.github.cottonmc:LibGui:${project.libgui_version}"))
 	modImplementation(include("io.github.ladysnake:Satin:${project.satin_version}"))
-	modImplementation(include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_version}"))
-	modImplementation(include ("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:${project.cardinal_version}"))
 	modImplementation( include(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.4.0+build.1"))
+	modImplementation( include( "vazkii.patchouli:Patchouli:${project.patchouli_version}"))
 	modRuntime "me.shedaniel:RoughlyEnoughItems:5.6.2"
+
 
 	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
 	//modCompile "grondag:canvas-mc116:1.0.+"

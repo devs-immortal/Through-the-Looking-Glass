@@ -1,7 +1,38 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.blockentity.BlockTesseractEntity;
+import azzy.fabric.lookingglass.item.DataShardItem;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+
 public class BlockTesseractBlock extends AbstractTesseractBlock {
+
     public BlockTesseractBlock(Settings settings) {
-        super(settings);
+        super(BlockTesseractEntity::new, settings);
+    }
+
+    @Override
+    boolean activate(World world, BlockPos pos, Direction dir, BlockPos trigger) {
+        BlockEntity entity = world.getBlockEntity(pos);
+        if(entity != null)
+            return ((BlockTesseractEntity) entity).moveBlock(dir);
+        return false;
+    }
+
+    @Override
+    boolean setData(World world, BlockPos pos, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+        BlockEntity entity = world.getBlockEntity(pos);
+        CompoundTag tag = stack.getTag();
+        if(stack.getItem() instanceof DataShardItem && tag != null && tag.contains("pos")) {
+            return ((BlockTesseractEntity) entity).setTarget(BlockPos.fromLong(tag.getLong("pos")));
+        }
+        return false;
     }
 }

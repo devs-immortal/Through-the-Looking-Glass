@@ -3,7 +3,8 @@
 	"textures": {
 		"0": "minecraft:block/dark_prismarine",
 		"1": "minecraft:block/chiseled_quartz_block",
-		"2": "minecraft:block/gold_block"
+		"2": "minecraft:block/gold_block",
+		"particle": "minecraft:block/dark_prismarine"
 	},
 	"elements": [
 		{

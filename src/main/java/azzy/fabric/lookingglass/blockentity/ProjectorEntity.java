@@ -1,24 +1,32 @@
-package azzy.fabric.lookingglass.entity;
+package azzy.fabric.lookingglass.blockentity;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
-import azzy.fabric.lookingglass.LookingGlass;
+import azzy.fabric.lookingglass.util.RenderCrimes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.texture.NativeImageBackedTexture;
+import net.minecraft.client.texture.TextureManager;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
+import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
+import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
 
 
@@ -160,7 +168,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
                 PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
                 packet.writeInt(index).writeDouble(value);
                 packet.writeBlockPos(pos);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.DOUBLES_TO_SERVER_PACKET, packet);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlassCommon.DOUBLES_TO_SERVER_PACKET, packet);
             }
 
             switch(index){
@@ -206,7 +214,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
             if(world.isClient()){
                 PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
                 packet.writeString(value).writeBlockPos(pos).writeInt(index);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlass.STRING_TO_SERVER_PACKET, packet);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlassCommon.STRING_TO_SERVER_PACKET, packet);
             }
 
             switch(index){

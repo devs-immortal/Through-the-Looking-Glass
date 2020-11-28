@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/block_tesseract",
+  "textures": {
+    "all": "lookingglass:block/tesseract_frame"
+  }
+}

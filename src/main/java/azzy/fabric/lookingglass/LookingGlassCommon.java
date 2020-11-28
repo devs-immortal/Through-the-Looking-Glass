@@ -2,17 +2,16 @@ package azzy.fabric.lookingglass;
 
 
 import azzy.fabric.lookingglass.block.TTLGBlocks;
-import azzy.fabric.lookingglass.entity.ProjectorEntity;
+import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import azzy.fabric.lookingglass.gui.ProjectorGUI;
-import azzy.fabric.lookingglass.item.DataShardItem;
 import azzy.fabric.lookingglass.item.TTLGItems;
-import azzy.fabric.lookingglass.item.WarcrimeItem;
 import azzy.fabric.lookingglass.util.EnumHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.minecraft.item.Item;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -25,17 +24,16 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
-import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.Logger;
 
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORBLOCK;
 
-public class LookingGlass implements ModInitializer {
+public class LookingGlassCommon implements ModInitializer {
 	public static final String MODID = "lookingglass";
 
 	public static final BlockSoundGroup ELDENMETAL = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundEvents.BLOCK_SHROOMLIGHT_PLACE, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundEvents.BLOCK_RESPAWN_ANCHOR_AMBIENT, SoundEvents.BLOCK_BEACON_DEACTIVATE);
 
-	public static final Rarity NOLL = EnumHelper.addRarity("null", Formatting.DARK_PURPLE);
+	public static final Rarity NULL_RARITY = EnumHelper.addRarity("null", Formatting.DARK_PURPLE);
 
 	public static final Logger FFLog = LogManager.getLogger(MODID);
 	public static final ItemGroup LOOKINGGLASS_BLOCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(PROJECTORBLOCK));
@@ -44,6 +42,7 @@ public class LookingGlass implements ModInitializer {
 
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
 	public static final Identifier DOUBLES_TO_SERVER_PACKET = new Identifier(MODID, "doubletoserver");
+	public static final Identifier BLOCKPOS_TO_CLIENT_PACKET = new Identifier(MODID, "postoclient");
 
 	@Override
 	public void onInitialize() {
@@ -99,6 +98,17 @@ public class LookingGlass implements ModInitializer {
 				}
 			});
 		}));
+
+		ClientSidePacketRegistry.INSTANCE.register(BLOCKPOS_TO_CLIENT_PACKET, (((packetContext, packetByteBuf) -> {
+
+			BlockPos pos = packetByteBuf.readBlockPos();
+			int count = packetByteBuf.readInt();
+			World world = packetContext.getPlayer().getEntityWorld();
+
+			packetContext.getTaskQueue().execute(() -> {
+				BoneMealItem.createParticles(world, pos, count);
+			});
+		})));
 
 		ContainerProviderRegistry.INSTANCE.registerFactory(new Identifier(MODID, "projector_gui"), (syncID, id, player, buf) -> new ProjectorGUI(ScreenHandlerType.ANVIL, syncID, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 

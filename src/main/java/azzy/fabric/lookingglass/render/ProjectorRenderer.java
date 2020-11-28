@@ -3,7 +3,7 @@ package azzy.fabric.lookingglass.render;
 import azzy.fabric.lookingglass.util.CacheCrimes;
 import azzy.fabric.lookingglass.util.FunkedUpTextureManager;
 import azzy.fabric.lookingglass.util.RenderCrimes;
-import azzy.fabric.lookingglass.entity.ProjectorEntity;
+import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -24,13 +24,12 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static azzy.fabric.lookingglass.ClientInit.textureIdCounter;
-import static azzy.fabric.lookingglass.LookingGlass.MODID;
+import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
+import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
     //hoi
-
     private RenderLayer renderLayer;
     private Identifier backingTextureId;
     private NativeImageBackedTexture texture = null;
@@ -173,7 +172,8 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         return new Identifier(MODID, "dynamic/dispmod_" + id);
     }
 
-    private RenderLayer getRenderLayer(){
+
+    public RenderLayer getRenderLayer(){
         if(renderLayer == null){
             final TextureManager texMan = MinecraftClient.getInstance().getTextureManager();
             backingTextureId = generateId();
@@ -184,14 +184,14 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         return renderLayer;
     }
 
-    private void flushTexture(){
-        if(backingTextureId != null){
-            TextureManager manager = MinecraftClient.getInstance().getTextureManager();
-            FunkedUpTextureManager.from(manager).unregisterTexture(backingTextureId);
-        }
-        if (texture != null) {
-            texture.close();
-            texture = null;
-        }
-    }
+    //private void flushTexture(){
+    //    if(backingTextureId != null){
+    //        TextureManager manager = MinecraftClient.getInstance().getTextureManager();
+    //        FunkedUpTextureManager.from(manager).unregisterTexture(backingTextureId);
+    //    }
+    //    if (texture != null) {
+    //        texture.close();
+    //        texture = null;
+    //    }
+    //}
 }

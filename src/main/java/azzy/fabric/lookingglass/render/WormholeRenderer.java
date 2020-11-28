@@ -1,8 +1,7 @@
 package azzy.fabric.lookingglass.render;
 
-import azzy.fabric.lookingglass.entity.WormholeEntity;
+import azzy.fabric.lookingglass.blockentity.WormholeEntity;
 import azzy.fabric.lookingglass.util.RenderCrimes;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -11,7 +10,6 @@ import net.minecraft.client.render.block.entity.EndPortalBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.world.World;
 
 public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {

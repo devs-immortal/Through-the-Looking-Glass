@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "azzy.fabric.lookingglass.LookingGlass"
+      "azzy.fabric.lookingglass.LookingGlassCommon"
     ],
     "client": [
-      "azzy.fabric.lookingglass.ClientInit"
+      "azzy.fabric.lookingglass.LookingGlassClient"
     ]
   },
   "mixins": [

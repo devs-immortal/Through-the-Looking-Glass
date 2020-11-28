@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.entity.ProjectorEntity;
+import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -22,7 +22,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import static azzy.fabric.lookingglass.LookingGlass.MODID;
+import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class ProjectorBlock extends Block implements BlockEntityProvider {
 

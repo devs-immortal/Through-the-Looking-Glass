@@ -1,13 +1,13 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.entity.ChunkLoaderEntity;
+import azzy.fabric.lookingglass.blockentity.ChunkAnchorEntity;
+import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
@@ -22,11 +22,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class ChunkLoaderBlock extends Block implements BlockEntityProvider {
+public class ChunkAnchorBlock extends Block implements BlockEntityProvider {
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
 
-    public ChunkLoaderBlock(Settings settings) {
+    public ChunkAnchorBlock(Settings settings) {
         super(settings);
     }
 
@@ -34,8 +34,8 @@ public class ChunkLoaderBlock extends Block implements BlockEntityProvider {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity entity = world.getBlockEntity(pos);
         ItemStack stack = player.getStackInHand(hand);
-        if(entity instanceof ChunkLoaderEntity && stack.getItem() == Items.GHAST_TEAR){
-            ChunkLoaderEntity loaderEntity = (ChunkLoaderEntity) entity;
+        if(entity instanceof ChunkAnchorEntity && stack.getItem() == Items.GHAST_TEAR){
+            ChunkAnchorEntity loaderEntity = (ChunkAnchorEntity) entity;
             ItemStack inventory = loaderEntity.getStack(0);
             if(inventory.getCount() < loaderEntity.getMaxCountPerStack() && !player.isInSneakingPose()){
                 stack.decrement(1);
@@ -62,14 +62,14 @@ public class ChunkLoaderBlock extends Block implements BlockEntityProvider {
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        ChunkLoaderEntity loaderEntity = (ChunkLoaderEntity) world.getBlockEntity(pos);
+        ChunkAnchorEntity loaderEntity = (ChunkAnchorEntity) world.getBlockEntity(pos);
         loaderEntity.requestCheck();
     }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!world.isClient() && this.hasBlockEntity() && !state.isOf(newState.getBlock())) {
-            ChunkLoaderEntity loaderEntity = (ChunkLoaderEntity) world.getBlockEntity(pos);
+            ChunkAnchorEntity loaderEntity = (ChunkAnchorEntity) world.getBlockEntity(pos);
             loaderEntity.recalcChunks(16, (ServerWorld) world, ChunkLoaderEntity.UnloadAction.BREAKUNLOAD);
             ItemScatterer.spawn(world, pos, loaderEntity);
         }
@@ -88,6 +88,6 @@ public class ChunkLoaderBlock extends Block implements BlockEntityProvider {
 
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
-        return new ChunkLoaderEntity();
+        return new ChunkAnchorEntity();
     }
 }

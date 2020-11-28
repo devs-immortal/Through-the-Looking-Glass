@@ -1,0 +1,11 @@
+{
+  "parent": "lookingglass:base/base_core",
+  "textures": {
+    "down": "#bases",
+    "up": "#bases",
+    "north": "#sides",
+    "east": "#sides",
+    "south": "#sides",
+    "west": "#sides"
+  }
+}
