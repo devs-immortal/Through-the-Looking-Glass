@@ -1,7 +1,9 @@
 package azzy.fabric.lookingglass.blockentity;
 
+import azzy.fabric.lookingglass.block.AnnulationCoreBlock;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.util.BlockEntityMover;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -32,8 +34,10 @@ public class BlockTesseractEntity extends BlockEntity {
                 return false;
             }
             if(!receiverState.isOf(TTLGBlocks.INTERMINAL_CORE)) {
-                float targetHardness = world.getBlockState(target).getHardness(world, target);
-                byte flags = (byte) (targetHardness < 0.0F ? 0 : receiverState.getHardness(world, receiver) < targetHardness ? 1 : receiverState.getHardness(world, receiver) > targetHardness ? 2 : 3);
+                BlockState targetState = world.getBlockState(target);
+                Block receiverBlock = receiverState.getBlock();
+                float targetHardness = targetState.getHardness(world, target);
+                byte flags = (byte) ((receiverBlock instanceof AnnulationCoreBlock && ((AnnulationCoreBlock) receiverBlock).canBreakAll()) ? 2 : targetHardness < 0.0F ? 0 : receiverBlock instanceof AnnulationCoreBlock ? 2 : receiverState.getHardness(world, receiver) < targetHardness ? 1 : receiverState.getHardness(world, receiver) > targetHardness ? 2 : 3);
                 if (flags == 3) {
                     receiver = receiver.offset(direction);
                     return false;

@@ -1,0 +1,8 @@
+{
+  "parent": "lookingglass:base/sided_core",
+  "textures": {
+    "bases": "lookingglass:block/interminal_core_1a_top",
+    "sides": "lookingglass:block/interminal_core_1a_side",
+    "particle": "lookingglass:block/interminal_core_1a_side"
+  }
+}
