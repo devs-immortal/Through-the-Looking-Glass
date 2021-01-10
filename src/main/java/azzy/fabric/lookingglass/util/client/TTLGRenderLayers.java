@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.client;
 
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import azzy.fabric.lookingglass.render.ProjectorRenderer;
@@ -13,14 +13,14 @@ import org.lwjgl.opengl.GL11;
 
 @Environment(EnvType.CLIENT)
 public abstract class RenderCrimes extends RenderLayer{
-    private static final String CURSED_RENDERLAYER = "lookingglass/trans_no_difflight";
+    private static final String CURSED_RENDERLAYER = "lookingglass/trans_no_difflight_";
 
 
     private RenderCrimes() {
         super("ae", VertexFormats.POSITION, 0, 0, false, true, null, null);
     }
 
-    public static RenderLayer getTransNoDiff(Identifier texture, ProjectorRenderer renderer){
+    public static RenderLayer getTransNoDiff(Identifier texture){
         final RenderLayer.MultiPhaseParameters parameters = RenderLayer.MultiPhaseParameters
                 .builder()
                 .texture(new RenderPhase.Texture(texture, true, true))
@@ -30,7 +30,7 @@ public abstract class RenderCrimes extends RenderLayer{
                 .overlay(DISABLE_OVERLAY_COLOR)
                 .build(true);
 
-        return RenderLayer.of(CURSED_RENDERLAYER + renderer.hashCode(),
+        return RenderLayer.of(CURSED_RENDERLAYER + texture,
                 VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
                 GL11.GL_QUADS, 256, false, true, parameters);
     }

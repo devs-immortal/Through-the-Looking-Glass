@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.blockentity;
+package azzy.fabric.lookingglass.block.blockentity;
 
 public interface ChunkLoaderEntity {
 

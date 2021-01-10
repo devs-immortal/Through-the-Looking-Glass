@@ -6,11 +6,6 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public interface FunkedUpTextureManager {
-
-    static FunkedUpTextureManager from(final TextureManager self){
-        return (FunkedUpTextureManager) self;
-    }
-
+public interface TexManRegEdit {
     void unregisterTexture(final Identifier id);
 }

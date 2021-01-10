@@ -1,7 +1,7 @@
-package azzy.fabric.lookingglass.blockentity;
+package azzy.fabric.lookingglass.block.blockentity;
 
 import azzy.fabric.lookingglass.util.InventoryWrapper;
-import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity.UnloadAction;
+import azzy.fabric.lookingglass.block.blockentity.ChunkLoaderEntity.UnloadAction;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

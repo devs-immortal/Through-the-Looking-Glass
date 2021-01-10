@@ -1,36 +1,27 @@
-package azzy.fabric.lookingglass.blockentity;
+package azzy.fabric.lookingglass.block.blockentity;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
-import azzy.fabric.lookingglass.util.RenderCrimes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.texture.NativeImageBackedTexture;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
-import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
-import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
 
 
-public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
+public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder {
 
     public int displayState;
     public double rotY, rotX, rotZ, disY, disX, disZ, scale;
@@ -44,18 +35,13 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         sign = "";
         url = "";
         color = "0xffffff";
-        rotX = 0;
-        rotY = 0;
-        rotZ = 0;
-        disX = 0;
         disY = 1;
-        disZ = 0;
         scale = 1;
     }
 
-    @Override
-    public void tick() {
-    }
+    //@Override
+    //public void tick() {
+    //}
 
     @Override
     public void sync() {

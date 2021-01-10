@@ -1,7 +1,6 @@
-package azzy.fabric.lookingglass.blockentity;
+package azzy.fabric.lookingglass.block.blockentity;
 
 import azzy.fabric.lookingglass.block.TTLGBlocks;
-import azzy.fabric.lookingglass.effects.ErasureDamageSource;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
 import com.mojang.authlib.GameProfile;
@@ -9,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
@@ -17,7 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Box;

@@ -1,27 +1,30 @@
 package azzy.fabric.lookingglass.util;
 
+import io.netty.util.concurrent.SingleThreadEventExecutor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.AbstractTexture;
 import net.minecraft.client.texture.NativeImageBackedTexture;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
+import net.minecraft.world.World;
 
 import java.io.Closeable;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
 import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
-public class CacheCrimes {
+public class RenderCache {
 
-    private static volatile HashMap<String, CompletableFuture<AbstractTexture>> futureCache;
+    private static HashMap<String, CompletableFuture<AbstractTexture>> futureCache;
     private static volatile HashMap<String, BakedRenderLayer> bakedLayerCache;
+    private static final ExecutorService bakedLayerManager = Executors.newSingleThreadExecutor();
 
     public static void init(){
         futureCache = new HashMap<>();
@@ -50,9 +53,9 @@ public class CacheCrimes {
         return bakedRenderLayer;
     }
 
-    public static boolean checkRenderLayer(String url) {
+    public static boolean checkRenderLayer(String url, World world) {
         if(bakedLayerCache.containsKey(url)) {
-            return bakedLayerCache.get(url).checkIntegrity();
+            return bakedLayerCache.get(url).checkAndUpdateLayer(world);
         }
         return false;
     }
@@ -61,10 +64,28 @@ public class CacheCrimes {
         return bakedLayerCache.get(url);
     }
 
+    private static void layerCacheFlush() {
+        long timeStamp = MinecraftClient.getInstance().world.getTime();
+        for(Map.Entry<String, BakedRenderLayer> layerPair : bakedLayerCache.entrySet()) {
+            BakedRenderLayer bakedLayer = layerPair.getValue();
+            if(bakedLayer != null) {
+                if(timeStamp - bakedLayer.getLastTickStamp() > 100) {
+                    bakedLayer.close();
+                    bakedLayerCache.remove(layerPair.getKey());
+                }
+            }
+        }
+    }
+
+    public static Future<?> cleanLayerCache() {
+        return bakedLayerManager.submit(RenderCache::layerCacheFlush);
+    }
+
     public static class BakedRenderLayer implements Closeable {
         private final Identifier id;
         private final RenderLayer renderLayer;
         private final NativeImageBackedTexture texture;
+        private long lastTickStamp;
 
         public BakedRenderLayer(Identifier id, NativeImageBackedTexture texture) {
             this.id = id;
@@ -85,13 +106,19 @@ public class CacheCrimes {
             return texture;
         }
 
-        public boolean checkIntegrity() {
-            return id != null && renderLayer != null && texture != null;
+        public long getLastTickStamp() {
+            return lastTickStamp;
+        }
+
+        public boolean checkAndUpdateLayer(World world) {
+            lastTickStamp = world.getTime();
+            return id != null && renderLayer != null && texture != null && texture.getImage() != null;
         }
 
         @Override
-        public void close() throws IOException {
-
+        public void close() {
+            ((TexManRegEdit) MinecraftClient.getInstance().getTextureManager()).unregisterTexture(id);
+            texture.close();
         }
     }
 }
