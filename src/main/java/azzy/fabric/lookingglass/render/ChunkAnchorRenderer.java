@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.blockentity.ChunkAnchorEntity;
+import azzy.fabric.lookingglass.item.TTLGItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> {
 
-    private static final ItemStack item = new ItemStack(Items.NETHER_STAR);
+    private static final ItemStack item = new ItemStack(TTLGItems.DATA_SHARD);
 
     public ChunkAnchorRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
@@ -30,7 +31,7 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
         float count = entity.getStack(0).getCount() * 2;
         float speen = -(world.getTime() + tickDelta);
         int tearLight = 14680160;
-        ItemStack focus = new ItemStack(Items.HONEY_BLOCK);
+        ItemStack focus = new ItemStack(Items.CHISELED_QUARTZ_BLOCK);
 
         matrices.push();
         bounce /= 4;
@@ -67,6 +68,10 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
             matrices.translate(-offset, 0, 0);
         }
         matrices.pop();
+    }
+
+    static {
+        item.addEnchantment(Enchantments.AQUA_AFFINITY, 1);
     }
 
     @Override

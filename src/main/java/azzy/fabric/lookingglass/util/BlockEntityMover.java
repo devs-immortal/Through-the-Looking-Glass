@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.util;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -40,10 +41,11 @@ public class BlockEntityMover {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if(newEntity instanceof ChunkLoaderEntity)
-                ((ChunkLoaderEntity) newEntity).requestCheck();
-            if(!world.isClient() && entity instanceof BlockEntityClientSerializable)
-                ((BlockEntityClientSerializable) newEntity).sync();
+            if(newEntity instanceof ChunkLoaderEntity) {
+                ((ChunkLoaderEntity) newEntity).setLoadedChunks(((ChunkLoaderEntity) entity).getLoadedChunks());
+            }
+            if(!world.isClient() && newEntity instanceof BlockEntityClientSerializable)
+                ((BlockEntityClientSerializable) entity).sync();
             return true;
         }
         return false;

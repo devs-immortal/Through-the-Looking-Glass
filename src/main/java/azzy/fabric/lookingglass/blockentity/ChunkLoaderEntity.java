@@ -1,11 +1,20 @@
-package azzy.fabric.lookingglass.block.blockentity;
+package azzy.fabric.lookingglass.blockentity;
+
+import net.minecraft.util.math.ChunkPos;
+
+import java.util.Set;
 
 public interface ChunkLoaderEntity {
 
     void requestCheck();
 
-    enum UnloadAction{
-        NONE,
+    void setLoadedChunks(Set<ChunkPos> chunks);
+
+    Set<ChunkPos> getLoadedChunks();
+
+    enum LoadAction {
+        LOAD,
+        REFRESH,
         FORCEUNLOAD,
         BREAKUNLOAD
     }

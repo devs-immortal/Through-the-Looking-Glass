@@ -68,10 +68,12 @@ public class ChunkAnchorBlock extends Block implements BlockEntityProvider {
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (!world.isClient() && this.hasBlockEntity() && !state.isOf(newState.getBlock())) {
+        if (!world.isClient() && !state.isOf(newState.getBlock())) {
             ChunkAnchorEntity loaderEntity = (ChunkAnchorEntity) world.getBlockEntity(pos);
-            loaderEntity.recalcChunks(16, (ServerWorld) world, ChunkLoaderEntity.UnloadAction.BREAKUNLOAD);
-            ItemScatterer.spawn(world, pos, loaderEntity);
+            if(loaderEntity != null) {
+                loaderEntity.recalcChunks(16, (ServerWorld) world, ChunkLoaderEntity.LoadAction.BREAKUNLOAD);
+                ItemScatterer.spawn(world, pos, loaderEntity);
+            }
         }
         super.onStateReplaced(state, world, pos, newState, moved);
     }

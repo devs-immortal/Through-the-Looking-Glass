@@ -11,6 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class BlockTesseractBlock extends AbstractTesseractBlock {
 
     public BlockTesseractBlock(Settings settings) {
@@ -29,10 +31,6 @@ public class BlockTesseractBlock extends AbstractTesseractBlock {
     boolean setData(World world, BlockPos pos, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BlockEntity entity = world.getBlockEntity(pos);
-        CompoundTag tag = stack.getTag();
-        if(stack.getItem() instanceof DataShardItem && tag != null && tag.contains("pos")) {
-            return ((BlockTesseractEntity) entity).setTarget(BlockPos.fromLong(tag.getLong("pos")));
-        }
-        return false;
+        return ((BlockTesseractEntity) entity).setTarget((Optional<Long>) DataShardItem.getData(stack, DataShardItem.DataType.POS));
     }
 }

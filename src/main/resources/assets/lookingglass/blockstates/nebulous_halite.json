@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "lookingglass:block/nebulous_halite",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "lookingglass:block/nebulous_halite"
+    },
+    "axis=z": {
+      "model": "lookingglass:block/nebulous_halite",
+      "x": 90
+    }
+  }
+}

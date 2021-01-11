@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.text.LiteralText;
@@ -47,14 +48,14 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
             if(world.isClient()) {
                 String label = "";
                 switch(entity.displayState){
-                    case(0): label = "Image"; break;
-                    case(1): label = "Item"; break;
-                    case(2): label = "Sign"; break;
-                    case(3): label = "Video (TBD)"; break;
-                    case(4): label = "Player (TBD)"; break;
+                    case(0): label = I18n.translate("label.lookingglass.glass.image_switch", label); break;
+                    case(1): label = I18n.translate("label.lookingglass.glass.item_switch", label); break;
+                    case(2): label = I18n.translate("label.lookingglass.glass.sign_switch");; break;
+                    case(3): label = I18n.translate("label.lookingglass.glass.mob_switch");; break;
+                    case(4): label = I18n.translate("label.lookingglass.glass.player_switch"); break;
                 }
 
-                MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText("§aSwitched mode to: "+label), null);
+                MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText(label), null);
             }
         }
         return ActionResult.SUCCESS;

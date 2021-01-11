@@ -1,6 +1,5 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.client;
 
-import io.netty.util.concurrent.SingleThreadEventExecutor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.AbstractTexture;
@@ -12,17 +11,14 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
 import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class RenderCache {
 
-    private static HashMap<String, CompletableFuture<AbstractTexture>> futureCache;
+    private static HashMap<String, MirrorFuture<AbstractTexture>> futureCache;
     private static volatile HashMap<String, BakedRenderLayer> bakedLayerCache;
     private static final ExecutorService bakedLayerManager = Executors.newSingleThreadExecutor();
 
@@ -32,13 +28,18 @@ public class RenderCache {
     }
 
     public static Optional<CompletableFuture<AbstractTexture>> getFuture(String url){
-        if(futureCache.containsKey(url))
-            return Optional.of(futureCache.get(url));
+        if(futureCache.containsKey(url)){
+            MirrorFuture<AbstractTexture> future = futureCache.get(url);
+            if(future.future.isDone() && !future.complete) {
+                future.complete = true;
+            }
+            return Optional.of(future.future);
+        }
         return Optional.empty();
     }
 
     public static void putFuture(String url, CompletableFuture<AbstractTexture> future){
-        futureCache.put(url, future);
+        futureCache.put(url, new MirrorFuture<>(future));
     }
 
     static private Identifier generateId() {
@@ -91,7 +92,7 @@ public class RenderCache {
             this.id = id;
             this.texture = texture;
             MinecraftClient.getInstance().getTextureManager().registerTexture(id, texture);
-            this.renderLayer = RenderCrimes.getTransNoDiff(id);
+            this.renderLayer = TTLGRenderLayers.getTransNoDiff(id);
         }
 
         public Identifier getId() {
@@ -119,6 +120,14 @@ public class RenderCache {
         public void close() {
             ((TexManRegEdit) MinecraftClient.getInstance().getTextureManager()).unregisterTexture(id);
             texture.close();
+        }
+    }
+
+    static class MirrorFuture<T> extends CompletableFuture<T> {
+        boolean complete;
+        CompletableFuture<T> future;
+        MirrorFuture(CompletableFuture<T> future) {
+            this.future = future;
         }
     }
 }

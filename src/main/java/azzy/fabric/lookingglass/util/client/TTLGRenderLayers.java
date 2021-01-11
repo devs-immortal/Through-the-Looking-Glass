@@ -12,11 +12,11 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
 @Environment(EnvType.CLIENT)
-public abstract class RenderCrimes extends RenderLayer{
+public abstract class TTLGRenderLayers extends RenderLayer{
     private static final String CURSED_RENDERLAYER = "lookingglass/trans_no_difflight_";
 
 
-    private RenderCrimes() {
+    private TTLGRenderLayers() {
         super("ae", VertexFormats.POSITION, 0, 0, false, true, null, null);
     }
 

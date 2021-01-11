@@ -1,32 +1,47 @@
-package azzy.fabric.lookingglass.block.blockentity;
+package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
+import com.mojang.authlib.GameProfile;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.OtherClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
+import java.util.UUID;
 
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
 
 
-public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder {
+public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
 
     public int displayState;
     public double rotY, rotX, rotZ, disY, disX, disZ, scale;
     public String sign, url, color;
     public DefaultedList<ItemStack> inventory;
+    public PlayerEntity player;
 
     public ProjectorEntity() {
         super(PROJECTORENTITY);
@@ -39,9 +54,22 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         scale = 1;
     }
 
-    //@Override
-    //public void tick() {
-    //}
+    @Override
+    public void tick() {
+        if(displayState == 4 && !world.isClient()) {
+            ItemStack stack = inventory.get(0);
+            if(stack.getOrCreateTag().contains("data")) {
+                CompoundTag tag = stack.getSubTag("data");
+                if(tag.contains("uuid")) {
+                    UUID id = tag.getUuid("uuid");
+                    if(player == null || !player.getUuid().equals(id)) {
+                        player = ((ServerWorld) world).getServer().getPlayerManager().getPlayer(id);
+                    }
+                }
+            }
+            sync();
+        }
+    }
 
     @Override
     public void sync() {
@@ -107,6 +135,10 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         compoundTag.putInt("state", displayState);
         compoundTag.putString("sign", sign);
         compoundTag.putString("image", url);
+        if(player != null && displayState == 4 && inventory.get(0).getOrCreateTag().contains("data") && inventory.get(0).getSubTag("data").contains("uuid")) {
+            compoundTag.putUuid("uuid", inventory.get(0).getSubTag("data").getUuid("uuid"));
+            compoundTag.put("player", player.toTag(new CompoundTag()));
+        }
         return compoundTag;
     }
 
@@ -130,6 +162,28 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         displayState = compoundTag.getInt("state");
         sign = compoundTag.getString("sign");
         url = compoundTag.getString("image");
+        if(displayState == 4) {
+            //try {
+            //    Field field = Unsafe.class.getDeclaredField("theUnsafe");
+            //    field.setAccessible(true);
+            //    Unsafe unsafe = (Unsafe) field.get(null);
+            //    player = (PlayerEntity) unsafe.allocateInstance(ClientPlayerEntity.class);
+            //} catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
+            //    e.printStackTrace();
+            //}
+            //MinecraftClient.getInstance().getCurrentServerEntry().playerListSummary.forEach(a -> LookingGlassCommon.FFLog.error(a.asString()));
+            if(compoundTag.contains("uuid")) {
+                if(player == null || !player.getUuid().equals(compoundTag.getUuid("uuid"))) {
+                    player = new OtherClientPlayerEntity((ClientWorld) world, new GameProfile(compoundTag.getUuid("uuid"), ""));
+                }
+                if(!player.isAlive() || !player.getUuid().equals(MinecraftClient.getInstance().player.getUuid())) {
+                    player.fromTag((CompoundTag) compoundTag.get("player"));
+                    player.yaw = 0;
+                    player.pitch = 0;
+                    player.refreshPositionAndAngles(player.getBlockPos(), 0, 0);
+                }
+            }
+        }
     }
 
     private final ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {

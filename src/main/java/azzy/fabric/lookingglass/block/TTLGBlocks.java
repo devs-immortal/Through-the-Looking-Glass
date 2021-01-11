@@ -1,10 +1,7 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.blockentity.BlockTesseractEntity;
-import azzy.fabric.lookingglass.blockentity.ChunkAnchorEntity;
-import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
-import azzy.fabric.lookingglass.blockentity.WormholeEntity;
+import azzy.fabric.lookingglass.blockentity.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -72,11 +69,11 @@ public class TTLGBlocks {
     public static final Block TRUE_GROWTH_CORE_1 = registerBlock("growth_core_6", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 9, 4, 2), advancedMachineItem().fireproof());
     public static final Block TRUE_GROWTH_CORE_2 = registerBlock("growth_core_7", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 13, 5, 4), trueMachineItem());
     public static final Block ANNULATION_CORE_0 = registerBlock("annulation_core_0", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS), 1, false, DamageSource.MAGIC), basicMachineItem());
-    public static final Block ANNULATION_CORE_1A = registerBlock("annulation_core_1a", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS), 2, true, DamageSource.OUT_OF_WORLD), advancedMachineItem());
-    public static final Block ANNULATION_CORE_1B = registerBlock("annulation_core_1b", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS), 10, false, DamageSource.MAGIC), midtierMachineItem());
+    public static final Block ANNULATION_CORE_1A = registerBlock("annulation_core_1a", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.GILDED_BLACKSTONE), 2, true, DamageSource.OUT_OF_WORLD), advancedMachineItem());
     public static final Block ANNULATION_CORE_2B = registerBlock("annulation_core_2b", new SpecialAnnullationCoreBlock(eldenMachine()), trueMachineItem());
 
     //Misc
+    public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().lightLevel(9).postProcess((a, b, c) -> true).strength(25, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_ITEMS));
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicMachineItem().fireproof().rarity(NULL_RARITY));
 
     //  BLOCK ENTITIES
@@ -84,12 +81,13 @@ public class TTLGBlocks {
     public static final BlockEntityType<ProjectorEntity> PROJECTORENTITY = registerEntity("projector_entity", ProjectorEntity::new, PROJECTORBLOCK);
     public static final BlockEntityType<ChunkAnchorEntity> CHUNKLOADER_ENTITY = registerEntity("chunkloader_entity", ChunkAnchorEntity::new, CHUNKLOADERBLOCK);
     public static final BlockEntityType<WormholeEntity> WORMHOLE_ENTITY = registerEntity("wormhole_entity", WormholeEntity::new, WORMHOLEBLOCK);
+    public static final BlockEntityType<SpecialAnnulationCoreEntity> SPECIAL_ANNULATION_CORE_ENTITY = registerEntity("special_annulation_core_entity", SpecialAnnulationCoreEntity::new, ANNULATION_CORE_2B);
 
     //Tesseracts
     public static final BlockEntityType<BlockTesseractEntity> BLOCK_TESSERACT_ENTITY = registerEntity("block_tesseract", BlockTesseractEntity::new, BLOCK_TESSERACT_BLOCK);
 
 
-    private static Block registerBlock(String name, Block item, Item.Settings settings){
+    public static Block registerBlock(String name, Block item, Item.Settings settings){
         Block block = Registry.register(Registry.BLOCK, new Identifier(MODID, name), item);
         Registry.register(Registry.ITEM, new Identifier(MODID, name), new BlockItem(block, settings));
         return block;

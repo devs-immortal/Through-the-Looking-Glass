@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "textures": {
-    "layer0": "lookingglass:item/data_shard"
+    "layer0": "lookingglass:item/steelhead_trout"
   }
 }

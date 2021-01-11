@@ -1,29 +1,24 @@
 package azzy.fabric.lookingglass.effects;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.UUID;
 
-public class FalsePlayerDamageSource extends EntityDamageSource {
+public class ErasureDamageSource extends EntityDamageSource {
 
-    private static PlayerEntity fakePlayer = null;
     private final boolean bypass, unblockable, outOfWorld;
 
-    static {
-        try {
-            fakePlayer = (PlayerEntity) PlayerEntity.class.getConstructors()[0].newInstance(null, BlockPos.ORIGIN, 0F, null);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public FalsePlayerDamageSource(String name, boolean bypass, boolean unblockable, boolean outOfWorld) {
-        super(name, fakePlayer);
+    public ErasureDamageSource(String name, LivingEntity source, boolean bypass, boolean unblockable, boolean outOfWorld) {
+        super(name, source);
         this.bypass = bypass;
         this.unblockable = unblockable;
         this.outOfWorld = outOfWorld;

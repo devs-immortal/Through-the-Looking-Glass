@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.block.blockentity;
+package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.AnnulationCoreBlock;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
@@ -13,6 +13,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class BlockTesseractEntity extends BlockEntity implements TesseractRenderable {
 
@@ -66,10 +68,13 @@ public class BlockTesseractEntity extends BlockEntity implements TesseractRender
         return false;
     }
 
-    public boolean setTarget(BlockPos pos) {
-        if(pos != this.pos && World.isInBuildLimit(pos)) {
-            receiver = pos;
-            return true;
+    public boolean setTarget(Optional<Long> encodedPos) {
+        if(encodedPos.isPresent() && encodedPos.get() != 0L) {
+            BlockPos pos = BlockPos.fromLong(encodedPos.get());
+            if(pos != this.pos && World.isInBuildLimit(pos)) {
+                receiver = pos;
+                return true;
+            }
         }
         return false;
     }

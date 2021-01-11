@@ -1,2 +1,4 @@
-package azzy.fabric.lookingglass.feature;public class TTLGFeatures {
+package azzy.fabric.lookingglass.feature;
+
+public class TTLGFeatures {
 }

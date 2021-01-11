@@ -68,20 +68,20 @@ public class ProjectorGUI extends SyncedGuiDescription {
 
         root.add(scale, 21, 160, 125, 40);
 
-
         switch(state){
-            case(0): label = "Image"; break;
-            case(1): label = "Item"; break;
-            case(2): label = "Sign"; break;
-            case(3): label = "Video (TBD)"; break;
-            case(4): label = "Player (TBD)"; break;
+            case(0): label = I18n.translate("label.lookingglass.glass.image", label); break;
+            case(1): label = I18n.translate("label.lookingglass.glass.item", label); break;
+            case(2): label = I18n.translate("label.lookingglass.glass.sign");; break;
+            case(3): label = I18n.translate("label.lookingglass.glass.mob");; break;
+            case(4): label = I18n.translate("label.lookingglass.glass.player"); break;
         }
-        if(state == 1)
+
+        if(state == 1 || state >= 3)
             root.add(new WItemSlot(blockInventory, 0, 1, 1, true), 70, 27);
 
 
         if(world.isClient) {
-            WDynamicLabel stateLabel = new WDynamicLabel(() -> I18n.translate("label.lookingglass.mode", label));
+            WDynamicLabel stateLabel = new WDynamicLabel(() -> label);
             stateLabel.setSize(100, 20);
             stateLabel.setAlignment(HorizontalAlignment.CENTER);
 
@@ -94,10 +94,10 @@ public class ProjectorGUI extends SyncedGuiDescription {
             }
 
             if(state == 2){
-                sign.setSuggestion("Message");
+                sign.setSuggestion(I18n.translate("label.lookingglass.glass.signsug"));
                 sign.setSize(160, 5);
                 sign.setText(delegate.getString(0));
-                color.setSuggestion("Hex color");
+                color.setSuggestion(I18n.translate("label.lookingglass.glass.colorsug"));
                 root.add(sign, 2, 23, 160, 5);
                 root.add(color, 53, 150, 60, 5);
             }

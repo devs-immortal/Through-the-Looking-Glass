@@ -1,5 +1,6 @@
-package azzy.fabric.lookingglass.block.blockentity;
+package azzy.fabric.lookingglass.blockentity;
 
+import azzy.fabric.lookingglass.item.DataShardItem;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -77,9 +78,9 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     }
 
     public boolean tryAssign(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        if(tag.contains("pos")){
-            out = BlockPos.fromLong(tag.getLong("pos"));
+        Optional<Long> pos = (Optional<Long>) DataShardItem.getData(stack, DataShardItem.DataType.POS);
+        if(pos.isPresent() && pos.get() != 0){
+            out = BlockPos.fromLong(pos.get());
             markDirty();
             return true;
         }

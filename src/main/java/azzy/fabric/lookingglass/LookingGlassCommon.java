@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass;
 
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
+import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
 import azzy.fabric.lookingglass.gui.ProjectorGUI;
 import azzy.fabric.lookingglass.item.TTLGItems;
 import azzy.fabric.lookingglass.util.EnumHelper;
@@ -50,6 +51,8 @@ public class LookingGlassCommon implements ModInitializer {
 
 		TTLGBlocks.init();
 		TTLGItems.init();
+		TTLGConfiguredFeatures.init();
+		TTLGConfiguredFeatures.Registrar.init();
 
 		ServerSidePacketRegistry.INSTANCE.register(STRING_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
 

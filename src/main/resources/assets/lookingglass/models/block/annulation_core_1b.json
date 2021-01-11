@@ -1,6 +1,6 @@
 {
   "parent": "lookingglass:base/core_all",
   "textures": {
-    "bases": "lookingglass:block/interminal_core_1b"
+    "all": "lookingglass:block/annulation_core_1b"
   }
 }

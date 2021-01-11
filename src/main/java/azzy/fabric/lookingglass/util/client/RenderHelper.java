@@ -1,2 +1,4 @@
-package azzy.fabric.lookingglass.util.client;public class RenderHelper {
+package azzy.fabric.lookingglass.util.client;
+
+public class RenderHelper {
 }

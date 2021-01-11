@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.blockentity.WormholeEntity;
-import azzy.fabric.lookingglass.util.RenderCrimes;
+import azzy.fabric.lookingglass.util.client.TTLGRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -37,9 +37,9 @@ public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {
             matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((world.getTime() * 7 - offset + tickDelta)));
             matrices.scale(scale, scale, scale);
 
-            renderCuboid(matrices, vertexConsumers.getBuffer(RenderCrimes.getPortalLayer(EndPortalBlockEntityRenderer.PORTAL_TEXTURE, 1)), 255, 255, 255, alpha);
+            renderCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(EndPortalBlockEntityRenderer.PORTAL_TEXTURE, 1)), 255, 255, 255, alpha);
             matrices.scale(1.001F, 1.001F, 1.001F);
-            renderCuboid(matrices, vertexConsumers.getBuffer(RenderCrimes.getPortalLayer(new Identifier("textures/environment/clouds.png"), 1)), 100, 180, 200, (41 - a) / 2);
+            renderCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(new Identifier("textures/environment/clouds.png"), 1)), 100, 180, 200, (41 - a) / 2);
             matrices.pop();
         }
     }

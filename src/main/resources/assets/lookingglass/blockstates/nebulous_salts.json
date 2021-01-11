@@ -1,50 +1,21 @@
 {
   "variants": {
-    "powered=false,facing=down": {
-      "model": "lookingglass:block/block_inductor",
-      "x": 90
-    },
-    "powered=false,facing=east": {
-      "model": "lookingglass:block/block_inductor",
-      "y": 90
-    },
-    "powered=false,facing=north": {
-      "model": "lookingglass:block/block_inductor"
-    },
-    "powered=false,facing=south": {
-      "model": "lookingglass:block/block_inductor",
-      "y": 180
-    },
-    "powered=false,facing=up": {
-      "model": "lookingglass:block/block_inductor",
-      "x": 270
-    },
-    "powered=false,facing=west": {
-      "model": "lookingglass:block/block_inductor",
-      "y": 270
-    },
-    "powered=true,facing=down": {
-      "model": "lookingglass:block/block_inductor_on",
-      "x": 90
-    },
-    "powered=true,facing=east": {
-      "model": "lookingglass:block/block_inductor_on",
-      "y": 90
-    },
-    "powered=true,facing=north": {
-      "model": "lookingglass:block/block_inductor_on"
-    },
-    "powered=true,facing=south": {
-      "model": "lookingglass:block/block_inductor_on",
-      "y": 180
-    },
-    "powered=true,facing=up": {
-      "model": "lookingglass:block/block_inductor_on",
-      "x": 270
-    },
-    "powered=true,facing=west": {
-      "model": "lookingglass:block/block_inductor_on",
-      "y": 270
-    }
+    "": [
+      {
+        "model": "lookingglass:block/nebulous_salts",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/nebulous_salts"
+      },
+      {
+        "model": "lookingglass:block/nebulous_salts",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/nebulous_salts",
+        "y": 270
+      }
+    ]
   }
 }

@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
-import azzy.fabric.lookingglass.util.FunkedUpTextureManager;
+import azzy.fabric.lookingglass.util.client.TexManRegEdit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.texture.AbstractTexture;
@@ -16,7 +16,7 @@ import java.util.Set;
 
 
 @Mixin(TextureManager.class)
-public abstract class TextureUnregister implements FunkedUpTextureManager {
+public abstract class TextureUnregister implements TexManRegEdit {
 
     @Shadow
     @Final
