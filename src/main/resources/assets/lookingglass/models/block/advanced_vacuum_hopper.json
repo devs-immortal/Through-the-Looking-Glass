@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/indented_gem_block",
+  "textures": {
+    "all": "lookingglass:block/vacuum_hopper"
+  }
+}

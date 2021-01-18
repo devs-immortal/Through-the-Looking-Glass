@@ -1,0 +1,13 @@
+
+{
+  "map": [
+    {
+      "predicate": {
+        "materialPredicate": {
+          "renderLayerName": "lookingglass:ff_portal_layer"
+        }
+      },
+      "material": "canvas:emissive_transform"
+    }
+  ]
+}
