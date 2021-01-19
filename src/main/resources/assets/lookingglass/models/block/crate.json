@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lookingglass:block/nebulous_halite_top",
+    "side": "lookingglass:block/nebulous_halite_side"
+  }
+}
