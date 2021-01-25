@@ -1,0 +1,4 @@
+{
+  "parent": "lookingglass:base/base_pipe_core",
+  "all": "lookingglass:block/silicon_pipe_core"
+}

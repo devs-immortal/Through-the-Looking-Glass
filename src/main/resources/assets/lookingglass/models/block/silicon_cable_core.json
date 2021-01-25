@@ -1,0 +1,4 @@
+{
+  "parent": "lookingglass:base/base_pipe_arm",
+  "all": "lookingglass:block/silicon_pipe_arm"
+}
