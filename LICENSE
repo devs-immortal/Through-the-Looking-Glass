@@ -1,20 +1,25 @@
-FPC (Fabric Project Commons) License
+FPC (Fabric Project Commons) License V2
 
 Copyright (c) 2021 Daniel Ferrer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software, including the rights to use, copy, modify, merge, publish, 
-distribute, sublicense, and/or sell copies of the Software as long as it
+and/or distribute copies of the Software as long as it
 does not fall within the following restrictions:
 
--   You may not port this software to any non-Fabric modloaders.
--   You may not use any proprietary textures or models for software 
+-   You may not port this software to any non-Fabric modloaders
+   unless the Software's primary development has stopped for a period 
+   greater than 15 months.
+-   You may not use any proprietary textures or models for Software 
    not meant for the Fabric modloader.
 -   You may not use this software to attack, disturb, or otherwise damage
    the Fabric community and modloader.
 -   These restrictions must be applied to any works that use or otherwise
-   reference the Software's uncompiled code or assets.
+   reference the Software's uncompiled code, or assets.
+
+Furthermore, sublicensing is allowed as long as the used license also
+contains the afforementioned restrictions.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
