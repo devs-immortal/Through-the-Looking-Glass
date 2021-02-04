@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.blockentity;
+package azzy.fabric.lookingglass.render;
 
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Triple;
@@ -10,5 +10,5 @@ public interface TesseractRenderable {
 
     ItemStack getCoreItem();
 
-    Triple<Float, Float, Float> getColor();
+    Triple<Integer, Integer, Integer> getColor();
 }

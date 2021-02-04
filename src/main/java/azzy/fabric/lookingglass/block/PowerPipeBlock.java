@@ -5,14 +5,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class EnergyPipeBlock extends PipeBlock {
+public abstract class PowerPipeBlock extends PipeBlock {
 
-    public EnergyPipeBlock(Settings settings) {
+    public PowerPipeBlock(Settings settings) {
         super(settings, true);
-    }
-
-    @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new PowerPipeEntity();
     }
 }

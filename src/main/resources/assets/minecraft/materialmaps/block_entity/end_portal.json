@@ -1,13 +1,3 @@
-
 {
-  "map": [
-    {
-      "predicate": {
-        "materialPredicate": {
-          "renderLayerName": "lookingglass:back_bloom"
-        }
-      },
-      "material": "canvas:emissive_transform"
-    }
-  ]
+  "material": "canvas:emissive_transform"
 }

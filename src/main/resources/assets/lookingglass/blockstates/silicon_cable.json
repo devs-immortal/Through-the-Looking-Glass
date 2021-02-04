@@ -5,7 +5,7 @@
         "center": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_core"
+        "model": "lookingglass:block/silicon_cable_core"
       }
     },
     {
@@ -14,7 +14,7 @@
         "facing": "north"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight"
+        "model": "lookingglass:block/silicon_cable_straight"
       }
     },
     {
@@ -23,7 +23,7 @@
         "facing": "south"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight",
+        "model": "lookingglass:block/silicon_cable_straight",
         "y": 180
       }
     },
@@ -33,8 +33,8 @@
         "facing": "east"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight",
-        "y": 90
+        "model": "lookingglass:block/silicon_cable_straight",
+        "y": 270
       }
     },
     {
@@ -43,8 +43,8 @@
         "facing": "west"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight",
-        "y": 270
+        "model": "lookingglass:block/silicon_cable_straight",
+        "y": 90
       }
     },
     {
@@ -53,8 +53,8 @@
         "facing": "up"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight",
-        "x": -90
+        "model": "lookingglass:block/silicon_cable_straight",
+        "x": 90
       }
     },
     {
@@ -63,8 +63,8 @@
         "facing": "down"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_straight",
-        "x": 90
+        "model": "lookingglass:block/silicon_cable_straight",
+        "x": -90
       }
     },
     {
@@ -72,7 +72,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm"
+        "model": "lookingglass:block/silicon_cable_arm"
       }
     },
     {
@@ -80,7 +80,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm",
+        "model": "lookingglass:block/silicon_cable_arm",
         "y": 90
       }
     },
@@ -89,8 +89,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm",
-        "y": 180
+        "model": "lookingglass:block/silicon_cable_arm_inverse"
       }
     },
     {
@@ -98,8 +97,8 @@
         "west": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm",
-        "y": 270
+        "model": "lookingglass:block/silicon_cable_arm_inverse",
+        "y": 90
       }
     },
     {
@@ -107,7 +106,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm",
+        "model": "lookingglass:block/silicon_cable_arm",
         "x": -90
       }
     },
@@ -116,8 +115,8 @@
         "down": "true"
       },
       "apply": {
-        "model": "lookingglass:block/silicon_pipe_arm",
-        "x": 90
+        "model": "lookingglass:block/silicon_cable_arm_inverse",
+        "x": -90
       }
     }
   ]

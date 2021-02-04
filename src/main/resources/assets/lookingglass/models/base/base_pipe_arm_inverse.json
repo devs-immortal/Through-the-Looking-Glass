@@ -1,19 +1,19 @@
 {
 	"credit": "Made by Azazelthedemonlord",
 	"textures": {
-		"1": "#all"
+		"particle": "#all"
 	},
 	"elements": [
 		{
 			"from": [6, 6, 11],
 			"to": [10, 10, 16],
 			"faces": {
-				"north": {"uv": [5, 5, 1, 9], "texture": "#1", "cullface": "north"},
-				"east": {"uv": [16, 0, 11, 4], "texture": "#1"},
-				"south": {"uv": [1, 5, 5, 9], "texture": "#1", "cullface": "north"},
-				"west": {"uv": [11, 0, 16, 4], "texture": "#1"},
-				"up": {"uv": [11, 0, 16, 4], "rotation": 90, "texture": "#1"},
-				"down": {"uv": [11, 0, 16, 4], "rotation": 270, "texture": "#1"}
+				"north": {"uv": [5, 5, 1, 9], "texture": "#all", "cullface": "north"},
+				"east": {"uv": [16, 0, 11, 4], "texture": "#all"},
+				"south": {"uv": [1, 5, 5, 9], "texture": "#all", "cullface": "north"},
+				"west": {"uv": [11, 0, 16, 4], "texture": "#all"},
+				"up": {"uv": [11, 0, 16, 4], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [11, 0, 16, 4], "rotation": 270, "texture": "#all"}
 			}
 		}
 	]

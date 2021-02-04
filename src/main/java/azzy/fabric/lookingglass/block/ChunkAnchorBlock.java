@@ -22,12 +22,12 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class ChunkAnchorBlock extends Block implements BlockEntityProvider {
+public class ChunkAnchorBlock extends LookingGlassBlock implements BlockEntityProvider {
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
 
     public ChunkAnchorBlock(Settings settings) {
-        super(settings);
+        super(settings, true);
     }
 
     @Override
@@ -72,7 +72,6 @@ public class ChunkAnchorBlock extends Block implements BlockEntityProvider {
             ChunkAnchorEntity loaderEntity = (ChunkAnchorEntity) world.getBlockEntity(pos);
             if(loaderEntity != null) {
                 loaderEntity.recalcChunks(16, (ServerWorld) world, ChunkLoaderEntity.LoadAction.BREAKUNLOAD);
-                ItemScatterer.spawn(world, pos, loaderEntity);
             }
         }
         super.onStateReplaced(state, world, pos, newState, moved);
@@ -80,11 +79,6 @@ public class ChunkAnchorBlock extends Block implements BlockEntityProvider {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
 

@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/base_pipe_core",
+  "textures": {
+    "all": "lookingglass:block/guilded_cable"
+  }
+}

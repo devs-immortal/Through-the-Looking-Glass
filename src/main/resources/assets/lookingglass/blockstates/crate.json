@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "lookingglass:block/fish_breeder"
+      "model": "lookingglass:block/crate"
     }
   }
 }

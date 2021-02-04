@@ -11,18 +11,19 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public abstract class AbstractTesseractBlock extends Block implements BlockEntityProvider {
+public abstract class AbstractTesseractBlock extends LookingGlassBlock implements BlockEntityProvider {
 
     private final Supplier<BlockEntity> blockEntity;
 
     public AbstractTesseractBlock(Supplier<BlockEntity> blockEntity, Settings settings) {
-        super(settings);
+        super(settings, true);
         this.blockEntity = blockEntity;
     }
 
@@ -35,6 +36,11 @@ public abstract class AbstractTesseractBlock extends Block implements BlockEntit
         if(setData(world, pos, player, hand))
             return ActionResult.SUCCESS;
         return super.onUse(state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
+        return super.getCullingShape(state, world, pos);
     }
 
     @Override

@@ -2,12 +2,15 @@ package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.*;
+import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
+import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
+import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
+import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,7 +20,9 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.*;
@@ -28,6 +33,7 @@ public class TTLGBlocks {
     private static FabricItemSettings basicMachineItem() {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS);
     }
+
     private static FabricItemSettings midtierMachineItem() {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.UNCOMMON);
     }
@@ -38,25 +44,57 @@ public class TTLGBlocks {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.EPIC).fireproof();
     }
 
+    private static FabricBlockSettings woodenMachine(int miningLevel) {
+        return FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES, miningLevel).requiresTool().strength(2f);
+    }
+
+    private static FabricBlockSettings stoneMachine() {
+        return FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.STONE).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(3.25f, 12f);
+    }
+
+    private static FabricBlockSettings hardenedMachine() {
+        return FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.ANCIENT_DEBRIS).breakByTool(FabricToolTags.PICKAXES, 3).requiresTool().strength(4f, 20f);
+    }
+
     private static FabricBlockSettings paleMachine() {
         return FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES, 1).strength(1f, 8f);
     }
-    private static FabricBlockSettings stoneMachine() {
-        return FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.STONE).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(2.25f, 12f);
-    }
     private static FabricBlockSettings eldenMachine() {
-        return FabricBlockSettings.of(Material.STRUCTURE_VOID).sounds(ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(5f, 800f);
+        return FabricBlockSettings.of(Material.STRUCTURE_VOID).sounds(ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
     }
-
-    public static void init() {}
 
     //  BLOCKS
     //Machines
     public static final Block PROJECTORBLOCK = registerBlock("projector", new ProjectorBlock(paleMachine().luminance(ignored -> 7)), basicMachineItem());
     public static final Block CHUNKLOADERBLOCK = registerBlock("chunkloader", new ChunkAnchorBlock(paleMachine().luminance(ignored -> 7)), basicMachineItem());
     public static final Block WORMHOLEBLOCK = registerBlock("wormhole", new WormholeBlock(paleMachine().luminance(ignored -> 5)), basicMachineItem());
-    public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(paleMachine()), basicMachineItem());
+    public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(stoneMachine(), 20, 4, 9), basicMachineItem());
+    public static final Block ADVANCED_VACUUM_HOPPER_BLOCK = registerBlock("advanced_vacuum_hopper", new VacuumHopperBlock(hardenedMachine(), 5, 7, 27), advancedMachineItem());
+    public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), trueMachineItem());
     public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(stoneMachine().nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicMachineItem());
+
+    //Power
+    public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), trueMachineItem());
+    public static final Block SILICON_CABLE_BLOCK = registerBlock("silicon_cable", new SiliconCableBlock(stoneMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), basicMachineItem());
+    public static final Block GUILDED_CABLE_BLOCK = registerBlock("guilded_cable", new GuildedCableBlock(stoneMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), midtierMachineItem());
+    public static final Block ENCHANTED_CABLE_BLOCK = registerBlock("enchanted_cable", new EnchantedCableBlock(hardenedMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), advancedMachineItem());
+    public static final Block NULL_CABLE_BLOCK = registerBlock("null_cable", new NullCableBlock(eldenMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), trueMachineItem());
+
+    //Devices
+    public static final Block FISH_BREEDER_BLOCK = registerBlock("fish_breeder", new FishBreederBlock(woodenMachine(1).nonOpaque().ticksRandomly()), basicMachineItem());
+    public static final Block CRATE_BLOCK = registerBlock("crate", new CrateBlock(woodenMachine(1)), basicMachineItem());
+
+    //Decorative
+    public static final Block BRICK_WALL_BLOCK = registerGeneratedBlock("brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.BRICKS)), null, new Identifier("block/bricks"), basicMachineItem(), SingletType.WALL) ;
+    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicMachineItem());
+    public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), midtierMachineItem());
+    public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE), basicMachineItem());
+    public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE), basicMachineItem());
+    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).materialColor(MaterialColor.WHITE)), null, null, basicMachineItem(), SingletType.BLOCK);
+    public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem());
+    public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem());
+    public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicMachineItem());
+    public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicMachineItem());
 
     //Cores
     public static final Block INTERMINAL_CORE = registerBlock("interminal_core", new InterminalCoreBlock(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN)), basicMachineItem().fireproof());
@@ -73,8 +111,10 @@ public class TTLGBlocks {
     public static final Block ANNULATION_CORE_2B = registerBlock("annulation_core_2b", new SpecialAnnullationCoreBlock(eldenMachine()), trueMachineItem());
 
     //Misc
-    public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().lightLevel(9).postProcess((a, b, c) -> true).strength(25, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_ITEMS));
+    public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
+    public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicMachineItem().fireproof().rarity(NULL_RARITY));
+    public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicMachineItem());
 
     //  BLOCK ENTITIES
     //Machines
@@ -82,18 +122,123 @@ public class TTLGBlocks {
     public static final BlockEntityType<ChunkAnchorEntity> CHUNKLOADER_ENTITY = registerEntity("chunkloader_entity", ChunkAnchorEntity::new, CHUNKLOADERBLOCK);
     public static final BlockEntityType<WormholeEntity> WORMHOLE_ENTITY = registerEntity("wormhole_entity", WormholeEntity::new, WORMHOLEBLOCK);
     public static final BlockEntityType<SpecialAnnulationCoreEntity> SPECIAL_ANNULATION_CORE_ENTITY = registerEntity("special_annulation_core_entity", SpecialAnnulationCoreEntity::new, ANNULATION_CORE_2B);
+    public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.VACUUM_HOPPER_ENTITY, 9, 20, 4), VACUUM_HOPPER_BLOCK);
+    public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
+
+    //Power
+    public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);
+    public static final BlockEntityType<SiliconCableEntity> SILICON_CABLE_ENTITY = registerEntity("silicon_cable_entity", SiliconCableEntity::new, SILICON_CABLE_BLOCK);
+    public static final BlockEntityType<GuildedCableEntity> GUILDED_CABLE_ENTITY = registerEntity("guilded_cable_entity", GuildedCableEntity::new, GUILDED_CABLE_BLOCK);
+    public static final BlockEntityType<EnchantedCableEntity> ENCHANTED_CABLE_ENTITY = registerEntity("enchanted_cable_entity", EnchantedCableEntity::new, ENCHANTED_CABLE_BLOCK);
+    public static final BlockEntityType<NullCableEntity> NULL_CABLE_ENTITY = registerEntity("null_cable_entity", NullCableEntity::new, NULL_CABLE_BLOCK);
+
+    //Devices
+    public static final BlockEntityType<FishBreederEntity> FISH_BREEDER_ENTITY = registerEntity("fish_breeder_entity", FishBreederEntity::new, FISH_BREEDER_BLOCK);
+    public static final BlockEntityType<CrateEntity> CRATE_ENTITY = registerEntity("crate_entity", CrateEntity::new, CRATE_BLOCK);
 
     //Tesseracts
     public static final BlockEntityType<BlockTesseractEntity> BLOCK_TESSERACT_ENTITY = registerEntity("block_tesseract", BlockTesseractEntity::new, BLOCK_TESSERACT_BLOCK);
 
+    public static void init() {
+        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {
+            if(!((PowerPipeEntity) blockEntity).powered())
+                return (EnergyIo) blockEntity;
+            return null;
+        }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
-    public static Block registerBlock(String name, Block item, Item.Settings settings){
-        Block block = Registry.register(Registry.BLOCK, new Identifier(MODID, name), item);
-        Registry.register(Registry.ITEM, new Identifier(MODID, name), new BlockItem(block, settings));
+        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity, CREATIVE_ENERGY_SOURCE_ENTITY);
+    }
+
+    public static Block registerBlock(String name, Block item, Item.Settings settings) {
+        Identifier id =  new Identifier(MODID, name);
+        Block block = Registry.register(Registry.BLOCK, id, item);
+        Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
         return block;
+    }
+
+    public static Block registerGeneratedBlock(String name, Block item, @Nullable Identifier parent, @Nullable Identifier texture, Item.Settings settings, SingletType type) {
+        Identifier id =  new Identifier(MODID, name);
+        Block block = Registry.register(Registry.BLOCK, id, item);
+        Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
+
+        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            Identifier texId = texture == null ? new Identifier(MODID, "block/" + name) : texture;
+
+            switch (type) {
+                case BLOCK:
+                    BSJsonGen.genBlockBS(METADATA, id, "block/");
+                    ModelJsonGen.genBlockJson(METADATA, texId, new Identifier(MODID, name), "");
+                    break;
+                case SLAB:
+                    BSJsonGen.genSlabBS(METADATA, id, Objects.requireNonNull(parent),"block/");
+                    ModelJsonGen.genSlabJsons(METADATA, texId, new Identifier(MODID, name), "");
+                    break;
+                case STAIRS:
+                    BSJsonGen.genStairsBS(METADATA, id, "block/");
+                    ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
+                    break;
+                case PILLAR:
+                    //BSJsonGen.genStairsBS(METADATA, id, "block/");
+                    //ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
+                    break;
+                case WALL:
+                    BSJsonGen.genWallBS(METADATA, id, "block/");
+                    ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, name), "");
+                    break;
+                case FENCE:
+                    break;
+                default:
+            }
+        }
+
+        return block;
+    }
+
+    public static Block[] registerBuildingBlocks(String baseName, FabricBlockSettings blockSettings, Item.Settings itemSettings) {
+
+        Block parent = registerBlock(baseName, new Block(blockSettings), itemSettings);
+
+        Block[] blocks = new Block[]{
+                parent,
+                registerBlock(baseName + "_slab", new SlabBlock(blockSettings), itemSettings),
+                registerBlock(baseName + "_stairs", new AltStairsBlock(parent, blockSettings), itemSettings),
+                registerBlock(baseName + "_wall", new WallBlock(blockSettings), itemSettings)
+        };
+
+        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            Identifier texId = new Identifier(MODID, "block/" + baseName);
+            Identifier parentId = new Identifier(MODID, baseName);
+
+            BSJsonGen.genBlockBS(METADATA, parentId, "block/");
+            BSJsonGen.genSlabBS(METADATA, new Identifier(MODID, baseName + "_slab"), parentId, "block/");
+            BSJsonGen.genStairsBS(METADATA, new Identifier(MODID, baseName + "_stairs"), "block/");
+            BSJsonGen.genWallBS(METADATA, new Identifier(MODID, baseName + "_wall"), "block/");
+            ModelJsonGen.genBlockJson(METADATA, texId, new Identifier(MODID, baseName), "");
+            ModelJsonGen.genSlabJsons(METADATA, texId, new Identifier(MODID, baseName + "_slab"), "");
+            ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, baseName + "_stairs"), "");
+            ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, baseName + "_wall"), "");
+        }
+
+        return blocks;
     }
 
     private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, Supplier<T> item, Block block){
         return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, name), BlockEntityType.Builder.create(item, block).build(null));
+    }
+
+    enum SingletType {
+        BLOCK,
+        SLAB,
+        STAIRS,
+        PILLAR,
+        WALL,
+        FENCE,
+        NONE
+    }
+
+    private enum WallType {
+        WALL,
+        FENCE,
+        NONE
     }
 }

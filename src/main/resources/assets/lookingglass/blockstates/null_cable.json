@@ -1,0 +1,123 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "center": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_core"
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight"
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "up"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "facing": "down"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_straight",
+        "x": -90
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm_inverse"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm_inverse",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm",
+        "x": -90
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/null_cable_arm_inverse",
+        "x": -90
+      }
+    }
+  ]
+}

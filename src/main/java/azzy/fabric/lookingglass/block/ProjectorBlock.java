@@ -25,12 +25,12 @@ import net.minecraft.world.World;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
-public class ProjectorBlock extends Block implements BlockEntityProvider {
+public class ProjectorBlock extends LookingGlassBlock implements BlockEntityProvider {
 
     private final VoxelShape shape = VoxelShapes.cuboid(0, 0, 0, 1, 0.375, 1);
 
     public ProjectorBlock(Settings settings) {
-        super(settings);
+        super(settings, true);
     }
 
     @Override
@@ -69,18 +69,6 @@ public class ProjectorBlock extends Block implements BlockEntityProvider {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return shape;
-    }
-
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity != null) {
-                ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
-                world.updateComparators(pos, this);
-            }
-            super.onStateReplaced(state, world, pos, newState, moved);
-        }
     }
 
     @Override

@@ -118,10 +118,10 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
                 matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180F));
                 matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180F));
                 matrices.translate(0, -1, 0);
-                consumer.vertex(matrix.getModel(), 0, 1, 0).color(255, 255, 255, 255).texture(0, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-                consumer.vertex(matrix.getModel(), 0, 0, 0).color(255, 255, 255, 255).texture(0, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-                consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
-                consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+                consumer.vertex(matrix.getModel(), 0, 1, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+                consumer.vertex(matrix.getModel(), 0, 0, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+                consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(0, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
+                consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(0, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
 
                 matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-180F));
             }

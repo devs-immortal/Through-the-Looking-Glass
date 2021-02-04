@@ -20,10 +20,10 @@ import net.minecraft.world.World;
 
 import static azzy.fabric.lookingglass.item.TTLGItems.DATA_SHARD;
 
-public class WormholeBlock extends Block implements BlockEntityProvider {
+public class WormholeBlock extends LookingGlassBlock implements BlockEntityProvider {
 
     public WormholeBlock(Settings settings) {
-        super(settings);
+        super(settings, true);
     }
 
     @Override

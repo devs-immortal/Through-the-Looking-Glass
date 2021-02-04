@@ -58,6 +58,17 @@ public interface InventoryWrapper extends Inventory {
     default ItemStack getStack(int slot) {
         return getItems().get(slot);
     }
+
+    default int getItemSlot(ItemStack stack) {
+        DefaultedList<ItemStack> inv = getItems();
+        for (int i = 0; i < inv.size(); i++) {
+            ItemStack item = inv.get(i);
+            if(item.getMaxCount() > item.getCount() && item.isItemEqual(stack)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     /**
      * Takes a stack of the size from the slot.
      * <p>(default implementation) If there are less items in the slot than what are requested,

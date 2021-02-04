@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "lookingglass:block/soulsand_bricks_slab"
+    },
+    "type=double": {
+      "model": "lookingglass:block/soulsand_bricks"
+    },
+    "type=top": {
+      "model": "lookingglass:block/soulsand_bricks_slab_top"
+    }
+  }
+}

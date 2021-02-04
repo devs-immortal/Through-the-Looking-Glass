@@ -1,4 +1,6 @@
 {
-  "parent": "lookingglass:base/base_pipe_arm",
-  "all": "lookingglass:block/silicon_pipe_arm"
+  "parent": "lookingglass:base/base_pipe_core",
+  "textures": {
+    "all": "lookingglass:block/silicon_cable"
+  }
 }

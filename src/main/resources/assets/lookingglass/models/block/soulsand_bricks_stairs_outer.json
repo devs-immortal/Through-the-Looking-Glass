@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "lookingglass:block/soulsand_bricks",
+    "top": "lookingglass:block/soulsand_bricks",
+    "side": "lookingglass:block/soulsand_bricks"
+  }
+}

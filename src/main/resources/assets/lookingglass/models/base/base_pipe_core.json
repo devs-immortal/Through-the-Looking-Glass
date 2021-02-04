@@ -1,7 +1,6 @@
 {
 	"credit": "Made by Azazelthedemonlord",
 	"textures": {
-		"0": "#all",
 		"particle": "#all"
 	},
 	"elements": [
@@ -10,12 +9,12 @@
 			"to": [11, 11, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 14, 8]},
 			"faces": {
-				"north": {"uv": [9, 5, 15, 11], "texture": "#0"},
-				"east": {"uv": [9, 5, 15, 11], "texture": "#0"},
-				"south": {"uv": [9, 5, 15, 11], "texture": "#0"},
-				"west": {"uv": [9, 5, 15, 11], "texture": "#0"},
-				"up": {"uv": [9, 5, 15, 11], "texture": "#0"},
-				"down": {"uv": [9, 5, 15, 11], "texture": "#0"}
+				"north": {"uv": [9, 5, 15, 11], "texture": "#all"},
+				"east": {"uv": [9, 5, 15, 11], "texture": "#all"},
+				"south": {"uv": [9, 5, 15, 11], "texture": "#all"},
+				"west": {"uv": [9, 5, 15, 11], "texture": "#all"},
+				"up": {"uv": [9, 5, 15, 11], "texture": "#all"},
+				"down": {"uv": [9, 5, 15, 11], "texture": "#all"}
 			}
 		}
 	]

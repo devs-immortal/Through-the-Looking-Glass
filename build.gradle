@@ -29,6 +29,21 @@ repositories {
 		url = "https://dl.bintray.com/ladysnake/libs"
 	}
 	maven { url 'https://maven.blamejared.com' }
+	maven {
+		name = "Technici4n"
+		url = "https://raw.githubusercontent.com/Technici4n/Technici4n-maven/master/"
+		content {
+			includeGroup "net.fabricmc.fabric-api" // until fabric-api-lookup-api-v1 is merged
+			includeGroup "dev.technici4n"
+		}
+	}
+	maven {
+		url = 'https://raw.githubusercontent.com/Devan-Kerman/Devan-Repo/master/'
+	}
+	maven {
+		name = "BuildCraft"
+		url = "https://mod-buildcraft.com/maven"
+	}
 	jcenter()
 }
 
@@ -48,11 +63,13 @@ dependencies {
 	modImplementation( include(group: "net.fabricmc", name: "fabric-language-kotlin", version: "1.4.0+build.1"))
 	modImplementation( include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"))
 	modImplementation( include( "vazkii.patchouli:Patchouli:${project.patchouli_version}"))
+	modImplementation(include(group: 'net.devtech', name: 'arrp', version: '0.3.5'))
+	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
 	modRuntime "me.shedaniel:RoughlyEnoughItems:5.6.2"
 
 
 	modImplementation "io.github.prospector:modmenu:1.14.6+build.31"
-	modCompile "grondag:canvas-mc116:1.0.+"
+	//modCompile "grondag:canvas-mc116:1.0.+"
 
 }
 

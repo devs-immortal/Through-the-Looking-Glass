@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "lookingglass:block/sand_bricks",
+    "top": "lookingglass:block/sand_bricks",
+    "side": "lookingglass:block/sand_bricks"
+  }
+}

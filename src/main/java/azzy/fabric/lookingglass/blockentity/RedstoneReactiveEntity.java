@@ -1,2 +1,6 @@
-package azzy.fabric.lookingglass.blockentity;public interface RedstoneReactiveEntity {
+package azzy.fabric.lookingglass.blockentity;
+
+public interface RedstoneReactiveEntity {
+
+    boolean powered();
 }

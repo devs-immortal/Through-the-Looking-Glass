@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.util.BlockEntityMover;
+import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;

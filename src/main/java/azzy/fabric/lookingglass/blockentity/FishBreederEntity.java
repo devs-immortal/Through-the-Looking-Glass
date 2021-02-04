@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public class FishBreederBlockEntity extends LookingGlassBE {
+public class FishBreederEntity extends LookingGlassBE {
 
-    public FishBreederBlockEntity() {
+    public FishBreederEntity() {
         super(TTLGBlocks.FISH_BREEDER_ENTITY, 1);
     }
 

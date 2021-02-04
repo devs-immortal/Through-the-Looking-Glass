@@ -18,7 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class ProjectorGUI extends SyncedGuiDescription {
+public class ProjectorGuiDescription extends SyncedGuiDescription {
 
     private final WPlainPanel root = new WPlainPanel();
     private final ExtendedPropertyDelegate delegate;
@@ -36,7 +36,7 @@ public class ProjectorGUI extends SyncedGuiDescription {
     private final int state;
     private String label;
 
-    public ProjectorGUI(ScreenHandlerType recipeType, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
+    public ProjectorGuiDescription(ScreenHandlerType recipeType, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(recipeType, syncId, playerInventory, getBlockInventory(context), getBlockPropertyDelegate(context));
         delegate = (ExtendedPropertyDelegate) getPropertyDelegate();
         state = delegate.get(0);

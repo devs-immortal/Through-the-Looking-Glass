@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "variation=0": {
+      "model": "lookingglass:block/herringbone_oak_0"
+    },
+    "variation=1": {
+      "model": "lookingglass:block/herringbone_oak_1"
+    },
+    "variation=2": {
+      "model": "lookingglass:block/herringbone_oak_2"
+    }
+  }
+}

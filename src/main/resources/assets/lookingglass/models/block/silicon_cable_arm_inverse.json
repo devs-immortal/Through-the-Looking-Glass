@@ -1,5 +1,5 @@
 {
-  "parent": "lookingglass:base/base_pipe_arm",
+  "parent": "lookingglass:base/base_pipe_arm_inverse",
   "textures": {
     "all": "lookingglass:block/silicon_cable"
   }

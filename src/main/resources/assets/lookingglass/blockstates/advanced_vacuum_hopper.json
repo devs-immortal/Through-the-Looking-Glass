@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "lookingglass:block/vacuum_hopper"
+      "model": "lookingglass:block/advanced_vacuum_hopper"
     }
   }
 }

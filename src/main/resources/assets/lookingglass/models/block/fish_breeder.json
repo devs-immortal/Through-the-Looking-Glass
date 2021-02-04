@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "lookingglass:block/eldenmetal_block"
+    "all": "lookingglass:block/fish_breeder"
   }
 }

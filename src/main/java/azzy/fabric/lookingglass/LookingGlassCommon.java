@@ -4,17 +4,24 @@ package azzy.fabric.lookingglass;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
-import azzy.fabric.lookingglass.gui.ProjectorGUI;
+import azzy.fabric.lookingglass.gui.CrateGuiDescription;
+import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
+import azzy.fabric.lookingglass.gui.ProjectorGuiDescription;
 import azzy.fabric.lookingglass.item.TTLGItems;
 import azzy.fabric.lookingglass.util.EnumHelper;
+import azzy.fabric.lookingglass.util.datagen.Metadata;
+import net.devtech.arrp.api.RRPCallback;
+import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
@@ -27,18 +34,28 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.SplittableRandom;
+
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORBLOCK;
 
 public class LookingGlassCommon implements ModInitializer {
 	public static final String MODID = "lookingglass";
+
+	public static final Metadata METADATA = new Metadata(MODID);
 
 	public static final BlockSoundGroup ELDENMETAL = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundEvents.BLOCK_SHROOMLIGHT_PLACE, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundEvents.BLOCK_RESPAWN_ANCHOR_AMBIENT, SoundEvents.BLOCK_BEACON_DEACTIVATE);
 
 	public static final Rarity NULL_RARITY = EnumHelper.addRarity("null", Formatting.DARK_PURPLE);
 
 	public static final Logger FFLog = LogManager.getLogger(MODID);
+	public static final SplittableRandom RANDOM = new SplittableRandom();
 	public static final ItemGroup LOOKINGGLASS_BLOCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(PROJECTORBLOCK));
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(TTLGItems.DATA_SHARD));
+	public static final RuntimeResourcePack LOOKINGGLASS_RESOURCES = RuntimeResourcePack.create("lookingglass:resources");
 
 
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
@@ -53,6 +70,9 @@ public class LookingGlassCommon implements ModInitializer {
 		TTLGItems.init();
 		TTLGConfiguredFeatures.init();
 		TTLGConfiguredFeatures.Registrar.init();
+		LookingGlassGUIs.initCommon();
+
+		RRPCallback.EVENT.register(a -> a.add(LOOKINGGLASS_RESOURCES));
 
 		ServerSidePacketRegistry.INSTANCE.register(STRING_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
 
@@ -113,7 +133,8 @@ public class LookingGlassCommon implements ModInitializer {
 			});
 		})));
 
-		ContainerProviderRegistry.INSTANCE.registerFactory(new Identifier(MODID, "projector_gui"), (syncID, id, player, buf) -> new ProjectorGUI(ScreenHandlerType.ANVIL, syncID, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 
+
+		ContainerProviderRegistry.INSTANCE.registerFactory(new Identifier(MODID, "projector_gui"), (syncID, id, player, buf) -> new ProjectorGuiDescription(ScreenHandlerType.ANVIL, syncID, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos())));
 	}
 }

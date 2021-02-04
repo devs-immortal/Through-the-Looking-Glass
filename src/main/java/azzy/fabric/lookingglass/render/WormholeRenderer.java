@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.blockentity.WormholeEntity;
+import azzy.fabric.lookingglass.util.client.RenderHelper;
 import azzy.fabric.lookingglass.util.client.TTLGRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -37,45 +38,10 @@ public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {
             matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((world.getTime() * 7 - offset + tickDelta)));
             matrices.scale(scale, scale, scale);
 
-            renderCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(EndPortalBlockEntityRenderer.PORTAL_TEXTURE, 1)), 255, 255, 255, alpha);
+            RenderHelper.renderVCNCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(EndPortalBlockEntityRenderer.PORTAL_TEXTURE, 1)), 255, 255, 255, alpha);
             matrices.scale(1.001F, 1.001F, 1.001F);
-            renderCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(new Identifier("textures/environment/clouds.png"), 1)), 100, 180, 200, (41 - a) / 2);
+            RenderHelper.renderVCNCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(new Identifier("textures/environment/clouds.png"), 1)), 100, 180, 200, (41 - a) / 2);
             matrices.pop();
         }
-    }
-
-    private void renderCuboid(MatrixStack matrices, VertexConsumer consumer, int r, int g, int b, int a) {
-        MatrixStack.Entry matrix = matrices.peek();
-        matrices.translate(-0.5, -0.5, -0.5);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 0, 0).color(r, g, b, a).next();
-        matrices.translate(1, 0, 0);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, 1).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 0, 1).color(r, g, b, a).next();
-        matrices.translate(0, 0, 1);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), -1, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), -1, 0, 0).color(r, g, b, a).next();
-        matrices.translate(-1, 0, 0);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 1, -1).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 0, -1).color(r, g, b, a).next();
-        matrices.translate(0, 0, -1);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 0, 1).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 0, 1).color(r, g, b, a).next();
-        matrices.translate(0, 1, 1);
-        consumer.vertex(matrix.getModel(), 0, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 0, 0).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 1, 0, -1).color(r, g, b, a).next();
-        consumer.vertex(matrix.getModel(), 0, 0, -1).color(r, g, b, a).next();
-        matrices.translate(0.5, -0.5, -0.5);
     }
 }

@@ -41,7 +41,7 @@ public class TTLGConfiguredFeatures {
     }
 
     public static class Configs {
-        public static final RandomPatchFeatureConfig END_SALTS_CONFIG = new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(TTLGItems.NEBULOUS_SALTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).blacklist(ImmutableSet.of(TTLGItems.NEBULOUS_SALTS.getDefaultState())).spreadZ(128).spreadX(128).spreadY(16).tries(5000).build();
+        public static final RandomPatchFeatureConfig END_SALTS_CONFIG = new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(TTLGBlocks.NEBULOUS_SALTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).blacklist(ImmutableSet.of(TTLGBlocks.NEBULOUS_SALTS.getDefaultState())).spreadZ(128).spreadX(128).spreadY(16).tries(5000).build();
         public static final TreeFeatureConfig END_HALITE_CRYSTAL_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(TTLGBlocks.NEBULOUS_HALITE.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(0), UniformIntDistribution.of(0), 0), new LargeOakTrunkPlacer(5, 3, 7), new TwoLayersFeatureSize(3, 0, 0)).build();
 
         public static final RandomFeatureConfig END_SALT_FLATS_CONFIG = new RandomFeatureConfig(

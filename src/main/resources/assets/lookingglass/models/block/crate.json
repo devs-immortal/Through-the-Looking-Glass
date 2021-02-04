@@ -1,7 +1,8 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "end": "lookingglass:block/nebulous_halite_top",
-    "side": "lookingglass:block/nebulous_halite_side"
+    "top": "lookingglass:block/crate_top",
+    "bottom": "minecraft:block/stripped_oak_log_top",
+    "side": "lookingglass:block/crate_side"
   }
 }

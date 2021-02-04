@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "lookingglass:block/whitestone_bricks",
+    "top": "lookingglass:block/whitestone_bricks",
+    "side": "lookingglass:block/whitestone_bricks"
+  }
+}

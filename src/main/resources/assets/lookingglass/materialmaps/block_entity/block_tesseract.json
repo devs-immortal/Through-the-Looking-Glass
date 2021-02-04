@@ -4,7 +4,7 @@
     {
       "predicate": {
         "materialPredicate": {
-          "renderLayerName": "lookingglass:back_bloom"
+          "renderLayerName": "lookingglass:flat_bloom"
         }
       },
       "material": "canvas:emissive_transform"

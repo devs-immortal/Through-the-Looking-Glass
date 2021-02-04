@@ -1,0 +1,72 @@
+{
+  "variants": {
+    "eggs=1": [
+      {
+        "model": "lookingglass:block/salmon_egg"
+      },
+      {
+        "model": "lookingglass:block/salmon_egg",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/salmon_egg",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/salmon_egg",
+        "y": 270
+      }
+    ],
+    "eggs=2": [
+      {
+        "model": "lookingglass:block/two_salmon_eggs"
+      },
+      {
+        "model": "lookingglass:block/two_salmon_eggs",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/two_salmon_eggs",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/two_salmon_eggs",
+        "y": 270
+      }
+    ],
+    "eggs=3": [
+      {
+        "model": "lookingglass:block/three_salmon_eggs"
+      },
+      {
+        "model": "lookingglass:block/three_salmon_eggs",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/three_salmon_eggs",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/three_salmon_eggs",
+        "y": 270
+      }
+    ],
+    "eggs=4": [
+      {
+        "model": "lookingglass:block/four_salmon_eggs"
+      },
+      {
+        "model": "lookingglass:block/four_salmon_eggs",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/four_salmon_eggs",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/four_salmon_eggs",
+        "y": 270
+      }
+    ]
+  }
+}

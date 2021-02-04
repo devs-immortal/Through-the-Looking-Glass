@@ -1,6 +1,6 @@
 {
-  "parent": "lookingglass:base/core_all",
+  "parent": "lookingglass:base/indented_gem_block",
   "textures": {
-    "all": "lookingglass:block/growth_core_4"
+    "all": "lookingglass:block/vacuum_hopper"
   }
 }
