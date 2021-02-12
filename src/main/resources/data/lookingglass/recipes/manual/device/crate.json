@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "121",
+    "2#2",
+    "121"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:chest"
+    },
+    "1": {
+      "item": "minecraft:stick"
+    },
+    "2": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "lookingglass:fish_breeder"
+  }
+}

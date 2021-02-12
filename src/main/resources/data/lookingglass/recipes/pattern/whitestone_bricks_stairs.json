@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "lookingglass:whitestone_bricks"
+    }
+  },
+  "result": {
+    "item": "lookingglass:whitestone_bricks_stairs",
+    "count": 8
+  }
+}

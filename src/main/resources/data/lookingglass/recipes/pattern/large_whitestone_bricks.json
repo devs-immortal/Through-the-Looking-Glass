@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "lookingglass:whitestone_tile"
+    }
+  },
+  "result": {
+    "item": "lookingglass:large_whitestone_bricks",
+    "count": 4
+  }
+}

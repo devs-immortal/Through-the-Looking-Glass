@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "12",
+    "21"
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:sand"
+    },
+    "2": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:sand_bricks",
+    "count": 4
+  }
+}

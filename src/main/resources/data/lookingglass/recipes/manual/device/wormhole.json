@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    " 1 ",
+    "232"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_eye"
+    },
+    "1": {
+      "item": "minecraft:gold_ingot"
+    },
+    "2": {
+      "item": "minecraft:chiseled_quartz"
+    },
+    "3": {
+      "item": "minecraft:dark_prismarine"
+    }
+  },
+  "result": {
+    "item": "lookingglass:wormhole"
+  }
+}

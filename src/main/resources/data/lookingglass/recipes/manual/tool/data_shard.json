@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    " 1 ",
+    "232"
+  ],
+  "key": {
+    "#": {
+      "item": "lookingglass:data_shard"
+    },
+    "1": {
+      "item": "minecraft:quartz_slab"
+    },
+    "2": {
+      "item": "minecraft:quartz_stairs"
+    },
+    "3": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "lookingglass:chunkloader"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "lookingglass:soulsand_bricks"
+    }
+  },
+  "result": {
+    "item": "lookingglass:soulsand_bricks_stairs",
+    "count": 8
+  }
+}

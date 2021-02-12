@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "lookingglass:basalt_bricks"
+    }
+  },
+  "result": {
+    "item": "lookingglass:basalt_bricks_stairs",
+    "count": 8
+  }
+}

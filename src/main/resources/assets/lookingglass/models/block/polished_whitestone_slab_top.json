@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "lookingglass:block/polished_whitestone",
+    "top": "lookingglass:block/polished_whitestone",
+    "side": "lookingglass:block/polished_whitestone"
+  }
+}

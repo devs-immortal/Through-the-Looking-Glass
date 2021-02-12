@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "lookingglass:block/polished_whitestone_slab"
+    },
+    "type=double": {
+      "model": "lookingglass:block/polished_whitestone"
+    },
+    "type=top": {
+      "model": "lookingglass:block/polished_whitestone_slab_top"
+    }
+  }
+}
