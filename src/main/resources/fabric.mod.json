@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "lookingglass",
-  "version": "1.2.0",
+  "version": "2.0.0-alpha.1",
 
   "name": "Through the Looking Glass",
-  "description": "For all your furry shit!",
+  "description": "Not a mod about glass working",
   "authors": [
     "Azazelthedemonlord"
   ],
@@ -13,7 +13,7 @@
     "sources": ""
   },
 
-  "license": "FPC License 2.0",
+  "license": "MIT but please no forge thx",
   "icon": "assets/lookingglass/icon.png",
 
   "environment": "*",

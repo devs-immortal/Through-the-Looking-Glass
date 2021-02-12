@@ -6,14 +6,14 @@
   ],
   "key": {
     "1": {
-      "item": "minecraft:sand"
+      "item": "minecraft:brick"
     },
     "2": {
-      "item": "minecraft:sandstone"
+      "item": "minecraft:coarse_dirt"
     }
   },
   "result": {
-    "item": "lookingglass:sand_bricks",
+    "item": "lookingglass:adobe_bricks",
     "count": 4
   }
 }

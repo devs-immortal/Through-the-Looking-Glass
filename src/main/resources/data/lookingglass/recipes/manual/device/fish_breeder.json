@@ -1,25 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " # ",
-    " 1 ",
-    "232"
+    "121",
+    "2#2",
+    "121"
   ],
   "key": {
     "#": {
-      "item": "minecraft:nether_star"
+      "item": "minecraft:chest"
     },
     "1": {
-      "item": "minecraft:quartz_slab"
+      "item": "minecraft:stick"
     },
     "2": {
-      "item": "minecraft:quartz_stairs"
-    },
-    "3": {
-      "item": "minecraft:gold_block"
+      "item": "minecraft:string"
     }
   },
   "result": {
-    "item": "lookingglass:chunkloader"
+    "item": "lookingglass:fish_breeder"
   }
 }

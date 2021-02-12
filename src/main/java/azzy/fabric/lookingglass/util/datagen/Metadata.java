@@ -32,12 +32,41 @@ public class Metadata {
         return genResourceJson(name, "", type);
     }
 
+    public File genDataJson(String name, String path, DataType type) {
+        if(!path.isEmpty()) {
+            path = path + File.separator;
+        }
+        File file = new File(dataPath + File.separator + type.path + File.separator + path + name + ".json");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public File genDataJson(String name, DataType type) {
+        return genDataJson(name, "", type);
+    }
+
     enum ResourceType {
         BLOCKSTATE("blockstates"),
         ITEM_MODEL("models" + File.separator + "item"),
         BLOCK_MODEL("models" + File.separator + "block");
 
         ResourceType(String path) {
+            this.path = path;
+        }
+
+        public final String path;
+    }
+
+    enum DataType {
+        RECIPE("recipes"),
+        BLOCK_LOOT("loot_tables" + File.separator + "blocks"),
+        MOB_LOOT("loot_tables" + File.separator + "entities");
+
+        DataType(String path) {
             this.path = path;
         }
 

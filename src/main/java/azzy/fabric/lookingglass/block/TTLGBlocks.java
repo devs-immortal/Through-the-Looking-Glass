@@ -3,7 +3,9 @@ package azzy.fabric.lookingglass.block;
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
+import azzy.fabric.lookingglass.util.datagen.LootGen;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
+import azzy.fabric.lookingglass.util.datagen.RecipeJsonGen;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -16,6 +18,8 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -85,15 +89,16 @@ public class TTLGBlocks {
     public static final Block CRATE_BLOCK = registerBlock("crate", new CrateBlock(woodenMachine(1)), basicMachineItem());
 
     //Decorative
-    public static final Block BRICK_WALL_BLOCK = registerGeneratedBlock("brick_wall", new WallBlock(FabricBlockSettings.copyOf(Blocks.BRICKS)), null, new Identifier("block/bricks"), basicMachineItem(), SingletType.WALL) ;
-    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicMachineItem());
-    public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), midtierMachineItem());
-    public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE), basicMachineItem());
-    public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE), basicMachineItem());
-    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).materialColor(MaterialColor.WHITE)), null, null, basicMachineItem(), SingletType.BLOCK);
-    public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem());
-    public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem());
-    public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicMachineItem());
+    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicMachineItem(), Items.AIR, false);
+    public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), midtierMachineItem(), Items.GOLD_INGOT, false);
+    public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SAND), basicMachineItem(), Items.AIR, false);
+    public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SOUL_SAND), basicMachineItem(), Items.AIR, false);
+    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), null, null, basicMachineItem(), SingletType.BLOCK);
+    public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), Items.AIR, false);
+    public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicMachineItem(), SingletType.BLOCK);
+    public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHISTONE_POLISHED[0].asItem(), false);
+    public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHITESTONE_TILE.asItem(), false);
+    public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicMachineItem(), Items.POLISHED_BASALT, false);
     public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicMachineItem());
 
     //Cores
@@ -149,11 +154,19 @@ public class TTLGBlocks {
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity, CREATIVE_ENERGY_SOURCE_ENTITY);
     }
 
-    public static Block registerBlock(String name, Block item, Item.Settings settings) {
+    public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {
         Identifier id =  new Identifier(MODID, name);
         Block block = Registry.register(Registry.BLOCK, id, item);
         Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
+
+        if(genLoot && DEV_ENV && REGEN_LOOT)
+            LootGen.genSimpleBlockDropTable(METADATA, block);
+
         return block;
+    }
+
+    public static Block registerBlock(String name, Block item, Item.Settings settings) {
+        return registerBlock(name, item, settings, true);
     }
 
     public static Block registerGeneratedBlock(String name, Block item, @Nullable Identifier parent, @Nullable Identifier texture, Item.Settings settings, SingletType type) {
@@ -161,40 +174,45 @@ public class TTLGBlocks {
         Block block = Registry.register(Registry.BLOCK, id, item);
         Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
 
-        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            Identifier texId = texture == null ? new Identifier(MODID, "block/" + name) : texture;
+        if(DEV_ENV) {
+            if(REGEN_BLOCKS) {
+                Identifier texId = texture == null ? new Identifier(MODID, "block/" + name) : texture;
 
-            switch (type) {
-                case BLOCK:
-                    BSJsonGen.genBlockBS(METADATA, id, "block/");
-                    ModelJsonGen.genBlockJson(METADATA, texId, new Identifier(MODID, name), "");
-                    break;
-                case SLAB:
-                    BSJsonGen.genSlabBS(METADATA, id, Objects.requireNonNull(parent),"block/");
-                    ModelJsonGen.genSlabJsons(METADATA, texId, new Identifier(MODID, name), "");
-                    break;
-                case STAIRS:
-                    BSJsonGen.genStairsBS(METADATA, id, "block/");
-                    ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
-                    break;
-                case PILLAR:
-                    //BSJsonGen.genStairsBS(METADATA, id, "block/");
-                    //ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
-                    break;
-                case WALL:
-                    BSJsonGen.genWallBS(METADATA, id, "block/");
-                    ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, name), "");
-                    break;
-                case FENCE:
-                    break;
-                default:
+                switch (type) {
+                    case BLOCK:
+                        BSJsonGen.genBlockBS(METADATA, id, "block/");
+                        ModelJsonGen.genBlockJson(METADATA, texId, new Identifier(MODID, name), "");
+                        break;
+                    case SLAB:
+                        BSJsonGen.genSlabBS(METADATA, id, Objects.requireNonNull(parent),"block/");
+                        ModelJsonGen.genSlabJsons(METADATA, texId, new Identifier(MODID, name), "");
+                        break;
+                    case STAIRS:
+                        BSJsonGen.genStairsBS(METADATA, id, "block/");
+                        ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
+                        break;
+                    case PILLAR:
+                        //BSJsonGen.genStairsBS(METADATA, id, "block/");
+                        //ModelJsonGen.genStairJsons(METADATA, texId, new Identifier(MODID, name), "");
+                        break;
+                    case WALL:
+                        BSJsonGen.genWallBS(METADATA, id, "block/");
+                        ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, name), "");
+                        break;
+                    case FENCE:
+                        break;
+                    default:
+                }
+            }
+            if(REGEN_LOOT) {
+                LootGen.genSimpleBlockDropTable(METADATA, block);
             }
         }
 
         return block;
     }
 
-    public static Block[] registerBuildingBlocks(String baseName, FabricBlockSettings blockSettings, Item.Settings itemSettings) {
+    public static Block[] registerBuildingBlocks(String baseName, FabricBlockSettings blockSettings, Item.Settings itemSettings, Item baseIngredient, boolean nines) {
 
         Block parent = registerBlock(baseName, new Block(blockSettings), itemSettings);
 
@@ -205,7 +223,7 @@ public class TTLGBlocks {
                 registerBlock(baseName + "_wall", new WallBlock(blockSettings), itemSettings)
         };
 
-        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
+        if(DEV_ENV) {
             Identifier texId = new Identifier(MODID, "block/" + baseName);
             Identifier parentId = new Identifier(MODID, baseName);
 
@@ -219,7 +237,24 @@ public class TTLGBlocks {
             ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, baseName + "_wall"), "");
         }
 
+        if(baseIngredient != null && REGEN_RECIPES)
+            registerBuildingRecipes(baseName, blocks, baseIngredient, nines);
+
         return blocks;
+    }
+
+    public static void registerBuildingRecipes(String baseName, Block[] blocks, Item baseIngredient, boolean nines) {
+        if(baseIngredient != Items.AIR)  {
+            if(nines) {
+                RecipeJsonGen.gen3x3Recipe(METADATA, baseName, baseIngredient, blocks[0].asItem(), 9);
+            }
+            else {
+                RecipeJsonGen.gen2x2Recipe(METADATA, baseName, baseIngredient, blocks[0].asItem(), 4);
+            }
+        }
+        RecipeJsonGen.genSlabRecipe(METADATA, baseName + "_slabs", blocks[0].asItem(), blocks[1].asItem(), 6);
+        RecipeJsonGen.genStairsRecipe(METADATA, baseName + "_stairs", blocks[0].asItem(), blocks[2].asItem(), 8);
+        RecipeJsonGen.genWallRecipe(METADATA, baseName + "_walls", blocks[0].asItem(), blocks[3].asItem(), 6);
     }
 
     private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, Supplier<T> item, Block block){

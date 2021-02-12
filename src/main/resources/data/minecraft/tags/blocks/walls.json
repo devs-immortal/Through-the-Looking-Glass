@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "lookingglass:gold_bricks_wall",
+    "lookingglass:adobe_bricks_wall",
+    "lookingglass:sand_bricks_wall",
+    "lookingglass:soulsand_bricks_wall",
+    "lookingglass:polished_whitestone_wall",
+    "lookingglass:whitestone_bricks_wall",
+    "lookingglass:large_whitestone_bricks_wall",
+    "lookingglass:basalt_bricks_wall"
+  ]
+}

@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
@@ -29,10 +30,18 @@ import java.util.function.Predicate;
 
 public class TTLGConfiguredFeatures {
 
-    public static RegistryFeature<?, ?> NEBULOUS_SALT_FLATS;
+    public static Feature<SingleStateFeatureConfig> BOULDER_FEATURE;
+    public static RegistryFeature<?, ?> NEBULOUS_SALT_FLATS, WHITESTONE_BOULDERS;
 
     public static void init() {
+        BOULDER_FEATURE = register("boulder", new BoulderFeature(SingleStateFeatureConfig.CODEC));
+
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));
+        WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(TTLGBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(1));
+    }
+
+    private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
+        return Registry.register(Registry.FEATURE, new Identifier(LookingGlassCommon.MODID, name), feature);
     }
 
     private static <FC extends FeatureConfig> RegistryFeature<FC, ?> register(String id, ConfiguredFeature<FC, ?> configuredFeature) {
@@ -52,6 +61,7 @@ public class TTLGConfiguredFeatures {
     public static class Registrar {
         public static void init() {
             register(NEBULOUS_SALT_FLATS, BiomeSelectors.foundInTheEnd(), GenerationStep.Feature.VEGETAL_DECORATION);
+            register(WHITESTONE_BOULDERS, BiomeSelectors.categories(Biome.Category.BEACH), GenerationStep.Feature.SURFACE_STRUCTURES);
         }
 
         private static void register(RegistryFeature<?, ?> feature, Predicate<BiomeSelectionContext> selector, GenerationStep.Feature step) {

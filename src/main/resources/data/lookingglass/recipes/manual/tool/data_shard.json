@@ -1,25 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " # ",
-    " 1 ",
-    "232"
-  ],
-  "key": {
-    "#": {
-      "item": "lookingglass:data_shard"
+  "type": "minecraft:crafting_shapeless",
+  "group": "data_shard",
+  "ingredients": [
+    {
+      "item": "minecraft:glass"
     },
-    "1": {
-      "item": "minecraft:quartz_slab"
+    {
+      "item": "minecraft:redstone"
     },
-    "2": {
-      "item": "minecraft:quartz_stairs"
-    },
-    "3": {
-      "item": "minecraft:gold_block"
+    {
+      "item": "minecraft:phantom_membrane"
     }
-  },
+  ],
   "result": {
-    "item": "lookingglass:chunkloader"
+    "item": "lookingglass:data_shard"
   }
 }

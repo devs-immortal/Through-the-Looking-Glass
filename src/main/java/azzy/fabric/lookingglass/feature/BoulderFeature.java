@@ -12,9 +12,9 @@ import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 import java.util.Iterator;
 import java.util.Random;
 
-public class WhitestoneBoulderFeature extends Feature<SingleStateFeatureConfig> {
+public class BoulderFeature extends Feature<SingleStateFeatureConfig> {
 
-    public WhitestoneBoulderFeature(Codec<SingleStateFeatureConfig> configCodec) {
+    public BoulderFeature(Codec<SingleStateFeatureConfig> configCodec) {
         super(configCodec);
     }
 

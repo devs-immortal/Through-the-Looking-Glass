@@ -10,14 +10,14 @@ import azzy.fabric.lookingglass.gui.ProjectorGuiDescription;
 import azzy.fabric.lookingglass.item.TTLGItems;
 import azzy.fabric.lookingglass.util.EnumHelper;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
-import net.devtech.arrp.api.RRPCallback;
-import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.decoration.painting.PaintingMotive;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -30,6 +30,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,8 +56,9 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final SplittableRandom RANDOM = new SplittableRandom();
 	public static final ItemGroup LOOKINGGLASS_BLOCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(PROJECTORBLOCK));
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(TTLGItems.DATA_SHARD));
-	public static final RuntimeResourcePack LOOKINGGLASS_RESOURCES = RuntimeResourcePack.create("lookingglass:resources");
 
+	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
+	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = false, REGEN_BLOCKS = false, REGEN_LOOT = true;
 
 	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
 	public static final Identifier DOUBLES_TO_SERVER_PACKET = new Identifier(MODID, "doubletoserver");
@@ -66,13 +68,13 @@ public class LookingGlassCommon implements ModInitializer {
 	public void onInitialize() {
 		FFLog.info(LookingGlassInit.BLESSED_CONST);
 
+		//Registry.register(Registry.PAINTING_MOTIVE, new Identifier(MODID, "uwu"), new PaintingMotive(16, 16));
+
 		TTLGBlocks.init();
 		TTLGItems.init();
 		TTLGConfiguredFeatures.init();
 		TTLGConfiguredFeatures.Registrar.init();
 		LookingGlassGUIs.initCommon();
-
-		RRPCallback.EVENT.register(a -> a.add(LOOKINGGLASS_RESOURCES));
 
 		ServerSidePacketRegistry.INSTANCE.register(STRING_TO_SERVER_PACKET, ((packetContext, packetByteBuf) -> {
 
