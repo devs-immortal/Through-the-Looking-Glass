@@ -35,13 +35,12 @@ import java.util.UUID;
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
 
 
-public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, Tickable {
+public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder {
 
     public int displayState;
     public double rotY, rotX, rotZ, disY, disX, disZ, scale;
     public String sign, url, color;
     public DefaultedList<ItemStack> inventory;
-    public PlayerEntity player;
 
     public ProjectorEntity() {
         super(PROJECTORENTITY);
@@ -52,23 +51,6 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         color = "0xffffff";
         disY = 1;
         scale = 1;
-    }
-
-    @Override
-    public void tick() {
-        if(displayState == 4 && !world.isClient()) {
-            ItemStack stack = inventory.get(0);
-            if(stack.getOrCreateTag().contains("data")) {
-                CompoundTag tag = stack.getSubTag("data");
-                if(tag.contains("uuid")) {
-                    UUID id = tag.getUuid("uuid");
-                    if(player == null || !player.getUuid().equals(id)) {
-                        player = ((ServerWorld) world).getServer().getPlayerManager().getPlayer(id);
-                    }
-                }
-            }
-            sync();
-        }
     }
 
     @Override
@@ -135,10 +117,6 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         compoundTag.putInt("state", displayState);
         compoundTag.putString("sign", sign);
         compoundTag.putString("image", url);
-        if(player != null && displayState == 4 && inventory.get(0).getOrCreateTag().contains("data") && inventory.get(0).getSubTag("data").contains("uuid")) {
-            compoundTag.putUuid("uuid", inventory.get(0).getSubTag("data").getUuid("uuid"));
-            compoundTag.put("player", player.toTag(new CompoundTag()));
-        }
         return compoundTag;
     }
 
@@ -162,28 +140,6 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         displayState = compoundTag.getInt("state");
         sign = compoundTag.getString("sign");
         url = compoundTag.getString("image");
-        if(displayState == 4) {
-            //try {
-            //    Field field = Unsafe.class.getDeclaredField("theUnsafe");
-            //    field.setAccessible(true);
-            //    Unsafe unsafe = (Unsafe) field.get(null);
-            //    player = (PlayerEntity) unsafe.allocateInstance(ClientPlayerEntity.class);
-            //} catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
-            //    e.printStackTrace();
-            //}
-            //MinecraftClient.getInstance().getCurrentServerEntry().playerListSummary.forEach(a -> LookingGlassCommon.FFLog.error(a.asString()));
-            if(compoundTag.contains("uuid")) {
-                if(player == null || !player.getUuid().equals(compoundTag.getUuid("uuid"))) {
-                    player = new OtherClientPlayerEntity((ClientWorld) world, new GameProfile(compoundTag.getUuid("uuid"), ""));
-                }
-                if(!player.isAlive() || !player.getUuid().equals(MinecraftClient.getInstance().player.getUuid())) {
-                    player.fromTag((CompoundTag) compoundTag.get("player"));
-                    player.yaw = 0;
-                    player.pitch = 0;
-                    player.refreshPositionAndAngles(player.getBlockPos(), 0, 0);
-                }
-            }
-        }
     }
 
     private final ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {

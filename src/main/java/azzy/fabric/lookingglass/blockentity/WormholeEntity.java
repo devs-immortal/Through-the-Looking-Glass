@@ -37,6 +37,7 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
         world.playSound(null, pos, SoundEvents.BLOCK_SHROOMLIGHT_BREAK, SoundCategory.BLOCKS, 0.6f, 2f);
         world.playSound(null, out, SoundEvents.ENTITY_SHULKER_TELEPORT, SoundCategory.BLOCKS, 0.3f, 2f);
     };
+
     public WormholeEntity() {
         super(WORMHOLE_ENTITY);
     }

@@ -11,11 +11,15 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 import static azzy.fabric.lookingglass.block.TTLGBlocks.*;
@@ -54,5 +58,16 @@ public class LookingGlassClient implements ClientModInitializer {
         //        layerCleanLock = RenderCache.cleanLayerCache();
         //    }
         //});
+
+        ClientSidePacketRegistry.INSTANCE.register(BLOCKPOS_TO_CLIENT_PACKET, (((packetContext, packetByteBuf) -> {
+
+            BlockPos pos = packetByteBuf.readBlockPos();
+            int count = packetByteBuf.readInt();
+            World world = packetContext.getPlayer().getEntityWorld();
+
+            packetContext.getTaskQueue().execute(() -> {
+                BoneMealItem.createParticles(world, pos, count);
+            });
+        })));
     }
 }

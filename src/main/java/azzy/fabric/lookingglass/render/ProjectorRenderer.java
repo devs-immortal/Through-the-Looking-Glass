@@ -160,16 +160,8 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
                 renderer.render(entity, 0, 0, matrices, vertexConsumers, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE);
             }
         }
-        else if(blockEntity.displayState == 4){
-            if(item.getOrCreateTag().contains("data") && item.getSubTag("data").contains("uuid")) {
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
-                PlayerEntity player = blockEntity.player;
-                if(player != null) {
-                    EntityRenderer<Entity> renderer = (EntityRenderer<Entity>) MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(player);
-                    renderer.render(player, 0, 0, matrices, vertexConsumers, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE);
-                }
-            }
-        }
+        //else if(blockEntity.displayState == 4){
+        //}
         matrices.pop();
         renderLayer = null;
     }

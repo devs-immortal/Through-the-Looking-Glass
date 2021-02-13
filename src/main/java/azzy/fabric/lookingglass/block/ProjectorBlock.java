@@ -36,26 +36,30 @@ public class ProjectorBlock extends LookingGlassBlock implements BlockEntityProv
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ProjectorEntity entity = (ProjectorEntity) world.getBlockEntity(pos);
-        if(!world.isClient) {
-            if(!player.isInSneakingPose())
-            ContainerProviderRegistry.INSTANCE.openContainer(new Identifier(MODID, "projector_gui"), player, (packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
-        }
-        if(player.isInSneakingPose()){
-            if(entity.displayState < 4)
-                entity.displayState++;
-            else
-                entity.displayState = 0;
-            if(world.isClient()) {
-                String label = "";
-                switch(entity.displayState){
-                    case(0): label = I18n.translate("label.lookingglass.glass.image_switch", label); break;
-                    case(1): label = I18n.translate("label.lookingglass.glass.item_switch", label); break;
-                    case(2): label = I18n.translate("label.lookingglass.glass.sign_switch");; break;
-                    case(3): label = I18n.translate("label.lookingglass.glass.mob_switch");; break;
-                    case(4): label = I18n.translate("label.lookingglass.glass.player_switch"); break;
+        if(entity != null) {
+            if(!world.isClient) {
+                if(!player.isInSneakingPose()) {
+                    ContainerProviderRegistry.INSTANCE.openContainer(new Identifier(MODID, "projector_gui"), player, (packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
+                    entity.sync();
                 }
+            }
+            if(player.isInSneakingPose()){
+                if(entity.displayState < 4)
+                    entity.displayState++;
+                else
+                    entity.displayState = 0;
+                if(world.isClient()) {
+                    String label = "";
+                    switch(entity.displayState){
+                        case(0): label = I18n.translate("label.lookingglass.glass.image_switch", label); break;
+                        case(1): label = I18n.translate("label.lookingglass.glass.item_switch", label); break;
+                        case(2): label = I18n.translate("label.lookingglass.glass.sign_switch");; break;
+                        case(3): label = I18n.translate("label.lookingglass.glass.mob_switch");; break;
+                        case(4): label = I18n.translate("label.lookingglass.glass.player_switch"); break;
+                    }
 
-                MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText(label), null);
+                    MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText(label), null);
+                }
             }
         }
         return ActionResult.SUCCESS;
