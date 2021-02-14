@@ -11,10 +11,10 @@ public class LookingGlassEarlyRiser implements Runnable {
 	public void run() {
 		MappingResolver mappingResolver = FabricLoader.getInstance().getMappingResolver();
 		EnumAdder enumAdder = ClassTinkerers.enumBuilder(
-				mappingResolver.mapClassName("intermediary", "net.minecraft.class_1814"),
-				"L" + mappingResolver.mapClassName("intermediary", "net.minecraft.class_124") + ";"
+				mappingResolver.mapClassName("intermediary", "net.minecraft.class_1814"),           // Rarity
+				"L" + mappingResolver.mapClassName("intermediary", "net.minecraft.class_124") + ";" // Formatting
 		);
-		enumAdder.addEnum("NULL", () -> new Object[]{Formatting.DARK_PURPLE });
+		enumAdder.addEnum("NULL", () -> new Object[]{ Formatting.DARK_PURPLE });
 		enumAdder.build();
 	}
 }
