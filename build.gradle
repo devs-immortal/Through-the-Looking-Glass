@@ -66,6 +66,8 @@ dependencies {
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
 	modRuntime "me.shedaniel:RoughlyEnoughItems:5.9.173"
 
+	modImplementation("com.github.Chocohead:Fabric-ASM:v2.1")
+
 	//implementation 'com.github.TerraformersMC:ModMenu:v1.16.7'
 	//modCompile "grondag:canvas-mc116:1.0.+"
 
