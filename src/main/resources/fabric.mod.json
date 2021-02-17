@@ -23,6 +23,9 @@
     ],
     "client": [
       "azzy.fabric.lookingglass.LookingGlassClient"
+    ],
+    "mm:early_risers": [
+      "azzy.fabric.lookingglass.LookingGlassEarlyRiser"
     ]
   },
   "mixins": [

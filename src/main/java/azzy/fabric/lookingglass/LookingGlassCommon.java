@@ -7,22 +7,19 @@ import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.gui.ProjectorGuiDescription;
 import azzy.fabric.lookingglass.item.TTLGItems;
-import azzy.fabric.lookingglass.util.EnumAdder;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
+import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +38,7 @@ public class LookingGlassCommon implements ModInitializer {
 
 	public static final BlockSoundGroup ELDENMETAL = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundEvents.BLOCK_SHROOMLIGHT_PLACE, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundEvents.BLOCK_RESPAWN_ANCHOR_AMBIENT, SoundEvents.BLOCK_BEACON_DEACTIVATE);
 
-	public static final Rarity NULL_RARITY = EnumAdder.brute(Rarity.class, "null", 6, Formatting.DARK_PURPLE);
+	public static final Rarity NULL_RARITY = ClassTinkerers.getEnum(Rarity.class, "NULL");
 
 	public static final Logger FFLog = LogManager.getLogger(MODID);
 	public static final SplittableRandom RANDOM = new SplittableRandom();
