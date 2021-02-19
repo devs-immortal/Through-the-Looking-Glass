@@ -2,10 +2,10 @@ package azzy.fabric.lookingglass.util;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.LiteralText;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.BlockPos;
 
 public class ClientNetworkingUtils {
 
@@ -13,12 +13,22 @@ public class ClientNetworkingUtils {
 
         ClientPlayNetworking.registerGlobalReceiver(GeneralNetworking.TRANSLATEABLE_PACKET, ((minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
 
-            String translationKey = packetByteBuf.readString();
+            final String translationKey = packetByteBuf.readString();
 
             minecraftClient.execute(() -> {
                 Text text = new TranslatableText(translationKey);
                 MinecraftClient.getInstance().player.sendMessage(text, true);
             });
         }));
+
+        ClientPlayNetworking.registerGlobalReceiver(GeneralNetworking.BONEMEAL_PARTICLES, (((minecraftClient, clientPlayNetworkHandler, packetByteBuf, packetSender) -> {
+
+            final BlockPos pos = packetByteBuf.readBlockPos();
+            final int count = packetByteBuf.readInt();
+
+            minecraftClient.execute(() -> {
+                BoneMealItem.createParticles(minecraftClient.world, pos, count);
+            });
+        })));
     }
 }

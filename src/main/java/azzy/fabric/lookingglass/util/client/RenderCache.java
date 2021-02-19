@@ -49,8 +49,9 @@ public class RenderCache {
 
     public static BakedRenderLayer bakeRenderLayer(String url, NativeImageBackedTexture texture) {
         Identifier backingTextureId = generateId();
-        BakedRenderLayer bakedRenderLayer = new BakedRenderLayer(backingTextureId, texture);
-        bakedLayerCache.put(url, bakedRenderLayer);
+        BakedRenderLayer bakedRenderLayer = BakedRenderLayer.of(backingTextureId, texture);
+        if(bakedRenderLayer != null)
+            bakedLayerCache.put(url, bakedRenderLayer);
         return bakedRenderLayer;
     }
 
@@ -88,11 +89,18 @@ public class RenderCache {
         private final NativeImageBackedTexture texture;
         private long lastTickStamp;
 
-        public BakedRenderLayer(Identifier id, NativeImageBackedTexture texture) {
+        private BakedRenderLayer(Identifier id, NativeImageBackedTexture texture) {
             this.id = id;
             this.texture = texture;
             MinecraftClient.getInstance().getTextureManager().registerTexture(id, texture);
             this.renderLayer = TTLGRenderLayers.getTransNoDiff(id);
+        }
+
+        public static BakedRenderLayer of(Identifier id, NativeImageBackedTexture texture) {
+            if(id != null && texture != null) {
+                return new BakedRenderLayer(id, texture);
+            }
+            return null;
         }
 
         public Identifier getId() {

@@ -1,17 +1,16 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
 import dev.technici4n.fasttransferlib.api.Simulation;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.Direction;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyIo {
 
@@ -26,22 +25,23 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     @Override
     public void performTransfers(Set<EnergyIo> participants) {
-        EnergyIo[] io = participants.toArray(new EnergyIo[0]);
-        List<EnergyIo> ioList = Arrays.asList(io);
-        Collections.shuffle(Arrays.asList(io));
-        io = ioList.toArray(new EnergyIo[0]);
-        for (EnergyIo energyIo : io) {
-            boolean pipe = energyIo instanceof PowerPipeEntity;
-            if(power > 0 && energyIo.supportsInsertion()) {
-                if(!(pipe && energyIo.getEnergy() > power)) {
-                    double selfDrain = extract(transferRate, Simulation.SIMULATE);
-                    double cap = energyIo.insert(selfDrain, Simulation.SIMULATE);
-                    double transfer = selfDrain - cap;
-                    power -= transfer;
-                    energyIo.insert(transfer, Simulation.ACT);
+        List<PowerPipeEntity> cables = new ArrayList<>();
+        cables.add(this);
+        for (EnergyIo energyIo : participants.toArray(new EnergyIo[0])) {
+            if(energyIo instanceof PowerPipeEntity) {
+                if(((PowerPipeEntity) energyIo).getType() == getType()) {
+                    cables.add((PowerPipeEntity) energyIo);
                 }
+                continue;
             }
-            else if (!pipe && energyIo.getEnergy() > 0 && energyIo.supportsExtraction()) {
+            if(power > 0 && energyIo.supportsInsertion()) {
+                double selfDrain = extract(transferRate, Simulation.SIMULATE);
+                double cap = energyIo.insert(selfDrain, Simulation.SIMULATE);
+                double transfer = selfDrain - cap;
+                power -= transfer;
+                energyIo.insert(transfer, Simulation.ACT);
+            }
+            else if (energyIo.getEnergy() > 0 && energyIo.supportsExtraction()) {
                 double succ = energyIo.extract(transferRate, Simulation.SIMULATE);
                 double selfCap = insert(succ, Simulation.SIMULATE);
                 double transfer = succ - selfCap;
@@ -49,10 +49,46 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
                 energyIo.insert(transfer, Simulation.ACT);
             }
         }
+
+        //Taken from Techreborn's CableBlockEntity
+
+        if(cables.size() > 1) {
+            double totalPower = cables.stream().mapToDouble(EnergyIo::getEnergy).sum();
+            double distributedpower = totalPower / cables.size();
+
+            cables.forEach(cable -> cable.setEnergy(distributedpower));
+        }
+
         markDirty();
         if(!world.isClient()) {
             sync();
         }
+    }
+
+    public Set<PowerPipeEntity> getNeighbours() {
+        Set<PowerPipeEntity> neighbours = new HashSet<>();
+        neighbours.add(this);
+        for(Direction direction : Direction.values()) {
+            BlockEntity entity = world.getBlockEntity(pos.offset(direction));
+            if(entity != null && entity.getType() == getType())
+                ((PowerPipeEntity)entity).getNeighbours(neighbours);
+        }
+        return neighbours;
+    }
+
+    public void getNeighbours(Set<PowerPipeEntity> neighbours) {
+        neighbours.add(this);
+        Arrays.stream(Direction.values())
+                .map(direction -> world.getBlockEntity(pos.offset(direction)))
+                .filter(blockEntity -> blockEntity.getType() == getType())
+                .forEach(entity -> {
+                    if(!neighbours.contains(entity))
+                        ((PowerPipeEntity)entity).getNeighbours(neighbours);
+                });
+    }
+
+    private void setEnergy(double power) {
+        this.power = power;
     }
 
     @Override

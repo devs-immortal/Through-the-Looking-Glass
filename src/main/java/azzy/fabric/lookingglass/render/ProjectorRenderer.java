@@ -110,6 +110,12 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             }
 
             final RenderLayer cursedLayer = getRenderLayer(rawUrl, blockEntity.getWorld());
+
+            if(cursedLayer == null) {
+                matrices.pop();
+                return;
+            }
+
             VertexConsumer consumer = vertexConsumers.getBuffer(cursedLayer);
             MatrixStack.Entry matrix = matrices.peek();
 
@@ -206,7 +212,9 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
                 renderLayer = RenderCache.getBakedLayer(url).getRenderLayer();
             }
             else {
-                return RenderCache.bakeRenderLayer(url, texture).getRenderLayer();
+                RenderCache.BakedRenderLayer layer = RenderCache.bakeRenderLayer(url, texture);
+                if(layer != null)
+                    return layer.getRenderLayer();
             }
         }
         return renderLayer;

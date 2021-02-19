@@ -1,10 +1,12 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.util.GeneralNetworking;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
@@ -63,10 +65,7 @@ public class GrowthCoreBlock extends CoreBlock {
         PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
         byteBuf.writeBlockPos(pos);
         byteBuf.writeInt(count);
-        List<ServerPlayerEntity> players = world.getPlayers();
-        for (ServerPlayerEntity player : players) {
-            if(player.getBlockPos().isWithinDistance(pos, 64.0D))
-                ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, LookingGlassCommon.BLOCKPOS_TO_CLIENT_PACKET, byteBuf);
-        }
+        world.getPlayers(player -> world.isPlayerInRange(pos.getX(), pos.getY(), pos.getZ(), 64))
+                .forEach(player -> ServerPlayNetworking.send(player, GeneralNetworking.BONEMEAL_PARTICLES, byteBuf));
     }
 }

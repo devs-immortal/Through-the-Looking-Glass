@@ -56,16 +56,5 @@ public class LookingGlassClient implements ClientModInitializer {
         //        layerCleanLock = RenderCache.cleanLayerCache();
         //    }
         //});
-
-        ClientSidePacketRegistry.INSTANCE.register(BLOCKPOS_TO_CLIENT_PACKET, (((packetContext, packetByteBuf) -> {
-
-            BlockPos pos = packetByteBuf.readBlockPos();
-            int count = packetByteBuf.readInt();
-            World world = packetContext.getPlayer().getEntityWorld();
-
-            packetContext.getTaskQueue().execute(() -> {
-                BoneMealItem.createParticles(world, pos, count);
-            });
-        })));
     }
 }

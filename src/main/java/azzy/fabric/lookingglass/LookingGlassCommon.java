@@ -51,10 +51,6 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
 	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = false, REGEN_BLOCKS = false, REGEN_LOOT = false;
 
-	public static final Identifier STRING_TO_SERVER_PACKET = new Identifier(MODID, "stringtoserver");
-	public static final Identifier DOUBLES_TO_SERVER_PACKET = new Identifier(MODID, "doubletoserver");
-	public static final Identifier BLOCKPOS_TO_CLIENT_PACKET = new Identifier(MODID, "postoclient");
-
 	@Override
 	public void onInitialize() {
 		FFLog.info(LookingGlassInit.BLESSED_CONST);

@@ -12,8 +12,12 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class GeneralNetworking {
 
+    //BE Sync
+    public static final Identifier PROJECTOR_SYNC_PACKET = new Identifier(MODID, "p_projector_sync");
+
+    //Client actions
     public static final Identifier TRANSLATEABLE_PACKET = new Identifier(MODID, "p_translateable");
-    public static final Identifier PROJECTOR_SYNC_PACKET = new Identifier(MODID, "p_general");
+    public static final Identifier BONEMEAL_PARTICLES = new Identifier(MODID, "p_meal_particles");
 
     public static void init() {
         ServerPlayNetworking.registerGlobalReceiver(PROJECTOR_SYNC_PACKET, ((minecraftServer, serverPlayerEntity, serverPlayNetworkHandler, packet, packetSender) -> {
@@ -41,10 +45,10 @@ public class GeneralNetworking {
                     projector.disX = disX;
                     projector.disY = disY;
                     projector.disZ = disZ;
-                    projector.scale =scale;
+                    projector.scale = scale;
                     projector.url = url;
                     projector.sign = sign ;
-                    projector.color =color;
+                    projector.color = color;
                     projector.sync();
                 }
             });
