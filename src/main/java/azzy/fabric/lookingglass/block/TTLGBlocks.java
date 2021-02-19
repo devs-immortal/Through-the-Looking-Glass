@@ -19,6 +19,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -96,6 +97,7 @@ public class TTLGBlocks {
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicMachineItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHISTONE_POLISHED[0].asItem(), false);
     public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHITESTONE_TILE.asItem(), false);
+    public static final Block DWARVEN_STONE = registerGeneratedBlock("dwarven_stone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).resistance(500).materialColor(DyeColor.GRAY).sounds(BlockSoundGroup.NETHER_BRICKS)), null, null, basicMachineItem(), SingletType.BLOCK);
     public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicMachineItem(), Items.POLISHED_BASALT, false);
     public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicMachineItem());
 

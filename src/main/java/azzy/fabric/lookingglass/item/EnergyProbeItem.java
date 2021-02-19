@@ -9,6 +9,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class EnergyProbeItem extends Item {
 
     public EnergyProbeItem(Settings settings) {
@@ -20,8 +23,10 @@ public class EnergyProbeItem extends Item {
         World world = context.getWorld();
         EnergyIo io = EnergyApi.SIDED.get(world, context.getBlockPos(), context.getSide());
         if(io != null) {
-                if(!world.isClient())
-                    context.getPlayer().sendMessage(new LiteralText(io.getEnergy() + "Lu"), true);
+                if(!world.isClient()) {
+                    double energy = io.getEnergy();
+                    context.getPlayer().sendMessage(new LiteralText((Double.isFinite(energy) ? Math.ceil(energy) : energy) + " Lu"), true);
+                }
             return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);

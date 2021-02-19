@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.item;
 
+import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -38,12 +39,20 @@ public class TTLGItems {
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(Rarity.EPIC).fireproof().food(shimmerfin)));
 
     //Materials
+    public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(badNoms)));
+    public static final Item DWARVEN_CLAY = registerGeneratedItem("dwarven_clay", new Item(defaultSettings()));
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
-    public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(badNoms)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);
+    }
+
+    private static Item registerGeneratedItem(String name, Item item) {
+        Identifier id = new Identifier(MODID, name);
+        if(REGEN_ITEMS)
+            ModelJsonGen.genItemJson(METADATA, id);
+        return Registry.register(Registry.ITEM, id, item);
     }
 }

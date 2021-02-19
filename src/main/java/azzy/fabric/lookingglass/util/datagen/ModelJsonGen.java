@@ -9,6 +9,21 @@ import java.io.IOException;
 
 public class ModelJsonGen {
 
+    public static void genItemJson(Metadata metadata, Identifier name) {
+        String item = "{\n" +
+                "  \"parent\": \"item/generated\",\n" +
+                "  \"textures\": {\n" +
+                "    \"layer0\": \"" + name.getNamespace() + ":item/" + name.getPath() + "\"\n" +
+                "  }\n" +
+                "}";
+
+        try {
+            FileUtils.writeStringToFile(metadata.genResourceJson(name.getPath(), "", Metadata.ResourceType.ITEM_MODEL), item, Charsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void genBlockJson(Metadata metadata, Identifier texId, Identifier name, String path) {
         String block = "{\n" +
                 "  \"parent\": \"minecraft:block/cube_all\",\n" +

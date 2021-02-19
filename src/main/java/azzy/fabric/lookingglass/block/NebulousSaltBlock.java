@@ -62,7 +62,7 @@ public class NebulousSaltBlock extends Block{
         if(!world.isClient()) {
             if(!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())) {
                 Random random = world.getRandom();
-                if(entity.isLiving() && random.nextInt(101) == 0) {
+                if(random.nextInt(101) == 0) {
                     if(random.nextBoolean()) {
                         ((LivingEntity) entity).applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
                     }

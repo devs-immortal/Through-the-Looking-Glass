@@ -6,7 +6,7 @@ import azzy.fabric.lookingglass.block.PipeBlock;
 import dev.technici4n.fasttransferlib.api.fluid.FluidApi;
 import dev.technici4n.fasttransferlib.api.fluid.FluidIo;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.provider.v1.block.BlockApiLookup;
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -18,14 +18,16 @@ import java.util.Set;
 
 public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable, BlockEntityClientSerializable, RedstoneReactiveEntity {
 
+    private final BlockApiLookup<T, Direction> lookup;
+    private final boolean strict;
     protected final int offset = LookingGlassCommon.RANDOM.nextInt(10);
     protected boolean straight = false;
     protected final Set<Direction> IO = new HashSet<>();
-    private final BlockApiLookup<T, Direction> lookup;
 
-    public BasePipeEntity(BlockEntityType<?> type, BlockApiLookup<T, Direction> lookup) {
+    public BasePipeEntity(BlockEntityType<?> type, BlockApiLookup<T, Direction> lookup, boolean strict) {
         super(type);
         this.lookup = lookup;
+        this.strict = strict;
     }
 
     @Override
@@ -44,17 +46,38 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
     public Set<T> checkConnections() {
         Set<T> ioSet = new HashSet<>();
         for(Direction direction : Direction.values()){
-            T io = lookup.get(world, pos.offset(direction), direction.getOpposite());
-            if(io != null){
-                if(!getCachedState().get(PipeBlock.getFACING().get(direction))) {
-                    world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), true));
-                    IO.add(direction);
+            BlockEntity entity = world.getBlockEntity(pos.offset(direction));
+            if(entity instanceof BasePipeEntity && strict) {
+                if(entity != null) {
+                    BlockEntityType<?> type = entity.getType();
+                    if (type == getType()) {
+                        T io = lookup.get(world, pos.offset(direction), direction.getOpposite());
+                        if (io != null) {
+                            if (!getCachedState().get(PipeBlock.getFACING().get(direction))) {
+                                world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), true));
+                                IO.add(direction);
+                            }
+                            ioSet.add(io);
+                            continue;
+                        }
+                    }
                 }
-                ioSet.add(io);
-            }
-            else {
                 world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), false));
                 getIO().remove(direction);
+            }
+            else {
+                T io = lookup.get(world, pos.offset(direction), direction.getOpposite());
+                if(io != null){
+                    if(!getCachedState().get(PipeBlock.getFACING().get(direction))) {
+                        world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), true));
+                        IO.add(direction);
+                    }
+                    ioSet.add(io);
+                }
+                else {
+                    world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), false));
+                    getIO().remove(direction);
+                }
             }
         }
         return ioSet;

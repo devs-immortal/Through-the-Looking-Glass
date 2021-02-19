@@ -41,7 +41,7 @@ public class NebulousHaliteBlock extends PillarBlock {
         if(!world.isClient()) {
             if(!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())) {
                 Random random = world.getRandom();
-                if(entity.isLiving() && random.nextInt(51) == 0) {
+                if(random.nextInt(51) == 0) {
                     if(random.nextBoolean()) {
                         ((LivingEntity) entity).applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
                     }

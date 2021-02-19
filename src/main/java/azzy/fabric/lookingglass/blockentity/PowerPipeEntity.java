@@ -16,22 +16,18 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     private final double maxPower, transferRate;
     private double power;
+    private boolean ticked;
 
     public PowerPipeEntity(BlockEntityType type, double transferRate) {
-        super(type, EnergyApi.SIDED);
+        super(type, EnergyApi.SIDED, true);
         this.maxPower = transferRate * 4.0;
         this.transferRate = transferRate;
     }
 
     @Override
     public void performTransfers(Set<EnergyIo> participants) {
-        List<PowerPipeEntity> cables = new ArrayList<>();
-        cables.add(this);
         for (EnergyIo energyIo : participants.toArray(new EnergyIo[0])) {
             if(energyIo instanceof PowerPipeEntity) {
-                if(((PowerPipeEntity) energyIo).getType() == getType()) {
-                    cables.add((PowerPipeEntity) energyIo);
-                }
                 continue;
             }
             if(power > 0 && energyIo.supportsInsertion()) {
@@ -50,7 +46,13 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
             }
         }
 
-        //Taken from Techreborn's CableBlockEntity
+        //Taken from Techreborn's CableBlockEntity, some of it at least
+
+        List<PowerPipeEntity> cables = new ArrayList<>();
+
+        if(!ticked) {
+            cables.addAll(getNeighbours());
+        }
 
         if(cables.size() > 1) {
             double totalPower = cables.stream().mapToDouble(EnergyIo::getEnergy).sum();
@@ -63,6 +65,8 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
         if(!world.isClient()) {
             sync();
         }
+
+        ticked = false;
     }
 
     public Set<PowerPipeEntity> getNeighbours() {
@@ -78,9 +82,10 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     public void getNeighbours(Set<PowerPipeEntity> neighbours) {
         neighbours.add(this);
+        this.ticked = true;
         Arrays.stream(Direction.values())
                 .map(direction -> world.getBlockEntity(pos.offset(direction)))
-                .filter(blockEntity -> blockEntity.getType() == getType())
+                .filter(blockEntity -> blockEntity != null && blockEntity.getType() == getType())
                 .forEach(entity -> {
                     if(!neighbours.contains(entity))
                         ((PowerPipeEntity)entity).getNeighbours(neighbours);
@@ -147,7 +152,7 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
-        power = tag.getDouble("energy");
+        power = tag.getDouble("power");
         super.fromTag(state, tag);
     }
 
