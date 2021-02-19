@@ -11,14 +11,12 @@ import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -118,7 +116,7 @@ public class TTLGBlocks {
     //Misc
     public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
     public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicMachineItem().fireproof().rarity(NULL_RARITY));
+    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicMachineItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicMachineItem());
 
     //  BLOCK ENTITIES

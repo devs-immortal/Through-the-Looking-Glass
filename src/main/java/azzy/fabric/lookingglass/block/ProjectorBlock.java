@@ -1,7 +1,10 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
+import azzy.fabric.lookingglass.util.GeneralNetworking;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -11,6 +14,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -37,32 +41,32 @@ public class ProjectorBlock extends LookingGlassBlock implements BlockEntityProv
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ProjectorEntity entity = (ProjectorEntity) world.getBlockEntity(pos);
         if(entity != null) {
+            if(!player.isInSneakingPose())
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
             if(!world.isClient) {
-                if(!player.isInSneakingPose()) {
-                    ContainerProviderRegistry.INSTANCE.openContainer(new Identifier(MODID, "projector_gui"), player, (packetByteBuf -> packetByteBuf.writeBlockPos(pos)));
-                    entity.sync();
-                }
-            }
-            if(player.isInSneakingPose()){
-                if(entity.displayState < 4)
-                    entity.displayState++;
-                else
-                    entity.displayState = 0;
-                if(world.isClient()) {
-                    String label = "";
-                    switch(entity.displayState){
-                        case(0): label = I18n.translate("label.lookingglass.glass.image_switch", label); break;
-                        case(1): label = I18n.translate("label.lookingglass.glass.item_switch", label); break;
-                        case(2): label = I18n.translate("label.lookingglass.glass.sign_switch");; break;
-                        case(3): label = I18n.translate("label.lookingglass.glass.mob_switch");; break;
-                        case(4): label = I18n.translate("label.lookingglass.glass.player_switch"); break;
-                    }
+                if(player.isInSneakingPose()) {
+                    if(entity.displayState < 4)
+                        entity.displayState++;
+                    else
+                        entity.displayState = 0;
 
-                    MinecraftClient.getInstance().player.sendSystemMessage(new LiteralText(label), null);
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, GeneralNetworking.TRANSLATEABLE_PACKET, PacketByteBufs.create().writeString(getClientMessage(entity)));
                 }
+                entity.sync();
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    public String getClientMessage(ProjectorEntity entity) {
+        switch(entity.displayState){
+            case(0): return "label.lookingglass.glass.image_switch";
+            case(1): return "label.lookingglass.glass.item_switch";
+            case(2): return "label.lookingglass.glass.sign_switch";
+            case(3): return "label.lookingglass.glass.mob_switch";
+            case(4): return "label.lookingglass.glass.player_switch";
+            default:return "";
+        }
     }
 
     @Override

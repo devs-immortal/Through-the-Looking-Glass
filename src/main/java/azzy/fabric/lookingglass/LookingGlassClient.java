@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass;
 import azzy.fabric.lookingglass.gui.*;
 import azzy.fabric.lookingglass.particle.TTLGParticles;
 import azzy.fabric.lookingglass.render.*;
+import azzy.fabric.lookingglass.util.ClientNetworkingUtils;
 import azzy.fabric.lookingglass.util.client.RenderCache;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -45,12 +46,9 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), FISH_BREEDER_BLOCK, BLOCK_TESSERACT_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), CREATIVE_ENERGY_SOURCE_BLOCK);
 
-        //I will update this some day k I promise
-        ScreenProviderRegistry.INSTANCE.registerFactory(new Identifier(MODID, "projector_gui"), (syncID, id, player, buf) -> new ProjectorScreen( new ProjectorGuiDescription(ScreenHandlerType.ANVIL, syncID, player.inventory, ScreenHandlerContext.create(player.world, buf.readBlockPos())), player));
-
-
         TTLGParticles.init();
         LookingGlassGUIs.initClient();
+        ClientNetworkingUtils.init();
         RenderCache.init();
 
         //ClientTickEvents.END_WORLD_TICK.register(clientWorld -> {

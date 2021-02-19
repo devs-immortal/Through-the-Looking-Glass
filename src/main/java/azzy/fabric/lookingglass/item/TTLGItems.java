@@ -1,18 +1,10 @@
 package azzy.fabric.lookingglass.item;
 
-import azzy.fabric.lookingglass.block.NebulousSaltBlock;
-import azzy.fabric.lookingglass.block.TTLGBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -34,7 +26,7 @@ public class TTLGItems {
     }
 
     private static FabricItemSettings eldenmetalSettings() {
-        return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).fireproof().rarity(NULL_RARITY);
+        return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).fireproof().rarity(ELDENMETAL_RARITY);
     }
 
     //Tools

@@ -19,11 +19,10 @@ import net.minecraft.util.math.BlockPos;
 
 public class CrateGuiDescription extends SyncedGuiDescription {
 
-    private final WPlainPanel root = new WPlainPanel();
-
     public CrateGuiDescription(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(LookingGlassGUIs.CRATE_HANDLER, syncId, playerInventory, getBlockInventory(context, 117), getBlockPropertyDelegate(context));
 
+        WPlainPanel root = new WPlainPanel();
         root.setSize(234, 162);
         setRootPanel(root);
         WItemSlot itemSlot;

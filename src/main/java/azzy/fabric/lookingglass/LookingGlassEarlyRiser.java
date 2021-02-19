@@ -14,7 +14,10 @@ public class LookingGlassEarlyRiser implements Runnable {
 				mappingResolver.mapClassName("intermediary", "net.minecraft.class_1814"),           // Rarity
 				"L" + mappingResolver.mapClassName("intermediary", "net.minecraft.class_124") + ";" // Formatting
 		);
+		enumAdder.addEnum("FINIS", () -> new Object[]{ Formatting.BLUE });
 		enumAdder.addEnum("NULL", () -> new Object[]{ Formatting.DARK_PURPLE });
+		enumAdder.addEnum("DAWN", () -> new Object[]{ Formatting.GOLD });
+		enumAdder.addEnum("TERMINUS", () -> new Object[]{ Formatting.UNDERLINE });
 		enumAdder.build();
 	}
 }

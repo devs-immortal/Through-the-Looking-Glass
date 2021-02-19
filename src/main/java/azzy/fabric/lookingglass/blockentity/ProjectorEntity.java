@@ -1,41 +1,40 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.util.ExtendedPropertyDelegate;
+import azzy.fabric.lookingglass.gui.CrateGuiDescription;
+import azzy.fabric.lookingglass.gui.NewProjectorGuiDescription;
+import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
-import com.mojang.authlib.GameProfile;
+import azzy.fabric.lookingglass.util.Syncable;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.OtherClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Tickable;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import sun.misc.Unsafe;
-
-import java.lang.reflect.Field;
-import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
 
 
-public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder {
+public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, ExtendedScreenHandlerFactory, Syncable {
 
     public int displayState;
     public double rotY, rotX, rotZ, disY, disX, disZ, scale;
@@ -142,41 +141,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         url = compoundTag.getString("image");
     }
 
-    private final ExtendedPropertyDelegate referenceHolder = new ExtendedPropertyDelegate() {
-
-        @Override
-        public double getDouble(int index) {
-            switch(index){
-                case (3): return rotX;
-                case (4): return rotY;
-                case (5): return rotZ;
-                case (6): return disX;
-                case (7): return disY;
-                case (8): return disZ;
-                case (9): return scale;
-            }
-            return -1;
-        }
-
-        @Override
-        public void setDouble(int index, double value) {
-            if(world.isClient()){
-                PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-                packet.writeInt(index).writeDouble(value);
-                packet.writeBlockPos(pos);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlassCommon.DOUBLES_TO_SERVER_PACKET, packet);
-            }
-
-            switch(index){
-                case (1): rotX = value; break;
-                case (2): rotY = value; break;
-                case (3): rotZ = value; break;
-                case (4): disX = value; break;
-                case (5): disY = value; break;
-                case (6): disZ = value; break;
-                case (7): scale = value; break;
-            }
-        }
+    private final PropertyDelegate referenceHolder = new PropertyDelegate() {
 
         @Override
         public int get(int index) {
@@ -184,6 +149,9 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
                 case (0): return displayState;
                 case (1): return Registry.ITEM.getRawId(inventory.get(0).getItem());
                 case (2): return inventory.get(0).getCount();
+                case (3): return pos.getX();
+                case (4): return pos.getY();
+                case (5): return pos.getZ();
             }
             return -1;
         }
@@ -195,42 +163,8 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         }
 
         @Override
-        public String getString(int index) {
-            switch(index){
-                case (0): return sign;
-                case (1): return url;
-                case (2): return color;
-            }
-            return null;
-        }
-
-        @Override
-        public void setString(int index, String value) {
-
-            if(world.isClient()){
-                PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
-                packet.writeString(value).writeBlockPos(pos).writeInt(index);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(LookingGlassCommon.STRING_TO_SERVER_PACKET, packet);
-            }
-
-            switch(index){
-                case (0): sign = value; break;
-                case (1): url = value; break;
-                case (2): color = value; break;
-            }
-
-            if(!world.isClient)
-                sync();
-        }
-
-        @Override
-        public BlockPos getPos() {
-            return pos;
-        }
-
-        @Override
         public int size() {
-            return 10;
+            return 6;
         }
     };
 
@@ -244,4 +178,35 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         return referenceHolder;
     }
 
+    @Override
+    public Text getDisplayName() {
+        return new TranslatableText(getCachedState().getBlock().getTranslationKey());
+    }
+
+    @Override
+    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new NewProjectorGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
+        packetByteBuf.writeBlockPos(pos);
+    }
+
+    @Override
+    public void sync(PacketByteBuf packet) {
+
+
+
+
+
+
+
+
+
+
+
+
+        sync();
+    }
 }

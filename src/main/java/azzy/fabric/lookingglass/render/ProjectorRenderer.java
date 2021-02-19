@@ -140,7 +140,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             if(item.getItem() instanceof BlockItem) {
                 BlockState state = ((BlockItem) item.getItem()).getBlock().getDefaultState();
                 BlockRenderManager manager = MinecraftClient.getInstance().getBlockRenderManager();
-                manager.getModelRenderer().render(blockEntity.getWorld(), manager.getModel(state), state, blockEntity.getPos().up(), matrices, vertexConsumers.getBuffer(RenderLayers.getMovingBlockLayer(state)), true, new Random(), state.getRenderingSeed(blockEntity.getPos()), OverlayTexture.DEFAULT_UV);
+                manager.getModelRenderer().render(blockEntity.getWorld(), manager.getModel(state), state, blockEntity.getPos().up(), matrices, vertexConsumers.getBuffer(RenderLayers.getMovingBlockLayer(state)), false, new Random(), state.getRenderingSeed(blockEntity.getPos()), OverlayTexture.DEFAULT_UV);
             }
             else {
                 MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.NONE, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
