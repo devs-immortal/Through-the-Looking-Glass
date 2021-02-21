@@ -1,9 +1,9 @@
 {
   "type": "minecraft:blasting",
   "ingredient": {
-    "item": "lookingglass:polished_whitestone"
+    "item": "lookingglass:dwarven_clay"
   },
-  "result": "lookingglass:whitestone_tile",
-  "experience": 0.2,
-  "cookingtime": 100
+  "result": "lookingglass:dwarven_stone",
+  "experience": 4,
+  "cookingtime": 600
 }

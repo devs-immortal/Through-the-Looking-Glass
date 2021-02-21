@@ -14,55 +14,41 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public class BlockEntityMover {
-
-    private static Field bePos;
-    private static Field beRemoved;
 
     public static boolean tryMoveEntity(World world, BlockPos pos, Direction facing) {
         return directEntityMove(world, pos, pos.offset(facing));
     }
 
     public static boolean directEntityMove(World world, BlockPos pos, BlockPos newPos) {
-        BlockState state = world.getBlockState(pos);
-        BlockEntity entity = world.getBlockEntity(pos);
-        if(entity != null && !(entity instanceof PistonBlockEntity)) {
-            CompoundTag tag = new CompoundTag();
-            entity.toTag(tag);
-            world.removeBlockEntity(pos);
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            world.setBlockState(newPos, state);
-            BlockEntity newEntity = world.getBlockEntity(newPos);
-            newEntity.fromTag(world.getBlockState(newPos), tag);
-            try {
-                bePos.set(newEntity, newPos);
-                beRemoved.set(newEntity, false);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+        if(!world.isClient()) {
+            BlockState state = world.getBlockState(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
+            if(entity != null && !(entity instanceof PistonBlockEntity)) {
+                CompoundTag tag = new CompoundTag();
+                entity.toTag(tag);
+                world.removeBlockEntity(pos);
+                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.setBlockState(newPos, state);
+                BlockEntity newEntity = entity.getType().get(world, newPos);
+                newEntity.fromTag(world.getBlockState(newPos), tag);
+                world.setBlockEntity(newPos, newEntity);
+                if(newEntity instanceof ChunkLoaderEntity) {
+                    ((ChunkLoaderEntity) newEntity).setLoadedChunks(((ChunkLoaderEntity) entity).getLoadedChunks());
+                }
+                if(newEntity instanceof BlockEntityClientSerializable)
+                    ((BlockEntityClientSerializable) entity).sync();
+                if(newEntity instanceof MovementSensitiveBlockEntity) {
+                    MovementSensitiveBlockEntity sensitiveEntity = (MovementSensitiveBlockEntity) entity;
+                    Arrays.stream(sensitiveEntity.getObservers()).forEach(observer -> observer.notifyObserver(newEntity, newPos));
+                    sensitiveEntity.notifyMoved(newPos);
+                }
+                return true;
             }
-            if(newEntity instanceof ChunkLoaderEntity) {
-                ((ChunkLoaderEntity) newEntity).setLoadedChunks(((ChunkLoaderEntity) entity).getLoadedChunks());
-            }
-            if(!world.isClient() && newEntity instanceof BlockEntityClientSerializable)
-                ((BlockEntityClientSerializable) entity).sync();
-            return true;
+            return false;
         }
-        return false;
-    }
-
-    static {
-        try {
-            bePos = BlockEntity.class.getDeclaredField("pos");
-            beRemoved = BlockEntity.class.getDeclaredField("removed");
-        } catch (NoSuchFieldException uhoh) {
-            uhoh.printStackTrace();
-        }
-        finally {
-            if(bePos != null)
-                bePos.setAccessible(true);
-            if(beRemoved != null)
-                beRemoved.setAccessible(true);
-        }
+        return true;
     }
 }

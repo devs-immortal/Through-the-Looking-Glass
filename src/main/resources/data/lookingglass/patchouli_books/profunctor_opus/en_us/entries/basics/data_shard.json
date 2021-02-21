@@ -1,12 +1,23 @@
 {
-  "name": "Data Shards",
+  "name": "Crystal EEPROM",
   "category": "basics",
   "icon": "lookingglass:data_shard",
   "pages": [
     {
       "type": "text",
-      "title": "Gates Of Knowledge",
-      "text": "uwu owo please fuck my ass daddy"
+      "text": "Data Shards are exceedingly useful, if somewhat complicated items used by a variety of machines and devices to read and store data. $(br2)Their most important use is collecting data from the world around you, this can be done shift-right clicking blocks, hitting entities, or if you want to collect your own data, clicking the air."
+    },
+    {
+      "type": "spotlight",
+      "title": "Data Shard",
+      "item": "lookingglass:data_shard{Enchantments:[{id:mending,lvl:1}],HideFlags:1}",
+      "text": "A data shard may be cleared of data by shift-right clicking the air."
+    },
+    {
+      "type": "crafting",
+      "title": "Data Shard",
+      "recipe": "lookingglass:manual/tool/data_shard",
+      "text": "   Glassy Floppy Discs"
     }
   ],
   "priority": true,

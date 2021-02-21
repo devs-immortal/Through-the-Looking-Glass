@@ -13,9 +13,14 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class LookingGlassGUIs {
 
-    public static final ScreenHandlerType<CrateGuiDescription> CRATE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "crate_gui"), (syncId, inventory) -> new CrateGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
+    //Pale Machines
     public static final ScreenHandlerType<NewProjectorGuiDescription> PROJECTOR_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier(MODID, "projector_gui"), (syncId, inventory, packetByteBuf) -> new NewProjectorGuiDescription(syncId, inventory, ScreenHandlerContext.create(inventory.player.world, packetByteBuf.readBlockPos())));
 
+    //Dwarven Machines
+    public static final ScreenHandlerType<PoweredFurnaceGuiDescription> POWERED_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "powered_furnace_gui"), (syncId, inventory) -> new PoweredFurnaceGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
+
+    //Devices
+    public static final ScreenHandlerType<CrateGuiDescription> CRATE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "crate_gui"), (syncId, inventory) -> new CrateGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
 
     public static void initCommon() {}
 
@@ -23,5 +28,6 @@ public class LookingGlassGUIs {
     public static void initClient() {
         ScreenRegistry.<CrateGuiDescription, CrateScreen>register(CRATE_HANDLER, (gui, inventory, title) -> new CrateScreen(gui, inventory.player, title));
         ScreenRegistry.<NewProjectorGuiDescription, NewProjectorScreen>register(PROJECTOR_HANDLER, (gui, inventory, title) -> new NewProjectorScreen(gui, inventory.player, title));
+        ScreenRegistry.<PoweredFurnaceGuiDescription, PoweredFurnaceScreen>register(POWERED_FURNACE_HANDLER, (gui, inventory, title) -> new PoweredFurnaceScreen(gui, inventory.player, title));
     }
 }

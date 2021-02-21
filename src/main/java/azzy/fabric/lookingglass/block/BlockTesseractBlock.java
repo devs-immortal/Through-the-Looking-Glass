@@ -5,7 +5,6 @@ import azzy.fabric.lookingglass.item.DataShardItem;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -20,11 +19,11 @@ public class BlockTesseractBlock extends AbstractTesseractBlock {
     }
 
     @Override
-    boolean activate(World world, BlockPos pos, Direction dir, BlockPos trigger) {
+    void activate(World world, BlockPos pos, Direction dir, BlockPos trigger) {
         BlockEntity entity = world.getBlockEntity(pos);
-        if(entity != null)
-            return ((BlockTesseractEntity) entity).moveBlock(dir);
-        return false;
+        if(entity != null) {
+            ((BlockTesseractEntity) entity).moveBlock(dir);
+        }
     }
 
     @Override

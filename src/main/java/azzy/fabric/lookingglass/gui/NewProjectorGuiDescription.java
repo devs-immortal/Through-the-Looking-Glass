@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 
 public class NewProjectorGuiDescription extends SyncedGuiDescription {
 
-    private final WPlainPanel root = new WPlainPanel();
     private final WTextField url = new WTextField().setMaxLength(512);
     private final WTextField disX = new WTextField().setMaxLength(4);
     private final WTextField disY = new WTextField().setMaxLength(4);
@@ -74,7 +73,7 @@ public class NewProjectorGuiDescription extends SyncedGuiDescription {
         root.add(disY, 20, 100, 55, 10);
         root.add(disZ, 20, 130, 55, 10);
 
-        root.add(scale, 20, state == 2 ? 180 : 160, 125, 40);
+        root.add(scale, 20, state == 2 ? 185 : 165, 125, 40);
 
         if(state == 1 || state >= 3)
             root.add(new WItemSlot(blockInventory, 0, 1, 1, true), 70, 27);
@@ -82,11 +81,11 @@ public class NewProjectorGuiDescription extends SyncedGuiDescription {
         String label;
 
         switch(state){
-            case(0): label = "label.lookingglass.glass.image"; break;
-            case(1): label = "label.lookingglass.glass.item"; break;
-            case(2): label = "label.lookingglass.glass.sign"; break;
-            case(3): label = "label.lookingglass.glass.mob"; break;
-            default: label = "label.lookingglass.glass.player"; break;
+            case(0): label = "Mode: Image Display"; break;
+            case(1): label = "Mode: Item Display"; break;
+            case(2): label = "Mode: Spectral Sign"; break;
+            case(3): label = "Mode: Mob Renderer"; break;
+            default: label = "Mode: Projector"; break;
         }
 
         WDynamicLabel stateLabel = new WDynamicLabel(() -> label);
@@ -98,10 +97,10 @@ public class NewProjectorGuiDescription extends SyncedGuiDescription {
         url.setSize(160, 5);
         url.setText(entity.url);
 
-        sign.setSuggestion("label.lookingglass.glass.signsug");
+        sign.setSuggestion("Text");
         sign.setSize(160, 5);
         sign.setText(entity.sign);
-        color.setSuggestion("label.lookingglass.glass.colorsug");
+        color.setSuggestion("Hex");
 
         if (state == 0) {
             root.add(url, 2, 23, 160, 5);

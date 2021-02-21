@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
+
 public class DataShardItem extends Item {
     public DataShardItem(Settings settings) {
         super(settings);
@@ -60,14 +62,14 @@ public class DataShardItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        HitResult result = user.raycast(user.getAttributeValue(ReachEntityAttributes.REACH), 1f, false);
+        HitResult result = user.raycast(5 + user.getAttributeValue(ReachEntityAttributes.REACH), 1f, false);
         if(result.getType() == HitResult.Type.MISS) {
             clearNBT(user.getStackInHand(hand));
             if(user.isSneaking()) {
                 world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BELL_RESONATE, SoundCategory.PLAYERS, 1F, 2F);
             }
             else {
-                user.damage(DamageSource.MAGIC, 0.001F);
+                user.damage(DamageSource.MAGIC, 1F);
                 user.getStackInHand(hand).getOrCreateSubTag("data").putUuid("uuid", user.getUuid());
             }
             user.getItemCooldownManager().set(this, 5);

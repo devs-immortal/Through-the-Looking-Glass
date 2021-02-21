@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.AnnulationCoreBlock;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.render.TesseractRenderable;
 import azzy.fabric.lookingglass.util.BlockEntityMover;
@@ -25,66 +24,92 @@ import java.util.Optional;
 public class BlockTesseractEntity extends BlockEntity implements BlockEntityClientSerializable, TesseractRenderable {
 
     private static final ItemStack core = new ItemStack(Items.ENDER_EYE);
-    private BlockPos receiver;
+    private BlockPos movePos;
 
     public BlockTesseractEntity() {
         super(TTLGBlocks.BLOCK_TESSERACT_ENTITY);
     }
 
-    public boolean moveBlock(Direction direction) {
-        if(receiver != null) {
-            BlockState receiverState = world.getBlockState(receiver);
-            BlockPos oldPos = receiver;
-            BlockPos target = receiver.offset(direction);
-            if(world.isAir(receiver)) {
+    public void moveBlock(Direction direction) {
+        if(movePos != null) {
+            BlockState moveState = world.getBlockState(movePos);
+            BlockPos oldPos = movePos;
+            BlockPos target = movePos.offset(direction);
+            if(world.isAir(movePos)) {
                 ((ServerWorld) world).spawnParticles(ParticleTypes.DRIPPING_OBSIDIAN_TEAR, oldPos.getX() + 0.5, oldPos.getY() + 0.5, oldPos.getZ() + 0.5, 1, 0, 0, 0, 0);
-                ((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, receiver.getX() + 0.5, receiver.getY() + 0.5, receiver.getZ() + 0.5, 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.04);
-                receiver = null;
+                ((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, movePos.getX() + 0.5, movePos.getY() + 0.5, movePos.getZ() + 0.5, 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.04);
+                movePos = null;
                 sync();
-                return false;
+                return;
             }
-            if(!receiverState.isOf(TTLGBlocks.INTERMINAL_CORE)) {
-                BlockState targetState = world.getBlockState(target);
-                Block receiverBlock = receiverState.getBlock();
-                float targetHardness = targetState.getHardness(world, target);
-                byte flags = (byte) ((receiverBlock instanceof AnnulationCoreBlock && ((AnnulationCoreBlock) receiverBlock).canBreakAll()) ? 2 : targetHardness < 0.0F ? 0 : receiverBlock instanceof AnnulationCoreBlock ? 2 : receiverState.getHardness(world, receiver) < targetHardness ? 1 : receiverState.getHardness(world, receiver) > targetHardness ? 2 : 3);
-                if (flags == 3) {
-                    receiver = receiver.offset(direction);
+            BlockState targetState = world.getBlockState(target);
+            Block moveBlock = moveState.getBlock();
+            float targetHardness = targetState.getHardness(world, target);
+            float moveHardness = moveState.getHardness(world, movePos);
+            PushAction action = PushAction.NONE;
+
+            //Do nothing if hardness is the same
+            if(world.isAir(target) && !(moveHardness < 0F)) {
+                action = PushAction.MOVE;
+            }
+            else if(moveBlock == TTLGBlocks.INTERMINAL_CORE || targetState.isOf(TTLGBlocks.INTERMINAL_CORE) || moveHardness < 0F) {
+                action = PushAction.TRANSFER;
+            }
+            else if(moveBlock == TTLGBlocks.ANNULATION_CORE_1A || (moveHardness > targetHardness && targetHardness > 0f)) {
+                action = PushAction.TARBREAK;
+            }
+            else if(targetHardness < 0F || moveHardness < targetHardness) {
+                action = PushAction.SELFBREAK;
+            }
+            switch (action) {
+                case TRANSFER: {
+                    movePos = movePos.offset(direction);
+                    ((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5, 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.08);
                     sync();
-                    return false;
+                    return;
                 }
-                else if(flags == 2) {
-                    world.breakBlock(target, true);
-                    if(world.getBlockEntity(receiver) != null) {
-                        BlockEntityMover.tryMoveEntity(world, receiver, direction);
+                case MOVE: {
+                    BlockEntity entity = world.getBlockEntity(movePos);
+                    if(entity != null) {
+                        BlockEntityMover.directEntityMove(world, movePos, target);
                     }
                     else {
-                        BlockPos newPos = receiver.offset(direction);
-                        world.setBlockState(newPos, receiverState);
-                        world.setBlockState(receiver, Blocks.AIR.getDefaultState());
+                        world.setBlockState(target, world.getBlockState(movePos));
+                        world.setBlockState(movePos, Blocks.AIR.getDefaultState());
                     }
+                    break;
                 }
-                else {
-                    world.breakBlock(receiver, true);
-                    sync();
-                    return true;
+                case TARBREAK:{
+                    world.breakBlock(target, true);
+                    BlockEntity entity = world.getBlockEntity(movePos);
+                    if(entity != null) {
+                        BlockEntityMover.directEntityMove(world, movePos, target);
+                    }
+                    else {
+                        world.setBlockState(target, world.getBlockState(movePos));
+                        world.setBlockState(movePos, Blocks.AIR.getDefaultState());
+                    }
+                    break;
                 }
-                ((ServerWorld) world).spawnParticles(ParticleTypes.DRIPPING_OBSIDIAN_TEAR, oldPos.getX() + 0.5, oldPos.getY() + 0.5, oldPos.getZ() + 0.5, 1, 0, 0, 0, 0);
-                ((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5, 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.08);
+                case SELFBREAK: {
+                    world.breakBlock(movePos, true);
+                }
+                case NONE: return;
             }
-            receiver = receiver.offset(direction);
+            ((ServerWorld) world).spawnParticles(ParticleTypes.DRIPPING_OBSIDIAN_TEAR, oldPos.getX() + 0.5, oldPos.getY() + 0.5, oldPos.getZ() + 0.5, 1, 0, 0, 0, 0);
+            ((ServerWorld) world).spawnParticles(ParticleTypes.DRAGON_BREATH, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5, 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.08);
+            movePos = movePos.offset(direction);
             sync();
-            return true;
+            return;
         }
         sync();
-        return false;
     }
 
     public boolean setTarget(Optional<Long> encodedPos) {
         if(encodedPos.isPresent() && encodedPos.get() != 0L) {
             BlockPos pos = BlockPos.fromLong(encodedPos.get());
             if(pos != this.pos && World.isInBuildLimit(pos)) {
-                receiver = pos;
+                movePos = pos;
                 return true;
             }
         }
@@ -93,21 +118,21 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
-        if(receiver != null)
-            tag.putLong("target", receiver.asLong());
+        if(movePos != null)
+            tag.putLong("target", movePos.asLong());
         return super.toTag(tag);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         if(tag.contains("target"))
-            receiver = BlockPos.fromLong(tag.getLong("target"));
+            movePos = BlockPos.fromLong(tag.getLong("target"));
         super.fromTag(state, tag);
     }
 
     @Override
     public boolean shouldRenderCore() {
-        return receiver != null;
+        return movePos != null;
     }
 
     @Override
@@ -127,18 +152,26 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
-        if(receiver != null)
-            tag.putLong("target", receiver.asLong());
+        if(movePos != null)
+            tag.putLong("target", movePos.asLong());
         return tag;
     }
 
     @Override
     public void fromClientTag(CompoundTag tag) {
         if(tag.contains("target"))
-            receiver = BlockPos.fromLong(tag.getLong("target"));
+            movePos = BlockPos.fromLong(tag.getLong("target"));
     }
 
     static {
         core.addEnchantment(Enchantments.SHARPNESS, 1);
+    }
+
+    private enum PushAction {
+        NONE,
+        TRANSFER,
+        MOVE,
+        TARBREAK,
+        SELFBREAK
     }
 }

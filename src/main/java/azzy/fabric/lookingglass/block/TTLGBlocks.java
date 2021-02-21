@@ -33,25 +33,41 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 @SuppressWarnings("unused")
 public class TTLGBlocks {
 
-    private static FabricItemSettings basicMachineItem() {
+    private static FabricItemSettings basicItem() {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS);
     }
 
-    private static FabricItemSettings midtierMachineItem() {
-        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.UNCOMMON);
-    }
-    private static FabricItemSettings advancedMachineItem() {
+    private static FabricItemSettings midtierItem() {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.RARE);
     }
-    private static FabricItemSettings trueMachineItem() {
-        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.EPIC).fireproof();
+    private static FabricItemSettings advancedItem() {
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.EPIC);
+    }
+    private static FabricItemSettings lategameItem() {
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(FINIS_RARITY).fireproof();
+    }
+
+    private static FabricItemSettings eldenItem() {
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(ELDENMETAL_RARITY).fireproof();
+    }
+
+    private static FabricItemSettings luprevanItem() {
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(LUPREVAN_RARITY).fireproof();
+    }
+
+    private static FabricItemSettings worldforgeItem() {
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(WORLDFORGE_RARITY).fireproof();
     }
 
     private static FabricBlockSettings woodenMachine(int miningLevel) {
         return FabricBlockSettings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).breakByTool(FabricToolTags.AXES, miningLevel).requiresTool().strength(2f);
     }
 
-    private static FabricBlockSettings stoneMachine() {
+    private static FabricBlockSettings basicMachine(BlockSoundGroup sounds) {
+        return FabricBlockSettings.of(Material.STONE).sounds(sounds).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(3.25f, 12f);
+    }
+
+    private static FabricBlockSettings dwarvenMachine() {
         return FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.STONE).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(3.25f, 12f);
     }
 
@@ -63,63 +79,65 @@ public class TTLGBlocks {
         return FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES, 1).strength(1f, 8f);
     }
     private static FabricBlockSettings eldenMachine() {
-        return FabricBlockSettings.of(Material.STRUCTURE_VOID).sounds(ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
+        return FabricBlockSettings.of(Material.METAL).sounds(ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
     }
 
     //  BLOCKS
     //Machines
-    public static final Block PROJECTORBLOCK = registerBlock("projector", new ProjectorBlock(paleMachine().luminance(ignored -> 7)), basicMachineItem());
-    public static final Block CHUNKLOADERBLOCK = registerBlock("chunkloader", new ChunkAnchorBlock(paleMachine().luminance(ignored -> 7)), basicMachineItem());
-    public static final Block WORMHOLEBLOCK = registerBlock("wormhole", new WormholeBlock(paleMachine().luminance(ignored -> 5)), basicMachineItem());
-    public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(stoneMachine(), 20, 4, 9), basicMachineItem());
-    public static final Block ADVANCED_VACUUM_HOPPER_BLOCK = registerBlock("advanced_vacuum_hopper", new VacuumHopperBlock(hardenedMachine(), 5, 7, 27), advancedMachineItem());
-    public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), trueMachineItem());
-    public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(stoneMachine().nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicMachineItem());
+    public static final Block PROJECTORBLOCK = registerBlock("projector", new ProjectorBlock(paleMachine().luminance(ignored -> 7)), basicItem());
+    public static final Block CHUNKLOADERBLOCK = registerBlock("chunkloader", new ChunkAnchorBlock(paleMachine().luminance(ignored -> 7)), basicItem());
+    public static final Block WORMHOLEBLOCK = registerBlock("wormhole", new WormholeBlock(paleMachine().luminance(ignored -> 5)), basicItem());
+    public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
+    public static final Block ADVANCED_VACUUM_HOPPER_BLOCK = registerBlock("advanced_vacuum_hopper", new VacuumHopperBlock(hardenedMachine(), 5, 7, 27), advancedItem());
+    public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), lategameItem());
+    public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(basicMachine(BlockSoundGroup.STONE).nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicItem());
+
+    public static final Block POWERED_FURNACE_BLOCK = registerBlock("powered_furnace_block", new PoweredFurnaceBlock(dwarvenMachine()), basicItem());
 
     //Power
-    public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), trueMachineItem());
-    public static final Block SILICON_CABLE_BLOCK = registerBlock("silicon_cable", new SiliconCableBlock(stoneMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), basicMachineItem());
-    public static final Block GUILDED_CABLE_BLOCK = registerBlock("guilded_cable", new GuildedCableBlock(stoneMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), midtierMachineItem());
-    public static final Block ENCHANTED_CABLE_BLOCK = registerBlock("enchanted_cable", new EnchantedCableBlock(hardenedMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), advancedMachineItem());
-    public static final Block NULL_CABLE_BLOCK = registerBlock("null_cable", new NullCableBlock(eldenMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), trueMachineItem());
+    public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), worldforgeItem());
+    public static final Block SILICON_CABLE_BLOCK = registerBlock("silicon_cable", new SiliconCableBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque()), basicItem());
+    public static final Block GUILDED_CABLE_BLOCK = registerBlock("guilded_cable", new GuildedCableBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque()), midtierItem());
+    public static final Block ENCHANTED_CABLE_BLOCK = registerBlock("enchanted_cable", new EnchantedCableBlock(hardenedMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), advancedItem());
+    public static final Block NULL_CABLE_BLOCK = registerBlock("null_cable", new NullCableBlock(eldenMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), eldenItem());
 
     //Devices
-    public static final Block FISH_BREEDER_BLOCK = registerBlock("fish_breeder", new FishBreederBlock(woodenMachine(1).nonOpaque().ticksRandomly()), basicMachineItem());
-    public static final Block CRATE_BLOCK = registerBlock("crate", new CrateBlock(woodenMachine(1)), basicMachineItem());
+    public static final Block FISH_BREEDER_BLOCK = registerBlock("fish_breeder", new FishBreederBlock(woodenMachine(1).nonOpaque().ticksRandomly()), basicItem());
+    public static final Block CRATE_BLOCK = registerBlock("crate", new CrateBlock(woodenMachine(1)), basicItem());
 
     //Decorative
-    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicMachineItem(), Items.AIR, false);
-    public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), midtierMachineItem(), Items.GOLD_INGOT, false);
-    public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SAND), basicMachineItem(), Items.AIR, false);
-    public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SOUL_SAND), basicMachineItem(), Items.AIR, false);
-    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), null, null, basicMachineItem(), SingletType.BLOCK);
-    public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), Items.AIR, false);
-    public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicMachineItem(), SingletType.BLOCK);
-    public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHISTONE_POLISHED[0].asItem(), false);
-    public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicMachineItem(), WHITESTONE_TILE.asItem(), false);
-    public static final Block DWARVEN_STONE = registerGeneratedBlock("dwarven_stone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).resistance(500).materialColor(DyeColor.GRAY).sounds(BlockSoundGroup.NETHER_BRICKS)), null, null, basicMachineItem(), SingletType.BLOCK);
-    public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicMachineItem(), Items.POLISHED_BASALT, false);
-    public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicMachineItem());
+    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);
+    public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), midtierItem(), Items.GOLD_INGOT, false);
+    public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SAND), basicItem(), Items.AIR, false);
+    public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SOUL_SAND), basicItem(), Items.AIR, false);
+    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
+    public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
+    public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHITESTONE_TILE.asItem(), false);
+    public static final Block DWARVEN_STONE = registerGeneratedBlock("dwarven_stone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).resistance(500).materialColor(DyeColor.GRAY).sounds(BlockSoundGroup.NETHER_BRICKS)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicItem(), Items.POLISHED_BASALT, false);
+    public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicItem());
 
     //Cores
-    public static final Block INTERMINAL_CORE = registerBlock("interminal_core", new InterminalCoreBlock(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN)), basicMachineItem().fireproof());
-    public static final Block GROWTH_CORE_0 = registerBlock("growth_core_0", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 1, 1, 0), basicMachineItem().fireproof());
-    public static final Block GROWTH_CORE_1 = registerBlock("growth_core_1", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 2, 1, 0), basicMachineItem().fireproof());
-    public static final Block GROWTH_CORE_2 = registerBlock("growth_core_2", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 3, 2, 0), basicMachineItem().fireproof());
-    public static final Block GROWTH_CORE_3 = registerBlock("growth_core_3", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 4, 2, 0), basicMachineItem().fireproof());
-    public static final Block GROWTH_CORE_4 = registerBlock("growth_core_4", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 4, 3, 1), midtierMachineItem().fireproof());
-    public static final Block TRUE_GROWTH_CORE_0 = registerBlock("growth_core_5", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 4, 4, 1), advancedMachineItem().fireproof());
-    public static final Block TRUE_GROWTH_CORE_1 = registerBlock("growth_core_6", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 9, 4, 2), advancedMachineItem().fireproof());
-    public static final Block TRUE_GROWTH_CORE_2 = registerBlock("growth_core_7", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 13, 5, 4), trueMachineItem());
-    public static final Block ANNULATION_CORE_0 = registerBlock("annulation_core_0", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS), 1, false, DamageSource.MAGIC), basicMachineItem());
-    public static final Block ANNULATION_CORE_1A = registerBlock("annulation_core_1a", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.GILDED_BLACKSTONE), 2, true, DamageSource.OUT_OF_WORLD), advancedMachineItem());
-    public static final Block ANNULATION_CORE_2B = registerBlock("annulation_core_2b", new SpecialAnnullationCoreBlock(eldenMachine()), trueMachineItem());
+    public static final Block INTERMINAL_CORE = registerBlock("interminal_core", new InterminalCoreBlock(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN)), basicItem().fireproof());
+    public static final Block GROWTH_CORE_0 = registerBlock("growth_core_0", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 1, 1, 0), basicItem().fireproof());
+    public static final Block GROWTH_CORE_1 = registerBlock("growth_core_1", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 2, 1, 0), basicItem().fireproof());
+    public static final Block GROWTH_CORE_2 = registerBlock("growth_core_2", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 3, 2, 0), basicItem().rarity(Rarity.UNCOMMON).fireproof());
+    public static final Block GROWTH_CORE_3 = registerBlock("growth_core_3", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 0).sounds(BlockSoundGroup.FUNGUS), 4, 2, 0), midtierItem().fireproof());
+    public static final Block GROWTH_CORE_4 = registerBlock("growth_core_4", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 4, 3, 1), advancedItem());
+    public static final Block TRUE_GROWTH_CORE_0 = registerBlock("growth_core_5", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 4, 4, 1), luprevanItem());
+    public static final Block TRUE_GROWTH_CORE_1 = registerBlock("growth_core_6", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 9, 4, 2), luprevanItem());
+    public static final Block TRUE_GROWTH_CORE_2 = registerBlock("growth_core_7", new GrowthCoreBlock(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).breakByTool(FabricToolTags.HOES, 4).sounds(BlockSoundGroup.FUNGUS), 13, 5, 4), luprevanItem());
+    public static final Block ANNULATION_CORE_0 = registerBlock("annulation_core_0", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.STONE_BRICKS), 1, false, DamageSource.MAGIC), basicItem());
+    public static final Block ANNULATION_CORE_1A = registerBlock("annulation_core_1a", new AnnulationCoreBlock(FabricBlockSettings.copyOf(Blocks.GILDED_BLACKSTONE), 2, true, DamageSource.OUT_OF_WORLD), luprevanItem());
+    public static final Block ANNULATION_CORE_2B = registerBlock("annulation_core_2b", new SpecialAnnullationCoreBlock(eldenMachine()), eldenItem());
 
     //Misc
-    public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), new FabricItemSettings().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicMachineItem().fireproof().rarity(ELDENMETAL_RARITY));
-    public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicMachineItem());
+    public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
+    public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
+    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
+    public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
 
     //  BLOCK ENTITIES
     //Machines
@@ -129,6 +147,8 @@ public class TTLGBlocks {
     public static final BlockEntityType<SpecialAnnulationCoreEntity> SPECIAL_ANNULATION_CORE_ENTITY = registerEntity("special_annulation_core_entity", SpecialAnnulationCoreEntity::new, ANNULATION_CORE_2B);
     public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.VACUUM_HOPPER_ENTITY, 9, 20, 4), VACUUM_HOPPER_BLOCK);
     public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
+
+    public static final BlockEntityType<PoweredFurnaceEntity> POWERED_FURNACE_ENTITY = registerEntity("powered_furnace_entity", PoweredFurnaceEntity::new, POWERED_FURNACE_BLOCK);
 
     //Power
     public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);
@@ -151,7 +171,7 @@ public class TTLGBlocks {
             return null;
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
-        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity, CREATIVE_ENERGY_SOURCE_ENTITY);
+        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity, CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY);
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {

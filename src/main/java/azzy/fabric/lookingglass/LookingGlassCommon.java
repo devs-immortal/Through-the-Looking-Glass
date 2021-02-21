@@ -45,8 +45,8 @@ public class LookingGlassCommon implements ModInitializer {
 
 	public static final Logger FFLog = LogManager.getLogger(MODID);
 	public static final SplittableRandom RANDOM = new SplittableRandom();
-	public static final ItemGroup LOOKINGGLASS_BLOCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(PROJECTORBLOCK));
-	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "blocks"), () -> new ItemStack(TTLGItems.DATA_SHARD));
+	public static final ItemGroup LOOKINGGLASS_BLOCKS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_blocks"), () -> new ItemStack(PROJECTORBLOCK));
+	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_items"), () -> new ItemStack(TTLGItems.DATA_SHARD));
 
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
 	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = false, REGEN_BLOCKS = false, REGEN_LOOT = false;

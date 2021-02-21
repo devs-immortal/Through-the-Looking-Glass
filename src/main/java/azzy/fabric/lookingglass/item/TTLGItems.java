@@ -36,7 +36,7 @@ public class TTLGItems {
 
     //Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(steelhead)));
-    public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(Rarity.EPIC).fireproof().food(shimmerfin)));
+    public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(shimmerfin)));
 
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(badNoms)));

@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.item.DataShardItem;
+import azzy.fabric.lookingglass.util.MovementSensitiveBlockEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 import static azzy.fabric.lookingglass.block.TTLGBlocks.WORMHOLE_ENTITY;
 
-public class WormholeEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable {
+public class WormholeEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable, MovementSensitiveBlockEntity {
 
     private BlockPos out = BlockPos.ORIGIN;
     private WormholeEntity cachedOut;
@@ -44,29 +45,52 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
 
     @Override
     public void tick() {
-        if(!receiverCooldown.isEmpty() && world.getTime() % 2 == 0)
-            receiverCooldown = (HashMap<Entity, Long>) receiverCooldown.entrySet().stream().filter(entityLongEntry -> entityLongEntry.getValue() - 2 > 0).collect(Collectors.toMap(Map.Entry::getKey, cooldown -> cooldown.getValue() - 2));
-        if(world.getTime() % 10 == 0) {
-            valid = world.getBlockEntity(out) instanceof WormholeEntity;
-            if(valid && cachedOut == null) {
-                cachedOut = (WormholeEntity) world.getBlockEntity(out);
-            }
-            if(cachedOut != null && !out.equals(cachedOut.pos)){
-                valid = false;
-                cachedOut = null;
-            }
-            markDirty();
-            if(!world.isClient())
+        if(!world.isClient()) {
+            if(!receiverCooldown.isEmpty() && world.getTime() % 2 == 0)
+                receiverCooldown = (HashMap<Entity, Long>) receiverCooldown.entrySet().stream().filter(entityLongEntry -> entityLongEntry.getValue() - 2 > 0).collect(Collectors.toMap(Map.Entry::getKey, cooldown -> cooldown.getValue() - 2));
+            if(world.getTime() % 10 == 0) {
+                valid = world.isChunkLoaded(out) && world.getBlockEntity(out) instanceof WormholeEntity;
+                if(valid && cachedOut == null) {
+                    cachedOut = (WormholeEntity) world.getBlockEntity(out);
+                }
+                if(cachedOut != null && !out.equals(cachedOut.pos)){
+                    valid = false;
+                    cachedOut = null;
+                }
+                markDirty();
                 sync();
+            }
+            if(valid) {
+                getCollidingEntities();
+            }
         }
-        if(valid) {
-            if(world.getTime() % 2 == 0 && onTicks < 60)
+        if(world.getTime() % 2 == 0) {
+            if(valid) {
+                if(onTicks < 60)
                 onTicks++;
-            getCollidingEntities();
+            }
+            else {
+                if(onTicks > 0)
+                    onTicks--;
+            }
         }
-        else
-            onTicks = 0;
     }
+
+    @Override
+    public MovementSensitiveBlockEntity[] getObservers() {
+        return new MovementSensitiveBlockEntity[]{ cachedOut };
+    }
+
+    @Override
+    public void notifyObserver(BlockEntity movedEntity, BlockPos newPos) {
+        if(movedEntity != null) {
+            cachedOut = (WormholeEntity) movedEntity;
+            out = newPos;
+        }
+    }
+
+    @Override
+    public void notifyMoved(BlockPos newPos) {}
 
     private void getCollidingEntities() {
         Box hitbox = new Box(pos.up(), pos.add(1, 3, 1));
@@ -95,23 +119,29 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         tag.putLong("out", out.asLong());
+        tag.putInt("ticks", onTicks);
+        tag.putBoolean("valid", valid);
         return super.toTag(tag);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         out = BlockPos.fromLong(tag.getLong("out"));
+        onTicks = tag.getInt("ticks");
+        valid = tag.getBoolean("valid");
         super.fromTag(state, tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        compoundTag.putLong("out", out.asLong());
-        return compoundTag;
+    public CompoundTag toClientTag(CompoundTag tag) {
+        tag.putInt("ticks", onTicks);
+        tag.putBoolean("valid", valid);
+        return tag;
     }
 
     @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        out = BlockPos.fromLong(compoundTag.getLong("out"));
+    public void fromClientTag(CompoundTag tag) {
+        onTicks = tag.getInt("ticks");
+        valid = tag.getBoolean("valid");
     }
 }

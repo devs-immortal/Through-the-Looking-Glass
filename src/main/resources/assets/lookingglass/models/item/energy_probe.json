@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "lookingglass:item/steelhead_trout"
+    "layer0": "lookingglass:item/energy_probe"
   }
 }

@@ -156,6 +156,7 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
             matrices.scale(0.1f, 0.1f, 0.1f);
             matrices.translate(0, 2f, 0);
             matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
             MinecraftClient.getInstance().textRenderer.draw(matrices, blockEntity.sign, -(blockEntity.sign.length() * 6f) / 2f, 0f, Integer.parseInt(blockEntity.color.replace("0x", ""), 16));
         }
         else if(blockEntity.displayState == 3){

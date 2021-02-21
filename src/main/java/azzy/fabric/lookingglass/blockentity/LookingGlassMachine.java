@@ -6,12 +6,15 @@ import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
 import java.util.*;
 
-public abstract class LookingGlassMachine extends LookingGlassBE implements Tickable, EnergyIo {
+public abstract class LookingGlassMachine extends LookingGlassBE implements Tickable, EnergyIo, NamedScreenHandlerFactory {
 
     protected final MachineTier tier;
     protected double power, maxPower;
@@ -19,6 +22,7 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower) {
         super(type, invSize);
         this.tier = tier;
+        this.maxPower = baseMaxPower;
     }
 
 
@@ -69,34 +73,42 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     }
 
     @Override
+    public Text getDisplayName() {
+        return new TranslatableText(getCachedState().getBlock().getTranslationKey());
+    }
+
+    @Override
     public CompoundTag toTag(CompoundTag tag) {
         tag.putDouble("power", power);
+        tag.putDouble("maxPower", maxPower);
         return super.toTag(tag);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
-        power = tag.getDouble("energy");
+        power = tag.getDouble("power");
+        maxPower = tag.getDouble("maxPower");
         super.fromTag(state, tag);
     }
 
     @Override
     public void fromClientTag(CompoundTag tag) {
         power = tag.getDouble("power");
+        maxPower = tag.getDouble("maxPower");
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
         tag.putDouble("power", power);
+        tag.putDouble("maxPower", maxPower);
         return tag;
     }
 
     enum MachineTier {
         BASIC,
         ADVANCED,
-        ENDGAME,
-        QUARTZ,
         ELDEN,
-        SPECIAL
+        LUPREVAN,
+        ENDGAME,
     }
 }

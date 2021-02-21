@@ -1,18 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "group": "data_shard",
-  "ingredients": [
-    {
-      "item": "minecraft:glass"
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "rp ",
+    "pm ",
+    "   "
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:glass_pane"
     },
-    {
+    "r": {
       "item": "minecraft:redstone"
     },
-    {
+    "m": {
       "item": "minecraft:phantom_membrane"
     }
-  ],
+  },
   "result": {
-    "item": "lookingglass:data_shard"
+    "item": "patchouli:guide_book",
+    "data": {
+      "patchouli:book": "lookingglass:profunctor_opus"
+    }
   }
 }

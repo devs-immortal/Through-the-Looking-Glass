@@ -16,7 +16,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public class LookingGlassBE extends BlockEntity implements SidedInventory, InventoryWrapper, BlockEntityClientSerializable {
+public abstract class LookingGlassBE extends BlockEntity implements SidedInventory, InventoryWrapper, BlockEntityClientSerializable {
 
     protected final int offset = LookingGlassCommon.RANDOM.nextInt(20);
     protected DefaultedList<ItemStack> inventory;

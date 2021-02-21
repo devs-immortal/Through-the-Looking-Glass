@@ -25,7 +25,7 @@ public class EnergyProbeItem extends Item {
         if(io != null) {
                 if(!world.isClient()) {
                     double energy = io.getEnergy();
-                    context.getPlayer().sendMessage(new LiteralText((Double.isFinite(energy) ? Math.ceil(energy) : energy) + " Lu"), true);
+                    context.getPlayer().sendMessage(new LiteralText((Double.isFinite(energy) ? Math.round(energy) : energy) + " Lu"), true);
                 }
             return ActionResult.SUCCESS;
         }

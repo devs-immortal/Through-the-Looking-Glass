@@ -1,6 +1,18 @@
 {
   "name": "Profunctor Opus",
-  "landing_text": "Ex favilla et cinere, in altera parte erunt expecto DFU a te",
+  "landing_text": "The DFU is coming for you",
   "model": "lookingglass:profunctor_opus",
-  "version": ""
+  "creative_tab": "lookingglass.looking_items",
+  "book_texture": "lookingglass:textures/special/profunctor_opus_gui.png",
+  "filler_texture": "lookingglass:textures/special/profunctor_filler.png",
+  "crafting_texture": "lookingglass:textures/special/profunctor_crafting.png",
+  "text_color": "81FFC5",
+  "header_color": "D7F7FF",
+  "nameplate_color": "FFFFFF",
+  "link_color": "F881FF",
+  "link_hover_color": "FFB7F4",
+  "progress_bar_color": "FFB7F4",
+  "progress_bar_background": "60487D",
+  "version": 0,
+  "subtitle": "infdev edition"
 }
