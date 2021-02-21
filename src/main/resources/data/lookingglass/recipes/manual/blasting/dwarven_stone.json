@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "lookingglass:polished_whitestone"
+  },
+  "result": "lookingglass:whitestone_tile",
+  "experience": 0.2,
+  "cookingtime": 100
+}

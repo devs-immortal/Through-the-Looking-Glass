@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 
 import java.lang.reflect.Field;
 
-public class WarcrimeItem extends Item {
+public class HandPistonItem extends Item {
 
 
 
-    public WarcrimeItem(Settings settings) {
+    public HandPistonItem(Settings settings) {
         super(settings);
     }
 }
