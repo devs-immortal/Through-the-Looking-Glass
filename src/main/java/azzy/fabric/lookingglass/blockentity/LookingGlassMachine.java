@@ -16,13 +16,14 @@ import java.util.*;
 
 public abstract class LookingGlassMachine extends LookingGlassBE implements Tickable, EnergyIo, NamedScreenHandlerFactory {
 
-    protected final MachineTier tier;
-    protected double power, maxPower;
+    protected final MachineTier machineTier;
+    protected final double baseMaxPower;
+    protected double power;
 
     public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower) {
         super(type, invSize);
-        this.tier = tier;
-        this.maxPower = baseMaxPower;
+        this.machineTier = tier;
+        this.baseMaxPower = baseMaxPower;
     }
 
 
@@ -36,7 +37,7 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
         Collections.shuffle(io);
         for (EnergyIo energyIo : io) {
             if (energyIo.getEnergy() > 0 && energyIo.supportsExtraction()) {
-                double succ = energyIo.extract(maxPower, Simulation.SIMULATE);
+                double succ = energyIo.extract(getEnergyCapacity(), Simulation.SIMULATE);
                 double selfCap = insert(succ, Simulation.SIMULATE);
                 double transfer = succ - selfCap;
                 power += transfer;
@@ -49,9 +50,9 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     @Override
     public double insert(double amount, Simulation simulation) {
         if (simulation == Simulation.SIMULATE) {
-            return Math.max(0, amount - (maxPower - power));
+            return Math.max(0, amount - (getEnergyCapacity() - power));
         }
-        double remnant = Math.max(0, amount - (maxPower - power));
+        double remnant = Math.max(0, amount - (getEnergyCapacity() - power));
         power =  power + (amount - remnant);
         markDirty();
         return remnant;
@@ -59,7 +60,7 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
 
     @Override
     public double getEnergyCapacity() {
-        return maxPower;
+        return baseMaxPower;
     }
 
     @Override
@@ -80,35 +81,38 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         tag.putDouble("power", power);
-        tag.putDouble("maxPower", maxPower);
         return super.toTag(tag);
     }
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         power = tag.getDouble("power");
-        maxPower = tag.getDouble("maxPower");
         super.fromTag(state, tag);
     }
 
     @Override
     public void fromClientTag(CompoundTag tag) {
         power = tag.getDouble("power");
-        maxPower = tag.getDouble("maxPower");
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
         tag.putDouble("power", power);
-        tag.putDouble("maxPower", maxPower);
         return tag;
     }
 
-    enum MachineTier {
-        BASIC,
-        ADVANCED,
-        ELDEN,
-        LUPREVAN,
-        ENDGAME,
+    public enum MachineTier {
+        BASIC(0),
+        ADVANCED(1),
+        FINIS(2),
+        ELDEN(3),
+        LUPREVAN(3),
+        ENDGAME(4);
+
+        public final int tier;
+
+        MachineTier(int tier) {
+            this.tier = tier;
+        }
     }
 }

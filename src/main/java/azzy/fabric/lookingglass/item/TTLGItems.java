@@ -1,5 +1,7 @@
 package azzy.fabric.lookingglass.item;
 
+import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
+import azzy.fabric.lookingglass.util.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,9 +20,9 @@ public class TTLGItems {
     public static void init() {}
 
     //FoodComponents
-    private static final FoodComponent badNoms = new FoodComponent.Builder().alwaysEdible().hunger(2).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100), 1F).build();
-    private static final FoodComponent steelhead = new FoodComponent.Builder().meat().snack().hunger(3).saturationModifier(1F).build();
-    private static final FoodComponent shimmerfin = new FoodComponent.Builder().meat().hunger(8).saturationModifier(2F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 600, 3), 1F).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 600, 1), 1F).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200, 0), 1F).build();
+    private static final FoodComponent BAD_NOMS = new FoodComponent.Builder().alwaysEdible().hunger(2).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100), 1F).build();
+    private static final FoodComponent STEELHEAD = new FoodComponent.Builder().meat().snack().hunger(3).saturationModifier(1F).build();
+    private static final FoodComponent SHIMMERFIN = new FoodComponent.Builder().meat().hunger(8).saturationModifier(2F).alwaysEdible().statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 600, 3), 1F).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 600, 1), 1F).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 1200, 0), 1F).build();
 
     private static FabricItemSettings defaultSettings() {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS);
@@ -34,16 +36,20 @@ public class TTLGItems {
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(defaultSettings()));
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings()));
 
-    //Weapons
-    public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(steelhead)));
-    public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(shimmerfin)));
+    //Upgrades
+    public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.1, 1, 1.1, true, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
 
     //Materials
-    public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(badNoms)));
+    public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));
     public static final Item DWARVEN_CLAY = registerGeneratedItem("dwarven_clay", new Item(defaultSettings()));
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
+
+
+    //Weapons
+    public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));
+    public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);

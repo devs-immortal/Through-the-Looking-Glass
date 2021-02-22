@@ -3,11 +3,9 @@ package azzy.fabric.lookingglass.blockentity;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
@@ -23,7 +21,7 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
     private int progress;
 
     public PoweredFurnaceEntity() {
-        super(TTLGBlocks.POWERED_FURNACE_ENTITY, MachineTier.BASIC, 2, 16000);
+        super(TTLGBlocks.POWERED_FURNACE_ENTITY, MachineTier.BASIC, 6, 16000);
     }
 
     @Override
@@ -98,7 +96,7 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
                 case 0: return progress;
                 case 1: return 100;
                 case 2: return (int) Math.round(power);
-                case 3: return (int) maxPower;
+                case 3: return (int) baseMaxPower;
             }
             return 0;
         }
