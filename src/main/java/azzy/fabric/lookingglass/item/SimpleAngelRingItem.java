@@ -12,11 +12,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 // This ring gives creative flight when it's equipped.
-public class SimpleAngelRing extends TrinketItem {
+public class SimpleAngelRingItem extends TrinketItem {
     public static final AbilitySource ANGEL_RING = Pal.getAbilitySource(LookingGlassCommon.MODID, "simple_angel_ring");
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
-    public SimpleAngelRing(Settings settings) {
+    public SimpleAngelRingItem(Settings settings) {
         super(settings);
     }
 

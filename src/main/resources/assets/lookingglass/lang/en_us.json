@@ -78,6 +78,8 @@
 	"item.lookingglass.steelhead_trout": "Steelhead Trout",
 	"item.lookingglass.shimmerfin": "Prismatic Shimmerfin",
 	"item.lookingglass.fish_feed": "Fish Feed",
+	"item.lookingglass.simple_angel_ring": "Simple Angel Ring",
+	"item.lookingglass.advanced_angel_ring": "Advanced Angel Ring",
 	"item.lookingglass.angelRing.flightEnabled": "Flight Enabled",
 	"item.lookingglass.angelRing.flightDisabled": "Flight Disabled",
 	"label.lookingglass.glass.image_switch": "§aSwitched mode to: Image Display",

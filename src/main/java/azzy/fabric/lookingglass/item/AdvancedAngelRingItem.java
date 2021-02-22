@@ -19,11 +19,11 @@ import net.minecraft.world.World;
 // On use again, it will remove creative flight.  So you get flight without having to carry around the item.
 // The recipe cost will reflect the same.
 // For a simpler item that gives creative flight on equip, check out the SimpleAngelRing class.
-public class AdvancedAngelRing extends Item {
+public class AdvancedAngelRingItem extends Item {
     public static final AbilitySource ADVANCED_ANGEL_RING_ABILITY_SOURCE = Pal.getAbilitySource(LookingGlassCommon.MODID, "advanced_angel_ring");
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
-    public AdvancedAngelRing(Settings settings) {
+    public AdvancedAngelRingItem(Settings settings) {
         super(settings);
     }
 

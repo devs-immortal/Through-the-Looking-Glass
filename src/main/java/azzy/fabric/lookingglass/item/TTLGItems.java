@@ -21,7 +21,7 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 @SuppressWarnings("unused")
 public class TTLGItems {
 
-    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRing(advancedAngelRingSettings()));
+    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(advancedAngelRingSettings()));
 
     //FoodComponents
     private static final FoodComponent BAD_NOMS = new FoodComponent.Builder().alwaysEdible().hunger(2).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100), 1F).build();
@@ -32,7 +32,7 @@ public class TTLGItems {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS);
     }
 
-    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRing(simpleAngelRingSettings()));
+    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(simpleAngelRingSettings()));
 
     public static void init() {
         TrinketSlots.addSlot(SlotGroups.HAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
