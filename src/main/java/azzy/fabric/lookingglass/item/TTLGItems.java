@@ -3,11 +3,15 @@ package azzy.fabric.lookingglass.item;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.util.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
+import dev.emi.trinkets.api.SlotGroups;
+import dev.emi.trinkets.api.Slots;
+import dev.emi.trinkets.api.TrinketSlots;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -17,7 +21,7 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 @SuppressWarnings("unused")
 public class TTLGItems {
 
-    public static void init() {}
+    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRing(advancedAngelRingSettings()));
 
     //FoodComponents
     private static final FoodComponent BAD_NOMS = new FoodComponent.Builder().alwaysEdible().hunger(2).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100), 1F).build();
@@ -26,6 +30,13 @@ public class TTLGItems {
 
     private static FabricItemSettings defaultSettings() {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS);
+    }
+
+    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRing(simpleAngelRingSettings()));
+
+    public static void init() {
+        TrinketSlots.addSlot(SlotGroups.HAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
+        TrinketSlots.addSlot(SlotGroups.OFFHAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
     }
 
     private static FabricItemSettings eldenmetalSettings() {
@@ -45,6 +56,16 @@ public class TTLGItems {
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
+
+    // This guy is fireproof.
+    private static FabricItemSettings advancedAngelRingSettings() {
+        return new FabricItemSettings().group(ItemGroup.TOOLS).fireproof().maxCount(1);
+    }
+
+    // This guy is not fireproof.
+    private static FabricItemSettings simpleAngelRingSettings() {
+        return new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1);
+    }
 
 
     //Weapons

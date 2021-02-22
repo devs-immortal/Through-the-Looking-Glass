@@ -78,6 +78,8 @@
 	"item.lookingglass.steelhead_trout": "Steelhead Trout",
 	"item.lookingglass.shimmerfin": "Prismatic Shimmerfin",
 	"item.lookingglass.fish_feed": "Fish Feed",
+	"item.lookingglass.angelRing.flightEnabled": "Flight Enabled",
+	"item.lookingglass.angelRing.flightDisabled": "Flight Disabled",
 	"label.lookingglass.glass.image_switch": "§aSwitched mode to: Image Display",
 	"label.lookingglass.glass.item_switch": "§aSwitched mode to: Item Display",
 	"label.lookingglass.glass.sign_switch": "§aSwitched mode to: Sign",
@@ -97,4 +99,3 @@
 	"death.attack.forge": "%1$s found out that,§o surprisingly §r, stepping into the reality-piercing laser of pure energy is perhaps a bad idea.",
 	"death.attack.forge.player": "%1$s found out that,§o surprisingly §r, stepping into the reality-piercing laser of pure energy is perhaps a bad idea."
 }
-

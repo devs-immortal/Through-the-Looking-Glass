@@ -50,6 +50,14 @@ repositories {
 		name "Siphalor's Maven"
 		url "https://maven.siphalor.de"
 	}
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+	maven {
+		name = "NerdHubMC"
+		url = "https://maven.abusedmaster.xyz/"
+	}
 	jcenter()
 }
 
@@ -57,21 +65,17 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
 	modImplementation(include("io.github.cottonmc:LibGui:${project.libgui_version}"))
 	modImplementation( include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}"))
 	modImplementation( include( "vazkii.patchouli:Patchouli:${project.patchouli_version}"))
 	modImplementation( include("de.siphalor:nbtcrafting-1.16:2+"))
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
 	modRuntime "me.shedaniel:RoughlyEnoughItems:5.9.173"
-
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
-
-	//implementation 'com.github.TerraformersMC:ModMenu:v1.16.7'
-	//modCompile "grondag:canvas-mc116:1.0.+"
-
+	modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
+	include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
+	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 }
 
 processResources {
