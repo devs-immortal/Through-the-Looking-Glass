@@ -37,7 +37,7 @@ public class TTLGItems {
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings()));
 
     //Upgrades
-    public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.1, 1, 1.1, true, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
+    public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.1, 1, 1.1, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
 
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));

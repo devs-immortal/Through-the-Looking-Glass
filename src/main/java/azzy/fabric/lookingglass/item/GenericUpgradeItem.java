@@ -7,19 +7,17 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 
-public class GenericUpgradeItem extends Item implements ModifierProvider<BlockEntity> {
+public class GenericUpgradeItem extends Item implements ModifierProvider {
 
     private final LookingGlassMachine.MachineTier machineTier;
     private final AdditivityType additivity;
     private final double basePowerEff, baseStorageEff, baseSpeedEff;
-    private final boolean exponential;
 
-    public GenericUpgradeItem(Settings settings, double basePowerEff, double baseStorageEff, double baseSpeedEff, boolean exponential, AdditivityType additivity, LookingGlassMachine.MachineTier minMachineTier) {
+    public GenericUpgradeItem(Settings settings, double basePowerEff, double baseStorageEff, double baseSpeedEff, AdditivityType additivity, LookingGlassMachine.MachineTier minMachineTier) {
         super(settings);
         this.basePowerEff = basePowerEff;
         this.baseStorageEff = baseStorageEff;
         this.baseSpeedEff = baseSpeedEff;
-        this.exponential = exponential;
         this.machineTier = minMachineTier;
         this.additivity = additivity;
     }
@@ -27,9 +25,9 @@ public class GenericUpgradeItem extends Item implements ModifierProvider<BlockEn
     @Override
     public double getModifier(EffectType type) {
         switch (type) {
-            case POWER: return baseStorageEff * tier;
-            case SPEED: return baseSpeedEff * tier;
-            case STORE: return exponential ? Math.pow(basePowerEff, tier) : basePowerEff * tier;
+            case POWER: return baseStorageEff;
+            case SPEED: return baseSpeedEff;
+            case STORE: return basePowerEff;
             default: return 1;
         }
     }
