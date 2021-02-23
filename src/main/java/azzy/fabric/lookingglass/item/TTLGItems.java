@@ -67,6 +67,11 @@ public class TTLGItems {
         return new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1);
     }
 
+    // This guy is fireproof and insta-breaks.
+    public static FabricItemSettings angelBlockSettings() {
+        return new FabricItemSettings().group(ItemGroup.TOOLS).fireproof().maxCount(64);
+    }
+
 
     //Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));

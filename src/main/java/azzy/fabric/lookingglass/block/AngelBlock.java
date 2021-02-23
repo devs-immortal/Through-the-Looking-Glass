@@ -1,14 +1,22 @@
 package azzy.fabric.lookingglass.block;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.world.World;
 
 public class AngelBlock extends Block {
-    public static final Block EXAMPLE_ANGEL_BLOCK = new Block(FabricBlockSettings.of(Material.BAMBOO).breakInstantly());
-
     public AngelBlock(FabricBlockSettings settings) {
-        super(settings);
+        super(settings.breakInstantly());
+    }
+
+    public ActionResult onUse(World world, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if(!world.isClient) {
+
+        }
+        return ActionResult.SUCCESS;
     }
 }

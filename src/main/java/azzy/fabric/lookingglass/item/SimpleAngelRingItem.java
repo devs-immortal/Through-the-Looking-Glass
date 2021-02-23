@@ -28,13 +28,13 @@ public class SimpleAngelRingItem extends TrinketItem {
 
     @Override
     public void onEquip(PlayerEntity player, ItemStack stack) {
-        if (!player.getEntityWorld().isClient())
+        if (!player.getEntityWorld().isClient)
             ANGEL_RING.grantTo(player, VanillaAbilities.ALLOW_FLYING);
     }
 
     @Override
     public void onUnequip(PlayerEntity player, ItemStack stack) {
-        if (!player.getEntityWorld().isClient() && !player.isCreative() && !player.isSpectator()) {
+        if (!player.getEntityWorld().isClient && !player.isCreative() && !player.isSpectator()) {
             ANGEL_RING.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
         }
     }

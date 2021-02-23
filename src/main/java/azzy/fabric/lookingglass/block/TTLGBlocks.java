@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.*;
+import azzy.fabric.lookingglass.item.TTLGItems;
 import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
 import azzy.fabric.lookingglass.util.datagen.LootGen;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
@@ -138,7 +139,8 @@ public class TTLGBlocks {
     public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
-    public static final Block ANGEL_BLOCK = registerBlock("angel_block", new AngelBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).strength(4f, 50f).breakInstantly()), basicItem().fireproof());
+    public static final Block ANGEL_BLOCK = registerBlock("angel_block", new AngelBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).strength(4f, 50f).breakInstantly()), TTLGItems.angelBlockSettings());
+    public static final Block CURSED_EARTH_BLOCK = registerBlock("cursed_earth", new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(50f, 1200f).breakInstantly().ticksRandomly()), basicItem());
 
     //  BLOCK ENTITIES
     //Machines
