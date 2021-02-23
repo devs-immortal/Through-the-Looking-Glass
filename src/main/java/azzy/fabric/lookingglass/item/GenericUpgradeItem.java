@@ -10,24 +10,25 @@ import net.minecraft.item.Item;
 public class GenericUpgradeItem extends Item implements ModifierProvider {
 
     private final LookingGlassMachine.MachineTier machineTier;
-    private final AdditivityType additivity;
+    private final AdditivityType additivity, speedAdd;
     private final double basePowerEff, baseStorageEff, baseSpeedEff;
 
-    public GenericUpgradeItem(Settings settings, double basePowerEff, double baseStorageEff, double baseSpeedEff, AdditivityType additivity, LookingGlassMachine.MachineTier minMachineTier) {
+    public GenericUpgradeItem(Settings settings, double basePowerEff, double baseStorageEff, double baseSpeedEff, AdditivityType additivity, AdditivityType speedAdd, LookingGlassMachine.MachineTier minMachineTier) {
         super(settings);
         this.basePowerEff = basePowerEff;
         this.baseStorageEff = baseStorageEff;
         this.baseSpeedEff = baseSpeedEff;
         this.machineTier = minMachineTier;
         this.additivity = additivity;
+        this.speedAdd = speedAdd;
     }
 
     @Override
     public double getModifier(EffectType type) {
         switch (type) {
-            case POWER: return baseStorageEff;
+            case POWER: return basePowerEff;
             case SPEED: return baseSpeedEff;
-            case STORE: return basePowerEff;
+            case STORE: return baseStorageEff;
             default: return 1;
         }
     }
@@ -35,6 +36,11 @@ public class GenericUpgradeItem extends Item implements ModifierProvider {
     @Override
     public AdditivityType getAdditivityType() {
         return additivity;
+    }
+
+    @Override
+    public AdditivityType getSpeedAdditivityType() {
+        return speedAdd;
     }
 
     @Override

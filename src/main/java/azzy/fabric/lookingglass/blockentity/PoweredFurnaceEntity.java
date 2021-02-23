@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass.blockentity;
 import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -11,17 +12,20 @@ import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.state.property.Properties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class PoweredFurnaceEntity extends LookingGlassMachine implements PropertyDelegateHolder {
+import static net.minecraft.state.property.Properties.LIT;
+
+public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder {
 
     private SmeltingRecipe trackedRecipe;
     private int progress;
 
     public PoweredFurnaceEntity() {
-        super(TTLGBlocks.POWERED_FURNACE_ENTITY, MachineTier.BASIC, 6, 16000);
+        super(TTLGBlocks.POWERED_FURNACE_ENTITY, MachineTier.BASIC, 2, 100, 1000, 2);
     }
 
     @Override
@@ -35,15 +39,17 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
             else {
                 if(trackedRecipe.matches(this, world)) {
                     tickRecipeProgression();
+                    if(!getCachedState().get(LIT))
+                        world.setBlockState(pos, getCachedState().with(LIT, true));
                 }
                 else {
                     trackedRecipe = null;
                     progress = 0;
+                    if(getCachedState().get(LIT))
+                        world.setBlockState(pos, getCachedState().with(LIT, false));
                 }
             }
-            if(world.getTime() % 10 == 0) {
-                attemptPowerDraw();
-            }
+            attemptPowerDraw();
             markDirty();
             sync();
         }
@@ -51,7 +57,7 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
 
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
-            if(progress >= 100) {
+            if(progress >= getProcessTime()) {
                 ItemStack outSlot = inventory.get(1);
                 if(outSlot.isEmpty()) {
                     inventory.set(1, trackedRecipe.craft(this));
@@ -68,8 +74,9 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
                 }
             }
             else {
-                if(power - 2 > 0) {
-                    power -= 2;
+                double drain = getPowerUsage();
+                if(power - drain > 0) {
+                    power -= drain;
                     progress++;
                 }
                 else if(progress > 0) {
@@ -94,7 +101,7 @@ public class PoweredFurnaceEntity extends LookingGlassMachine implements Propert
         public int get(int index) {
             switch (index) {
                 case 0: return progress;
-                case 1: return 100;
+                case 1: return getProcessTime();
                 case 2: return (int) Math.round(power);
                 case 3: return (int) baseMaxPower;
             }

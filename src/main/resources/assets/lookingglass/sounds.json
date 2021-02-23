@@ -1,0 +1,25 @@
+{
+  "finis_impact": {
+    "sounds": [
+      "lookingglass:finis_impact",
+      "lookingglass:finis_impact_2",
+      "lookingglass:finis_impact_3"
+    ]
+  },
+  "finis_break": {
+    "sounds": [
+      "lookingglass:finis_break"
+    ]
+  },
+  "finis_fall": {
+    "sounds": [
+      "lookingglass:finis_fall"
+    ]
+  },
+  "finis_place": {
+    "sounds": [
+      "lookingglass:finis_place",
+      "lookingglass:finis_place_alt"
+    ]
+  }
+}

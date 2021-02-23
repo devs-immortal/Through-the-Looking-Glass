@@ -1,0 +1,9 @@
+{
+  "type": "lookingglass:induction",
+  "inputs": [
+    "minecraft:fire",
+    "minecraft:hay_block"
+  ],
+  "output": "minecraft:bread",
+  "count": 9
+}

@@ -31,7 +31,7 @@ public abstract class UpgradeableMachineGuiDescription extends SyncedGuiDescript
         root.add(new WBar(getBackground().lumenTexture, LUMEN_BAR_FULL, powerIndex, powerIndex + 1), 10, 20, 14, 50);
         for(int i = 0; i < 4; i++) {
             WItemSlot slot = WItemSlot.of(blockInventory, upgradeIndex + i);
-            slot.setFilter(stack -> stack.getItem() instanceof ModifierProvider);
+            slot.setFilter(stack -> stack.getItem() instanceof ModifierProvider && ((ModifierProvider) stack.getItem()).canEquip(this));
             root.add(slot, 135, 18 * (i + 1) - 9);
         }
 

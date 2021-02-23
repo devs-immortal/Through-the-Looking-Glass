@@ -24,6 +24,9 @@
     "client": [
       "azzy.fabric.lookingglass.LookingGlassClient"
     ],
+    "rei_plugins": [
+      "azzy.fabric.lookingglass.LookingGlassREIIntegration"
+    ],
     "mm:early_risers": [
       "azzy.fabric.lookingglass.LookingGlassEarlyRiser"
     ]

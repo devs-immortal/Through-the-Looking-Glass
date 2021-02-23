@@ -6,6 +6,7 @@
   "mixins": [
     "FishKillMixin",
     "LivingEntityLootMixin",
+    "RecipeMapAccessor",
     "TextureUnregister"
   ],
   "client": [

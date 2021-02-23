@@ -41,7 +41,7 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
                 double selfCap = insert(succ, Simulation.SIMULATE);
                 double transfer = succ - selfCap;
                 power += transfer;
-                energyIo.insert(transfer, Simulation.ACT);
+                energyIo.extract(transfer, Simulation.ACT);
             }
         }
         markDirty();

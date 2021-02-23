@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.*;
+import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import azzy.fabric.lookingglass.item.TTLGItems;
 import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
 import azzy.fabric.lookingglass.util.datagen.LootGen;
@@ -45,7 +46,7 @@ public class TTLGBlocks {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(Rarity.EPIC);
     }
     private static FabricItemSettings lategameItem() {
-        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(FINIS_RARITY).fireproof();
+        return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).rarity(FINIS_RARITY);
     }
 
     private static FabricItemSettings eldenItem() {
@@ -79,8 +80,11 @@ public class TTLGBlocks {
     private static FabricBlockSettings paleMachine() {
         return FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES, 1).strength(1f, 8f);
     }
+    private static FabricBlockSettings finisMachine() {
+        return FabricBlockSettings.of(Material.AGGREGATE).sounds(LookingGlassSounds.FINIS).breakByTool(FabricToolTags.PICKAXES, 4).strength(5f, 10f);
+    }
     private static FabricBlockSettings eldenMachine() {
-        return FabricBlockSettings.of(Material.METAL).sounds(ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
+        return FabricBlockSettings.of(Material.METAL).sounds(LookingGlassSounds.ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
     }
 
     //  BLOCKS
@@ -93,7 +97,8 @@ public class TTLGBlocks {
     public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), lategameItem());
     public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(basicMachine(BlockSoundGroup.STONE).nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicItem());
 
-    public static final Block POWERED_FURNACE_BLOCK = registerBlock("powered_furnace_block", new PoweredFurnaceBlock(dwarvenMachine()), basicItem());
+    public static final Block POWERED_FURNACE_BLOCK = registerBlock("powered_furnace", new PoweredFurnaceBlock(dwarvenMachine()), basicItem());
+    public static final Block ALLOY_FURNACE_BLOCK = registerBlock("alloy_furnace", new AlloyFurnaceBlock(dwarvenMachine()), basicItem());
 
     //Power
     public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), worldforgeItem());
@@ -137,7 +142,8 @@ public class TTLGBlocks {
     //Misc
     public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
     public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassCommon.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
+    public static final Block FINIS_BLOCK = TTLGBlocks.registerGeneratedBlock("finis_block", new Block(finisMachine()), null, null, lategameItem(), SingletType.BLOCK);
+    public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassSounds.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = registerBlock("angel_block", new AngelBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).strength(4f, 50f).breakInstantly()), TTLGItems.angelBlockSettings());
     public static final Block CURSED_EARTH_BLOCK = registerBlock("cursed_earth", new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(50f, 1200f).breakInstantly().ticksRandomly()), basicItem());
@@ -152,6 +158,7 @@ public class TTLGBlocks {
     public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
 
     public static final BlockEntityType<PoweredFurnaceEntity> POWERED_FURNACE_ENTITY = registerEntity("powered_furnace_entity", PoweredFurnaceEntity::new, POWERED_FURNACE_BLOCK);
+    public static final BlockEntityType<AlloyFurnaceEntity> ALLOY_FURNACE_ENTITY = registerEntity("alloy_furnace_entity", AlloyFurnaceEntity::new, ALLOY_FURNACE_BLOCK);
 
     //Power
     public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);
@@ -174,7 +181,8 @@ public class TTLGBlocks {
             return null;
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
-        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity, CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY);
+        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
+                CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY);
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {

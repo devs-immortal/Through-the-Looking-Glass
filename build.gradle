@@ -71,7 +71,7 @@ dependencies {
 	modImplementation( include( "vazkii.patchouli:Patchouli:${project.patchouli_version}"))
 	modImplementation( include("de.siphalor:nbtcrafting-1.16:2+"))
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
-	modRuntime "me.shedaniel:RoughlyEnoughItems:5.9.173"
+	modImplementation "me.shedaniel:RoughlyEnoughItems:5.9.173"
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
 	modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
 	include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"

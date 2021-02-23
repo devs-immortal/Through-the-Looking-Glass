@@ -1,0 +1,9 @@
+{
+  "parent": "lookingglass:base/machine_triside",
+  "textures": {
+    "front": "lookingglass:block/alloy_furnace",
+    "sides": "lookingglass:block/machine_side",
+    "up": "lookingglass:block/machine_top",
+    "down": "lookingglass:block/machine_base"
+  }
+}

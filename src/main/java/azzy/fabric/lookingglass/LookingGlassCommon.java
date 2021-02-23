@@ -6,6 +6,7 @@ import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.TTLGItems;
+import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
 import com.chocohead.mm.api.ClassTinkerers;
@@ -36,8 +37,6 @@ public class LookingGlassCommon implements ModInitializer {
 
 	public static final Metadata METADATA = new Metadata(MODID);
 
-	public static final BlockSoundGroup ELDENMETAL = new BlockSoundGroup(1.0F, 1.0F, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundEvents.BLOCK_SHROOMLIGHT_PLACE, SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, SoundEvents.BLOCK_RESPAWN_ANCHOR_AMBIENT, SoundEvents.BLOCK_BEACON_DEACTIVATE);
-
 	public static final Rarity FINIS_RARITY = ClassTinkerers.getEnum(Rarity.class, "FINIS");
 	public static final Rarity ELDENMETAL_RARITY = ClassTinkerers.getEnum(Rarity.class, "NULL");
 	public static final Rarity LUPREVAN_RARITY = ClassTinkerers.getEnum(Rarity.class, "DAWN");
@@ -49,7 +48,7 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_items"), () -> new ItemStack(TTLGItems.DATA_SHARD));
 
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
-	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = false, REGEN_BLOCKS = false, REGEN_LOOT = false;
+	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = true, REGEN_BLOCKS = true, REGEN_LOOT = true;
 
 	@Override
 	public void onInitialize() {
@@ -60,6 +59,7 @@ public class LookingGlassCommon implements ModInitializer {
 		TTLGConfiguredFeatures.init();
 		TTLGConfiguredFeatures.Registrar.init();
 		LookingGlassGUIs.initCommon();
+		LookingGlassRecipes.init();
 		GeneralNetworking.init();
 	}
 }

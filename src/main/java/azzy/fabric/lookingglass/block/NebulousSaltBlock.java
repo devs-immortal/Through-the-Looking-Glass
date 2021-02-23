@@ -47,7 +47,7 @@ public class NebulousSaltBlock extends Block{
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        int tries = random.nextInt(5);
+        int tries = random.nextInt(25);
         for(int i = 0; i <= tries; i++) {
             BlockPos endPos = pos.add((random.nextDouble() * 17) - 8, (random.nextDouble() * 33) - 16, (random.nextDouble() * 17) - 8);
             int chance = Math.abs(endPos.getManhattanDistance(pos)) / 3;

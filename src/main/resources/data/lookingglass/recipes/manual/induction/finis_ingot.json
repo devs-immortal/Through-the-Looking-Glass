@@ -1,0 +1,9 @@
+{
+  "type": "lookingglass:induction",
+  "inputs": [
+    "lookingglass:nebulous_halite",
+    "minecraft:obsidian",
+    "minecraft:purpur_block"
+  ],
+  "output": "lookingglass:celestial_amalgam"
+}

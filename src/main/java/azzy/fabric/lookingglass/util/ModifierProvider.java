@@ -13,6 +13,8 @@ public interface ModifierProvider {
 
     AdditivityType getAdditivityType();
 
+    AdditivityType getSpeedAdditivityType();
+
     boolean canEquip(UpgradeableMachineGuiDescription gui);
 
     LookingGlassMachine.MachineTier getMinMachineTier();
@@ -26,6 +28,6 @@ public interface ModifierProvider {
     enum AdditivityType {
         ADD,
         ADD_MULT,
-        ALL_MULT
+        EXP
     }
 }

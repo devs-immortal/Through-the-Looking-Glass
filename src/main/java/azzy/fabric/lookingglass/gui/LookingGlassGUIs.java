@@ -18,6 +18,7 @@ public class LookingGlassGUIs {
 
     //Dwarven Machines
     public static final ScreenHandlerType<PoweredFurnaceGuiDescription> POWERED_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "powered_furnace_gui"), (syncId, inventory) -> new PoweredFurnaceGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
+    public static final ScreenHandlerType<AlloyingFurnaceGuiDescription> ALLOYING_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "alloying_furnace_gui"), (syncId, inventory) -> new AlloyingFurnaceGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
 
     //Devices
     public static final ScreenHandlerType<CrateGuiDescription> CRATE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MODID, "crate_gui"), (syncId, inventory) -> new CrateGuiDescription(syncId, inventory, ScreenHandlerContext.EMPTY));
@@ -29,5 +30,6 @@ public class LookingGlassGUIs {
         ScreenRegistry.<CrateGuiDescription, CrateScreen>register(CRATE_HANDLER, (gui, inventory, title) -> new CrateScreen(gui, inventory.player, title));
         ScreenRegistry.<NewProjectorGuiDescription, NewProjectorScreen>register(PROJECTOR_HANDLER, (gui, inventory, title) -> new NewProjectorScreen(gui, inventory.player, title));
         ScreenRegistry.<PoweredFurnaceGuiDescription, PoweredFurnaceScreen>register(POWERED_FURNACE_HANDLER, (gui, inventory, title) -> new PoweredFurnaceScreen(gui, inventory.player, title));
+        ScreenRegistry.<AlloyingFurnaceGuiDescription, AlloyingFurnaceScreen>register(ALLOYING_FURNACE_HANDLER, (gui, inventory, title) -> new AlloyingFurnaceScreen(gui, inventory.player, title));
     }
 }
