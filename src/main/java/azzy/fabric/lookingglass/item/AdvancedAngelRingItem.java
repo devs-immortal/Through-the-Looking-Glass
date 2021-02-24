@@ -4,15 +4,11 @@ import azzy.fabric.lookingglass.LookingGlassCommon;
 import io.github.ladysnake.pal.AbilitySource;
 import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.MessageType;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
 // This Ring will have an expensive recipe.  This is really not a ring.  It's an item that on use, rewards the user with creative flight - forever.
@@ -21,7 +17,6 @@ import net.minecraft.world.World;
 // For a simpler item that gives creative flight on equip, check out the SimpleAngelRing class.
 public class AdvancedAngelRingItem extends Item {
     public static final AbilitySource ADVANCED_ANGEL_RING_ABILITY_SOURCE = Pal.getAbilitySource(LookingGlassCommon.MODID, "advanced_angel_ring");
-    private static final MinecraftClient client = MinecraftClient.getInstance();
 
     public AdvancedAngelRingItem(Settings settings) {
         super(settings);
@@ -34,11 +29,13 @@ public class AdvancedAngelRingItem extends Item {
             if (ADVANCED_ANGEL_RING_ABILITY_SOURCE.grants(user, VanillaAbilities.ALLOW_FLYING)) {
                 // If the item is giving flight, remove it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.revokeFrom(user, VanillaAbilities.ALLOW_FLYING);
-                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightDisabled"), Util.NIL_UUID);
+                // TODO:  Message to client HUD via networking.
+//                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightDisabled"), Util.NIL_UUID);
             } else {
                 // Otherwise, grant it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.grantTo(user, VanillaAbilities.ALLOW_FLYING);
-                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightEnabled"), Util.NIL_UUID);
+                // TODO:  Message to client HUD via networking.
+//                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightEnabled"), Util.NIL_UUID);
             }
         }
 

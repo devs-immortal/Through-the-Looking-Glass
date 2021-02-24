@@ -2,10 +2,10 @@ package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class AngelBlockItem extends BlockItem {
-    public AngelBlockItem(Block angelBlock, Item.Settings angelBlockSettings) {
+    public AngelBlockItem(Block angelBlock, FabricItemSettings angelBlockSettings) {
         super(angelBlock, angelBlockSettings);
     }
 

@@ -12,7 +12,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -30,6 +29,7 @@ public class LookingGlassItems {
     private static FabricItemSettings defaultSettings() {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS);
     }
+
     public static void init() {
         //TrinketSlots.addSlot(SlotGroups.HAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
         TrinketSlots.addSlot(SlotGroups.OFFHAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
@@ -71,7 +71,8 @@ public class LookingGlassItems {
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
 
     //Registry shenanigans
-    public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof().maxCount(64)));
+    public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof()));
+    public static final Item CURSED_EARTH_BLOCK = registerItem("cursed_earth", new CursedEarthBlockItem(LookingGlassBlocks.CURSED_EARTH_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);
@@ -79,7 +80,7 @@ public class LookingGlassItems {
 
     private static Item registerGeneratedItem(String name, Item item) {
         Identifier id = new Identifier(MODID, name);
-        if(REGEN_ITEMS)
+        if (REGEN_ITEMS)
             ModelJsonGen.genItemJson(METADATA, id);
         return Registry.register(Registry.ITEM, id, item);
     }

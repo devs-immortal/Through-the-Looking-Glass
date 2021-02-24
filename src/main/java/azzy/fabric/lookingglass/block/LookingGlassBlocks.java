@@ -146,7 +146,7 @@ public class LookingGlassBlocks {
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassSounds.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakInstantly()));
-    public static final Block CURSED_EARTH_BLOCK = registerBlock("cursed_earth", new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(50f, 1200f).breakInstantly().ticksRandomly()), basicItem());
+    public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
 
     //  BLOCK ENTITIES
     //Machines

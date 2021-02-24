@@ -1,7 +1,6 @@
 {
-  "variants": {
-    "": {
-      "model": "minecraft:block/grass"
-    }
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "lookingglass:block/polished_whitestone"
   }
 }
