@@ -73,9 +73,8 @@ dependencies {
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
 	modImplementation "me.shedaniel:RoughlyEnoughItems:5.9.173"
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
-	modImplementation "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
-	include "io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"
-	modImplementation "dev.emi:trinkets:${project.trinkets_version}"
+	modImplementation(include("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"))
+	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))
 }
 
 processResources {
