@@ -21,17 +21,16 @@ public class AngelBlockItem extends BlockItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient)
-            return super.use(world, user, hand);
-
         ItemStack itemStack = user.getStackInHand(hand);
 
-        HitResult result = user.raycast(2 + user.getAttributeValue(ReachEntityAttributes.REACH), 1f, false);
-        Vec3d hitVec = result.getPos();
-        BlockPos hitPos = new BlockPos(hitVec.x, hitVec.y, hitVec.z);
+        if (!world.isClient) {
+            HitResult result = user.raycast(2 + user.getAttributeValue(ReachEntityAttributes.REACH), 1f, false);
+            Vec3d hitVec = result.getPos();
+            BlockPos hitPos = new BlockPos(hitVec.x, hitVec.y, hitVec.z);
 
-        world.setBlockState(hitPos, LookingGlassBlocks.ANGEL_BLOCK.getDefaultState());
-        itemStack.decrement(1);
+            world.setBlockState(hitPos, LookingGlassBlocks.ANGEL_BLOCK.getDefaultState());
+            itemStack.decrement(1);
+        }
 
         return TypedActionResult.success(itemStack);
     }
