@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.item;
 
+import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.util.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
@@ -63,6 +64,7 @@ public class TTLGItems {
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
+    public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(TTLGBlocks.ANGEL_BLOCK, angelBlockSettings()));
 
     // This guy is fireproof.
     private static FabricItemSettings advancedAngelRingSettings() {
