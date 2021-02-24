@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.item;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.util.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
@@ -20,9 +20,7 @@ import net.minecraft.util.registry.Registry;
 import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 
 @SuppressWarnings("unused")
-public class TTLGItems {
-
-    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(advancedAngelRingSettings()));
+public class LookingGlassItems {
 
     //FoodComponents
     private static final FoodComponent BAD_NOMS = new FoodComponent.Builder().alwaysEdible().hunger(2).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100), 1F).build();
@@ -32,11 +30,8 @@ public class TTLGItems {
     private static FabricItemSettings defaultSettings() {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS);
     }
-
-    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(simpleAngelRingSettings()));
-
     public static void init() {
-        TrinketSlots.addSlot(SlotGroups.HAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
+        //TrinketSlots.addSlot(SlotGroups.HAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
         TrinketSlots.addSlot(SlotGroups.OFFHAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
     }
 
@@ -51,6 +46,9 @@ public class TTLGItems {
     //Tools
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(defaultSettings()));
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings()));
+    public static final Item BASE_RING = registerGeneratedItem("ring", new Item(defaultSettings().rarity(Rarity.UNCOMMON)));
+    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
+    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(LUPREVAN_RARITY).fireproof().maxCount(1)));
 
     //Upgrades
     public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.2, 1, 0.95, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
@@ -58,33 +56,22 @@ public class TTLGItems {
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));
     public static final Item DWARVEN_CLAY = registerGeneratedItem("dwarven_clay", new Item(defaultSettings()));
+    public static final Item RED_SILICON_INGOT = registerGeneratedItem("red_silicon_ingot", new Item(defaultSettings()));
+    public static final Item ROSE_GOLD_INGOT = registerGeneratedItem("rose_gold_ingot", new Item(defaultSettings()));
+    public static final Item ROSE_GOLD_NUGGET = registerGeneratedItem("rose_gold_nugget", new Item(defaultSettings()));
     public static final Item CELESTIAL_AMALGAM = registerGeneratedItem("celestial_amalgam", new Item(genericSettings(FINIS_RARITY)));
     public static final Item FINIS_INGOT = registerGeneratedItem("finis_ingot", new Item(genericSettings(FINIS_RARITY)));
     public static final Item FINIS_NUGGET = registerGeneratedItem("finis_nugget", new Item(genericSettings(FINIS_RARITY)));
     public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
     public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
-    public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(TTLGBlocks.ANGEL_BLOCK, angelBlockSettings()));
-
-    // This guy is fireproof.
-    private static FabricItemSettings advancedAngelRingSettings() {
-        return new FabricItemSettings().group(ItemGroup.TOOLS).fireproof().maxCount(1);
-    }
-
-    // This guy is not fireproof.
-    private static FabricItemSettings simpleAngelRingSettings() {
-        return new FabricItemSettings().group(ItemGroup.TOOLS).maxCount(1);
-    }
-
-    // This guy is fireproof and insta-breaks.
-    public static FabricItemSettings angelBlockSettings() {
-        return new FabricItemSettings().group(ItemGroup.TOOLS).fireproof().maxCount(64);
-    }
-
 
     //Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
+
+    //Registry shenanigans
+    public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof().maxCount(64)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);

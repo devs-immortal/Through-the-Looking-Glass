@@ -1,0 +1,14 @@
+{
+  "type": "lookingglass:alloying",
+  "inputA": [
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "inputB": [
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "output": "lookingglass:red_silicon_ingot"
+}

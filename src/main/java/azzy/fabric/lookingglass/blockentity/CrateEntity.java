@@ -1,8 +1,7 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.gui.CrateGuiDescription;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 public class CrateEntity extends LookingGlassBE implements NamedScreenHandlerFactory {
 
     public CrateEntity() {
-        super(TTLGBlocks.CRATE_ENTITY, 117);
+        super(LookingGlassBlocks.CRATE_ENTITY, 117);
     }
 
     @Override

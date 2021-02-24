@@ -1,15 +1,10 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.gui.CrateGuiDescription;
 import azzy.fabric.lookingglass.gui.NewProjectorGuiDescription;
-import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.InventoryWrapper;
 import azzy.fabric.lookingglass.util.Syncable;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,7 +14,6 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -27,11 +21,10 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
-import static azzy.fabric.lookingglass.block.TTLGBlocks.PROJECTORENTITY;
+import static azzy.fabric.lookingglass.block.LookingGlassBlocks.PROJECTORENTITY;
 
 
 public class ProjectorEntity extends BlockEntity implements BlockEntityClientSerializable, InventoryWrapper, PropertyDelegateHolder, ExtendedScreenHandlerFactory, Syncable {

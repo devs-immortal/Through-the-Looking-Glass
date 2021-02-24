@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractLookingGlassRecipeCategory<R extends LookingGlassRecipe<? extends LookingGlassBE>> implements RecipeCategory<LookingGlassRecipeDisplay<R>> {
+public abstract class AbstractLookingGlassRecipeCategory<R extends LookingGlassRecipe<?>> implements RecipeCategory<LookingGlassRecipeDisplay<R>> {
 
     private final LookingGlassRecipeType<R> recipeType;
     private final EntryStack logo;

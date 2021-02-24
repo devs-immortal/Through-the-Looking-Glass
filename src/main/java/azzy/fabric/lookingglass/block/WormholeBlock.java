@@ -18,7 +18,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import static azzy.fabric.lookingglass.item.TTLGItems.DATA_SHARD;
+import static azzy.fabric.lookingglass.item.LookingGlassItems.DATA_SHARD;
 
 public class WormholeBlock extends LookingGlassBlock implements BlockEntityProvider {
 

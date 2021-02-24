@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sgs",
+    "rpr",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:smooth_stone"
+    },
+    "p": {
+      "item": "minecraft:ender_pearl"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "r": {
+      "item": "lookingglass:rose_gold_ingot"
+    }
+  },
+  "result": {
+    "item": "lookingglass:block_inductor"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "drd",
+    "rgr",
+    "drd"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:dwarven_machine_core"
+  }
+}

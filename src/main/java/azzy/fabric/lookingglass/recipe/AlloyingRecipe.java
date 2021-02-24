@@ -1,10 +1,9 @@
 package azzy.fabric.lookingglass.recipe;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -15,9 +14,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
@@ -57,7 +54,7 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
     @Override
     public ItemStack getRecipeKindIcon() {
-        return new ItemStack(TTLGBlocks.ALLOY_FURNACE_BLOCK);
+        return new ItemStack(LookingGlassBlocks.ALLOY_FURNACE_BLOCK);
     }
 
     @Override

@@ -6,17 +6,11 @@ import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.BlockEntityMover;
 import azzy.fabric.lookingglass.util.FalseInventory;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
-import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -56,7 +50,7 @@ public class BlockInductorBlock extends AbstractInductorBlock implements FalseIn
                 ((AbstractTesseractBlock) state.getBlock()).activate(world, probePos, facing, pos);
                 return;
             }
-            if(state.getHardness(world, probePos) < 0.0F || world.getBlockState(probePos.offset(facing)).isOf(TTLGBlocks.INTERMINAL_CORE) || state.isOf(TTLGBlocks.INTERMINAL_CORE) || !border.contains(probePos)) {
+            if(state.getHardness(world, probePos) < 0.0F || world.getBlockState(probePos.offset(facing)).isOf(LookingGlassBlocks.INTERMINAL_CORE) || state.isOf(LookingGlassBlocks.INTERMINAL_CORE) || !border.contains(probePos)) {
                 max = i - 1;
                 break;
             }

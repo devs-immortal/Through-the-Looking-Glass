@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "data_shard",
+  "ingredients": [
+    {
+      "item": "lookingglass:finis_block"
+    }
+  ],
+  "result": {
+    "item": "lookingglass:finis_ingot",
+    "count": 9
+  }
+}

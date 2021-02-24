@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static azzy.fabric.lookingglass.block.TTLGBlocks.WORMHOLE_ENTITY;
+import static azzy.fabric.lookingglass.block.LookingGlassBlocks.WORMHOLE_ENTITY;
 
 public class WormholeEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable, MovementSensitiveBlockEntity {
 

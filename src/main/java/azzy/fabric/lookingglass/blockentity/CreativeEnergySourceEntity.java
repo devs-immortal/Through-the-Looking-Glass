@@ -1,11 +1,10 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlock;
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import dev.technici4n.fasttransferlib.api.Simulation;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -15,7 +14,7 @@ public class CreativeEnergySourceEntity extends BlockEntity implements EnergyIo 
     public static final ItemStack REDSPEEN = new ItemStack(Items.REDSTONE_BLOCK);
 
     public CreativeEnergySourceEntity() {
-        super(TTLGBlocks.CREATIVE_ENERGY_SOURCE_ENTITY);
+        super(LookingGlassBlocks.CREATIVE_ENERGY_SOURCE_ENTITY);
     }
 
     @Override

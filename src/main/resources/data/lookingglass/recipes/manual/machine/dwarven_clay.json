@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "nnn",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gravel"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "c": {
+      "item": "minecraft:charcoal"
+    }
+  },
+  "result": {
+    "item": "lookingglass:dwarven_clay",
+    "count": 4
+  }
+}

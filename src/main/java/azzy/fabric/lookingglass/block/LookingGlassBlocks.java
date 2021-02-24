@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 
 @SuppressWarnings("unused")
-public class TTLGBlocks {
+public class LookingGlassBlocks {
 
     private static FabricItemSettings basicItem() {
         return new FabricItemSettings().group(LOOKINGGLASS_BLOCKS);
@@ -68,7 +68,7 @@ public class TTLGBlocks {
     }
 
     private static FabricBlockSettings dwarvenMachine() {
-        return FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.STONE).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(3.25f, 12f);
+        return FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.NETHER_BRICKS).breakByTool(FabricToolTags.PICKAXES, 2).requiresTool().strength(3.25f, 12f);
     }
 
     private static FabricBlockSettings hardenedMachine() {
@@ -95,6 +95,7 @@ public class TTLGBlocks {
     public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), lategameItem());
     public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(basicMachine(BlockSoundGroup.STONE).nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicItem());
 
+    public static final Block DWARVEN_MACHINE_CORE = registerGeneratedBlock("dwarven_machine_core", new Block(dwarvenMachine()), null, null, basicItem(), SingletType.BLOCK);
     public static final Block POWERED_FURNACE_BLOCK = registerBlock("powered_furnace", new PoweredFurnaceBlock(dwarvenMachine()), basicItem());
     public static final Block ALLOY_FURNACE_BLOCK = registerBlock("alloy_furnace", new AlloyFurnaceBlock(dwarvenMachine()), basicItem());
 
@@ -119,7 +120,6 @@ public class TTLGBlocks {
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
     public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHITESTONE_TILE.asItem(), false);
-    public static final Block DWARVEN_STONE = registerGeneratedBlock("dwarven_stone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).resistance(500).materialColor(DyeColor.GRAY).sounds(BlockSoundGroup.NETHER_BRICKS)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicItem(), Items.POLISHED_BASALT, false);
     public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicItem());
 
@@ -138,9 +138,11 @@ public class TTLGBlocks {
     public static final Block ANNULATION_CORE_2B = registerBlock("annulation_core_2b", new SpecialAnnullationCoreBlock(eldenMachine()), eldenItem());
 
     //Misc
+    public static final Block DWARVEN_STONE = registerGeneratedBlock("dwarven_stone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).resistance(500).materialColor(DyeColor.GRAY).sounds(BlockSoundGroup.NETHER_BRICKS)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block ROSE_GOLD_BLOCK = registerGeneratedBlock("rose_gold_block", new Block(FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).materialColor(DyeColor.PINK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block NEBULOUS_HALITE = registerBlock("nebulous_halite", new NebulousHaliteBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(9).postProcess((a, b, c) -> true).strength(25, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block NEBULOUS_SALTS = TTLGBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
-    public static final Block FINIS_BLOCK = TTLGBlocks.registerGeneratedBlock("finis_block", new Block(finisMachine()), null, null, lategameItem(), SingletType.BLOCK);
+    public static final Block NEBULOUS_SALTS = LookingGlassBlocks.registerBlock("nebulous_salts", new NebulousSaltBlock(FabricBlockSettings.of(Material.GLASS).sounds(BlockSoundGroup.GLASS).emissiveLighting((a, b, c) -> true).requiresTool().breakByTool(FabricToolTags.PICKAXES, 3).nonOpaque().luminance(7).postProcess((a, b, c) -> true).strength(20, 500)), basicItem().fireproof().group(LOOKINGGLASS_BLOCKS));
+    public static final Block FINIS_BLOCK = LookingGlassBlocks.registerGeneratedBlock("finis_block", new Block(finisMachine()), null, null, lategameItem(), SingletType.BLOCK);
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassSounds.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakInstantly()));
@@ -152,8 +154,8 @@ public class TTLGBlocks {
     public static final BlockEntityType<ChunkAnchorEntity> CHUNKLOADER_ENTITY = registerEntity("chunkloader_entity", ChunkAnchorEntity::new, CHUNKLOADERBLOCK);
     public static final BlockEntityType<WormholeEntity> WORMHOLE_ENTITY = registerEntity("wormhole_entity", WormholeEntity::new, WORMHOLEBLOCK);
     public static final BlockEntityType<SpecialAnnulationCoreEntity> SPECIAL_ANNULATION_CORE_ENTITY = registerEntity("special_annulation_core_entity", SpecialAnnulationCoreEntity::new, ANNULATION_CORE_2B);
-    public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.VACUUM_HOPPER_ENTITY, 9, 20, 4), VACUUM_HOPPER_BLOCK);
-    public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(TTLGBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
+    public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", () -> new VacuumHopperEntity(LookingGlassBlocks.VACUUM_HOPPER_ENTITY, 9, 20, 4), VACUUM_HOPPER_BLOCK);
+    public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(LookingGlassBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
 
     public static final BlockEntityType<PoweredFurnaceEntity> POWERED_FURNACE_ENTITY = registerEntity("powered_furnace_entity", PoweredFurnaceEntity::new, POWERED_FURNACE_BLOCK);
     public static final BlockEntityType<AlloyFurnaceEntity> ALLOY_FURNACE_ENTITY = registerEntity("alloy_furnace_entity", AlloyFurnaceEntity::new, ALLOY_FURNACE_BLOCK);

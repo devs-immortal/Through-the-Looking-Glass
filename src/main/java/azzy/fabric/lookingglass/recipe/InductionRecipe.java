@@ -1,16 +1,15 @@
 package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.BlockInductorBlock;
-import azzy.fabric.lookingglass.block.TTLGBlocks;
-import azzy.fabric.lookingglass.util.FalseInventory;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.BlockItem;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -21,11 +20,13 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
-public class InductionRecipe implements Recipe<BlockInductorBlock> {
+public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
 
     private final Block[] inputs;
     private final ItemStack output;
@@ -59,7 +60,7 @@ public class InductionRecipe implements Recipe<BlockInductorBlock> {
 
     @Override
     public ItemStack getRecipeKindIcon() {
-        return new ItemStack(TTLGBlocks.BLOCK_INDUCTOR_BLOCK);
+        return new ItemStack(LookingGlassBlocks.BLOCK_INDUCTOR_BLOCK);
     }
 
     @Override
@@ -78,8 +79,18 @@ public class InductionRecipe implements Recipe<BlockInductorBlock> {
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public LookingGlassRecipeType<?> getType() {
         return LookingGlassRecipes.INDUCTION_RECIPE;
+    }
+
+    @Override
+    public List<Ingredient> getInputs() {
+        return Arrays.stream(inputs).map(Ingredient::ofItems).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemStack> getOutputs() {
+        return Collections.singletonList(getOutput());
     }
 
     public static class InductionRecipeSerializer implements RecipeSerializer<InductionRecipe> {

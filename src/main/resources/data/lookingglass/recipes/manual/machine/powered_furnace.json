@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "bcb",
+    "rrr"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bricks"
+    },
+    "c": {
+      "item": "lookingglass:dwarven_machine_core"
+    },
+    "r": {
+      "item": "lookingglass:red_silicon_ingot"
+    }
+  },
+  "result": {
+    "item": "lookingglass:powered_furnace"
+  }
+}

@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class LookingGlassRecipeDisplay<R extends LookingGlassRecipe<? extends LookingGlassBE>> implements RecipeDisplay {
+public class LookingGlassRecipeDisplay<R extends LookingGlassRecipe<?>> implements RecipeDisplay {
 
     private final R recipe;
     private final List<List<EntryStack>> inputs;
