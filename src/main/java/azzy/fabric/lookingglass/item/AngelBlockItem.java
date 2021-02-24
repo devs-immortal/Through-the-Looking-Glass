@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.item;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +28,7 @@ public class AngelBlockItem extends BlockItem {
             Vec3d hitVec = result.getPos();
             BlockPos hitPos = new BlockPos(hitVec.x, hitVec.y, hitVec.z);
 
-            world.setBlockState(hitPos, TTLGBlocks.ANGEL_BLOCK.getDefaultState());
+            world.setBlockState(hitPos, LookingGlassBlocks.ANGEL_BLOCK.getDefaultState());
             itemStack.decrement(1);
         }
 
