@@ -1,0 +1,14 @@
+{
+  "type": "lookingglass:alloying",
+  "inputA": [
+    {
+      "item": "minecraft:rose_bush"
+    }
+  ],
+  "inputB": [
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "output": "lookingglass:rose_gold_ingot"
+}

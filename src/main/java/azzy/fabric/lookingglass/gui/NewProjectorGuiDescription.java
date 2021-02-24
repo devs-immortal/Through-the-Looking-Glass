@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.gui;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
@@ -14,7 +13,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class NewProjectorGuiDescription extends SyncedGuiDescription {

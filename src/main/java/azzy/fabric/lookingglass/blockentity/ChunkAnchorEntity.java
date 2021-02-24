@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import static azzy.fabric.lookingglass.block.TTLGBlocks.CHUNKLOADER_ENTITY;
+import static azzy.fabric.lookingglass.block.LookingGlassBlocks.CHUNKLOADER_ENTITY;
 
 public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity, BlockEntityClientSerializable, InventoryWrapper, Tickable {
 

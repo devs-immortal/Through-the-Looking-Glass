@@ -1,8 +1,7 @@
 package azzy.fabric.lookingglass.feature;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.block.TTLGBlocks;
-import azzy.fabric.lookingglass.item.TTLGItems;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -37,7 +36,7 @@ public class TTLGConfiguredFeatures {
         BOULDER_FEATURE = register("boulder", new BoulderFeature(SingleStateFeatureConfig.CODEC));
 
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));
-        WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(TTLGBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(1));
+        WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(1));
     }
 
     private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
@@ -50,8 +49,8 @@ public class TTLGConfiguredFeatures {
     }
 
     public static class Configs {
-        public static final RandomPatchFeatureConfig END_SALTS_CONFIG = new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(TTLGBlocks.NEBULOUS_SALTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).blacklist(ImmutableSet.of(TTLGBlocks.NEBULOUS_SALTS.getDefaultState())).spreadZ(128).spreadX(128).spreadY(16).tries(5000).build();
-        public static final TreeFeatureConfig END_HALITE_CRYSTAL_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(TTLGBlocks.NEBULOUS_HALITE.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(0), UniformIntDistribution.of(0), 0), new LargeOakTrunkPlacer(5, 3, 7), new TwoLayersFeatureSize(3, 0, 0)).build();
+        public static final RandomPatchFeatureConfig END_SALTS_CONFIG = new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(LookingGlassBlocks.NEBULOUS_SALTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).blacklist(ImmutableSet.of(LookingGlassBlocks.NEBULOUS_SALTS.getDefaultState())).spreadZ(128).spreadX(128).spreadY(16).tries(5000).build();
+        public static final TreeFeatureConfig END_HALITE_CRYSTAL_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(LookingGlassBlocks.NEBULOUS_HALITE.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(0), UniformIntDistribution.of(0), 0), new LargeOakTrunkPlacer(5, 3, 7), new TwoLayersFeatureSize(3, 0, 0)).build();
 
         public static final RandomFeatureConfig END_SALT_FLATS_CONFIG = new RandomFeatureConfig(
                 ImmutableList.of(Feature.TREE.configure(END_HALITE_CRYSTAL_CONFIG).withChance(0.1F)), Feature.RANDOM_PATCH.configure(END_SALTS_CONFIG)

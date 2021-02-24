@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.FishBreederEntity;
-import azzy.fabric.lookingglass.item.TTLGItems;
+import azzy.fabric.lookingglass.item.LookingGlassItems;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TurtleEggBlock;
@@ -19,7 +19,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +53,7 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
                 Iterator<BlockPos> iterator = BlockPos.iterate(pos.add(-6, -6, -6), pos.add(6, 0, 6)).iterator();
                 int egg = 0;
                 while(iterator.hasNext()) {
-                    if(world.getBlockState(iterator.next()).isOf(TTLGBlocks.SALMON_EGGS))
+                    if(world.getBlockState(iterator.next()).isOf(LookingGlassBlocks.SALMON_EGGS))
                         egg++;
                 }
                 int salmon = 0, cod = 0, tropical = 0;
@@ -73,7 +72,7 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
                                     spawnPos = spawnPos.down();
                                 }
                                 if(valid) {
-                                    world.setBlockState(spawnPos, TTLGBlocks.SALMON_EGGS.getDefaultState().with(TurtleEggBlock.EGGS, random.nextInt(4) + 1).with(WATERLOGGED, true));
+                                    world.setBlockState(spawnPos, LookingGlassBlocks.SALMON_EGGS.getDefaultState().with(TurtleEggBlock.EGGS, random.nextInt(4) + 1).with(WATERLOGGED, true));
                                 }
                             }
                         }
@@ -105,7 +104,7 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
                         }
                     }
                 }
-                world.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(TTLGItems.FISH_FEED)), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 40, 0.2, 0, 0.2, 0.1);
+                world.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(LookingGlassItems.FISH_FEED)), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 40, 0.2, 0, 0.2, 0.1);
                 world.playSound(null, pos, SoundEvents.ENTITY_FOX_EAT, SoundCategory.BLOCKS, 1F, 2F);
             }
         }

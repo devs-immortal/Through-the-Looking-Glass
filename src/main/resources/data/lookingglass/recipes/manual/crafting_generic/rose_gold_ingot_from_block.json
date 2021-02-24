@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "data_shard",
+  "ingredients": [
+    {
+      "item": "lookingglass:rose_gold_block"
+    }
+  ],
+  "result": {
+    "item": "lookingglass:rose_gold_ingot",
+    "count": 9
+  }
+}

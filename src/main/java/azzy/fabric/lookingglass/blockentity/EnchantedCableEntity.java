@@ -1,9 +1,9 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 
 public class EnchantedCableEntity extends PowerPipeEntity {
     public EnchantedCableEntity() {
-        super(TTLGBlocks.ENCHANTED_CABLE_ENTITY, 2048);
+        super(LookingGlassBlocks.ENCHANTED_CABLE_ENTITY, 2048);
     }
 }

@@ -37,7 +37,7 @@ public abstract class AbstractInductorBlock extends FacingBlock {
     }
 
     public static void tryInduct(World world, BlockState inductor, BlockPos pos) {
-        if(!world.isClient() && inductor.isOf(TTLGBlocks.BLOCK_INDUCTOR_BLOCK) && isPowered(world, inductor.get(FACING), inductor, pos)) {
+        if(!world.isClient() && inductor.isOf(LookingGlassBlocks.BLOCK_INDUCTOR_BLOCK) && isPowered(world, inductor.get(FACING), inductor, pos)) {
             ((AbstractInductorBlock) inductor.getBlock()).internalInduct(world, inductor, inductor.get(FACING), pos);
         }
     }

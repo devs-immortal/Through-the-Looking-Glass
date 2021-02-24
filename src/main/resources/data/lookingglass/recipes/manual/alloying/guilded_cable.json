@@ -2,12 +2,12 @@
   "type": "lookingglass:alloying",
   "inputA": [
     {
-      "item": "lookingglass:silicon_cable"
+      "item": "lookingglass:rose_gold_nugget"
     }
   ],
   "inputB": [
     {
-      "item": "minecraft:gold_nugget"
+      "item": "lookingglass:silicon_cable"
     }
   ],
   "output": "lookingglass:guilded_cable"

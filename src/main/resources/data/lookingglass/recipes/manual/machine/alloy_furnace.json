@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "fcf",
+    "bib"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bricks"
+    },
+    "c": {
+      "item": "lookingglass:dwarven_machine_core"
+    },
+    "i": {
+      "item": "minecraft:cauldron"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "lookingglass:alloy_furnace"
+  }
+}

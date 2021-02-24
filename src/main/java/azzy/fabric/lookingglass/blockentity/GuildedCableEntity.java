@@ -1,9 +1,9 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 
 public class GuildedCableEntity extends PowerPipeEntity {
     public GuildedCableEntity() {
-        super(TTLGBlocks.GUILDED_CABLE_ENTITY, 512);
+        super(LookingGlassBlocks.GUILDED_CABLE_ENTITY, 512);
     }
 }

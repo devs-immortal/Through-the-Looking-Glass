@@ -3,8 +3,6 @@ package azzy.fabric.lookingglass.block;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.SalmonEntity;
-import net.minecraft.entity.passive.TurtleEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -43,7 +41,7 @@ public class SalmonEggBlock extends TurtleEggBlock implements Waterloggable {
     public static boolean isValidGround(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         BlockState upState = world.getBlockState(pos.up());
-    return (world.isWater(pos.up()) || upState.isOf(TTLGBlocks.SALMON_EGGS) && upState.get(WATERLOGGED)) && (state.isIn(BlockTags.SAND) || state.isIn(BlockTags.CORAL_BLOCKS) || state.isOf(Blocks.GRAVEL));
+    return (world.isWater(pos.up()) || upState.isOf(LookingGlassBlocks.SALMON_EGGS) && upState.get(WATERLOGGED)) && (state.isIn(BlockTags.SAND) || state.isIn(BlockTags.CORAL_BLOCKS) || state.isOf(Blocks.GRAVEL));
     }
 
     @Override

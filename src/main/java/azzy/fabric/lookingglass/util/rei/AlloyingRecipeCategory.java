@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.util.rei;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import me.shedaniel.math.Point;
@@ -16,7 +16,7 @@ import java.util.List;
 public class AlloyingRecipeCategory extends AbstractLookingGlassRecipeCategory<AlloyingRecipe> {
 
     public AlloyingRecipeCategory() {
-        super(LookingGlassRecipes.ALLOYING_RECIPE, EntryStack.create(TTLGBlocks.ALLOY_FURNACE_BLOCK));
+        super(LookingGlassRecipes.ALLOYING_RECIPE, EntryStack.create(LookingGlassBlocks.ALLOY_FURNACE_BLOCK));
     }
 
     @Override

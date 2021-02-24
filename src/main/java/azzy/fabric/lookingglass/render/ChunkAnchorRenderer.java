@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.blockentity.ChunkAnchorEntity;
-import azzy.fabric.lookingglass.item.TTLGItems;
+import azzy.fabric.lookingglass.item.LookingGlassItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> {
 
-    private static final ItemStack item = new ItemStack(TTLGItems.DATA_SHARD);
+    private static final ItemStack item = new ItemStack(LookingGlassItems.DATA_SHARD);
 
     public ChunkAnchorRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);

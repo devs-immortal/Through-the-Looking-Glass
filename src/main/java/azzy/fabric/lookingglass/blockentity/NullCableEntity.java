@@ -1,9 +1,9 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 
 public class NullCableEntity extends PowerPipeEntity {
     public NullCableEntity() {
-        super(TTLGBlocks.NULL_CABLE_ENTITY, 32768);
+        super(LookingGlassBlocks.NULL_CABLE_ENTITY, 32768);
     }
 }

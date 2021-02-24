@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iii",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "lookingglass:finis_nugget"
+    }
+  },
+  "result": {
+    "item": "lookingglass:finis_ingot"
+  }
+}

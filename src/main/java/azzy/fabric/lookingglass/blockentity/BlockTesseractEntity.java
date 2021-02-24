@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.block.TTLGBlocks;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.render.TesseractRenderable;
 import azzy.fabric.lookingglass.util.BlockEntityMover;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -27,7 +27,7 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
     private BlockPos movePos;
 
     public BlockTesseractEntity() {
-        super(TTLGBlocks.BLOCK_TESSERACT_ENTITY);
+        super(LookingGlassBlocks.BLOCK_TESSERACT_ENTITY);
     }
 
     public void moveBlock(Direction direction) {
@@ -52,10 +52,10 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
             if(world.isAir(target) && !(moveHardness < 0F)) {
                 action = PushAction.MOVE;
             }
-            else if(moveBlock == TTLGBlocks.INTERMINAL_CORE || targetState.isOf(TTLGBlocks.INTERMINAL_CORE) || moveHardness < 0F) {
+            else if(moveBlock == LookingGlassBlocks.INTERMINAL_CORE || targetState.isOf(LookingGlassBlocks.INTERMINAL_CORE) || moveHardness < 0F) {
                 action = PushAction.TRANSFER;
             }
-            else if(moveBlock == TTLGBlocks.ANNULATION_CORE_1A || (moveHardness > targetHardness && targetHardness > 0f)) {
+            else if(moveBlock == LookingGlassBlocks.ANNULATION_CORE_1A || (moveHardness > targetHardness && targetHardness > 0f)) {
                 action = PushAction.TARBREAK;
             }
             else if(targetHardness < 0F || moveHardness < targetHardness) {
