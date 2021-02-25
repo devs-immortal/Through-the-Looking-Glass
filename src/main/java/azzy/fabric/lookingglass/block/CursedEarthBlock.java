@@ -1,16 +1,27 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.collection.WeightedPicker;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.world.SpawnHelper;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.SpawnSettings;
 
+import java.util.List;
 import java.util.Random;
 
-@SuppressWarnings("deprecated")
+@SuppressWarnings({"deprecated"})
 public class CursedEarthBlock extends LookingGlassBlock {
     public CursedEarthBlock(FabricBlockSettings settings) {
         super(settings, false);
@@ -35,7 +46,6 @@ public class CursedEarthBlock extends LookingGlassBlock {
      */
     protected void doTick(ServerWorld world, BlockPos pos, Random random) {
         int light = world.getLightLevel(pos.up());
-        System.out.println("Reached here...: '" + light + "'.");
 
         // Light level 14 is torch.
         // Light level 15 is fire, lava, etc.
@@ -73,8 +83,8 @@ public class CursedEarthBlock extends LookingGlassBlock {
                         BlockPos tmpPos = pos.add(x, y, z);
                         Block neighbor = world.getBlockState(tmpPos).getBlock();
                         if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.GRASS_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
-                            if (random.nextInt(50) == 0) {
-                                // 1 in 50 chance to turn neighbor into cursed earth.
+                            if (random.nextInt(10) == 0) {
+                                // 1 in 10 chance to turn neighbor into cursed earth.
                                 world.setBlockState(tmpPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                             }
                         }
@@ -91,7 +101,39 @@ public class CursedEarthBlock extends LookingGlassBlock {
             turnCursedEarthToSlag(world, pos, random);
         }
 
-        // TODO 4:  Spawn random mobs as required
+        // TODO 4:  Spawn random mobs as required when it's dark.
+        if (light <= 7) {
+            Box boundingBox = new Box(pos);
+            boundingBox = boundingBox.expand(7, 7, 7);
+            List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox);
+
+            if (entitiesAround.size() > 8) {
+                // Too many entities nearby.  Do nothing.
+                return;
+            }
+
+            spawnMobs(world, pos, random);
+
+            System.out.println(entitiesAround);
+        }
+    }
+
+    private void spawnMobs(ServerWorld world, BlockPos pos, Random random) {
+        Biome biome = world.getBiome(pos);
+        SpawnSettings spawnSettings = biome.getSpawnSettings();
+        List<SpawnSettings.SpawnEntry> list = spawnSettings.getSpawnEntry(SpawnGroup.MONSTER);
+
+        if (!list.isEmpty()) {
+            SpawnSettings.SpawnEntry spawnEntry = WeightedPicker.getRandom(random, list);
+
+            try {
+                if (spawnEntry.type.isSummonable() && SpawnHelper.canSpawn(SpawnRestriction.getLocation(spawnEntry.type), world, pos.up(), spawnEntry.type)) {
+                    spawnEntry.type.spawn(world, null, null, null, pos, SpawnReason.COMMAND, true, false);
+                }
+            } catch (Exception spawnException) {
+                LookingGlassCommon.FFLog.debug("Error spawning new mob.");
+            }
+        }
     }
 
     private void turnCursedEarthToSlag(ServerWorld world, BlockPos pos, Random random) {
