@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "lookingglass:block/large_whitestone_bricks"
+    "side": "lookingglass:block/angel_block_side",
+    "end": "lookingglass:block/angel_block_top"
   }
 }
