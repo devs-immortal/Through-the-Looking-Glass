@@ -2,6 +2,8 @@ package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,11 +11,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.WeightedPicker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.SpawnHelper;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.SpawnSettings;
 
@@ -24,14 +28,40 @@ import java.util.UUID;
 @SuppressWarnings({"deprecated"})
 public class CursedEarthBlock extends LookingGlassBlock {
     public static final UUID CURSE_UUID = UUID.fromString("A223344A-B55B-C66C-D77D-E8888888888E");
+
     public CursedEarthBlock(FabricBlockSettings settings) {
         super(settings, false);
     }
 
+    /**
+     * Called on random growth ticks.  Default growth tick value is 3.  To test, increase the growth tick to, say, 1000 using /gamerule randomTickSpeed 1000
+     *
+     * @param state  Block State
+     * @param world  Serverside world
+     * @param pos    Block Position
+     * @param random Random Object
+     */
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.isClient)
             doTick(world, pos, random);
+    }
+
+    /**
+     * Called to render the block on the client side.
+     *
+     * @param state  Block State
+     * @param world  Client side world
+     * @param pos    Block position
+     * @param random Random Object
+     */
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        // Spawn some particles
+        for (int i = 0; i < 5; i++) {
+            world.addParticle(ParticleTypes.SMOKE, pos.getX() + random.nextDouble(), pos.getY() + 1.01, pos.getZ() + random.nextDouble(), 0, 0, 0);
+        }
     }
 
     /**

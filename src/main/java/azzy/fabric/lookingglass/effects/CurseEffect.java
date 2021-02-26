@@ -1,8 +1,6 @@
 package azzy.fabric.lookingglass.effects;
 
 import com.google.common.collect.Maps;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -27,7 +25,6 @@ public class CurseEffect extends StatusEffect {
         return this;
     }
 
-    @Environment(EnvType.CLIENT)
     public Map<EntityAttribute, EntityAttributeModifier> getAttributeModifiers() {
         return this.attributeModifiers;
     }
