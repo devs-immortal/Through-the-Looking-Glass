@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -38,8 +39,9 @@ public class AlloyFurnaceBlock extends HorizontalMachineBlock implements BlockEn
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(!world.isClient() && !player.isSneaking()) {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+        if(!player.isSneaking()) {
+            if(!world.isClient())
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
             return ActionResult.SUCCESS;
         }
         return super.onUse(state, world, pos, player, hand, hit);

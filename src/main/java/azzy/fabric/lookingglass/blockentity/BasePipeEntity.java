@@ -32,13 +32,15 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
 
     @Override
     public void tick() {
-        if(IO.isEmpty())
+        if(!world.isClient()) {
+            if(IO.isEmpty())
+                revalidateConnections();
+            Set<T> ioSet = checkConnections();
+            connectionTest();
             revalidateConnections();
-        Set<T> ioSet = checkConnections();
-        connectionTest();
-        revalidateConnections();
-        if(!ioSet.isEmpty());
-        performTransfers(ioSet);
+            if(!ioSet.isEmpty())
+                performTransfers(ioSet);
+        }
     }
 
     public Set<T> checkConnections() {

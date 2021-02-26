@@ -107,6 +107,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         compoundTag.putDouble("scale", scale);
 
         compoundTag.putInt("state", displayState);
+        compoundTag.putString("color", color);
         compoundTag.putString("sign", sign);
         compoundTag.putString("image", url);
         return compoundTag;
@@ -130,6 +131,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         scale = compoundTag.getInt("scale");
 
         displayState = compoundTag.getInt("state");
+        color = compoundTag.getString("color");
         sign = compoundTag.getString("sign");
         url = compoundTag.getString("image");
     }

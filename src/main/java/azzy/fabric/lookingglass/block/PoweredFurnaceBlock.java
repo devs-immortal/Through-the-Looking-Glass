@@ -40,8 +40,9 @@ public class PoweredFurnaceBlock extends HorizontalMachineBlock implements Block
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(!world.isClient() && !player.isSneaking()) {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+        if(!player.isSneaking()) {
+            if(!world.isClient())
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
             return ActionResult.SUCCESS;
         }
         return super.onUse(state, world, pos, player, hand, hit);
