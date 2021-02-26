@@ -59,8 +59,11 @@ public class CursedEarthBlock extends LookingGlassBlock {
     @Environment(EnvType.CLIENT)
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         // Spawn some particles
-        for (int i = 0; i < 5; i++) {
-            world.addParticle(ParticleTypes.SMOKE, pos.getX() + random.nextDouble(), pos.getY() + 1.01, pos.getZ() + random.nextDouble(), 0, 0, 0);
+        // Need to check if I need the @Environment annotation AND the world.isClient check below.  For now, keeping it for additional safety.
+        if(world.isClient) {
+            for (int i = 0; i < 5; i++) {
+                world.addParticle(ParticleTypes.SMOKE, pos.getX() + random.nextDouble(), pos.getY() + 1.01, pos.getZ() + random.nextDouble(), 0, 0, 0);
+            }
         }
     }
 
