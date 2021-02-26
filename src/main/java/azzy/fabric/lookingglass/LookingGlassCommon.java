@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass;
 
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
@@ -47,6 +48,7 @@ public class LookingGlassCommon implements ModInitializer {
 
 		LookingGlassBlocks.init();
 		LookingGlassItems.init();
+		LookingGlassEffects.init();
 		TTLGConfiguredFeatures.init();
 		TTLGConfiguredFeatures.Registrar.init();
 		LookingGlassGUIs.initCommon();

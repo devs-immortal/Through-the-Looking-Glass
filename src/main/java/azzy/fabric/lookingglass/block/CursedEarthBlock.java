@@ -1,15 +1,14 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.*;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.WeightedPicker;
 import net.minecraft.util.math.BlockPos;
@@ -20,9 +19,11 @@ import net.minecraft.world.biome.SpawnSettings;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @SuppressWarnings({"deprecated"})
 public class CursedEarthBlock extends LookingGlassBlock {
+    public static final UUID CURSE_UUID = UUID.fromString("A223344A-B55B-C66C-D77D-E8888888888E");
     public CursedEarthBlock(FabricBlockSettings settings) {
         super(settings, false);
     }
@@ -105,7 +106,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
         if (light <= 7) {
             Box boundingBox = new Box(pos);
             boundingBox = boundingBox.expand(7, 7, 7);
-            List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox);
+            List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox, Entity::isLiving);
 
             if (entitiesAround.size() > 8) {
                 // Too many entities nearby.  Do nothing.
@@ -113,11 +114,17 @@ public class CursedEarthBlock extends LookingGlassBlock {
             }
 
             spawnMobs(world, pos, random);
-
-            System.out.println(entitiesAround);
         }
     }
 
+    /**
+     * This method spawns the cursed mobs and adds the curse effect to them.
+     * The effect makes the mobs stronger, faster, healthier... and die in 60 seconds :)
+     *
+     * @param world  The server world instance
+     * @param pos    The position of the cursed earth
+     * @param random The random object
+     */
     private void spawnMobs(ServerWorld world, BlockPos pos, Random random) {
         Biome biome = world.getBiome(pos);
         SpawnSettings spawnSettings = biome.getSpawnSettings();
@@ -128,10 +135,15 @@ public class CursedEarthBlock extends LookingGlassBlock {
 
             try {
                 if (spawnEntry.type.isSummonable() && SpawnHelper.canSpawn(SpawnRestriction.getLocation(spawnEntry.type), world, pos.up(), spawnEntry.type)) {
-                    spawnEntry.type.spawn(world, null, null, null, pos, SpawnReason.COMMAND, true, false);
+                    LivingEntity spawnedEntity = (LivingEntity) spawnEntry.type.spawn(world, null, null, null, pos, SpawnReason.COMMAND, true, false);
+                    if (spawnedEntity == null) {
+                        throw new Exception("Unable to spawn mob at position (x, y, z): (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + ").");
+                    }
+                    // Set the duration at which the entity will die.
+                    spawnedEntity.addStatusEffect(new StatusEffectInstance(LookingGlassEffects.CURSE_EFFECT, 1200));
                 }
             } catch (Exception spawnException) {
-                LookingGlassCommon.FFLog.debug("Error spawning new mob.");
+                LookingGlassCommon.FFLog.debug("Error spawning new mob.", spawnException);
             }
         }
     }
