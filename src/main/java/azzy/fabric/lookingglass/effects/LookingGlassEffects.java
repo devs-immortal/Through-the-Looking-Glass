@@ -18,7 +18,7 @@ public class LookingGlassEffects {
     }
 
     public static StatusEffect registerCurseEffect(String id) {
-        StatusEffect curseEffect = new CurseEffect(StatusEffectType.NEUTRAL, 0xd66f00);
+        StatusEffect curseEffect = new CurseEffect(StatusEffectType.NEUTRAL, 0x280d04);
         curseEffect = curseEffect.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, CursedEarthBlock.CURSE_UUID.toString(), 1.0D, EntityAttributeModifier.Operation.ADDITION);
         curseEffect = curseEffect.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, CursedEarthBlock.CURSE_UUID.toString(), 1.5D, EntityAttributeModifier.Operation.MULTIPLY_BASE);
         curseEffect = curseEffect.addAttributeModifier(EntityAttributes.GENERIC_MAX_HEALTH, CursedEarthBlock.CURSE_UUID.toString(), 1.2D, EntityAttributeModifier.Operation.MULTIPLY_BASE);

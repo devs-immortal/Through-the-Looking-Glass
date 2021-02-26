@@ -117,7 +117,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
                         BlockPos tmpPos = pos.add(x, y, z);
                         Block neighbor = world.getBlockState(tmpPos).getBlock();
                         if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.GRASS_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
-                            if (random.nextInt(10) == 0) {
+                            if (random.nextInt(5) == 0) {
                                 // 1 in 10 chance to turn neighbor into cursed earth.
                                 world.setBlockState(tmpPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                             }
