@@ -52,11 +52,10 @@ public class CurseEffect extends StatusEffect {
      */
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        // This method kills the entity.  It's more elegant than calling LivingEntity.kill() method which stupidly applies
-        // a OUT_OF_WORLD damage to the entity.  The parent Entity.kill() method does what I'm doing here, which is
-        // to simply call remove();
-        entity.kill();
+        // This method kills the entity.  First, it tries to remove them elegantly, without them dropping any items.
+        // If that fails, it goes ahead and applies an OUT_OF_WORLD damage to kill them dead.
+        entity.remove();
         if (entity.isAlive())
-            entity.remove();
+            entity.kill();
     }
 }
