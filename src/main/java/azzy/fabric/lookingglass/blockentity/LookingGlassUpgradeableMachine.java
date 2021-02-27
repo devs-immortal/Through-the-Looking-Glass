@@ -69,6 +69,14 @@ public abstract class LookingGlassUpgradeableMachine extends LookingGlassMachine
         }
         storage *= addMult;
         storage = Math.pow(storage, allMult);
+
+        if(power > storage) {
+            power = storage;
+            if(!world.isClient())
+                sync();
+            markDirty();
+        }
+
         return storage;
     }
 

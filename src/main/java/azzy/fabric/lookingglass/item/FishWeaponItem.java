@@ -1,19 +1,16 @@
 package azzy.fabric.lookingglass.item;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.core.jmx.Server;
-import org.jetbrains.annotations.Nullable;
 
 public class FishWeaponItem extends SwordItem {
 
     private final boolean divine;
 
     public FishWeaponItem(boolean divine, int attackDamage, Settings settings) {
-        super(TTLGToolMaterials.FISH, attackDamage, -2.2F, settings);
+        super(LookingGlassToolMaterials.FISH, attackDamage, -2.2F, settings);
         this.divine = divine;
     }
 

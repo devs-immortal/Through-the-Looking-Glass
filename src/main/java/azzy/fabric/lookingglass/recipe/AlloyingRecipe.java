@@ -34,7 +34,9 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
     @Override
     public boolean matches(AlloyFurnaceEntity inv, World world) {
-        return (inputA.test(inv.getStack(0)) ^ inputA.test(inv.getStack(1))) && (inputB.test(inv.getStack(0)) ^ inputB.test(inv.getStack(1)));
+        ItemStack a = inv.getStack(0);
+        ItemStack b = inv.getStack(1);
+        return ((inputA.test(a)) ^ (inputA.test(b))) && ((inputB.test(a)) ^ (inputB.test(b)));
     }
 
     @Override

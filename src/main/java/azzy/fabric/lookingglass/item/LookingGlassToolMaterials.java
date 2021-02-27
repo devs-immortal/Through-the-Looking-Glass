@@ -7,7 +7,7 @@ import net.minecraft.util.Lazy;
 
 import java.util.function.Supplier;
 
-public enum  TTLGToolMaterials implements ToolMaterial {
+public enum LookingGlassToolMaterials implements ToolMaterial {
     FISH(-1, 2645, 3.5F, 0.0F, 30, () -> {
         return Ingredient.fromTag(ItemTags.FISHES);
     });
@@ -19,7 +19,7 @@ public enum  TTLGToolMaterials implements ToolMaterial {
     private final int enchantability;
     private final Lazy<Ingredient> repairIngredient;
 
-    TTLGToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    LookingGlassToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;

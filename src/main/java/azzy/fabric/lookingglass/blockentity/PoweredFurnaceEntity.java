@@ -101,7 +101,7 @@ public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine impleme
                 case 0: return progress;
                 case 1: return getProcessTime();
                 case 2: return (int) Math.round(power);
-                case 3: return (int) baseMaxPower;
+                case 3: return (int) getEnergyCapacity();
             }
             return 0;
         }
