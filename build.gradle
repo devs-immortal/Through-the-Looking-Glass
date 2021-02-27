@@ -58,6 +58,7 @@ repositories {
 		name = "NerdHubMC"
 		url = "https://maven.abusedmaster.xyz/"
 	}
+	maven { url "https://jitpack.io" }
 	jcenter()
 }
 
@@ -75,6 +76,7 @@ dependencies {
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
 	modImplementation(include("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"))
 	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))
+	modImplementation(include("com.github.badasintended:wthit:${project.WTHIT_version}"))
 }
 
 processResources {

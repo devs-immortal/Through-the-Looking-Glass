@@ -76,6 +76,7 @@ public class LookingGlassItems {
     //Registry shenanigans
     public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof()));
     public static final Item CURSED_EARTH_BLOCK = registerItem("cursed_earth", new CursedEarthBlockItem(LookingGlassBlocks.CURSED_EARTH_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item WOODEN_SPIKE_BLOCK = registerItem("wooden_spike", new WoodenSpikeBlockItem(LookingGlassBlocks.WOODEN_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);

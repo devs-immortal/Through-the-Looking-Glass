@@ -147,6 +147,7 @@ public class LookingGlassBlocks {
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SHROOMLIGHT).breakInstantly()));
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
+    public static final Block WOODEN_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "wooden_spike"), new WoodenSpikeBlock(FabricBlockSettings.copyOf(Blocks.OAK_WOOD)));
 
     //  BLOCK ENTITIES
     //Machines
