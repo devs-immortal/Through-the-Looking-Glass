@@ -102,6 +102,7 @@
 	"item.lookingglass.angelRing.flightEnabled": "Flight Enabled",
 	"item.lookingglass.angelRing.flightDisabled": "Flight Disabled",
 	"item.lookingglass.goldenlasso.hostile_mob": "Golden lasso only works on passive mobs",
+	"item.lookingglass.goldenlasso.peaceful": "This world is too peaceful!",
 	"label.lookingglass.glass.image_switch": "§aSwitched mode to: Image Display",
 	"label.lookingglass.glass.item_switch": "§aSwitched mode to: Item Display",
 	"label.lookingglass.glass.sign_switch": "§aSwitched mode to: Sign",

@@ -7,6 +7,7 @@ import io.github.ladysnake.pal.VanillaAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -29,11 +30,11 @@ public class AdvancedAngelRingItem extends Item {
             if (ADVANCED_ANGEL_RING_ABILITY_SOURCE.grants(user, VanillaAbilities.ALLOW_FLYING)) {
                 // If the item is giving flight, remove it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.revokeFrom(user, VanillaAbilities.ALLOW_FLYING);
-//                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightDisabled"), Util.NIL_UUID);
+                user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
             } else {
                 // Otherwise, grant it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.grantTo(user, VanillaAbilities.ALLOW_FLYING);
-//                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightEnabled"), Util.NIL_UUID);
+                user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
             }
         }
 

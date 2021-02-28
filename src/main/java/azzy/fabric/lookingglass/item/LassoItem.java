@@ -21,6 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,6 +57,14 @@ public class LassoItem extends Item {
         // Don't bother playing on the client side.  We live on the server side.
         if (genericWorld.isClient)
             return ActionResult.PASS;
+
+        if (genericWorld.getDifficulty() == Difficulty.PEACEFUL) {
+            if (context.getPlayer() == null)
+                return ActionResult.FAIL;
+
+            context.getPlayer().sendMessage(new TranslatableText("item.lookingglass.goldenlasso.peaceful"), true);
+            return ActionResult.FAIL;
+        }
 
         ServerWorld world = (ServerWorld) genericWorld;
         ItemStack itemStack = context.getStack();
