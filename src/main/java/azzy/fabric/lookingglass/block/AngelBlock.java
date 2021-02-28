@@ -5,6 +5,6 @@ import net.minecraft.block.Block;
 
 public class AngelBlock extends Block {
     public AngelBlock(FabricBlockSettings settings) {
-        super(settings.breakInstantly());
+        super(settings);
     }
 }

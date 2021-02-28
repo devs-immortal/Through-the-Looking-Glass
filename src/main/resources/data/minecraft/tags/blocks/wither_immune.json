@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "lookingglass:angel_block"
+    "lookingglass:diamond_spike",
+    "lookingglass:netherite_spike"
   ]
 }

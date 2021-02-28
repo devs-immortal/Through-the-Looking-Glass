@@ -96,7 +96,7 @@ public class SpikesBlock extends LookingGlassBlock {
         } else if (this == LookingGlassBlocks.IRON_SPIKE_BLOCK) {
             // Iron spikes cause magic damage - 4 for now.
             entity.damage(DamageSource.MAGIC, damage);
-        } else if (this == LookingGlassBlocks.DIAMOND_SPIKE_BLOCK) {
+        } else if ((this == LookingGlassBlocks.DIAMOND_SPIKE_BLOCK) || (this == LookingGlassBlocks.NETHERITE_SPIKE_BLOCK)) {
             // Diamond spikes and above cause player damage.
             if ((fakePlayer == null) || (fakePlayerEntity == null)) {
                 fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));

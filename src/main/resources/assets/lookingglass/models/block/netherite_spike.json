@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/base_spikes",
+  "textures": {
+    "all": "lookingglass:block/diamond_spike"
+  }
+}
