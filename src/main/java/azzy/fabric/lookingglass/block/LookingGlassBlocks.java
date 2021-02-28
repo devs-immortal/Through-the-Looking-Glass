@@ -150,9 +150,9 @@ public class LookingGlassBlocks {
     // Wooden spikes cause 1 non-lethal magic damage.
     public static final Block WOODEN_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "wooden_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OAK_WOOD), 1));
     // Iron spikes do 4 magic damage.
-    public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).strength(50f, 1200f), 4));
+    public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 4));
     // Diamond spikes do 7 player damage.
-    public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.DIAMOND_BLOCK).strength(50f, 2000f), 7));
+    public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 7));
 
     //  BLOCK ENTITIES
     //Machines
