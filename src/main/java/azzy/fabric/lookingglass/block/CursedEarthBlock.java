@@ -138,7 +138,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
         if (light <= 7) {
             Box boundingBox = new Box(pos);
             boundingBox = boundingBox.expand(7, 7, 7);
-            List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox, Entity::isLiving);
+            List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox, Entity::isAlive);
 
             if (entitiesAround.size() > 8) {
                 // Too many entities nearby.  Do nothing.
