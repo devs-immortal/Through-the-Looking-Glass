@@ -57,7 +57,7 @@ public class LookingGlassItems {
     public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.2, 0, 0.95, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
     public static final Item BASIC_ENERGY_STORAGE_UPGRADE = registerGeneratedItem("basic_energy_storage_upgrade", new GenericUpgradeItem(defaultSettings(), 1, 0.5, 1, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
     public static final Item BASIC_ENERGY_USAGE_UPGRADE = registerGeneratedItem("basic_energy_usage_upgrade", new GenericUpgradeItem(defaultSettings(), 0.9, 0, 1.05, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
-    public static final Item FREEZER_UPGRADE_ITEM = registerGeneratedItem("freezer_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), LookingGlassRecipes.FREEZING_RECIPE, PoweredFurnaceGuiDescription.class, 2.0, 0, 0.5, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD));
+    public static final Item FREEZER_UPGRADE_ITEM = registerGeneratedItem("freezer_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), LookingGlassRecipes.FREEZING_RECIPE, PoweredFurnaceGuiDescription.class, 2.0, 0, 4.0, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD));
 
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));
