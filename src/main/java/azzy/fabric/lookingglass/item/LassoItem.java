@@ -71,7 +71,6 @@ public class LassoItem extends Item {
             // Some issue with this mob.  Reset the lasso.
             LookingGlassCommon.FFLog.warn("Unable to spawn mob: '" + mobType + "'.");
             itemStack.removeSubTag(MOB_KEY);
-            // TODO:  Reset the render for the lasso to make it empty again.
             return ActionResult.FAIL;
         }
         EntityType newMobEntityType = Registry.ENTITY_TYPE.get(mobTypeId);
@@ -138,7 +137,6 @@ public class LassoItem extends Item {
         stackTag.putString(MOB_MAX_HEALTH, decimalFormat.format(maxHealth));
 
         entity.remove();
-        // TODO:  Change the lasso's notification to show the captured mob details (type, health, max health, etc.)
         return ActionResult.SUCCESS;
     }
 

@@ -29,12 +29,10 @@ public class AdvancedAngelRingItem extends Item {
             if (ADVANCED_ANGEL_RING_ABILITY_SOURCE.grants(user, VanillaAbilities.ALLOW_FLYING)) {
                 // If the item is giving flight, remove it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.revokeFrom(user, VanillaAbilities.ALLOW_FLYING);
-                // TODO:  Message to client HUD via networking.
 //                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightDisabled"), Util.NIL_UUID);
             } else {
                 // Otherwise, grant it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.grantTo(user, VanillaAbilities.ALLOW_FLYING);
-                // TODO:  Message to client HUD via networking.
 //                client.inGameHud.addChatMessage(MessageType.GAME_INFO, new TranslatableText("item.lookingglass.angelRing.flightEnabled"), Util.NIL_UUID);
             }
         }

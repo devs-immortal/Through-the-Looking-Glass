@@ -135,7 +135,6 @@ public class CursedEarthBlock extends LookingGlassBlock {
             turnCursedEarthToSlag(world, pos, random);
         }
 
-        // TODO 4:  Spawn random mobs as required when it's dark.
         if (light <= 7) {
             Box boundingBox = new Box(pos);
             boundingBox = boundingBox.expand(7, 7, 7);
