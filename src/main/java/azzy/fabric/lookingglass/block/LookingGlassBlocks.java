@@ -153,6 +153,8 @@ public class LookingGlassBlocks {
     public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 4));
     // Diamond spikes do 7 player damage.
     public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 7));
+    // Netherite spikes do 14 player damage.
+    public static final Block NETHERITE_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "netherite_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 14));
 
     //  BLOCK ENTITIES
     //Machines

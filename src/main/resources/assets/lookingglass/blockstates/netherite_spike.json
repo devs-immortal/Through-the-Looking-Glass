@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/diamond_spike"
+      },
+      {
+        "model": "lookingglass:block/diamond_spike",
+        "y": 90
+      }
+    ]
+  }
+}
