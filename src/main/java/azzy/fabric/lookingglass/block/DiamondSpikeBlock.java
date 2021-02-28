@@ -1,5 +1,8 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
+import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -8,15 +11,24 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.network.ServerPlayerInteractionManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class WoodenSpikeBlock extends LookingGlassBlock {
-    public WoodenSpikeBlock(FabricBlockSettings settings) {
+import java.lang.ref.WeakReference;
+
+public class DiamondSpikeBlock extends LookingGlassBlock {
+    private WeakReference<ServerPlayerEntity> fakePlayer = null;
+    private ServerPlayerEntity fakePlayerEntity = null;
+
+    public DiamondSpikeBlock(FabricBlockSettings settings) {
         super(settings, false);
     }
 
@@ -42,16 +54,30 @@ public class WoodenSpikeBlock extends LookingGlassBlock {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (world.isClient)
+            return;
+
         if ((entity instanceof PlayerEntity) || !(entity instanceof LivingEntity))
             return;
 
-        // This is a living entity, but not a player entity.
-        float currentHealth = ((LivingEntity) entity).getHealth();
-
-        if (currentHealth == 1)
+        if (world.getServer() == null)
             return;
 
-        entity.damage(DamageSource.MAGIC, 1);
+        if ((fakePlayer == null) || (fakePlayerEntity == null)) {
+            fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
+            fakePlayerEntity = fakePlayer.get();
+
+            if (fakePlayerEntity == null) {
+                LookingGlassCommon.FFLog.warn("Error instantiating fake player for diamond spikes.  Defaulting to magic damage.  Kindly report to mod author(s).");
+                entity.damage(DamageSource.MAGIC, 7);
+                return;
+            }
+
+            fakePlayerEntity.setInvulnerable(true);
+            fakePlayerEntity.setBoundingBox(new Box(0, 0, 0, 0, 0, 0));
+        }
+
+        entity.damage(new FalsePlayerDamageSource("diamond_spike", fakePlayerEntity, true, false, false), 7);
     }
 
     /**
