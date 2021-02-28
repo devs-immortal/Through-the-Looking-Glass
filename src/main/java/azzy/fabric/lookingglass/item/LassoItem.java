@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public class LassoItem extends Item {
     private static final String MOB_KEY = "MOB_KEY";
-    private static final String MOB_TAG = "MOB_TAG";
+//    private static final String MOB_TAG = "MOB_TAG";
     private static final String MOB_TYPE = "MOB_TYPE";
     private static final String MOB_HEALTH = "MOB_HEALTH";
     private static final String MOB_MAX_HEALTH = "MOB_MAX_HEALTH";
@@ -65,7 +65,6 @@ public class LassoItem extends Item {
             return ActionResult.PASS;
         }
 
-        CompoundTag mobTag = (CompoundTag) stackTag.get(MOB_TAG);
         String mobType = stackTag.getString(MOB_TYPE);
         Identifier mobTypeId = Identifier.tryParse(mobType);
         if (mobTypeId == null) {
@@ -82,7 +81,8 @@ public class LassoItem extends Item {
         if (spawnedEntity == null)
             return ActionResult.FAIL;
 
-        spawnedEntity.fromTag(mobTag);
+        // Don't reset the tag for the mob since it seems to also reset their position to where they were captured.
+//                spawnedEntity.fromTag((CompoundTag) stackTag.get(MOB_TAG));
 
         // Remove the tag since we've successfully spawned the stored item away.
         itemStack.removeSubTag(MOB_KEY);
@@ -116,16 +116,20 @@ public class LassoItem extends Item {
         if (user.getEntityWorld().isClient)
             return ActionResult.PASS;
 
+        // This is to fix a sneaky scenario when users have lassos in main and offhand and right click on an entity.
+        if (entity.removed)
+            return ActionResult.PASS;
+
         // If we use the ItemStack that's been provided, the lasso won't work in creative.
         // Because, in creative mode, we get a copy of the itemstack that the user is wielding, not the actual itemstack.
         CompoundTag stackTag = stack.getOrCreateSubTag(MOB_KEY);
-        CompoundTag mobTag = new CompoundTag();
-        entity.saveSelfToTag(mobTag);
+//        CompoundTag mobTag = new CompoundTag();
+//        entity.saveSelfToTag(mobTag);
         EntityType entityType = entity.getType();
         Identifier entityId = Registry.ENTITY_TYPE.getId(entityType);
         float currentHealth = entity.getHealth();
         float maxHealth = entity.getMaxHealth();
-        stackTag.put(MOB_TAG, mobTag);
+//        stackTag.put(MOB_TAG, mobTag);
         stackTag.putString(MOB_TYPE, entityId.toString());
         DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMaximumFractionDigits(2);
