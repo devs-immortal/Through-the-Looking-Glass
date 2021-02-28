@@ -40,9 +40,6 @@ public class GoldenLassoItem extends ToolItem {
         // Spawn the mob above the clicked block position.
         BlockPos usedPosition = context.getBlockPos().up();
 
-        CompoundTag tmpMobKey = context.getStack().getSubTag(MOB_KEY);
-        System.out.println(tmpMobKey);
-
         // Don't bother playing on the client side.  We live on the server side.
         if (genericWorld.isClient)
             return ActionResult.PASS;
@@ -112,5 +109,16 @@ public class GoldenLassoItem extends ToolItem {
         // TODO:  Change the render for the lasso to make it loaded with the item.
         // TODO:  Change the lasso's notification to show the captured mob details (type, health, max health, etc.)
         return ActionResult.SUCCESS;
+    }
+
+    /**
+     * Determines whether or not the lasso should glow, this is determined by whether or not it contains an entity.
+     *
+     * @param stack The lasso
+     * @return Should the lasso shine
+     */
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return stack.getOrCreateTag().contains("MOB_KEY");
     }
 }
