@@ -2,31 +2,44 @@ package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public class GoldenLassoItem extends ToolItem {
+public class LassoItem extends Item {
     private static final String MOB_KEY = "MOB_KEY";
     private static final String MOB_TAG = "MOB_TAG";
     private static final String MOB_TYPE = "MOB_TYPE";
+    private static final String MOB_HEALTH = "MOB_HEALTH";
+    private static final String MOB_MAX_HEALTH = "MOB_MAX_HEALTH";
+    private final boolean isCursed;
 
-    public GoldenLassoItem(ToolMaterial toolMaterial, FabricItemSettings goldenLassoSettings) {
-        super(toolMaterial, goldenLassoSettings);
+    public LassoItem(FabricItemSettings lassoSettings, boolean isCursed) {
+        super(lassoSettings);
+        this.isCursed = isCursed;
     }
 
     /**
@@ -80,7 +93,7 @@ public class GoldenLassoItem extends ToolItem {
     /**
      * Called when the lasso is used on an entity.
      *
-     * @param stack  The lasso (or a copy thereof, in creative).  For that reason, I won't be using this and instead, get the stack from the user object directly.
+     * @param stack  The lasso
      * @param user   The user
      * @param entity The target entity
      * @param hand   The hand used
@@ -91,23 +104,68 @@ public class GoldenLassoItem extends ToolItem {
         if (entity instanceof PlayerEntity)
             return ActionResult.PASS;
 
+        // Golden lasso doesn't capture hostile entities.
+        // Cursed lasso captures everything.
+        if ((!isCursed) && (entity instanceof HostileEntity)) {
+            // On the client side, send a notification message about the faux pas.
+            if (user.getEntityWorld().isClient)
+                user.sendMessage(new TranslatableText("item.lookingglass.goldenlasso.hostile_mob"), true);
+            return ActionResult.PASS;
+        }
+
         if (user.getEntityWorld().isClient)
             return ActionResult.PASS;
 
         // If we use the ItemStack that's been provided, the lasso won't work in creative.
         // Because, in creative mode, we get a copy of the itemstack that the user is wielding, not the actual itemstack.
-        // To avoid this issue, I'm going to get the itemStack from user.getActiveItem()
         CompoundTag stackTag = stack.getOrCreateSubTag(MOB_KEY);
         CompoundTag mobTag = new CompoundTag();
         entity.saveSelfToTag(mobTag);
         EntityType entityType = entity.getType();
         Identifier entityId = Registry.ENTITY_TYPE.getId(entityType);
+        float currentHealth = entity.getHealth();
+        float maxHealth = entity.getMaxHealth();
         stackTag.put(MOB_TAG, mobTag);
         stackTag.putString(MOB_TYPE, entityId.toString());
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMaximumFractionDigits(2);
+        stackTag.putString(MOB_HEALTH, decimalFormat.format(currentHealth));
+        stackTag.putString(MOB_MAX_HEALTH, decimalFormat.format(maxHealth));
 
         entity.remove();
         // TODO:  Change the lasso's notification to show the captured mob details (type, health, max health, etc.)
         return ActionResult.SUCCESS;
+    }
+
+    /**
+     * This method is called when the user mouse-overs the item.
+     *
+     * @param stack   The lasso item
+     * @param world   The world
+     * @param tooltip The tooltip text
+     * @param context The tool tip context
+     */
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        CompoundTag stackTag = stack.getSubTag(MOB_KEY);
+        if (stackTag == null)
+            return;
+
+        String entityTypeStr = stackTag.getString(MOB_TYPE);
+        Identifier identifier = Identifier.tryParse(entityTypeStr);
+        if (identifier == null)
+            return;
+        EntityType entityType = Registry.ENTITY_TYPE.get(identifier);
+        String mobHealth = stackTag.getString(MOB_HEALTH);
+        String mobMaxHealth = stackTag.getString(MOB_MAX_HEALTH);
+
+        // Display the name and health of the caught entity.
+        List<Text> displayText = new ArrayList<>();
+        displayText.add(entityType.getName());
+        Text text = new LiteralText("§3§oHealth: " + mobHealth + "/" + mobMaxHealth);
+        displayText.add(text);
+
+        tooltip.addAll(displayText);
     }
 
     /**
