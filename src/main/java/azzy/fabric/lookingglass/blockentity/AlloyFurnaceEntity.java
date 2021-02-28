@@ -23,7 +23,7 @@ public class AlloyFurnaceEntity extends LookingGlassUpgradeableMachine implement
     private int progress;
 
     public AlloyFurnaceEntity() {
-        super(LookingGlassBlocks.ALLOY_FURNACE_ENTITY, MachineTier.BASIC, 3, 200, 1000, 2);
+        super(LookingGlassBlocks.ALLOY_FURNACE_ENTITY, null, MachineTier.BASIC, 3, 200, 1000, 2);
     }
 
     @Override

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "FishKillMixin",
+    "LithiumBlockEntityListMixin",
     "LivingEntityLootMixin",
     "RecipeMapAccessor",
     "TextureUnregister"
@@ -13,5 +14,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "azzy.fabric.lookingglass.mixin.Plugin"
 }

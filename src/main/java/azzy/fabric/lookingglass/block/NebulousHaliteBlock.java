@@ -43,7 +43,7 @@ public class NebulousHaliteBlock extends PillarBlock {
                 Random random = world.getRandom();
                 if(random.nextInt(51) == 0) {
                     if(random.nextBoolean()) {
-                        ((LivingEntity) entity).applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
+                        ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
                     }
                     else
                         entity.requestTeleport(entity.getX() + (random.nextInt(33) - 16), entity.getY() + random.nextInt(9),entity.getZ() + (random.nextInt(33) - 16));

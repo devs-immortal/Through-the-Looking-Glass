@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.util;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -8,21 +7,19 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.PistonBlockEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 
 public class BlockEntityMover {
 
-    public static boolean tryMoveEntity(World world, BlockPos pos, Direction facing) {
-        return directEntityMove(world, pos, pos.offset(facing));
+    public static void tryMoveEntity(World world, BlockPos pos, Direction facing) {
+        directEntityMove(world, pos, pos.offset(facing));
     }
 
-    public static boolean directEntityMove(World world, BlockPos pos, BlockPos newPos) {
+    public static void directEntityMove(World world, BlockPos pos, BlockPos newPos) {
         if(!world.isClient()) {
             BlockState state = world.getBlockState(pos);
             BlockEntity entity = world.getBlockEntity(pos);
@@ -45,10 +42,7 @@ public class BlockEntityMover {
                     Arrays.stream(sensitiveEntity.getObservers()).forEach(observer -> observer.notifyObserver(newEntity, newPos));
                     sensitiveEntity.notifyMoved(newPos);
                 }
-                return true;
             }
-            return false;
         }
-        return true;
     }
 }

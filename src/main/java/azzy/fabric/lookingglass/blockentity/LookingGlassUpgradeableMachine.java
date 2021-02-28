@@ -1,24 +1,35 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.util.ModifierProvider;
+import azzy.fabric.lookingglass.util.RecipeConversionProvider;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class LookingGlassUpgradeableMachine extends LookingGlassMachine {
 
     private final double basePowerUsage;
     private final int baseProcessTime;
+    private final RecipeType<?> recipeType;
 
-    public LookingGlassUpgradeableMachine(BlockEntityType<?> type, MachineTier tier, int invSize, int baseProcessTime, double baseMaxPower, double basePowerUsage) {
+    public LookingGlassUpgradeableMachine(BlockEntityType<?> type, RecipeType<?> recipeType, MachineTier tier, int invSize, int baseProcessTime, double baseMaxPower, double basePowerUsage) {
         super(type, tier, invSize + 4, baseMaxPower);
         this.basePowerUsage = basePowerUsage;
         this.baseProcessTime = baseProcessTime;
+        this.recipeType = recipeType;
+    }
+
+    public RecipeType getRecipeType() {
+        for(int i = 1; i < 5; i++) {
+            Item upgrade = inventory.get(inventory.size() - i).getItem();
+            if(upgrade instanceof RecipeConversionProvider)
+                return ((RecipeConversionProvider) upgrade).getRecipeType();
+        }
+        return recipeType;
     }
 
     public double getPowerUsage() {

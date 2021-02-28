@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
+import azzy.fabric.lookingglass.blockentity.PoweredFurnaceEntity;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.Item;
@@ -15,32 +16,30 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
-public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
+public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> {
 
-    private final Ingredient inputA, inputB;
+    private final Ingredient input;
     private final ItemStack output;
     private final Identifier id;
 
-    public AlloyingRecipe(Identifier id, Ingredient inputA, Ingredient inputB, ItemStack output) {
-        this.inputA = inputA;
-        this.inputB = inputB;
+    public FreezingRecipe(Identifier id, Ingredient input, ItemStack output) {
+        this.input = input;
         this.output = output;
         this.id = id;
     }
 
     @Override
-    public boolean matches(AlloyFurnaceEntity inv, World world) {
-        ItemStack a = inv.getStack(0);
-        ItemStack b = inv.getStack(1);
-        return ((inputA.test(a)) ^ (inputA.test(b))) && ((inputB.test(a)) ^ (inputB.test(b)));
+    public boolean matches(PoweredFurnaceEntity inv, World world) {
+        return input.test(inv.getStack(0));
     }
 
     @Override
-    public ItemStack craft(AlloyFurnaceEntity inv) {
+    public ItemStack craft(PoweredFurnaceEntity inv) {
         return output.copy();
     }
 
@@ -62,8 +61,7 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
     @Override
     public DefaultedList<Ingredient> getPreviewInputs() {
         DefaultedList<Ingredient> inputs = DefaultedList.of();
-        inputs.add(inputA);
-        inputs.add(inputB);
+        inputs.add(input);
         return inputs;
     }
 
@@ -74,57 +72,53 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return LookingGlassRecipes.ALLOYING_SERIALIZER;
+        return LookingGlassRecipes.FREEZING_SERIALIZER;
     }
 
     @Override
     public LookingGlassRecipeType<?> getType() {
-        return LookingGlassRecipes.ALLOYING_RECIPE;
+        return LookingGlassRecipes.FREEZING_RECIPE;
     }
 
     @Override
     public List<Ingredient> getInputs() {
-        return Arrays.asList(inputA, inputB);
+        return Collections.singletonList(input);
     }
 
-    public static class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe> {
+    public static class FreezingRecipeSerializer implements RecipeSerializer<FreezingRecipe> {
 
         @Override
-        public AlloyingRecipe read(Identifier id, JsonObject json) {
+        public FreezingRecipe read(Identifier id, JsonObject json) {
 
-            Ingredient inputA;
-            Ingredient inputB;
+            Ingredient input;
             Item output;
             int count;
 
             try {
-                if(!(json.has("inputA") && json.has("inputB") && json.has("output")))
-                    throw new MalformedJsonException("Invalid Alloying Recipe Json");
-                inputA = Ingredient.fromJson(json.get("inputA"));
-                inputB = Ingredient.fromJson(json.get("inputB"));
+                if(!(json.has("input") && json.has("output")))
+                    throw new MalformedJsonException("Invalid Freezing Recipe Json");
+                input = Ingredient.fromJson(json.get("input"));
                 output = Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString()));
                 count = json.has("count") ? json.get("count").getAsInt() : 1;
             } catch (Exception e) {
-                FFLog.error("Exception found while loading Alloying recipe json " + id.toString() + " ", e);
+                FFLog.error("Exception found while loading Freezing recipe json " + id.toString() + " ", e);
                 return null;
             }
 
-            return new AlloyingRecipe(id, inputA, inputB, new ItemStack(output, count));
+            return new FreezingRecipe(id, input, new ItemStack(output, count));
         }
 
         @Override
-        public AlloyingRecipe read(Identifier id, PacketByteBuf buf) {
+        public FreezingRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack output = buf.readItemStack();
-            Ingredient inputA = Ingredient.fromPacket(buf);
-            Ingredient inputB = Ingredient.fromPacket(buf);
-            return new AlloyingRecipe(id, inputA, inputB, output);
+            Ingredient input = Ingredient.fromPacket(buf);
+            return new FreezingRecipe(id, input, output);
         }
 
         @Override
-        public void write(PacketByteBuf buf, AlloyingRecipe recipe) {
+        public void write(PacketByteBuf buf, FreezingRecipe recipe) {
             buf.writeItemStack(recipe.output);
-            recipe.inputA.write(buf);
-            recipe.inputB.write(buf);
+            recipe.input.write(buf);
         }
     }
 }

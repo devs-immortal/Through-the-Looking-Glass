@@ -1,0 +1,7 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "item": "minecraft:snow_block"
+  },
+  "output": "minecraft:ice"
+}

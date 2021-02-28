@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/slab",
+  "parent": "lookingglass:base/base_spikes",
   "textures": {
-    "bottom": "lookingglass:block/basalt_bricks",
-    "top": "lookingglass:block/basalt_bricks",
-    "side": "lookingglass:block/basalt_bricks"
+    "all": "lookingglass:block/diamond_spike"
   }
 }

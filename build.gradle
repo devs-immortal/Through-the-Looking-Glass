@@ -73,6 +73,7 @@ dependencies {
 	modImplementation( include("de.siphalor:nbtcrafting-1.16:2+"))
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
 	modImplementation "me.shedaniel:RoughlyEnoughItems:5.9.173"
+	modImplementation "com.github.CaffeineMC:lithium-fabric:mc1.16.5-0.6.4"
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
 	modImplementation(include("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"))
 	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))

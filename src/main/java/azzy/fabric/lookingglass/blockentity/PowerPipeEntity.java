@@ -69,6 +69,10 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
         ticked = false;
     }
 
+    public double getTransferRate() {
+        return transferRate;
+    }
+
     public Set<PowerPipeEntity> getNeighbours() {
         Set<PowerPipeEntity> neighbours = new HashSet<>();
         neighbours.add(this);

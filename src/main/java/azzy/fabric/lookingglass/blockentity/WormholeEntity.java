@@ -31,12 +31,14 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     private HashMap<Entity, Long> receiverCooldown = new HashMap<>();
     private int onTicks;
     private final Consumer<Entity> teleporter = entity -> {
-        cachedOut.notifyAssign(entity);
-        entity.teleport(out.getX() + 0.5, out.getY() + 2, out.getZ() + 0.5);
-        if(entity.hasPassengers() && entity.getPassengerList().get(0).getDimensions(EntityPose.STANDING).height > 1f)
-            entity.getPassengerList().get(0).kill();
-        world.playSound(null, pos, SoundEvents.BLOCK_SHROOMLIGHT_BREAK, SoundCategory.BLOCKS, 0.6f, 2f);
-        world.playSound(null, out, SoundEvents.ENTITY_SHULKER_TELEPORT, SoundCategory.BLOCKS, 0.3f, 2f);
+        if(entity != null) {
+            cachedOut.notifyAssign(entity);
+            entity.teleport(out.getX() + 0.5, out.getY() + 2, out.getZ() + 0.5);
+            if(entity.hasPassengers() && entity.getPassengerList().get(0).getDimensions(EntityPose.STANDING).height > 1f)
+                entity.getPassengerList().get(0).kill();
+            world.playSound(null, pos, SoundEvents.BLOCK_SHROOMLIGHT_BREAK, SoundCategory.BLOCKS, 0.6f, 2f);
+            world.playSound(null, out, SoundEvents.ENTITY_SHULKER_TELEPORT, SoundCategory.BLOCKS, 0.3f, 2f);
+        }
     };
 
     public WormholeEntity() {
@@ -49,7 +51,7 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
             if(!receiverCooldown.isEmpty() && world.getTime() % 2 == 0)
                 receiverCooldown = (HashMap<Entity, Long>) receiverCooldown.entrySet().stream().filter(entityLongEntry -> entityLongEntry.getValue() - 2 > 0).collect(Collectors.toMap(Map.Entry::getKey, cooldown -> cooldown.getValue() - 2));
             if(world.getTime() % 10 == 0) {
-                valid = world.isChunkLoaded(out) && world.getBlockEntity(out) instanceof WormholeEntity;
+                valid = world.isChunkLoaded(out.getX() >> 4, out.getZ() >> 4) && world.getBlockEntity(out) instanceof WormholeEntity;
                 if(valid && cachedOut == null) {
                     cachedOut = (WormholeEntity) world.getBlockEntity(out);
                 }
@@ -94,8 +96,8 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
 
     private void getCollidingEntities() {
         Box hitbox = new Box(pos.up(), pos.add(1, 3, 1));
-        world.getEntitiesByType(EntityType.ITEM, hitbox, itemEntity -> (!receiverCooldown.containsKey(itemEntity) || receiverCooldown.get(itemEntity) == 0)).forEach( teleporter );
-        world.getEntitiesByClass(Entity.class, new Box(pos.up(), pos.add(1, 3, 1)), entity -> (!receiverCooldown.containsKey(entity) || receiverCooldown.get(entity) == 0) && entity.getDimensions(EntityPose.STANDING).height <= 1f && !(entity instanceof ItemEntity)).forEach( teleporter );
+        world.getEntitiesByType(EntityType.ITEM, hitbox, itemEntity -> itemEntity != null && (!receiverCooldown.containsKey(itemEntity) || receiverCooldown.get(itemEntity) == 0)).forEach( teleporter );
+        world.getEntitiesByClass(Entity.class, new Box(pos.up(), pos.add(1, 3, 1)), entity -> entity != null&& (!receiverCooldown.containsKey(entity) || receiverCooldown.get(entity) == 0) && entity.getDimensions(EntityPose.STANDING).height <= 1f && !(entity instanceof ItemEntity)).forEach( teleporter );
     }
 
     public void notifyAssign(Entity entity) {

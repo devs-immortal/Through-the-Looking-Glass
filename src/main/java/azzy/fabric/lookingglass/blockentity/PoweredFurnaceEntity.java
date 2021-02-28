@@ -6,6 +6,7 @@ import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
@@ -17,20 +18,21 @@ import java.util.Optional;
 
 import static net.minecraft.state.property.Properties.LIT;
 
+@SuppressWarnings("unchecked")
 public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder {
 
-    private SmeltingRecipe trackedRecipe;
+    private Recipe trackedRecipe;
     private int progress;
 
     public PoweredFurnaceEntity() {
-        super(LookingGlassBlocks.POWERED_FURNACE_ENTITY, MachineTier.BASIC, 2, 100, 1000, 2);
+        super(LookingGlassBlocks.POWERED_FURNACE_ENTITY, RecipeType.SMELTING, MachineTier.BASIC, 2, 100, 1000, 2);
     }
 
     @Override
     public void tick() {
         if(!world.isClient()) {
             if(trackedRecipe == null) {
-                Optional<SmeltingRecipe> smeltable = world.getRecipeManager().getFirstMatch(RecipeType.SMELTING, this, world);
+                Optional<Recipe> smeltable = (Optional<Recipe>) world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
                 smeltable.ifPresent(smeltingRecipe -> trackedRecipe = smeltingRecipe);
                 tickRecipeProgression();
             }

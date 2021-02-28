@@ -66,7 +66,7 @@ public class DataShardItem extends Item {
         if(result.getType() == HitResult.Type.MISS) {
             clearNBT(user.getStackInHand(hand));
             if(user.isSneaking()) {
-                world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BELL_RESONATE, SoundCategory.PLAYERS, 1F, 2F);
+                world.playSoundFromEntity(null, user, SoundEvents.BLOCK_BELL_RESONATE, SoundCategory.PLAYERS, 1F, 2F);
             }
             else {
                 user.damage(DamageSource.MAGIC, 1F);

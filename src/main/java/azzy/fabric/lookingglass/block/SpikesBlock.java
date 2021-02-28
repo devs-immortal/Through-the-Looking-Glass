@@ -4,6 +4,7 @@ import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
@@ -24,12 +25,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
 
-public class DiamondSpikeBlock extends LookingGlassBlock {
+public class SpikesBlock extends LookingGlassBlock {
+
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
     private WeakReference<ServerPlayerEntity> fakePlayer = null;
     private ServerPlayerEntity fakePlayerEntity = null;
+    private final int damage;
 
-    public DiamondSpikeBlock(FabricBlockSettings settings) {
+    public SpikesBlock(FabricBlockSettings settings, int damage) {
         super(settings, false);
+        this.damage = damage;
     }
 
     /**
@@ -48,8 +53,23 @@ public class DiamondSpikeBlock extends LookingGlassBlock {
     }
 
     @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
+        return VoxelShapes.empty();
+    }
+
+    @Override
     public int getOpacity(BlockState state, BlockView world, BlockPos pos) {
         return 0;
+    }
+
+    @Override
+    public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
+        return 1;
     }
 
     @Override
@@ -63,21 +83,26 @@ public class DiamondSpikeBlock extends LookingGlassBlock {
         if (world.getServer() == null)
             return;
 
-        if ((fakePlayer == null) || (fakePlayerEntity == null)) {
-            fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
-            fakePlayerEntity = fakePlayer.get();
+        if (this != LookingGlassBlocks.WOODEN_SPIKE_BLOCK) {
+            if ((fakePlayer == null) || (fakePlayerEntity == null)) {
+                fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
+                fakePlayerEntity = fakePlayer.get();
 
-            if (fakePlayerEntity == null) {
-                LookingGlassCommon.FFLog.warn("Error instantiating fake player for diamond spikes.  Defaulting to magic damage.  Kindly report to mod author(s).");
-                entity.damage(DamageSource.MAGIC, 7);
-                return;
+                if (fakePlayerEntity == null) {
+                    LookingGlassCommon.FFLog.warn("Error instantiating fake player for diamond spikes.  Defaulting to magic damage.  Kindly report to mod author(s).");
+                    entity.damage(DamageSource.MAGIC, damage);
+                    return;
+                }
+
+                fakePlayerEntity.setInvulnerable(true);
+                fakePlayerEntity.setBoundingBox(new Box(0, 0, 0, 0, 0, 0));
             }
 
-            fakePlayerEntity.setInvulnerable(true);
-            fakePlayerEntity.setBoundingBox(new Box(0, 0, 0, 0, 0, 0));
+            entity.damage(new FalsePlayerDamageSource("spikes", fakePlayerEntity, true, false, false), damage);
         }
-
-        entity.damage(new FalsePlayerDamageSource("diamond_spike", fakePlayerEntity, true, false, false), 7);
+        else if (((LivingEntity) entity).getHealth() > 1) {
+            entity.damage(DamageSource.MAGIC, damage);
+        }
     }
 
     /**

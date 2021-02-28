@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=bottom": {
-      "model": "lookingglass:block/basalt_bricks_slab"
-    },
-    "type=double": {
-      "model": "lookingglass:block/basalt_bricks"
-    },
-    "type=top": {
-      "model": "lookingglass:block/basalt_bricks_slab_top"
-    }
+    "": [
+      {
+        "model": "lookingglass:block/wooden_spike"
+      },
+      {
+        "model": "lookingglass:block/wooden_spike",
+        "y": 90
+      }
+    ]
   }
 }

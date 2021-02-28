@@ -23,7 +23,7 @@ import java.lang.ref.WeakReference;
 
 public class SpecialAnnulationCoreEntity extends BlockEntity implements InventoryWrapper {
 
-    private DefaultedList<ItemStack> inv = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inv = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private WeakReference<ServerPlayerEntity> fakePlayer = null;
 
     public SpecialAnnulationCoreEntity() {
