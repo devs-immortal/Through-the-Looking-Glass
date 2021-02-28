@@ -1,3 +1,6 @@
 {
-  "parent": "lookingglass:block/golden_lasso"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "lookingglass:item/golden_lasso"
+  }
 }

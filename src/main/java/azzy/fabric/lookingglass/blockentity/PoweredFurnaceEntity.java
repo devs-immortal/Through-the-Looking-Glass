@@ -37,7 +37,7 @@ public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine impleme
                 tickRecipeProgression();
             }
             else {
-                if(trackedRecipe.matches(this, world)) {
+                if(trackedRecipe.matches(this, world) && trackedRecipe.getType() == getRecipeType()) {
                     tickRecipeProgression();
                     if(!getCachedState().get(LIT))
                         world.setBlockState(pos, getCachedState().with(LIT, true));
