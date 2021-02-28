@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -82,6 +83,7 @@ public class LookingGlassItems {
     public static final Item IRON_SPIKE_BLOCK = registerItem("iron_spike", new IronSpikeBlockItem(LookingGlassBlocks.IRON_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item DIAMOND_SPIKE_BLOCK = registerItem("diamond_spike", new DiamondSpikeBlockItem(LookingGlassBlocks.DIAMOND_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item NETHERITE_SPIKE_BLOCK = registerItem("netherite_spike", new NetheriteSpikeBlockItem(LookingGlassBlocks.NETHERITE_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new GoldenLassoItem(ToolMaterials.GOLD, defaultSettings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);
