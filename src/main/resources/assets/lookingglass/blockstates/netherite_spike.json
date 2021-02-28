@@ -2,10 +2,10 @@
   "variants": {
     "": [
       {
-        "model": "lookingglass:block/diamond_spike"
+        "model": "lookingglass:block/netherite_spike"
       },
       {
-        "model": "lookingglass:block/diamond_spike",
+        "model": "lookingglass:block/netherite_spike",
         "y": 90
       }
     ]
