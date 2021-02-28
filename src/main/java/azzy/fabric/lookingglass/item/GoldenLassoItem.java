@@ -106,7 +106,6 @@ public class GoldenLassoItem extends ToolItem {
         stackTag.putString(MOB_TYPE, entityId.toString());
 
         entity.remove();
-        // TODO:  Change the render for the lasso to make it loaded with the item.
         // TODO:  Change the lasso's notification to show the captured mob details (type, health, max health, etc.)
         return ActionResult.SUCCESS;
     }
@@ -119,6 +118,6 @@ public class GoldenLassoItem extends ToolItem {
      */
     @Override
     public boolean hasGlint(ItemStack stack) {
-        return stack.getOrCreateTag().contains("MOB_KEY");
+        return stack.getOrCreateTag().contains(MOB_KEY);
     }
 }
