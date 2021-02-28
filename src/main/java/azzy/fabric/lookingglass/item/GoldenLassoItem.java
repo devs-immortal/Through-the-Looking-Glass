@@ -21,6 +21,10 @@ import net.minecraft.world.World;
 
 @SuppressWarnings("rawtypes")
 public class GoldenLassoItem extends ToolItem {
+    private static final String MOB_KEY = "MOB_KEY";
+    private static final String MOB_TAG = "MOB_TAG";
+    private static final String MOB_TYPE = "MOB_TYPE";
+
     public GoldenLassoItem(ToolMaterial toolMaterial, FabricItemSettings goldenLassoSettings) {
         super(toolMaterial, goldenLassoSettings);
     }
@@ -36,7 +40,7 @@ public class GoldenLassoItem extends ToolItem {
         // Spawn the mob above the clicked block position.
         BlockPos usedPosition = context.getBlockPos().up();
 
-        CompoundTag tmpMobKey = context.getStack().getSubTag("MOB_KEY");
+        CompoundTag tmpMobKey = context.getStack().getSubTag(MOB_KEY);
         System.out.println(tmpMobKey);
 
         // Don't bother playing on the client side.  We live on the server side.
@@ -45,19 +49,19 @@ public class GoldenLassoItem extends ToolItem {
 
         ServerWorld world = (ServerWorld) genericWorld;
         ItemStack itemStack = context.getStack();
-        CompoundTag stackTag = itemStack.getSubTag("MOB_KEY");
+        CompoundTag stackTag = itemStack.getSubTag(MOB_KEY);
 
         if (stackTag == null) {
             return ActionResult.PASS;
         }
 
-        CompoundTag mobTag = (CompoundTag) stackTag.get("MOB_TAG");
-        String mobType = stackTag.getString("MOB_TYPE");
+        CompoundTag mobTag = (CompoundTag) stackTag.get(MOB_TAG);
+        String mobType = stackTag.getString(MOB_TYPE);
         Identifier mobTypeId = Identifier.tryParse(mobType);
         if (mobTypeId == null) {
             // Some issue with this mob.  Reset the lasso.
             LookingGlassCommon.FFLog.warn("Unable to spawn mob: '" + mobType + "'.");
-            itemStack.removeSubTag("MOB_KEY");
+            itemStack.removeSubTag(MOB_KEY);
             // TODO:  Reset the render for the lasso to make it empty again.
             return ActionResult.FAIL;
         }
@@ -70,13 +74,16 @@ public class GoldenLassoItem extends ToolItem {
 
         spawnedEntity.fromTag(mobTag);
 
+        // Remove the tag since we've successfully spawned the stored item away.
+        itemStack.removeSubTag(MOB_KEY);
+
         return ActionResult.PASS;
     }
 
     /**
      * Called when the lasso is used on an entity.
      *
-     * @param stack  The lasso
+     * @param stack  The lasso (or a copy thereof, in creative).  For that reason, I won't be using this and instead, get the stack from the user object directly.
      * @param user   The user
      * @param entity The target entity
      * @param hand   The hand used
@@ -90,13 +97,16 @@ public class GoldenLassoItem extends ToolItem {
         if (user.getEntityWorld().isClient)
             return ActionResult.PASS;
 
-        CompoundTag stackTag = stack.getOrCreateSubTag("MOB_KEY");
+        // If we use the ItemStack that's been provided, the lasso won't work in creative.
+        // Because, in creative mode, we get a copy of the itemstack that the user is wielding, not the actual itemstack.
+        // To avoid this issue, I'm going to get the itemStack from user.getActiveItem()
+        CompoundTag stackTag = stack.getOrCreateSubTag(MOB_KEY);
         CompoundTag mobTag = new CompoundTag();
         entity.saveSelfToTag(mobTag);
         EntityType entityType = entity.getType();
         Identifier entityId = Registry.ENTITY_TYPE.getId(entityType);
-        stackTag.put("MOB_TAG", mobTag);
-        stackTag.putString("MOB_TYPE", entityId.toString());
+        stackTag.put(MOB_TAG, mobTag);
+        stackTag.putString(MOB_TYPE, entityId.toString());
 
         entity.remove();
         // TODO:  Change the render for the lasso to make it loaded with the item.
