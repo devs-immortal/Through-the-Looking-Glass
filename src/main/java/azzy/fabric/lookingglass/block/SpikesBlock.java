@@ -77,13 +77,27 @@ public class SpikesBlock extends LookingGlassBlock {
         if (world.isClient)
             return;
 
+        // Don't hurt players.  Don't hurt items.
         if ((entity instanceof PlayerEntity) || !(entity instanceof LivingEntity))
             return;
 
+        // Just a NPE avoidance check.
         if (world.getServer() == null)
             return;
 
-        if (this != LookingGlassBlocks.WOODEN_SPIKE_BLOCK) {
+        if (this == LookingGlassBlocks.WOODEN_SPIKE_BLOCK) {
+            // Wooden spikes cause magic damage, but only until the monster gets to 1 health (half heart)
+            float health = ((LivingEntity) entity).getHealth();
+            if (health > damage)
+                entity.damage(DamageSource.MAGIC, damage);
+            else
+                // If the entity has less than "damage" health, just set it to 1.  Shouldn't happen since wooden spikes only do 1 damage right now.
+                entity.damage(DamageSource.MAGIC, (health - 1));
+        } else if (this == LookingGlassBlocks.IRON_SPIKE_BLOCK) {
+            // Iron spikes cause magic damage - 4 for now.
+            entity.damage(DamageSource.MAGIC, damage);
+        } else if (this == LookingGlassBlocks.DIAMOND_SPIKE_BLOCK) {
+            // Diamond spikes and above cause player damage.
             if ((fakePlayer == null) || (fakePlayerEntity == null)) {
                 fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
                 fakePlayerEntity = fakePlayer.get();
@@ -99,9 +113,6 @@ public class SpikesBlock extends LookingGlassBlock {
             }
 
             entity.damage(new FalsePlayerDamageSource("spikes", fakePlayerEntity, true, false, false), damage);
-        }
-        else if (((LivingEntity) entity).getHealth() > 1) {
-            entity.damage(DamageSource.MAGIC, damage);
         }
     }
 
