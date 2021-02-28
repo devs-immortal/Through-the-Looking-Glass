@@ -104,6 +104,11 @@ public class LassoItem extends Item {
         if (entity instanceof PlayerEntity)
             return ActionResult.PASS;
 
+        // We don't mess with dead things.  This also fixes a possible bug where user has a lasso on main and offhand and uses
+        // on an entity.
+        if (!entity.isAlive())
+            return ActionResult.PASS;
+
         // Golden lasso doesn't capture hostile entities.
         // Cursed lasso captures everything.
         if ((!isCursed) && (entity instanceof HostileEntity)) {
@@ -114,10 +119,6 @@ public class LassoItem extends Item {
         }
 
         if (user.getEntityWorld().isClient)
-            return ActionResult.PASS;
-
-        // This is to fix a sneaky scenario when users have lassos in main and offhand and right click on an entity.
-        if (entity.removed)
             return ActionResult.PASS;
 
         // If we use the ItemStack that's been provided, the lasso won't work in creative.
