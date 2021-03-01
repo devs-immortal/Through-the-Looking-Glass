@@ -1,9 +1,11 @@
 package azzy.fabric.lookingglass.util;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.block.VectorPlateBlock;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -20,10 +22,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpikeUtility {
     private static WeakReference<ServerPlayerEntity> fakePlayer = null;
     private static ServerPlayerEntity fakePlayerEntity = null;
+    private static final List<Block> VECTOR_BLOCKS = Arrays.asList(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK);
 
     public static ActionResult useOnBlock(ItemUsageContext context, int spikeType) {
         World world = context.getWorld();
@@ -32,6 +37,10 @@ public class SpikeUtility {
 
         BlockPos usedBlockPos = context.getBlockPos();
         BlockState targetBlockState = world.getBlockState(usedBlockPos);
+
+        // This method isn't even required if the targeted block isn't a vector plate.
+        if (!VECTOR_BLOCKS.contains(targetBlockState.getBlock()))
+            return ActionResult.CONSUME;
 
         // The vector plate already has the same spike upgrade.  So return without doing anything.
         if (targetBlockState.contains(VectorPlateBlock.SPIKE_UPGRADE)) {

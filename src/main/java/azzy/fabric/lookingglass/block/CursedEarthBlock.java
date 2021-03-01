@@ -115,10 +115,15 @@ public class CursedEarthBlock extends LookingGlassBlock {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
                         BlockPos tmpPos = pos.add(x, y, z);
+                        // Only spread cursed earth if the neighbor is at the surface.  Otherwise, it spreads forever.
+                        if (world.getBlockState(tmpPos.up()).getBlock() != Blocks.AIR) {
+                            continue;
+                        }
+
                         Block neighbor = world.getBlockState(tmpPos).getBlock();
                         if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.GRASS_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
-                            if (random.nextInt(5) == 0) {
-                                // 1 in 10 chance to turn neighbor into cursed earth.
+                            if (random.nextInt(50) == 0) {
+                                // 1 in 50 chance to turn neighbor into cursed earth.
                                 world.setBlockState(tmpPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                             }
                         }
