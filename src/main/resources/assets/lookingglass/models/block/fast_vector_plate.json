@@ -1,6 +1,6 @@
 {
-  "parent": "lookingglass:base/conveyor_base",
+  "parent": "lookingglass:base/vector_plate_base",
   "textures": {
-    "all": "lookingglass:block/conveyor_express"
+    "all": "lookingglass:block/fast_vector_plate"
   }
 }

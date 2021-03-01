@@ -33,10 +33,12 @@ public class SpikeUtility {
         BlockPos usedBlockPos = context.getBlockPos();
         BlockState targetBlockState = world.getBlockState(usedBlockPos);
 
-        // The vector plate already has a spike upgrade.  So return without doing anything.
-        // TODO:  If the "used" spike upgrade is different from the current one, consider changing the spike on the vector plate.
-        if (targetBlockState.contains(VectorPlateBlock.SPIKE_UPGRADE))
-            return ActionResult.PASS;
+        // The vector plate already has the same spike upgrade.  So return without doing anything.
+        if (targetBlockState.contains(VectorPlateBlock.SPIKE_UPGRADE)) {
+            int currentSpikeType = targetBlockState.get(VectorPlateBlock.SPIKE_UPGRADE);
+            if (currentSpikeType == spikeType)
+                return ActionResult.PASS;
+        }
 
         targetBlockState = targetBlockState.with(VectorPlateBlock.SPIKE_UPGRADE, spikeType);
         world.setBlockState(usedBlockPos, targetBlockState);
@@ -59,7 +61,7 @@ public class SpikeUtility {
                 if (health > damage)
                     entity.damage(DamageSource.MAGIC, damage);
                 else
-                    // If the entity has less than "damage" health, just set it to 1.  Shouldn't happen since wooden spikes only do 1 damage right now.
+                    // If the entity has less than "damage" health, just set it to 1.  Shouldn't happen since wooden spikes only do 1 damage by default.
                     entity.damage(DamageSource.MAGIC, (health - 1));
                 break;
             case 2:
@@ -68,7 +70,7 @@ public class SpikeUtility {
                 break;
             case 3:
             case 4:
-                // Diamond spikes and above cause player damage.
+                // Diamond spikes and above cause player damage.  7 for diamond and 14 for netherite.
                 if ((fakePlayer == null) || (fakePlayerEntity == null)) {
                     fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "TTLG_Spike_Player"), new ServerPlayerInteractionManager((ServerWorld) world)));
                     fakePlayerEntity = fakePlayer.get();

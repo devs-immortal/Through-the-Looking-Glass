@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "spike_upgrade=0,facing=north": {
+      "model": "lookingglass:block/fast_vector_plate"
+    },
+    "spike_upgrade=0,facing=east": {
+      "model": "lookingglass:block/fast_vector_plate",
+      "y": 90
+    },
+    "spike_upgrade=0,facing=south": {
+      "model": "lookingglass:block/fast_vector_plate",
+      "y": 180
+    },
+    "spike_upgrade=0,facing=west": {
+      "model": "lookingglass:block/fast_vector_plate",
+      "y": 270
+    },
+    "spike_upgrade=1,facing=north": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_wooden"
+    },
+    "spike_upgrade=1,facing=east": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_wooden",
+      "y": 90
+    },
+    "spike_upgrade=1,facing=south": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_wooden",
+      "y": 180
+    },
+    "spike_upgrade=1,facing=west": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_wooden",
+      "y": 270
+    },
+    "spike_upgrade=2,facing=north": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_iron"
+    },
+    "spike_upgrade=2,facing=east": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_iron",
+      "y": 90
+    },
+    "spike_upgrade=2,facing=south": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_iron",
+      "y": 180
+    },
+    "spike_upgrade=2,facing=west": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_iron",
+      "y": 270
+    },
+    "spike_upgrade=3,facing=north": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_diamond"
+    },
+    "spike_upgrade=3,facing=east": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_diamond",
+      "y": 90
+    },
+    "spike_upgrade=3,facing=south": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_diamond",
+      "y": 180
+    },
+    "spike_upgrade=3,facing=west": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_diamond",
+      "y": 270
+    },
+    "spike_upgrade=4,facing=north": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_netherite"
+    },
+    "spike_upgrade=4,facing=east": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_netherite",
+      "y": 90
+    },
+    "spike_upgrade=4,facing=south": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_netherite",
+      "y": 180
+    },
+    "spike_upgrade=4,facing=west": {
+      "model": "lookingglass:block/fast_vector_plate_spiked_netherite",
+      "y": 270
+    }
+  }
+}

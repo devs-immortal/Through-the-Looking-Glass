@@ -1,6 +1,6 @@
 {
   "parent": "lookingglass:base/vector_plate_base",
   "textures": {
-    "all": "lookingglass:block/normal_vector_plate"
+    "all": "lookingglass:block/slow_vector_plate_spiked_iron"
   }
 }
