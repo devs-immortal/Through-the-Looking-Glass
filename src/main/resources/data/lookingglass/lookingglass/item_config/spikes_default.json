@@ -1,0 +1,7 @@
+{
+  "type": "SPIKE_DAMAGE",
+  "wood_spike": 1,
+  "iron_spike": 4,
+  "diamond_spike": 7,
+  "netherite_spike": 14
+}

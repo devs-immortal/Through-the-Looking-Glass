@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.*;
+import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
 import azzy.fabric.lookingglass.util.datagen.LootGen;
@@ -149,18 +150,14 @@ public class LookingGlassBlocks {
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SHROOMLIGHT).breakInstantly()));
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
-    // Wooden spikes cause 1 non-lethal magic damage.
-    public static final Block WOODEN_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "wooden_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OAK_WOOD), 1));
-    // Iron spikes do 4 magic damage.
-    public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 4));
-    // Diamond spikes do 7 player damage.
-    public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 7));
-    // Netherite spikes do 14 player damage.
-    public static final Block NETHERITE_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "netherite_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 14));
+    public static final Block WOODEN_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "wooden_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OAK_WOOD), LookingGlassJsonManager.getDamageForSpike(1)));
+    public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), LookingGlassJsonManager.getDamageForSpike(2)));
+    public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), LookingGlassJsonManager.getDamageForSpike(3)));
+    public static final Block NETHERITE_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "netherite_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), LookingGlassJsonManager.getDamageForSpike(4)));
     // Vector plates move entities around.
-    public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
-    public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 4));
-    public static final Block FAST_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "fast_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 8));
+    public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 1));
+    public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
+    public static final Block FAST_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "fast_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 4));
 
     //  BLOCK ENTITIES
     //Machines

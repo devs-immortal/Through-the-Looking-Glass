@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
@@ -116,6 +117,12 @@ public class LassoItem extends Item {
         // on an entity.
         if (!entity.isAlive())
             return ActionResult.PASS;
+
+        if (!LookingGlassJsonManager.canLassoCapture(entity.getType(), isCursed)) {
+            // The entity has been blacklisted OR not whitelisted.
+            user.sendMessage(new TranslatableText("item.lookingglass.goldenlasso.taboo_entity"), true);
+            return ActionResult.PASS;
+        }
 
         // Golden lasso doesn't capture hostile entities.
         // Cursed lasso captures everything.

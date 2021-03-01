@@ -1,5 +1,7 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
+import azzy.fabric.lookingglass.util.SpikeUtility;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -96,7 +98,7 @@ public class VectorPlateBlock extends LookingGlassBlock {
             return;
 
         // Don't hurt players.  Don't hurt items.
-        if ((entity instanceof PlayerEntity) || !(entity instanceof LivingEntity))
+        if (entity instanceof PlayerEntity)
             return;
 
         // Just a NPE avoidance check.
@@ -124,6 +126,15 @@ public class VectorPlateBlock extends LookingGlassBlock {
             case WEST:
                 // West (-x) direction
                 entity.addVelocity(-1 * velocity, 0, 0);
+        }
+
+        // We move items, but we don't damage them - bad karma!
+        if (!(entity instanceof LivingEntity))
+            return;
+
+        // If the vector plate has a spike upgrade, call this method to bring the hurt!
+        if (spikeUpgrade > 0) {
+            SpikeUtility.damageEntity(entity, LookingGlassJsonManager.getDamageForSpike(spikeUpgrade), world, spikeUpgrade);
         }
     }
 
