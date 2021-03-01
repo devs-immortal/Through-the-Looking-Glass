@@ -84,6 +84,9 @@ public class LookingGlassItems {
     public static final Item IRON_SPIKE_BLOCK = registerItem("iron_spike", new IronSpikeBlockItem(LookingGlassBlocks.IRON_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item DIAMOND_SPIKE_BLOCK = registerItem("diamond_spike", new DiamondSpikeBlockItem(LookingGlassBlocks.DIAMOND_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item NETHERITE_SPIKE_BLOCK = registerItem("netherite_spike", new NetheriteSpikeBlockItem(LookingGlassBlocks.NETHERITE_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item SLOW_VECTOR_PLATE_BLOCK = registerItem("slow_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item NORMAL_VECTOR_PLATE_BLOCK = registerItem("normal_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item FAST_VECTOR_PLATE_BLOCK = registerItem("fast_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings(), false));
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings(), true));
 

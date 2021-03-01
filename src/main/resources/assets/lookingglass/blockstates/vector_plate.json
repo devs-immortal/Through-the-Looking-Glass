@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "diamond": [
+      {
+        "model": "lookingglass:block/vector_plate"
+      },
+      {
+        "model": "lookingglass:block/vector_plate",
+        "y": 90
+      }
+    ]
+  }
+}

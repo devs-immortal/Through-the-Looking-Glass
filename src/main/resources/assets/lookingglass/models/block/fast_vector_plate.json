@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/conveyor_base",
+  "textures": {
+    "all": "lookingglass:block/conveyor_express"
+  }
+}
