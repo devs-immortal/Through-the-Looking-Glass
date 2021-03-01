@@ -28,7 +28,7 @@ import java.util.List;
 public class SpikeUtility {
     private static WeakReference<ServerPlayerEntity> fakePlayer = null;
     private static ServerPlayerEntity fakePlayerEntity = null;
-    private static final List<Block> VECTOR_BLOCKS = Arrays.asList(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK);
+    public static final List<Block> VECTOR_BLOCKS = Arrays.asList(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK);
 
     public static ActionResult useOnBlock(ItemUsageContext context, int spikeType) {
         World world = context.getWorld();
