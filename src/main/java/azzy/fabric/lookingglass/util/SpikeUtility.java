@@ -1,15 +1,21 @@
 package azzy.fabric.lookingglass.util;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.block.VectorPlateBlock;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
@@ -18,6 +24,27 @@ import java.lang.ref.WeakReference;
 public class SpikeUtility {
     private static WeakReference<ServerPlayerEntity> fakePlayer = null;
     private static ServerPlayerEntity fakePlayerEntity = null;
+
+    public static ActionResult useOnBlock(ItemUsageContext context, int spikeType) {
+        World world = context.getWorld();
+        if (world.isClient)
+            return ActionResult.PASS;
+
+        BlockPos usedBlockPos = context.getBlockPos();
+        BlockState targetBlockState = world.getBlockState(usedBlockPos);
+
+        // The vector plate already has this same spike upgrade.  So return without doing anything.
+        if (targetBlockState.contains(VectorPlateBlock.SPIKE_UPGRADE))
+            return ActionResult.PASS;
+
+        targetBlockState = targetBlockState.with(VectorPlateBlock.SPIKE_UPGRADE, spikeType);
+        world.setBlockState(usedBlockPos, targetBlockState);
+
+        ItemStack usedItem = context.getStack();
+        usedItem.decrement(1);
+
+        return ActionResult.SUCCESS;
+    }
 
     public static void damageEntity(Entity entity, int damage, World world, int spikeType) {
         // Don't hurt players.  Don't hurt items.
