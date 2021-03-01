@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyIo {
 
+    private final Direction[] directions = Direction.values();
     private final double maxPower, transferRate;
     private double power;
     private boolean ticked;
@@ -75,25 +76,24 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     public Set<PowerPipeEntity> getNeighbours() {
         Set<PowerPipeEntity> neighbours = new HashSet<>();
-        neighbours.add(this);
-        for(Direction direction : Direction.values()) {
-            BlockEntity entity = world.getBlockEntity(pos.offset(direction));
-            if(entity != null && entity.getType() == getType())
-                ((PowerPipeEntity)entity).getNeighbours(neighbours);
+        Queue<PowerPipeEntity> next = new LinkedList<>();
+        next.add(this);
+        while (!next.isEmpty()) {
+            PowerPipeEntity cable = next.poll();
+            if(cable.getType() == getType()) {
+                Arrays.stream(directions)
+                        .map(direction -> EnergyApi.SIDED.get(world, cable.pos.offset(direction), direction.getOpposite()))
+                        .filter(energyIo -> energyIo instanceof PowerPipeEntity && !neighbours.contains(energyIo))
+                        .forEach(wire -> next.add(((PowerPipeEntity) wire).markTicked()));
+                neighbours.add(cable);
+            }
         }
         return neighbours;
     }
 
-    public void getNeighbours(Set<PowerPipeEntity> neighbours) {
-        neighbours.add(this);
+    public PowerPipeEntity markTicked() {
         this.ticked = true;
-        Arrays.stream(Direction.values())
-                .map(direction -> world.getBlockEntity(pos.offset(direction)))
-                .filter(blockEntity -> blockEntity != null && blockEntity.getType() == getType())
-                .forEach(entity -> {
-                    if(!neighbours.contains(entity))
-                        ((PowerPipeEntity)entity).getNeighbours(neighbours);
-                });
+        return this;
     }
 
     private void setEnergy(double power) {

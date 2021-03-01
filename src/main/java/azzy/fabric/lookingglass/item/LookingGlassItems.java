@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -57,6 +58,7 @@ public class LookingGlassItems {
     public static final Item BASIC_ENERGY_STORAGE_UPGRADE = registerGeneratedItem("basic_energy_storage_upgrade", new GenericUpgradeItem(defaultSettings(), 1, 0.5, 1, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
     public static final Item BASIC_ENERGY_USAGE_UPGRADE = registerGeneratedItem("basic_energy_usage_upgrade", new GenericUpgradeItem(defaultSettings(), 0.9, 0, 1.05, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
     public static final Item FREEZER_UPGRADE_ITEM = registerGeneratedItem("freezer_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), LookingGlassRecipes.FREEZING_RECIPE, PoweredFurnaceGuiDescription.class, 2.0, 0, 4.0, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD));
+    public static final Item BLAST_UPGRADE_ITEM = registerGeneratedItem("blast_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), RecipeType.BLASTING, PoweredFurnaceGuiDescription.class, 2.0, 0, 0.5, ModifierProvider.AdditivityType.ADD_MULT, ModifierProvider.AdditivityType.ADD));
 
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));

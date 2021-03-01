@@ -1,0 +1,9 @@
+{
+  "parent": "lookingglass:base/machine_triside",
+  "textures": {
+    "front": "lookingglass:block/mixer",
+    "sides": "lookingglass:block/machine_side_full",
+    "up": "lookingglass:block/mixer_top_on",
+    "down": "lookingglass:block/machine_base"
+  }
+}

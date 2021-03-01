@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "lookingglass:block/grinder"
+    },
+    "lit=true": {
+      "model": "lookingglass:block/grinder_on"
+    }
+  }
+}

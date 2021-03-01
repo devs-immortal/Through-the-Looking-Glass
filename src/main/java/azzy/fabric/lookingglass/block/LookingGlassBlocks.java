@@ -98,6 +98,8 @@ public class LookingGlassBlocks {
     public static final Block DWARVEN_MACHINE_CORE = registerGeneratedBlock("dwarven_machine_core", new Block(dwarvenMachine()), null, null, basicItem(), SingletType.BLOCK);
     public static final Block POWERED_FURNACE_BLOCK = registerBlock("powered_furnace", new PoweredFurnaceBlock(dwarvenMachine()), basicItem());
     public static final Block ALLOY_FURNACE_BLOCK = registerBlock("alloy_furnace", new AlloyFurnaceBlock(dwarvenMachine()), basicItem());
+    public static final Block GRINDER_BLOCK = registerBlock("grinder", new GrinderBlock(dwarvenMachine()), basicItem());
+    public static final Block MIXER_BLOCK = registerBlock("mixer", new MixerBlock(dwarvenMachine()), basicItem());
 
     //Power
     public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), worldforgeItem());
@@ -167,6 +169,8 @@ public class LookingGlassBlocks {
 
     public static final BlockEntityType<PoweredFurnaceEntity> POWERED_FURNACE_ENTITY = registerEntity("powered_furnace_entity", PoweredFurnaceEntity::new, POWERED_FURNACE_BLOCK);
     public static final BlockEntityType<AlloyFurnaceEntity> ALLOY_FURNACE_ENTITY = registerEntity("alloy_furnace_entity", AlloyFurnaceEntity::new, ALLOY_FURNACE_BLOCK);
+    public static final BlockEntityType<GrinderEntity> GRINDER_ENTITY = registerEntity("grinder_entity", GrinderEntity::new, GRINDER_BLOCK);
+    public static final BlockEntityType<MixerEntity> MIXER_ENTITY = registerEntity("mixer_entity", MixerEntity::new, MIXER_BLOCK);
 
     //Power
     public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);

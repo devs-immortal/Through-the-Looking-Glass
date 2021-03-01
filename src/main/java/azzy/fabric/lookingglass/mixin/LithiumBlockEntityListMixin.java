@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(BlockEntityList.class)
+@Mixin(value = BlockEntityList.class, remap = false)
 public abstract class LithiumBlockEntityListMixin {
 
     @Shadow @Final private ReferenceLinkedOpenHashSet<BlockEntity> allBlockEntities;
@@ -34,7 +34,7 @@ public abstract class LithiumBlockEntityListMixin {
      * @author Azazelthedemonlord
      * @reason Prevents a crash when moving block entities.
      */
-    @Overwrite(remap = false)
+    @Overwrite()
     private boolean addNoDoubleAdd(BlockEntity blockEntity, boolean exceptionOnDoubleAdd) {
         boolean added = this.allBlockEntities.add(blockEntity);
         if (added && this.posMap != null) {

@@ -1,0 +1,7 @@
+{
+  "type": "GOLDEN_LASSO",
+  "blacklist": [
+    "minecraft:creeper",
+    "minecraft:cow"
+  ]
+}

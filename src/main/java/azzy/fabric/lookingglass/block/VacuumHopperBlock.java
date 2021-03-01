@@ -10,10 +10,10 @@ public class VacuumHopperBlock extends LookingGlassBlock implements BlockEntityP
 
     private final int delay, radious, inv;
 
-    public VacuumHopperBlock(Settings settings,  int delay, int radious, int inv) {
+    public VacuumHopperBlock(Settings settings,  int delay, int radius, int inv) {
         super(settings, true);
         this.delay = delay;
-        this.radious = radious;
+        this.radious = radius;
         this.inv = inv;
     }
 

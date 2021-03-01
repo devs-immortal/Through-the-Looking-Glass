@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "lit=false,facing=east": {
+      "model": "lookingglass:block/mixer",
+      "y": 90
+    },
+    "lit=false,facing=north": {
+      "model": "lookingglass:block/mixer"
+    },
+    "lit=false,facing=south": {
+      "model": "lookingglass:block/mixer",
+      "y": 180
+    },
+    "lit=false,facing=west": {
+      "model": "lookingglass:block/mixer",
+      "y": 270
+    },
+    "lit=true,facing=east": {
+      "model": "lookingglass:block/mixer_on",
+      "y": 90
+    },
+    "lit=true,facing=north": {
+      "model": "lookingglass:block/mixer_on"
+    },
+    "lit=true,facing=south": {
+      "model": "lookingglass:block/mixer_on",
+      "y": 180
+    },
+    "lit=true,facing=west": {
+      "model": "lookingglass:block/mixer_on",
+      "y": 270
+    }
+  }
+}

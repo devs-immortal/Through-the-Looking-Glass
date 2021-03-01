@@ -8,13 +8,18 @@ import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
+import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import org.apache.logging.log4j.LogManager;
@@ -54,5 +59,19 @@ public class LookingGlassCommon implements ModInitializer {
 		LookingGlassGUIs.initCommon();
 		LookingGlassRecipes.init();
 		GeneralNetworking.init();
+
+		ResourceManagerHelperImpl.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+			private final Identifier id = new Identifier(MODID, "config");
+
+			@Override
+			public Identifier getFabricId() {
+				return id;
+			}
+
+			@Override
+			public void apply(ResourceManager manager) {
+				LookingGlassJsonManager.load(manager);
+			}
+		});
 	}
 }
