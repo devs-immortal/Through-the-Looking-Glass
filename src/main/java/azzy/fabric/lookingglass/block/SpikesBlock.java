@@ -11,10 +11,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
@@ -26,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.ref.WeakReference;
 
 public class SpikesBlock extends LookingGlassBlock {
-
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
     private WeakReference<ServerPlayerEntity> fakePlayer = null;
     private ServerPlayerEntity fakePlayerEntity = null;
@@ -35,6 +36,24 @@ public class SpikesBlock extends LookingGlassBlock {
     public SpikesBlock(FabricBlockSettings settings, int damage) {
         super(settings, false);
         this.damage = damage;
+//        BlockState defaultState = getStateManager().getDefaultState();
+//        setDefaultState(defaultState.with(VECTOR, 0));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+    }
+
+    /**
+     * I shouldn't need this, but since azzy's code in LookingGlassBlock is kinda bugged right now, I'll have this code.
+     *
+     * @param ctx Placement Context
+     * @return Block State
+     */
+    @Override
+    public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
+        return super.getPlacementState(ctx);
     }
 
     /**
@@ -99,7 +118,7 @@ public class SpikesBlock extends LookingGlassBlock {
         } else if ((this == LookingGlassBlocks.DIAMOND_SPIKE_BLOCK) || (this == LookingGlassBlocks.NETHERITE_SPIKE_BLOCK)) {
             // Diamond spikes and above cause player damage.
             if ((fakePlayer == null) || (fakePlayerEntity == null)) {
-                fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
+                fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "TTLG_Spike_Player"), new ServerPlayerInteractionManager((ServerWorld) world)));
                 fakePlayerEntity = fakePlayer.get();
 
                 if (fakePlayerEntity == null) {
@@ -113,6 +132,30 @@ public class SpikesBlock extends LookingGlassBlock {
             }
 
             entity.damage(new FalsePlayerDamageSource("spikes", fakePlayerEntity, true, false, false), damage);
+
+/*
+            // Here is the vector portion of the codebase.
+            int vectorState = getStateManager().getDefaultState().get(VECTOR);
+            switch(vectorState) {
+                case 1:
+                    // Slow speed
+                    // TODO:  Add direction to the vector plate, store it as a property and use it to add to the velocity.
+                    entity.addVelocity(2, 0, 2);
+                    break;
+                case 2:
+                    // Medium speed
+                    // TODO:  Add direction to the vector plate, store it as a property and use it to add to the velocity.
+                    entity.addVelocity(4, 0, 4);
+                    break;
+                case 3:
+                    // Fast speed
+                    // TODO:  Add direction to the vector plate, store it as a property and use it to add to the velocity.
+                    entity.addVelocity(8, 0, 8);
+                    break;
+                default:
+                    // Do nothing.
+            }
+*/
         }
     }
 
