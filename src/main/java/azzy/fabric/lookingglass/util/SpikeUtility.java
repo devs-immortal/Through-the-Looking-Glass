@@ -33,7 +33,8 @@ public class SpikeUtility {
         BlockPos usedBlockPos = context.getBlockPos();
         BlockState targetBlockState = world.getBlockState(usedBlockPos);
 
-        // The vector plate already has this same spike upgrade.  So return without doing anything.
+        // The vector plate already has a spike upgrade.  So return without doing anything.
+        // TODO:  If the "used" spike upgrade is different from the current one, consider changing the spike on the vector plate.
         if (targetBlockState.contains(VectorPlateBlock.SPIKE_UPGRADE))
             return ActionResult.PASS;
 
