@@ -134,7 +134,7 @@ public class VectorPlateBlock extends LookingGlassBlock {
 
         // If the vector plate has a spike upgrade, call this method to bring the hurt!
         if (spikeUpgrade > 0) {
-            SpikeUtility.damageEntity(entity, LookingGlassJsonManager.getDamageForSpike(spikeUpgrade), world, spikeUpgrade);
+            SpikeUtility.damageEntity(entity, world, spikeUpgrade);
         }
     }
 

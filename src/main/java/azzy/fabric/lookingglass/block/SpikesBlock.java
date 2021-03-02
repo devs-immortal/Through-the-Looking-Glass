@@ -20,11 +20,8 @@ import org.jetbrains.annotations.Nullable;
 public class SpikesBlock extends LookingGlassBlock {
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
 
-    private final int damage;
-
-    public SpikesBlock(FabricBlockSettings settings, int damage) {
+    public SpikesBlock(FabricBlockSettings settings) {
         super(settings, false);
-        this.damage = damage;
     }
 
     @Override
@@ -101,7 +98,7 @@ public class SpikesBlock extends LookingGlassBlock {
             // This scenario should never happen.  It means I've created a new spike type and not yet handled it right.
             return;
 
-        SpikeUtility.damageEntity(entity, damage, world, spikeType);
+        SpikeUtility.damageEntity(entity, world, spikeType);
     }
 
     /**

@@ -51,6 +51,15 @@ public class LookingGlassCommon implements ModInitializer {
 	public void onInitialize() {
 		FFLog.info(LookingGlassInit.BLESSED_CONST);
 
+		LookingGlassBlocks.init();
+		LookingGlassItems.init();
+		LookingGlassEffects.init();
+		TTLGConfiguredFeatures.init();
+		TTLGConfiguredFeatures.Registrar.init();
+		LookingGlassGUIs.initCommon();
+		LookingGlassRecipes.init();
+		GeneralNetworking.init();
+
 		ResourceManagerHelperImpl.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
 			private final Identifier id = new Identifier(MODID, "config");
 
@@ -64,14 +73,5 @@ public class LookingGlassCommon implements ModInitializer {
 				LookingGlassJsonManager.load(manager);
 			}
 		});
-
-		LookingGlassBlocks.init();
-		LookingGlassItems.init();
-		LookingGlassEffects.init();
-		TTLGConfiguredFeatures.init();
-		TTLGConfiguredFeatures.Registrar.init();
-		LookingGlassGUIs.initCommon();
-		LookingGlassRecipes.init();
-		GeneralNetworking.init();
 	}
 }

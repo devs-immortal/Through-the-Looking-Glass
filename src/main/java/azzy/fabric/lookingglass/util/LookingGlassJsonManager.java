@@ -45,19 +45,6 @@ public class LookingGlassJsonManager {
     }
 
     public static int getDamageForSpike(int spikeType) {
-        // TODO:  Azzy to figure out how to load config before the blocks are initialized.  For now, I'm going to return hard coded values.  This is strictly temporary.
-        if (SPIKE_DAMAGE_LIST.isEmpty()) {
-            switch (spikeType) {
-                case 1:
-                    return 1;
-                case 2:
-                    return 4;
-                case 3:
-                    return 7;
-                case 4:
-                    return 14;
-            }
-        }
         switch (spikeType) {
             case 1:
                 return SPIKE_DAMAGE_LIST.get(WOOD_SPIKE);
