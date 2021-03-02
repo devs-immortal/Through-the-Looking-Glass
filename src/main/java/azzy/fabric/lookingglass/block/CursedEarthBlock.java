@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
+import azzy.fabric.lookingglass.util.SpikeUtility;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -94,15 +95,15 @@ public class CursedEarthBlock extends LookingGlassBlock {
                         BlockPos tmpPos = pos.add(x, y, z);
                         // If the nearby block is a cursed earth block
                         if (onFire && (world.getBlockState(tmpPos).getBlock() == LookingGlassBlocks.CURSED_EARTH_BLOCK)) {
-                            if (random.nextInt(5) == 0) {
-                                // 1 in 5 chance to spread fire to this neighbor.
+                            if (random.nextInt(3) == 0) {
+                                // 1 in 3 chance to spread fire to this neighbor.
                                 world.setBlockState(tmpPos.up(), Blocks.FIRE.getDefaultState());
                             }
                         }
                         // If the nearby block is on fire
                         else if (world.getBlockState(tmpPos.up()).getMaterial() == Material.FIRE) {
-                            if (random.nextInt(5) == 0) {
-                                // 1 in 5 chance to catch self fire.
+                            if (random.nextInt(3) == 0) {
+                                // 1 in 3 chance to catch self fire.
                                 world.setBlockState(pos.up(), Blocks.FIRE.getDefaultState());
                             }
                         }
@@ -115,10 +116,19 @@ public class CursedEarthBlock extends LookingGlassBlock {
                 for (int y = -1; y < 2; y++) {
                     for (int z = -1; z < 2; z++) {
                         BlockPos tmpPos = pos.add(x, y, z);
+                        // Only spread cursed earth if the neighbor is at the surface or just covered by vector plates.  Otherwise, it spreads forever.
+                        BlockState aboveBlockState = world.getBlockState(tmpPos.up());
+                        Block aboveBlock = aboveBlockState.getBlock();
+
+                        // If the block above is not air and not vector plates, do nothing.
+                        if ((world.getBlockState(tmpPos.up()).getBlock() != Blocks.AIR) && !(SpikeUtility.VECTOR_BLOCKS.contains(aboveBlock))) {
+                            continue;
+                        }
+
                         Block neighbor = world.getBlockState(tmpPos).getBlock();
                         if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.GRASS_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
-                            if (random.nextInt(5) == 0) {
-                                // 1 in 10 chance to turn neighbor into cursed earth.
+                            if (random.nextInt(500) == 0) {
+                                // 1 in 500 chance to turn neighbor into cursed earth.
                                 world.setBlockState(tmpPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                             }
                         }

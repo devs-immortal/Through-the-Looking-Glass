@@ -15,6 +15,12 @@ public class DiamondSpikeBlockItem extends BlockItem {
     // Change the Vector plate to the spiked version of the vector plate
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        return SpikeUtility.useOnBlock(context, 3);
+        ActionResult actionResult = SpikeUtility.useOnBlock(context, 3);
+
+        // This happens when the targeted block isn't a vector plate.
+        if (actionResult == ActionResult.CONSUME)
+            return super.useOnBlock(context);
+
+        return actionResult;
     }
 }
