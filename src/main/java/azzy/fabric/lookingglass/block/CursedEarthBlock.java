@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.SpawnSettings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -150,9 +151,39 @@ public class CursedEarthBlock extends LookingGlassBlock {
             boundingBox = boundingBox.expand(7, 7, 7);
             List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox, Entity::isAlive);
 
-            if (entitiesAround.size() > 8) {
-                // Too many entities nearby.  Do nothing.  This considers experience orb to be a valid entity since it's alive.
-                // I've decided to leave that as a feature since too many experience orbs lag the server and I want players to suck them up.
+            // Let's try to condense experience orbs nearby to improve performance of the server.
+            ExperienceOrbEntity firstExpOrb = null;
+            int amount = 0;
+            double x = 0, y = 0, z = 0;
+            List<Entity> consideredEntities = new ArrayList<>();
+            for (Entity entity : entitiesAround) {
+                // Don't count experience orbs for the mob limit.
+                if (entity instanceof ExperienceOrbEntity) {
+                    amount += ((ExperienceOrbEntity) entity).getExperienceAmount();
+
+                    if (firstExpOrb == null) {
+                        firstExpOrb = (ExperienceOrbEntity) entity;
+                        x = entity.getX();
+                        y = entity.getY();
+                        z = entity.getZ();
+                    }
+
+                    entity.remove();
+                } else {
+                    consideredEntities.add(entity);
+                }
+            }
+
+            // Found some experience orbs and removed them.  So let's create a new large one instead.
+            if (amount > 0) {
+                ExperienceOrbEntity experienceOrbEntity = new ExperienceOrbEntity(world, x, y, z, amount);
+                experienceOrbEntity.setVelocity(0, 0, 0);
+                world.spawnEntity(experienceOrbEntity);
+            }
+
+            if (consideredEntities.size() > 20) {
+                // Too many entities nearby.  Do nothing.  The entities include non-living ones too.
+                // For performance reasons, I don't want to check for Living or Hostile entities and instead, just check for isAlive ones.
                 return;
             }
 
