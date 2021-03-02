@@ -20,7 +20,7 @@ public class AlloyingFurnaceGuiDescription extends UpgradeableMachineGuiDescript
         root.add(WItemSlot.of(blockInventory, 0), 36, 28);
         root.add(WItemSlot.of(blockInventory, 1), 36, 46);
         root.add(new WItemSlot(blockInventory, 2, 1, 1, true), 99, 37);
-        root.add(new WBar(new Identifier(LookingGlassCommon.MODID, "textures/gui/progress/electric_smelting_arrow.png"), new Identifier(LookingGlassCommon.MODID, "textures/gui/progress/electric_smelting_arrow_full.png"), 0, 1, WBar.Direction.RIGHT), 64, 39, 22, 15);
+        root.add(new WBar(new Identifier(LookingGlassCommon.MODID, "textures/gui/progress/alloy_arrow.png"), new Identifier(LookingGlassCommon.MODID, "textures/gui/progress/alloy_arrow_full.png"), 0, 1, WBar.Direction.RIGHT), 64, 39, 22, 15);
     }
 
     @Override

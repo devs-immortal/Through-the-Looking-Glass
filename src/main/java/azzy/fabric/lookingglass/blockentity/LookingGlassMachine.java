@@ -20,10 +20,15 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     protected final double baseMaxPower;
     protected double power;
 
-    public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower) {
+    public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower, boolean autoEnergyRegistry) {
         super(type, invSize);
         this.machineTier = tier;
         this.baseMaxPower = baseMaxPower;
+        EnergyApi.SIDED.registerForBlockEntities(((blockEntity, direction) -> (EnergyIo) blockEntity), type);
+    }
+
+    public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower) {
+        this(type, tier, invSize, baseMaxPower, true);
     }
 
 

@@ -1,8 +1,8 @@
 package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.Item;
@@ -15,8 +15,10 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
@@ -37,11 +39,27 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public boolean matches(MixerEntity inv, World world) {
-        ItemStack a = inv.getStack(0);
-        ItemStack b = inv.getStack(1);
-        ItemStack c = inv.getStack(2);
-        ItemStack d = inv.getStack((3));
-        return (inputA.test(a) ^ inputA.test(b) ^ inputA.test(c) ^ inputA.test(d)) && (inputB.test(a) ^ inputB.test(b) ^ inputB.test(c) ^ inputB.test(d)) && (inputC.test(a) ^ inputC.test(b) ^ inputC.test(c) ^ inputC.test(d)) && (inputD.test(a) ^ inputD.test(b) ^ inputD.test(c) ^ inputD.test(d));
+        List<Ingredient> ingredients = Arrays.asList(inputA, inputB, inputC, inputD);
+        List<ItemStack> invStacks = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            invStacks.add(inv.getStack(i));
+        }
+        AtomicInteger matches = new AtomicInteger();
+        ingredients.forEach(ingredient -> {
+            for (int i = 0; i < invStacks.size(); i++) {
+                if(ingredient.isEmpty()) {
+                    matches.getAndIncrement();
+                    break;
+                }
+                ItemStack stack = invStacks.get(i);
+                if(ingredient.test(stack)) {
+                    matches.getAndIncrement();
+                    invStacks.remove(i);
+                    break;
+                }
+            }
+        });
+        return matches.get() == 4;
     }
 
     @Override
@@ -61,7 +79,7 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public ItemStack getRecipeKindIcon() {
-        return new ItemStack(LookingGlassBlocks.ALLOY_FURNACE_BLOCK);
+        return new ItemStack(LookingGlassBlocks.MIXER_BLOCK);
     }
 
     @Override
@@ -99,17 +117,17 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
         @Override
         public MixerRecipe read(Identifier id, JsonObject json) {
 
-            Ingredient inputA, inputB, inputC, inputD;
+            DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(4, Ingredient.EMPTY);
             Item output;
             int count;
 
             try {
-                if(!(json.has("inputA") && json.has("inputB") && json.has("inputC") && json.has("inputD") && json.has("output")))
+                if(!(json.has("inputs") && json.has("output")))
                     throw new MalformedJsonException("Invalid Alloying Recipe Json");
-                inputA = Ingredient.fromJson(json.get("inputA"));
-                inputB = Ingredient.fromJson(json.get("inputB"));
-                inputC = Ingredient.fromJson(json.get("inputC"));
-                inputD = Ingredient.fromJson(json.get("inputD"));
+                JsonArray inputs = json.getAsJsonArray("inputs");
+                for (int i = 0; i < inputs.size(); i++) {
+                    ingredients.set(i, Ingredient.fromJson(inputs.get(i)));
+                }
                 output = Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString()));
                 count = json.has("count") ? json.get("count").getAsInt() : 1;
             } catch (Exception e) {
@@ -117,7 +135,7 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
                 return null;
             }
 
-            return new MixerRecipe(id, inputA, inputB, inputC, inputD, new ItemStack(output, count));
+            return new MixerRecipe(id, ingredients.get(0), ingredients.get(1), ingredients.get(2), ingredients.get(3), new ItemStack(output, count));
         }
 
         @Override

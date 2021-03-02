@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.gui.AlloyingFurnaceGuiDescription;
+import azzy.fabric.lookingglass.gui.MixerGuiDescription;
 import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.recipe.MixerRecipe;
@@ -25,15 +26,15 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
     private int progress;
 
     public MixerEntity() {
-        super(LookingGlassBlocks.MIXER_ENTITY, LookingGlassRecipes.MIXING_RECIPE, MachineTier.BASIC, 5, 200, 1000, 3);
+        super(LookingGlassBlocks.MIXER_ENTITY, LookingGlassRecipes.MIXING_RECIPE, MachineTier.BASIC, 5, 400, 1000, 3);
     }
 
     @Override
     public void tick() {
         if(!world.isClient()) {
             if(trackedRecipe == null) {
-                Optional<MixerRecipe> smeltable = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
-                smeltable.ifPresent(smeltingRecipe -> trackedRecipe = smeltingRecipe);
+                Optional<MixerRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
+                recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
                 tickRecipeProgression();
             }
             else {
@@ -58,7 +59,7 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(2);
+                ItemStack outSlot = inventory.get(4);
                 if(outSlot.isEmpty()) {
                     inventory.set(4, trackedRecipe.craft(this));
                     inventory.get(3).decrement(1);
@@ -94,7 +95,7 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloyingFurnaceGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
+        return new MixerGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
     }
 
     @Override

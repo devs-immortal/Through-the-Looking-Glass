@@ -21,7 +21,7 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     public PowerPipeEntity(BlockEntityType type, double transferRate) {
         super(type, EnergyApi.SIDED, true);
-        this.maxPower = transferRate * 4.0;
+        this.maxPower = transferRate * 8.0;
         this.transferRate = transferRate;
     }
 

@@ -4,6 +4,6 @@ import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 
 public class SiliconCableEntity extends PowerPipeEntity {
     public SiliconCableEntity() {
-        super(LookingGlassBlocks.SILICON_CABLE_ENTITY, 128);
+        super(LookingGlassBlocks.SILICON_CABLE_ENTITY, 64);
     }
 }

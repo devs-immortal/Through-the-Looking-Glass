@@ -195,7 +195,7 @@ public class LookingGlassBlocks {
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
-                CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY);
+                CREATIVE_ENERGY_SOURCE_ENTITY);
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {

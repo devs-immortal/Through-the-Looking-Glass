@@ -1,0 +1,26 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+    [
+      {
+        "item": "minecraft:wheat"
+      }
+    ],
+    [
+      {
+        "item": "minecraft:egg"
+      }
+    ],
+    [
+      {
+        "item": "minecraft:sugar"
+      }
+    ],
+    [
+      {
+        "item": "minecraft:sugar"
+      }
+    ]
+  ],
+  "output": "minecraft:cake"
+}

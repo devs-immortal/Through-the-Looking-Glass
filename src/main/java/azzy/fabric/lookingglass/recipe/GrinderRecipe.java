@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -58,7 +59,7 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public ItemStack getRecipeKindIcon() {
-        return new ItemStack(LookingGlassBlocks.ALLOY_FURNACE_BLOCK);
+        return new ItemStack(LookingGlassBlocks.GRINDER_BLOCK);
     }
 
     @Override
@@ -93,6 +94,10 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
         return Arrays.asList(outputTop, outputBottom);
     }
 
+    public float getChance() {
+        return chance;
+    }
+
     public static class GrinderRecipeSerializer implements RecipeSerializer<GrinderRecipe> {
 
         @Override
@@ -104,8 +109,8 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
             int countTop, countBottom;
 
             try {
-                if(!(json.has("outputTop") && json.has("outputBottom") && json.has("input")))
-                    throw new MalformedJsonException("Invalid Freezing Recipe Json");
+                if(!(json.has("outputTop") && json.has("input")))
+                    throw new MalformedJsonException("Invalid Grinding Recipe Json");
                 input = Ingredient.fromJson(json.get("input"));
                 outputTop = Registry.ITEM.get(Identifier.tryParse(json.get("outputTop").getAsString()));
                 outputBottom = Registry.ITEM.get(Identifier.tryParse(json.get("outputBottom").getAsString()));
@@ -117,7 +122,8 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
                 return null;
             }
 
-            return new GrinderRecipe(id, input, new ItemStack(outputTop, countTop), new ItemStack(outputBottom, countBottom), chance);
+            ItemStack secOut = outputBottom == Items.AIR ? ItemStack.EMPTY : new ItemStack(outputBottom, countBottom);
+            return new GrinderRecipe(id, input, new ItemStack(outputTop, countTop), secOut, chance);
         }
 
         @Override

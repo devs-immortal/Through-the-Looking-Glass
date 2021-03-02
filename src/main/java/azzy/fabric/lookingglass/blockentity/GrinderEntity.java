@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.gui.AlloyingFurnaceGuiDescription;
+import azzy.fabric.lookingglass.gui.GrinderGuiDescription;
 import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.GrinderRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
@@ -14,6 +15,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 import static net.minecraft.state.property.Properties.LIT;
@@ -25,15 +27,15 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
     private int progress;
 
     public GrinderEntity() {
-        super(LookingGlassBlocks.GRINDER_ENTITY, LookingGlassRecipes.GRINDING_RECIPE, MachineTier.BASIC, 3, 200, 1000, 2);
+        super(LookingGlassBlocks.GRINDER_ENTITY, LookingGlassRecipes.GRINDING_RECIPE, MachineTier.BASIC, 3, 200, 1000, 4);
     }
 
     @Override
     public void tick() {
         if(!world.isClient()) {
             if(trackedRecipe == null) {
-                Optional<GrinderRecipe> smeltable = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
-                smeltable.ifPresent(smeltingRecipe -> trackedRecipe = smeltingRecipe);
+                Optional<GrinderRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
+                recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
                 tickRecipeProgression();
             }
             else {
@@ -58,19 +60,37 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(2);
+                ItemStack outSlot = inventory.get(1);
+                ItemStack secSlot = inventory.get(2);
+                List<ItemStack> outputs = trackedRecipe.getOutputs();
+                ItemStack output = outputs.get(0);
+                ItemStack secondary = outputs.get(1);
+                float chance = trackedRecipe.getChance();
                 if(outSlot.isEmpty()) {
-                    inventory.set(2, trackedRecipe.craft(this));
-                    inventory.get(1).decrement(1);
                     inventory.get(0).decrement(1);
+                    inventory.set(1, output.copy());
+                    if(world.getRandom().nextFloat() <= chance) {
+                        if(secSlot.isEmpty()) {
+                            inventory.set(2, secondary.copy());
+                        }
+                        else if(secSlot.getCount() + secondary.getCount() <= secSlot.getMaxCount() && secondary.isItemEqual(secSlot)) {
+                            inventory.get(2).increment(secondary.getCount());
+                        }
+                    }
                     progress = 0;
                     sync();
                 }
-                ItemStack output = trackedRecipe.getOutput();
                 if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-                    inventory.get(2).increment(output.getCount());
-                    inventory.get(1).decrement(1);
                     inventory.get(0).decrement(1);
+                    inventory.get(1).increment(output.getCount());
+                    if(world.getRandom().nextFloat() <= chance) {
+                        if(secSlot.isEmpty()) {
+                            inventory.set(2, secondary.copy());
+                        }
+                        else if(secSlot.getCount() + secondary.getCount() <= secSlot.getMaxCount() && secondary.isItemEqual(secSlot)) {
+                            inventory.get(2).increment(secondary.getCount());
+                        }
+                    }
                     progress = 0;
                     sync();
                 }
@@ -90,7 +110,7 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloyingFurnaceGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
+        return new GrinderGuiDescription(syncId, inv, ScreenHandlerContext.create(world, pos));
     }
 
     @Override
