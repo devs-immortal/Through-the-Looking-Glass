@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version '0.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -72,12 +72,14 @@ dependencies {
 	modImplementation( include( "vazkii.patchouli:Patchouli:${project.patchouli_version}"))
 	modImplementation( include("de.siphalor:nbtcrafting-1.16:2+"))
 	modApi(include("dev.technici4n:FastTransferLib:${project.ftl_version}"))
-	modImplementation "me.shedaniel:RoughlyEnoughItems:5.9.173"
+	modImplementation "me.shedaniel:RoughlyEnoughItems:5.10.184"
+	modImplementation "com.terraformersmc:modmenu:1.16.7"
 	modImplementation "com.github.CaffeineMC:lithium-fabric:mc1.16.5-0.6.4"
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
 	modImplementation(include("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"))
 	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))
-	modImplementation(include("com.github.badasintended:wthit:${project.WTHIT_version}"))
+	//WTHIT is packaging an old modmenu version which is causing issues.
+	//modRuntime "com.github.badasintended:wthit:${project.WTHIT_version}"
 }
 
 processResources {

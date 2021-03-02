@@ -1,7 +1,6 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.*;
-import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
 import azzy.fabric.lookingglass.util.datagen.LootGen;
@@ -195,7 +194,7 @@ public class LookingGlassBlocks {
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
-                CREATIVE_ENERGY_SOURCE_ENTITY);
+                CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY, GRINDER_ENTITY, MIXER_ENTITY);
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {

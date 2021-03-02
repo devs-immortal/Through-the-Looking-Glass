@@ -8,7 +8,7 @@ import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
-import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
+import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;

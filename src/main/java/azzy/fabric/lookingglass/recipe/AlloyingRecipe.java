@@ -45,6 +45,11 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
     }
 
     @Override
+    public String getGroup() {
+        return "minecraft:smelting";
+    }
+
+    @Override
     public boolean fits(int width, int height) {
         return true;
     }

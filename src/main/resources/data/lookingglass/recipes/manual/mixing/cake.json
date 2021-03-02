@@ -22,5 +22,7 @@
       }
     ]
   ],
-  "output": "minecraft:cake"
+  "output": {
+    "item": "minecraft:cake"
+  }
 }

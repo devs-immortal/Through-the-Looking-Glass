@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.json;
 
 import com.google.gson.JsonObject;
 import net.minecraft.entity.EntityType;

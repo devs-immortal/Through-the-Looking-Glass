@@ -2,11 +2,14 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
+import azzy.fabric.lookingglass.util.BufUtils;
+import azzy.fabric.lookingglass.util.json.JsonUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -24,22 +27,18 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
 public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
-    private final Ingredient inputA, inputB, inputC, inputD;
+    private final DefaultedList<Ingredient> ingredients;
     private final ItemStack output;
     private final Identifier id;
 
-    public MixerRecipe(Identifier id, Ingredient inputA, Ingredient inputB, Ingredient inputC, Ingredient inputD, ItemStack output) {
-        this.inputA = inputA;
-        this.inputB = inputB;
-        this.inputC = inputC;
-        this.inputD = inputD;
+    public MixerRecipe(Identifier id, DefaultedList<Ingredient> ingredients, ItemStack output) {
+        this.ingredients = ingredients;
         this.output = output;
         this.id = id;
     }
 
     @Override
     public boolean matches(MixerEntity inv, World world) {
-        List<Ingredient> ingredients = Arrays.asList(inputA, inputB, inputC, inputD);
         List<ItemStack> invStacks = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             invStacks.add(inv.getStack(i));
@@ -84,12 +83,7 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public DefaultedList<Ingredient> getPreviewInputs() {
-        DefaultedList<Ingredient> inputs = DefaultedList.of();
-        inputs.add(inputA);
-        inputs.add(inputB);
-        inputs.add(inputC);
-        inputs.add(inputD);
-        return inputs;
+        return ingredients;
     }
 
     @Override
@@ -109,52 +103,40 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public List<Ingredient> getInputs() {
-        return Arrays.asList(inputA, inputB);
+        return ingredients;
     }
 
     public static class MixerRecipeSerializer implements RecipeSerializer<MixerRecipe> {
 
         @Override
         public MixerRecipe read(Identifier id, JsonObject json) {
-
-            DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(4, Ingredient.EMPTY);
-            Item output;
-            int count;
+            DefaultedList<Ingredient> ingredients;
+            ItemStack output;
 
             try {
                 if(!(json.has("inputs") && json.has("output")))
                     throw new MalformedJsonException("Invalid Alloying Recipe Json");
-                JsonArray inputs = json.getAsJsonArray("inputs");
-                for (int i = 0; i < inputs.size(); i++) {
-                    ingredients.set(i, Ingredient.fromJson(inputs.get(i)));
-                }
-                output = Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString()));
-                count = json.has("count") ? json.get("count").getAsInt() : 1;
+                ingredients = JsonUtils.ingredientsFromJson(json.getAsJsonArray("inputs"), 4);
+                output = JsonUtils.stackFromJson(json.getAsJsonObject("output"));
             } catch (Exception e) {
                 FFLog.error("Exception found while loading Alloying recipe json " + id.toString() + " ", e);
                 return null;
             }
 
-            return new MixerRecipe(id, ingredients.get(0), ingredients.get(1), ingredients.get(2), ingredients.get(3), new ItemStack(output, count));
+            return new MixerRecipe(id, ingredients, output);
         }
 
         @Override
         public MixerRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack output = buf.readItemStack();
-            Ingredient inputA = Ingredient.fromPacket(buf);
-            Ingredient inputB = Ingredient.fromPacket(buf);
-            Ingredient inputC = Ingredient.fromPacket(buf);
-            Ingredient inputD = Ingredient.fromPacket(buf);
-            return new MixerRecipe(id, inputA, inputB, inputC, inputD, output);
+            DefaultedList<Ingredient> ingredients = BufUtils.ingredientsFromBuf(buf);
+            return new MixerRecipe(id, ingredients, output);
         }
 
         @Override
         public void write(PacketByteBuf buf, MixerRecipe recipe) {
             buf.writeItemStack(recipe.output);
-            recipe.inputA.write(buf);
-            recipe.inputB.write(buf);
-            recipe.inputC.write(buf);
-            recipe.inputD.write(buf);
+            BufUtils.ingredientsToBuf(recipe.ingredients, buf);
         }
     }
 }

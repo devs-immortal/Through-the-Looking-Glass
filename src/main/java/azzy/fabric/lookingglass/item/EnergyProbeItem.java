@@ -54,7 +54,8 @@ public class EnergyProbeItem extends Item {
                     message = energy + " Lu";
                 }
                 if(io instanceof LookingGlassUpgradeableMachine) {
-                    message += " | drain " + ((LookingGlassUpgradeableMachine) io).getPowerUsage() + " Lu";
+
+                    message += " | drain " + String.format("%.1f", ((LookingGlassUpgradeableMachine) io).getPowerUsage()) + " Lu";
                 }
                 else if(io instanceof PowerPipeEntity) {
                     message += " | trans " + ((PowerPipeEntity) io).getTransferRate() + " Lu";

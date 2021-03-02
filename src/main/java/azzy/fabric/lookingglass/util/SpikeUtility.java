@@ -4,6 +4,7 @@ import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.block.VectorPlateBlock;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
+import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

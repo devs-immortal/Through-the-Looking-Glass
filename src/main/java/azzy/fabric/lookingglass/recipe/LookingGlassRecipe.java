@@ -16,6 +16,11 @@ public interface LookingGlassRecipe<C extends Inventory> extends Recipe<C> {
 
     List<Ingredient> getInputs();
 
+    @Override
+    default String getGroup() {
+        return "lookingglass:undefined";
+    }
+
     default List<ItemStack> getOutputs() {
         return Collections.singletonList(getOutput());
     }

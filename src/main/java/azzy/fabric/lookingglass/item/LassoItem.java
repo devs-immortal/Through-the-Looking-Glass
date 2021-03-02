@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.util.LookingGlassJsonManager;
+import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;

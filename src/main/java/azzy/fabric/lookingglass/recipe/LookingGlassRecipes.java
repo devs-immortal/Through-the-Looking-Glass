@@ -17,7 +17,6 @@ public class LookingGlassRecipes {
     public static final LookingGlassRecipeType<GrinderRecipe> GRINDING_RECIPE = registerType("grinding");
     public static final LookingGlassRecipeType<MixerRecipe> MIXING_RECIPE = registerType("mixing");
 
-
     public static final InductionRecipe.InductionRecipeSerializer INDUCTION_SERIALIZER = registerSerializer("induction", new InductionRecipe.InductionRecipeSerializer());
     public static final AlloyingRecipe.AlloyingRecipeSerializer ALLOYING_SERIALIZER = registerSerializer("alloying", new AlloyingRecipe.AlloyingRecipeSerializer());
     public static final FreezingRecipe.FreezingRecipeSerializer FREEZING_SERIALIZER = registerSerializer("freezing", new FreezingRecipe.FreezingRecipeSerializer());

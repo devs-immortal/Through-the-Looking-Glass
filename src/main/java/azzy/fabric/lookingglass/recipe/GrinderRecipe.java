@@ -44,7 +44,7 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public ItemStack craft(GrinderEntity inv) {
-        return null;
+        return outputTop.copy();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public ItemStack getOutput() {
-        return null;
+        return outputTop;
     }
 
     @Override
@@ -102,7 +102,6 @@ public class GrinderRecipe implements LookingGlassRecipe<GrinderEntity> {
 
         @Override
         public GrinderRecipe read(Identifier id, JsonObject json) {
-
             Ingredient input;
             Item outputTop, outputBottom;
             float chance;
