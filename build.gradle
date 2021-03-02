@@ -78,7 +78,6 @@ dependencies {
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:v2.1"))
 	modImplementation(include("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}"))
 	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))
-	modRuntime "com.github.badasintended:wthit:${project.WTHIT_version}"
 }
 
 processResources {
