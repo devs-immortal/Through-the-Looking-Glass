@@ -1,0 +1,107 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:fast_vector_plate"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:fast_vector_plate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:wooden_spike"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "lookingglass:fast_vector_plate",
+          "properties": {
+            "spike_upgrade": "1"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:fast_vector_plate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:iron_spike"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "lookingglass:fast_vector_plate",
+          "properties": {
+            "spike_upgrade": "2"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:fast_vector_plate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:diamond_spike"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "lookingglass:fast_vector_plate",
+          "properties": {
+            "spike_upgrade": "3"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:fast_vector_plate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "lookingglass:netherite_spike"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "lookingglass:fast_vector_plate",
+          "properties": {
+            "spike_upgrade": "4"
+          }
+        }
+      ]
+    }
+  ]
+}
