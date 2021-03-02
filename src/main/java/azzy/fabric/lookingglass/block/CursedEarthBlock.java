@@ -151,7 +151,8 @@ public class CursedEarthBlock extends LookingGlassBlock {
             List<Entity> entitiesAround = world.getOtherEntities(null, boundingBox, Entity::isAlive);
 
             if (entitiesAround.size() > 8) {
-                // Too many entities nearby.  Do nothing.
+                // Too many entities nearby.  Do nothing.  This considers experience orb to be a valid entity since it's alive.
+                // I've decided to leave that as a feature since too many experience orbs lag the server and I want players to suck them up.
                 return;
             }
 
