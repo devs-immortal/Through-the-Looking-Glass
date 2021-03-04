@@ -1,11 +1,17 @@
 {
   "type": "lookingglass:grinding",
-  "input": [
-    {
-      "item": "minecraft:gravel"
-    }
-  ],
-  "outputTop": "minecraft:flint",
-  "outputBottom": "minecraft:flint",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:gravel"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:flint"
+  },
+  "secondary": {
+    "item": "minecraft:flint"
+  },
   "chance": 0.25
 }

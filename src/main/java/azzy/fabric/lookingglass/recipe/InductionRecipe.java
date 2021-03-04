@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.BlockInductorBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import azzy.fabric.lookingglass.util.IngredientStack;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.block.Block;
@@ -84,8 +85,8 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
     }
 
     @Override
-    public List<Ingredient> getInputs() {
-        return Arrays.stream(inputs).map(Ingredient::ofItems).collect(Collectors.toList());
+    public List<IngredientStack> getInputs() {
+        return Arrays.stream(inputs).map(Ingredient::ofItems).map(IngredientStack::of).collect(Collectors.toList());
     }
 
     @Override

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bbb",
+    "ici",
+    "dhd"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:bricks"
+    },
+    "c": {
+      "item": "lookingglass:dwarven_machine_core"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:grinder"
+  }
+}

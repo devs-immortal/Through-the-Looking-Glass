@@ -1,11 +1,9 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.gui.AlloyingFurnaceGuiDescription;
 import azzy.fabric.lookingglass.gui.MixerGuiDescription;
-import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import azzy.fabric.lookingglass.recipe.MixerRecipe;
+import azzy.fabric.lookingglass.recipe.MixingRecipe;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,7 +20,7 @@ import static net.minecraft.state.property.Properties.LIT;
 @SuppressWarnings("unchecked")
 public class MixerEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder {
 
-    private MixerRecipe trackedRecipe;
+    private MixingRecipe trackedRecipe;
     private int progress;
 
     public MixerEntity() {
@@ -33,7 +31,7 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
     public void tick() {
         if(!world.isClient()) {
             if(trackedRecipe == null) {
-                Optional<MixerRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
+                Optional<MixingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
                 recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
                 tickRecipeProgression();
             }
@@ -59,26 +57,9 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(4);
-                if(outSlot.isEmpty()) {
-                    inventory.set(4, trackedRecipe.craft(this));
-                    inventory.get(3).decrement(1);
-                    inventory.get(2).decrement(1);
-                    inventory.get(1).decrement(1);
-                    inventory.get(0).decrement(1);
-                    progress = 0;
-                    sync();
-                }
-                ItemStack output = trackedRecipe.getOutput();
-                if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-                    inventory.get(4).increment(output.getCount());
-                    inventory.get(3).decrement(1);
-                    inventory.get(2).decrement(1);
-                    inventory.get(1).decrement(1);
-                    inventory.get(0).decrement(1);
-                    progress = 0;
-                    sync();
-                }
+                trackedRecipe.craft(this);
+                progress = 0;
+                sync();
             }
             else {
                 double drain = getPowerUsage();

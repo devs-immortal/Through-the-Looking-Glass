@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.util.json;
 
+import azzy.fabric.lookingglass.util.IngredientStack;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,6 +16,8 @@ import net.minecraft.util.registry.Registry;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsonUtils {
 
@@ -24,16 +27,29 @@ public class JsonUtils {
         return PARSER.parse(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8))).getAsJsonObject();
     }
 
-    public static ItemStack stackFromJson(JsonObject element) {
-        Item item = Registry.ITEM.get(Identifier.tryParse(element.get("item").getAsString()));
-        int count = element.has("count") ? element.get("count").getAsInt() : 1;
+    public static ItemStack stackFromJson(JsonObject json) {
+        Item item = Registry.ITEM.get(Identifier.tryParse(json.get("item").getAsString()));
+        int count = json.has("count") ? json.get("count").getAsInt() : 1;
         return item != Items.AIR ? new ItemStack(item, count) : ItemStack.EMPTY;
     }
 
-    public static DefaultedList<Ingredient> ingredientsFromJson(JsonArray elements, int size) {
-         DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(size, Ingredient.EMPTY);
-        for (int i = 0; i < elements.size() && i < size; i++) {
-            ingredients.set(i, Ingredient.fromJson(elements.get(i)));
+    public static IngredientStack ingredientFromJson(JsonObject json) {
+        Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
+        int count = json.has("count") ? json.get("count").getAsInt() : 1;
+        return IngredientStack.of(ingredient, count);
+    }
+
+    public static List<IngredientStack> ingredientsFromJson(JsonArray array, int size) {
+         List<IngredientStack> ingredients = new ArrayList<>(size);
+         int dif = size - array.size();
+        for (int i = 0; i < array.size() && i < size; i++) {
+            JsonObject object = array.get(i).getAsJsonObject();
+            ingredients.add(ingredientFromJson(object));
+        }
+        if(dif > 0) {
+            for (int i = 0; i < dif; i++) {
+                ingredients.add(IngredientStack.EMPTY);
+            }
         }
         return ingredients;
     }

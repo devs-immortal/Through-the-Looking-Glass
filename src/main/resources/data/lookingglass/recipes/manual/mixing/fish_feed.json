@@ -1,0 +1,24 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+      {
+        "ingredient": [
+          {
+            "item": "minecraft:kelp"
+          }
+        ],
+        "count": 3
+      },
+      {
+        "ingredient": [
+          {
+            "item": "minecraft:sugar"
+          }
+        ]
+      }
+  ],
+  "output": {
+    "item": "lookingglass:fish_feed",
+    "count": 8
+  }
+}

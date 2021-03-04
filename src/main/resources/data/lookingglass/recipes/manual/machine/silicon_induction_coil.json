@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " r ",
+    "r r",
+    " r "
+  ],
+  "key": {
+    "r": {
+      "item": "lookingglass:red_silicon_ingot"
+    }
+  },
+  "result": {
+    "item": "lookingglass:silicon_induction_coil"
+  }
+}

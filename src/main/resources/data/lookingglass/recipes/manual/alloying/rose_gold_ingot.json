@@ -1,14 +1,23 @@
 {
   "type": "lookingglass:alloying",
-  "inputA": [
+  "inputs": [
     {
-      "item": "minecraft:rose_bush"
+      "ingredient": [
+        {
+          "item": "minecraft:gold_ingot"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:rose_bush"
+        }
+      ],
+      "count": 4
     }
   ],
-  "inputB": [
-    {
-      "item": "minecraft:gold_ingot"
-    }
-  ],
-  "output": "lookingglass:rose_gold_ingot"
+  "output": {
+    "item": "lookingglass:rose_gold_ingot"
+  }
 }

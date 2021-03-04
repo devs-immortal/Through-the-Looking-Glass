@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "drd",
+    " c "
+  ],
+  "key": {
+    "d": {
+      "item": "lookingglass:data_shard"
+    },
+    "r": {
+      "item": "lookingglass:rose_chipset"
+    },
+    "c": {
+      "item": "lookingglass:dwarven_clay"
+    }
+  },
+  "result": {
+    "item": "lookingglass:energy_probe"
+  }
+}

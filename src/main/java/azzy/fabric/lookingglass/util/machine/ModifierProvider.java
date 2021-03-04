@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.machine;
 
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.UpgradeableMachineGuiDescription;

@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.recipe;
 
+import azzy.fabric.lookingglass.util.IngredientStack;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -14,7 +15,7 @@ public interface LookingGlassRecipe<C extends Inventory> extends Recipe<C> {
     @Override
     LookingGlassRecipeType<?> getType();
 
-    List<Ingredient> getInputs();
+    List<IngredientStack> getInputs();
 
     @Override
     default String getGroup() {

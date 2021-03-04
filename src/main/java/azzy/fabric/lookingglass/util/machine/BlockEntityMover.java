@@ -1,6 +1,7 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.machine;
 
 import azzy.fabric.lookingglass.blockentity.ChunkLoaderEntity;
+import azzy.fabric.lookingglass.util.MovementSensitiveBlockEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

@@ -1,14 +1,22 @@
 {
   "type": "lookingglass:alloying",
-  "inputA": [
+  "inputs": [
     {
-      "item": "lookingglass:rose_gold_nugget"
+      "ingredient": [
+        {
+          "item": "lookingglass:rose_gold_nugget"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "lookingglass:silicon_cable"
+        }
+      ]
     }
   ],
-  "inputB": [
-    {
-      "item": "lookingglass:silicon_cable"
-    }
-  ],
-  "output": "lookingglass:guilded_cable"
+  "output": {
+    "item": "lookingglass:guilded_cable"
+  }
 }

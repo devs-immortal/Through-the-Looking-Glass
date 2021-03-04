@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dh ",
+    "pd ",
+    "   "
+  ],
+  "key": {
+    "p": {
+      "item": "minecraft:ender_pearl"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:vacuum_hopper"
+  }
+}

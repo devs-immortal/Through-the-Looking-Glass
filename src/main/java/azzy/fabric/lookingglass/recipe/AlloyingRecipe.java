@@ -2,6 +2,8 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
+import azzy.fabric.lookingglass.util.IngredientStack;
+import azzy.fabric.lookingglass.util.json.JsonUtils;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.Item;
@@ -14,6 +16,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,26 +24,32 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
 public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
-    private final Ingredient inputA, inputB;
+    private final List<IngredientStack> ingredients;
     private final ItemStack output;
     private final Identifier id;
 
-    public AlloyingRecipe(Identifier id, Ingredient inputA, Ingredient inputB, ItemStack output) {
-        this.inputA = inputA;
-        this.inputB = inputB;
+    public AlloyingRecipe(Identifier id, List<IngredientStack> ingredients, ItemStack output) {
+        this.ingredients = ingredients;
         this.output = output;
         this.id = id;
     }
 
     @Override
     public boolean matches(AlloyFurnaceEntity inv, World world) {
-        ItemStack a = inv.getStack(0);
-        ItemStack b = inv.getStack(1);
-        return ((inputA.test(a)) ^ (inputA.test(b))) && ((inputB.test(a)) ^ (inputB.test(b)));
+        return IngredientStack.matchInvExclusively(inv, ingredients, 2, 0);
     }
 
     @Override
     public ItemStack craft(AlloyFurnaceEntity inv) {
+        ItemStack outSlot = inv.getStack(2);
+        if(outSlot.isEmpty()) {
+            inv.setStack(2, output.copy());
+            IngredientStack.decrementExclusively(inv, ingredients, 2, 0);
+        }
+        else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
+            inv.getStack(2).increment(output.getCount());
+            IngredientStack.decrementExclusively(inv, ingredients, 2, 0);
+        }
         return output.copy();
     }
 
@@ -66,10 +75,7 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
     @Override
     public DefaultedList<Ingredient> getPreviewInputs() {
-        DefaultedList<Ingredient> inputs = DefaultedList.of();
-        inputs.add(inputA);
-        inputs.add(inputB);
-        return inputs;
+        return IngredientStack.listIngredients(ingredients);
     }
 
     @Override
@@ -88,8 +94,8 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
     }
 
     @Override
-    public List<Ingredient> getInputs() {
-        return Arrays.asList(inputA, inputB);
+    public List<IngredientStack> getInputs() {
+        return ingredients;
     }
 
     public static class AlloyingRecipeSerializer implements RecipeSerializer<AlloyingRecipe> {
@@ -97,39 +103,31 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
         @Override
         public AlloyingRecipe read(Identifier id, JsonObject json) {
 
-            Ingredient inputA;
-            Ingredient inputB;
-            Item output;
-            int count;
+            List<IngredientStack> ingredients;
+            ItemStack output;
 
             try {
-                if(!(json.has("inputA") && json.has("inputB") && json.has("output")))
+                if(!(json.has("inputs") && json.has("output")))
                     throw new MalformedJsonException("Invalid Alloying Recipe Json");
-                inputA = Ingredient.fromJson(json.get("inputA"));
-                inputB = Ingredient.fromJson(json.get("inputB"));
-                output = Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString()));
-                count = json.has("count") ? json.get("count").getAsInt() : 1;
+                ingredients = JsonUtils.ingredientsFromJson(json.getAsJsonArray("inputs"), 2);
+                output = JsonUtils.stackFromJson(json.getAsJsonObject("output"));
             } catch (Exception e) {
                 FFLog.error("Exception found while loading Alloying recipe json " + id.toString() + " ", e);
                 return null;
             }
 
-            return new AlloyingRecipe(id, inputA, inputB, new ItemStack(output, count));
+            return new AlloyingRecipe(id, ingredients, output);
         }
 
         @Override
         public AlloyingRecipe read(Identifier id, PacketByteBuf buf) {
-            ItemStack output = buf.readItemStack();
-            Ingredient inputA = Ingredient.fromPacket(buf);
-            Ingredient inputB = Ingredient.fromPacket(buf);
-            return new AlloyingRecipe(id, inputA, inputB, output);
+            return new AlloyingRecipe(id, IngredientStack.decodeByteBuf(buf, 2), buf.readItemStack());
         }
 
         @Override
         public void write(PacketByteBuf buf, AlloyingRecipe recipe) {
+            recipe.getInputs().forEach(ingredientStack -> ingredientStack.write(buf));
             buf.writeItemStack(recipe.output);
-            recipe.inputA.write(buf);
-            recipe.inputB.write(buf);
         }
     }
 }

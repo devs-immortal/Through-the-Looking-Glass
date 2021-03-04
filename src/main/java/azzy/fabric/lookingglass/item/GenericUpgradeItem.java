@@ -2,9 +2,7 @@ package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.UpgradeableMachineGuiDescription;
-import azzy.fabric.lookingglass.util.ModifierProvider;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
+import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import net.minecraft.item.Item;
 
 public class GenericUpgradeItem extends Item implements ModifierProvider {

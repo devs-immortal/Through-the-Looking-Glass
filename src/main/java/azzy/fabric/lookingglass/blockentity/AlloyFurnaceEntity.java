@@ -56,22 +56,9 @@ public class AlloyFurnaceEntity extends LookingGlassUpgradeableMachine implement
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(2);
-                if(outSlot.isEmpty()) {
-                    inventory.set(2, trackedRecipe.craft(this));
-                    inventory.get(1).decrement(1);
-                    inventory.get(0).decrement(1);
-                    progress = 0;
-                    sync();
-                }
-                ItemStack output = trackedRecipe.getOutput();
-                if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-                    inventory.get(2).increment(output.getCount());
-                    inventory.get(1).decrement(1);
-                    inventory.get(0).decrement(1);
-                    progress = 0;
-                    sync();
-                }
+                trackedRecipe.craft(this);
+                progress = 0;
+                sync();
             }
             else {
                 double drain = getPowerUsage();

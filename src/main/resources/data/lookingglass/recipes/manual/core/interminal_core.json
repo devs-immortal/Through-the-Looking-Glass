@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " q ",
+    "qcq",
+    " q "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "lookingglass:interminal_core"
+  }
+}

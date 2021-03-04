@@ -23,7 +23,7 @@ public class LookingGlassRecipeDisplay<R extends LookingGlassRecipe<?>> implemen
 
     public LookingGlassRecipeDisplay(R recipe) {
         this.recipe = recipe;
-        this.inputs = CollectionUtils.map(recipe.getInputs(), EntryStack::ofIngredient);
+        this.inputs = CollectionUtils.map(recipe.getInputs(), stack -> EntryStack.ofItemStacks(stack.getStacks()));
         this.outputs = CollectionUtils.map(EntryStack.ofItemStacks(recipe.getOutputs()), Collections::singletonList);
     }
 
@@ -36,6 +36,10 @@ public class LookingGlassRecipeDisplay<R extends LookingGlassRecipe<?>> implemen
     @Override
     public @NotNull List<List<EntryStack>> getInputEntries() {
         return inputs;
+    }
+
+    public R getRecipe() {
+        return recipe;
     }
 
     @Override

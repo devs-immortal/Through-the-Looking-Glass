@@ -1,10 +1,8 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.gui.AlloyingFurnaceGuiDescription;
 import azzy.fabric.lookingglass.gui.GrinderGuiDescription;
-import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
-import azzy.fabric.lookingglass.recipe.GrinderRecipe;
+import azzy.fabric.lookingglass.recipe.GrindingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +21,7 @@ import static net.minecraft.state.property.Properties.LIT;
 @SuppressWarnings("unchecked")
 public class GrinderEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder {
 
-    private GrinderRecipe trackedRecipe;
+    private GrindingRecipe trackedRecipe;
     private int progress;
 
     public GrinderEntity() {
@@ -34,7 +32,7 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
     public void tick() {
         if(!world.isClient()) {
             if(trackedRecipe == null) {
-                Optional<GrinderRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
+                Optional<GrindingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
                 recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
                 tickRecipeProgression();
             }
@@ -60,40 +58,9 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(1);
-                ItemStack secSlot = inventory.get(2);
-                List<ItemStack> outputs = trackedRecipe.getOutputs();
-                ItemStack output = outputs.get(0);
-                ItemStack secondary = outputs.get(1);
-                float chance = trackedRecipe.getChance();
-                if(outSlot.isEmpty()) {
-                    inventory.get(0).decrement(1);
-                    inventory.set(1, output.copy());
-                    if(world.getRandom().nextFloat() <= chance) {
-                        if(secSlot.isEmpty()) {
-                            inventory.set(2, secondary.copy());
-                        }
-                        else if(secSlot.getCount() + secondary.getCount() <= secSlot.getMaxCount() && secondary.isItemEqual(secSlot)) {
-                            inventory.get(2).increment(secondary.getCount());
-                        }
-                    }
-                    progress = 0;
-                    sync();
-                }
-                if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-                    inventory.get(0).decrement(1);
-                    inventory.get(1).increment(output.getCount());
-                    if(world.getRandom().nextFloat() <= chance) {
-                        if(secSlot.isEmpty()) {
-                            inventory.set(2, secondary.copy());
-                        }
-                        else if(secSlot.getCount() + secondary.getCount() <= secSlot.getMaxCount() && secondary.isItemEqual(secSlot)) {
-                            inventory.get(2).increment(secondary.getCount());
-                        }
-                    }
-                    progress = 0;
-                    sync();
-                }
+                trackedRecipe.craft(this);
+                progress = 0;
+                sync();
             }
             else {
                 double drain = getPowerUsage();

@@ -58,17 +58,24 @@ public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine impleme
     private void tickRecipeProgression() {
         if(trackedRecipe != null) {
             if(progress >= getProcessTime()) {
-                ItemStack outSlot = inventory.get(1);
-                if(outSlot.isEmpty()) {
-                    inventory.set(1, trackedRecipe.craft(this));
-                    inventory.get(0).decrement(1);
-                    progress = 0;
-                    sync();
+                if(trackedRecipe.getType() == RecipeType.SMELTING || trackedRecipe.getType() == RecipeType.BLASTING) {
+                    ItemStack outSlot = inventory.get(1);
+                    if(outSlot.isEmpty()) {
+                        inventory.set(1, trackedRecipe.craft(this));
+                        inventory.get(0).decrement(1);
+                        progress = 0;
+                        sync();
+                    }
+                    ItemStack output = trackedRecipe.getOutput();
+                    if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
+                        inventory.get(1).increment(output.getCount());
+                        inventory.get(0).decrement(1);
+                        progress = 0;
+                        sync();
+                    }
                 }
-                ItemStack output = trackedRecipe.getOutput();
-                if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-                    inventory.get(1).increment(output.getCount());
-                    inventory.get(0).decrement(1);
+                else {
+                    trackedRecipe.craft(this);
                     progress = 0;
                     sync();
                 }

@@ -27,7 +27,7 @@ public class FreezingRecipeCategory extends AbstractLookingGlassRecipeCategory<F
         Point start = new Point(bounds.getCenterX() - 41, bounds.y + 10);
         widgets.add(Widgets.createCategoryBase(bounds));
         widgets.add(Widgets.createResultSlotBackground(new Point(start.x + 61, start.y + 9)));
-        widgets.add(Widgets.createSlot(new Point(start.x + 1, start.y  + 1)).entries(getInput(recipeDisplay, 0)).markInput());
+        widgets.add(Widgets.createSlot(new Point(start.x + 1, start.y  + 10)).entries(getInput(recipeDisplay, 0)).markInput());
         widgets.add(Widgets.createArrow(new Point(start.x + 24, start.y + 8)).animationDurationTicks(800));
         widgets.add(Widgets.createSlot(new Point(start.x + 61, start.y + 9)).entries(getOutput(recipeDisplay, 0)).disableBackground().markOutput());
 

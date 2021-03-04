@@ -3,7 +3,7 @@
   "pattern": [
     "bbb",
     "bcb",
-    "rrr"
+    "drd"
   ],
   "key": {
     "b": {
@@ -13,7 +13,10 @@
       "item": "lookingglass:dwarven_machine_core"
     },
     "r": {
-      "item": "lookingglass:red_silicon_ingot"
+      "item": "lookingglass:silicon_induction_coil"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
     }
   },
   "result": {

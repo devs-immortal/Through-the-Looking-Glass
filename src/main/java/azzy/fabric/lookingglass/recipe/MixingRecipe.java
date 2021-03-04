@@ -1,37 +1,32 @@
 package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
 import azzy.fabric.lookingglass.util.BufUtils;
+import azzy.fabric.lookingglass.util.IngredientStack;
 import azzy.fabric.lookingglass.util.json.JsonUtils;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
-public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
+public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
-    private final DefaultedList<Ingredient> ingredients;
+    private final List<IngredientStack> ingredients;
     private final ItemStack output;
     private final Identifier id;
 
-    public MixerRecipe(Identifier id, DefaultedList<Ingredient> ingredients, ItemStack output) {
+    public MixingRecipe(Identifier id, List<IngredientStack> ingredients, ItemStack output) {
         this.ingredients = ingredients;
         this.output = output;
         this.id = id;
@@ -39,30 +34,20 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public boolean matches(MixerEntity inv, World world) {
-        List<ItemStack> invStacks = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            invStacks.add(inv.getStack(i));
-        }
-        AtomicInteger matches = new AtomicInteger();
-        ingredients.forEach(ingredient -> {
-            for (int i = 0; i < invStacks.size(); i++) {
-                if(ingredient.isEmpty()) {
-                    matches.getAndIncrement();
-                    break;
-                }
-                ItemStack stack = invStacks.get(i);
-                if(ingredient.test(stack)) {
-                    matches.getAndIncrement();
-                    invStacks.remove(i);
-                    break;
-                }
-            }
-        });
-        return matches.get() == 4;
+        return IngredientStack.matchInvExclusively(inv, ingredients, 4, 0);
     }
 
     @Override
     public ItemStack craft(MixerEntity inv) {
+        ItemStack outSlot = inv.getStack(4);
+        if(outSlot.isEmpty()) {
+            inv.setStack(4, output.copy());
+            IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
+        }
+        else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
+            inv.getStack(4).increment(output.getCount());
+            IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
+        }
         return output.copy();
     }
 
@@ -83,7 +68,7 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public DefaultedList<Ingredient> getPreviewInputs() {
-        return ingredients;
+        return IngredientStack.listIngredients(ingredients);
     }
 
     @Override
@@ -102,15 +87,15 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
     }
 
     @Override
-    public List<Ingredient> getInputs() {
+    public List<IngredientStack> getInputs() {
         return ingredients;
     }
 
-    public static class MixerRecipeSerializer implements RecipeSerializer<MixerRecipe> {
+    public static class MixingRecipeSerializer implements RecipeSerializer<MixingRecipe> {
 
         @Override
-        public MixerRecipe read(Identifier id, JsonObject json) {
-            DefaultedList<Ingredient> ingredients;
+        public MixingRecipe read(Identifier id, JsonObject json) {
+            List<IngredientStack> ingredients;
             ItemStack output;
 
             try {
@@ -123,18 +108,18 @@ public class MixerRecipe implements LookingGlassRecipe<MixerEntity> {
                 return null;
             }
 
-            return new MixerRecipe(id, ingredients, output);
+            return new MixingRecipe(id, ingredients, output);
         }
 
         @Override
-        public MixerRecipe read(Identifier id, PacketByteBuf buf) {
+        public MixingRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack output = buf.readItemStack();
-            DefaultedList<Ingredient> ingredients = BufUtils.ingredientsFromBuf(buf);
-            return new MixerRecipe(id, ingredients, output);
+            List<IngredientStack> ingredients = BufUtils.ingredientsFromBuf(buf);
+            return new MixingRecipe(id, ingredients, output);
         }
 
         @Override
-        public void write(PacketByteBuf buf, MixerRecipe recipe) {
+        public void write(PacketByteBuf buf, MixingRecipe recipe) {
             buf.writeItemStack(recipe.output);
             BufUtils.ingredientsToBuf(recipe.ingredients, buf);
         }

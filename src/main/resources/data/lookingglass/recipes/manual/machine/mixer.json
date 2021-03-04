@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "drd",
+    "gcg",
+    "dhd"
+  ],
+  "key": {
+    "c": {
+      "item": "lookingglass:dwarven_machine_core"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "r": {
+      "item": "lookingglass:rose_chipset"
+    },
+    "h": {
+      "item": "minecraft:cauldron"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:mixer"
+  }
+}

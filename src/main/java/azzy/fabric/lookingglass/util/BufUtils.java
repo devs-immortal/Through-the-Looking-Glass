@@ -1,20 +1,22 @@
 package azzy.fabric.lookingglass.util;
 
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.collection.DefaultedList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BufUtils {
 
-    public static DefaultedList<Ingredient> ingredientsFromBuf(PacketByteBuf buf) {
-        DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(buf.readInt(), Ingredient.EMPTY);
-        for (int i = 0; i < ingredients.size(); i++) {
-            ingredients.set(i, Ingredient.fromPacket(buf));
+    public static List<IngredientStack> ingredientsFromBuf(PacketByteBuf buf) {
+        int size = buf.readInt();
+        List<IngredientStack> ingredients = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            ingredients.set(i, IngredientStack.fromByteBuf(buf));
         }
         return ingredients;
     }
 
-    public static void ingredientsToBuf(DefaultedList<Ingredient> ingredients, PacketByteBuf buf) {
+    public static void ingredientsToBuf(List<IngredientStack> ingredients, PacketByteBuf buf) {
         buf.writeInt(ingredients.size());
         ingredients.forEach(ingredient -> ingredient.write(buf));
     }

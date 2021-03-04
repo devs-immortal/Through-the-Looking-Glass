@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dgd",
+    "ici",
+    "dgd"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:ice"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "c": {
+      "item": "lookingglass:rose_chipset"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:freezer_upgrade"
+  }
+}

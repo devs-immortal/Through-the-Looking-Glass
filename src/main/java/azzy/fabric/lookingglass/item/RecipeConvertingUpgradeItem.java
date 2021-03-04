@@ -1,10 +1,8 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
-import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import azzy.fabric.lookingglass.gui.UpgradeableMachineGuiDescription;
-import azzy.fabric.lookingglass.recipe.LookingGlassRecipe;
-import azzy.fabric.lookingglass.util.RecipeConversionProvider;
+import azzy.fabric.lookingglass.util.machine.RecipeConversionProvider;
 import net.minecraft.recipe.RecipeType;
 
 public class RecipeConvertingUpgradeItem<T extends UpgradeableMachineGuiDescription> extends GenericUpgradeItem implements RecipeConversionProvider {

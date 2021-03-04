@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util;
+package azzy.fabric.lookingglass.util.machine;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

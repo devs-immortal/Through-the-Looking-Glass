@@ -4,7 +4,7 @@ import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import azzy.fabric.lookingglass.util.ModifierProvider;
+import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;
@@ -51,6 +51,8 @@ public class LookingGlassItems {
     public static final Item BASE_RING = registerGeneratedItem("ring", new Item(defaultSettings().rarity(Rarity.UNCOMMON).maxCount(8)));
     public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
     public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(LUPREVAN_RARITY).fireproof().maxCount(1)));
+    public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings(), false));
+    public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings(), true));
 
     //Upgrades
     public static final Item ROSE_CHIPSET = registerGeneratedItem("rose_chipset", new Item(defaultSettings()));
@@ -63,7 +65,8 @@ public class LookingGlassItems {
     //Materials
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));
     public static final Item DWARVEN_CLAY = registerGeneratedItem("dwarven_clay", new Item(defaultSettings()));
-    public static final Item RED_SILICON_INGOT = registerGeneratedItem("red_silicon_ingot", new Item(defaultSettings()));
+    public static final Item SILICON_INGOT = registerGeneratedItem("red_silicon_ingot", new Item(defaultSettings()));
+    public static final Item SILICON_INDUCTION_COIL = registerGeneratedItem("silicon_induction_coil", new Item(defaultSettings()));
     public static final Item ROSE_GOLD_INGOT = registerGeneratedItem("rose_gold_ingot", new Item(defaultSettings()));
     public static final Item ROSE_GOLD_NUGGET = registerGeneratedItem("rose_gold_nugget", new Item(defaultSettings()));
     public static final Item CELESTIAL_AMALGAM = registerGeneratedItem("celestial_amalgam", new Item(genericSettings(FINIS_RARITY)));
@@ -87,8 +90,6 @@ public class LookingGlassItems {
     public static final Item SLOW_VECTOR_PLATE_BLOCK = registerItem("slow_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item NORMAL_VECTOR_PLATE_BLOCK = registerItem("normal_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item FAST_VECTOR_PLATE_BLOCK = registerItem("fast_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings(), false));
-    public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings(), true));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);

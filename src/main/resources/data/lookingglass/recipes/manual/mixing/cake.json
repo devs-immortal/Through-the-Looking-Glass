@@ -1,26 +1,28 @@
 {
   "type": "lookingglass:mixing",
   "inputs": [
-    [
       {
-        "item": "minecraft:wheat"
-      }
-    ],
-    [
+        "ingredient": [
+          {
+            "item": "minecraft:wheat"
+          }
+        ]
+      },
       {
-        "item": "minecraft:egg"
-      }
-    ],
-    [
+        "ingredient": [
+          {
+            "item": "minecraft:egg"
+          }
+        ]
+      },
       {
-        "item": "minecraft:sugar"
+        "ingredient": [
+          {
+            "item": "minecraft:sugar"
+          }
+        ],
+        "count": 2
       }
-    ],
-    [
-      {
-        "item": "minecraft:sugar"
-      }
-    ]
   ],
   "output": {
     "item": "minecraft:cake"

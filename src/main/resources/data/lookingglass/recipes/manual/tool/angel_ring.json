@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " n ",
+    "frf",
+    " m "
+  ],
+  "key": {
+    "r": {
+      "item": "lookingglass:ring"
+    },
+    "n": {
+      "item": "lookingglass:nebulous_salts"
+    },
+    "f": {
+      "item": "lookingglass:finis_ingot"
+    },
+    "m": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "lookingglass:simple_angel_ring"
+  }
+}

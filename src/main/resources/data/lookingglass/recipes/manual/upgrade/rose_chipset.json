@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cdc",
+    "rrr",
+    "cdc"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:redstone"
+    },
+    "r": {
+      "item": "lookingglass:rose_gold_nugget"
+    },
+    "c": {
+      "item": "lookingglass:dwarven_clay"
+    }
+  },
+  "result": {
+    "item": "lookingglass:rose_chipset"
+  }
+}

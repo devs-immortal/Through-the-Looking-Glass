@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dod",
+    "rcr",
+    "dod"
+  ],
+  "key": {
+    "r": {
+      "item": "lookingglass:silicon_induction_coil"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "c": {
+      "item": "lookingglass:rose_chipset"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:blast_upgrade"
+  }
+}

@@ -2,9 +2,13 @@ package azzy.fabric.lookingglass.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 public class HorizontalMachineBlock extends LookingGlassBlock {
@@ -24,5 +28,10 @@ public class HorizontalMachineBlock extends LookingGlassBlock {
         builder.add(Properties.HORIZONTAL_FACING);
         builder.add(Properties.LIT);
         super.appendProperties(builder);
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return super.getCollisionShape(state, world, pos, context);
     }
 }

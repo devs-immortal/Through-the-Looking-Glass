@@ -90,7 +90,6 @@ public class LookingGlassBlocks {
     public static final Block PROJECTORBLOCK = registerBlock("projector", new ProjectorBlock(paleMachine().luminance(ignored -> 7)), basicItem());
     public static final Block CHUNKLOADERBLOCK = registerBlock("chunkloader", new ChunkAnchorBlock(paleMachine().luminance(ignored -> 7)), basicItem());
     public static final Block WORMHOLEBLOCK = registerBlock("wormhole", new WormholeBlock(paleMachine().luminance(ignored -> 5)), basicItem());
-    public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
     public static final Block ADVANCED_VACUUM_HOPPER_BLOCK = registerBlock("advanced_vacuum_hopper", new VacuumHopperBlock(hardenedMachine(), 5, 7, 27), advancedItem());
     public static final Block BLOCK_TESSERACT_BLOCK = registerBlock("block_tesseract", new BlockTesseractBlock(eldenMachine().nonOpaque()), lategameItem());
     public static final Block BLOCK_INDUCTOR_BLOCK = registerBlock("block_inductor", new BlockInductorBlock(basicMachine(BlockSoundGroup.STONE).nonOpaque().luminance(state -> state.get(AbstractInductorBlock.POWERED) ? 15 : 5)), basicItem());
@@ -100,6 +99,7 @@ public class LookingGlassBlocks {
     public static final Block ALLOY_FURNACE_BLOCK = registerBlock("alloy_furnace", new AlloyFurnaceBlock(dwarvenMachine()), basicItem());
     public static final Block GRINDER_BLOCK = registerBlock("grinder", new GrinderBlock(dwarvenMachine()), basicItem());
     public static final Block MIXER_BLOCK = registerBlock("mixer", new MixerBlock(dwarvenMachine()), basicItem());
+    public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
 
     //Power
     public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), worldforgeItem());

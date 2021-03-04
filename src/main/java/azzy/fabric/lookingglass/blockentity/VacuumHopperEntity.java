@@ -29,7 +29,7 @@ public class VacuumHopperEntity extends LookingGlassBE implements Tickable {
     @Override
     public void tick() {
         if(!world.isClient() && !getCachedState().get(LookingGlassBlock.POWERED) && (world.getTime() + offset) % delay == 0) {
-            List<ItemEntity> itemEntities = world.getEntitiesByType(EntityType.ITEM, new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius)), ignored -> true);
+            List<ItemEntity> itemEntities = world.getEntitiesByType(EntityType.ITEM, new Box(pos.add(-radius, -radius, -radius), pos.add(radius + 1, radius + 1, radius + 1)), ignored -> true);
             entityCheck:
                 for (ItemEntity itemEntity : itemEntities) {
                     ItemStack stack = itemEntity.getStack();

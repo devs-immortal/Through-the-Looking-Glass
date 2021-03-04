@@ -3,7 +3,7 @@
   "pattern": [
     "bbb",
     "fcf",
-    "bib"
+    "did"
   ],
   "key": {
     "b": {
@@ -17,6 +17,9 @@
     },
     "f": {
       "item": "minecraft:furnace"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
     }
   },
   "result": {

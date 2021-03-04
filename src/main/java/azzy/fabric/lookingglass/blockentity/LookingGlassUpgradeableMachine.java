@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.blockentity;
 
-import azzy.fabric.lookingglass.util.ModifierProvider;
-import azzy.fabric.lookingglass.util.RecipeConversionProvider;
+import azzy.fabric.lookingglass.util.machine.ModifierProvider;
+import azzy.fabric.lookingglass.util.machine.RecipeConversionProvider;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

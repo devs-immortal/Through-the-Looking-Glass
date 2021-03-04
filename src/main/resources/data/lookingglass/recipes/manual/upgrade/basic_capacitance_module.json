@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "drd",
+    "rcr",
+    "drd"
+  ],
+  "key": {
+    "r": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "c": {
+      "item": "lookingglass:rose_chipset"
+    },
+    "d": {
+      "item": "lookingglass:dwarven_stone"
+    }
+  },
+  "result": {
+    "item": "lookingglass:basic_energy_storage_upgrade"
+  }
+}

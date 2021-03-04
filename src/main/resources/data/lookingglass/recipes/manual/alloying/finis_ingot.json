@@ -1,14 +1,23 @@
 {
   "type": "lookingglass:alloying",
-  "inputA": [
+  "inputs": [
     {
-      "item": "lookingglass:celestial_amalgam"
+      "ingredient": [
+        {
+          "item": "lookingglass:celestial_amalgam"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:lapis_lazuli"
+        }
+      ],
+      "count": 8
     }
   ],
-  "inputB": [
-    {
-      "item": "minecraft:lapis_block"
-    }
-  ],
-  "output": "lookingglass:finis_ingot"
+  "output": {
+    "item": "lookingglass:finis_ingot"
+  }
 }
