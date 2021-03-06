@@ -8,8 +8,8 @@ import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
-import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import azzy.fabric.lookingglass.util.datagen.Metadata;
+import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -49,7 +49,7 @@ public class LookingGlassCommon implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		FFLog.info(LookingGlassInit.BLESSED_CONST);
+//		FFLog.info(LookingGlassInit.BLESSED_CONST);
 
 		LookingGlassBlocks.init();
 		LookingGlassItems.init();

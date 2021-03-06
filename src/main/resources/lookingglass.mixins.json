@@ -4,14 +4,17 @@
   "package": "azzy.fabric.lookingglass.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "EntityRetainedShapeContextMixin",
     "FishKillMixin",
+    "IngredientMixin",
     "LithiumBlockEntityListMixin",
     "LivingEntityLootMixin",
     "RecipeMapAccessor",
-    "TextureUnregister",
-    "IngredientMixin"
+    "TextureUnregister"
   ],
   "client": [
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

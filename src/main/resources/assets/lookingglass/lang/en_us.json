@@ -83,6 +83,7 @@
 	"block.lookingglass.slow_vector_plate": "Slow Vector Plate",
 	"block.lookingglass.normal_vector_plate": "Fast Vector Plate",
 	"block.lookingglass.fast_vector_plate": "Extreme Vector Plate",
+	"block.lookingglass.ethereal_glass": "Ethereal Glass",
 	"item.lookingglass.": "",
 	"item.lookingglass.golden_lasso": "Golden Lasso",
 	"item.lookingglass.cursed_lasso": "Cursed Lasso",

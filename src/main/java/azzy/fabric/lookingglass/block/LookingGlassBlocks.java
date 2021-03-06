@@ -157,6 +157,7 @@ public class LookingGlassBlocks {
     public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 1));
     public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
     public static final Block FAST_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "fast_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 4));
+    public static final Block ETHEREAL_GLASS_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.ETHEREAL));
 
     //  BLOCK ENTITIES
     //Machines

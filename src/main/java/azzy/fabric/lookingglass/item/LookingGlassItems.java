@@ -4,8 +4,8 @@ import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
+import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;
 import dev.emi.trinkets.api.TrinketSlots;
@@ -51,8 +51,11 @@ public class LookingGlassItems {
     public static final Item BASE_RING = registerGeneratedItem("ring", new Item(defaultSettings().rarity(Rarity.UNCOMMON).maxCount(8)));
     public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
     public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(LUPREVAN_RARITY).fireproof().maxCount(1)));
-    public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings(), false));
-    public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings(), true));
+    // I should consider fixing the potential bug where user changes the stack size for lasso, has more than one in a stack and uses on an entity.  It makes ALL the lassos get the entity.
+    // So if the user subsequently spreads out the lassos and uses them one at a time, they effectively duplicate the mob.  I've sidestepped the issue for now by forcing stack size to 1.
+    public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings().maxCount(1), false));
+    public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));
+    public static final Item ETHEREAL_GLASS_BLOCK = registerItem("ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.ETHEREAL_GLASS_BLOCK, defaultSettings()));
 
     //Upgrades
     public static final Item ROSE_CHIPSET = registerGeneratedItem("rose_chipset", new Item(defaultSettings()));
