@@ -15,8 +15,6 @@ import java.util.stream.Stream;
 @Mixin(Ingredient.class)
 public abstract class IngredientMixin implements MatchingStackAccessor {
 
-    @Unique
-
     @Shadow protected abstract void cacheMatchingStacks();
 
     @Shadow private ItemStack[] matchingStacks;
