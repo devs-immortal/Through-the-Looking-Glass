@@ -46,7 +46,7 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
 
     @Override
     public ItemStack craft(BlockInductorBlock inv) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
 
     @Override
     public DefaultedList<ItemStack> getRemainingStacks(BlockInductorBlock inventory) {
-        return null;
+        return DefaultedList.of();
     }
 
     @Override

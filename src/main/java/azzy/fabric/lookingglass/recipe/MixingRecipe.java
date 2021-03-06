@@ -114,14 +114,14 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
         @Override
         public MixingRecipe read(Identifier id, PacketByteBuf buf) {
             ItemStack output = buf.readItemStack();
-            List<IngredientStack> ingredients = BufUtils.ingredientsFromBuf(buf);
+            List<IngredientStack> ingredients = IngredientStack.decodeByteBuf(buf, 4);
             return new MixingRecipe(id, ingredients, output);
         }
 
         @Override
         public void write(PacketByteBuf buf, MixingRecipe recipe) {
             buf.writeItemStack(recipe.output);
-            BufUtils.ingredientsToBuf(recipe.ingredients, buf);
+            recipe.getInputs().forEach(ingredientStack -> ingredientStack.write(buf));
         }
     }
 }

@@ -47,33 +47,35 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
 
     @Override
     public void tick() {
-        if(!world.isClient()) {
-            if(!receiverCooldown.isEmpty() && world.getTime() % 2 == 0)
-                receiverCooldown = (HashMap<Entity, Long>) receiverCooldown.entrySet().stream().filter(entityLongEntry -> entityLongEntry.getValue() - 2 > 0).collect(Collectors.toMap(Map.Entry::getKey, cooldown -> cooldown.getValue() - 2));
-            if(world.getTime() % 10 == 0) {
-                valid = world.isChunkLoaded(out.getX() >> 4, out.getZ() >> 4) && world.getBlockEntity(out) instanceof WormholeEntity;
-                if(valid && cachedOut == null) {
-                    cachedOut = (WormholeEntity) world.getBlockEntity(out);
+        if(world != null) {
+            if(!world.isClient()) {
+                if(!receiverCooldown.isEmpty() && world.getTime() % 2 == 0)
+                    receiverCooldown = (HashMap<Entity, Long>) receiverCooldown.entrySet().stream().filter(entityLongEntry -> entityLongEntry.getValue() - 2 > 0).collect(Collectors.toMap(Map.Entry::getKey, cooldown -> cooldown.getValue() - 2));
+                if(world.getTime() % 10 == 0) {
+                    valid = world.isChunkLoaded(out.getX() >> 4, out.getZ() >> 4) && world.getBlockEntity(out) instanceof WormholeEntity;
+                    if(valid && cachedOut == null) {
+                        cachedOut = (WormholeEntity) world.getBlockEntity(out);
+                    }
+                    if(cachedOut != null && !out.equals(cachedOut.pos)){
+                        valid = false;
+                        cachedOut = null;
+                    }
+                    markDirty();
+                    sync();
                 }
-                if(cachedOut != null && !out.equals(cachedOut.pos)){
-                    valid = false;
-                    cachedOut = null;
+                if(valid) {
+                    getCollidingEntities();
                 }
-                markDirty();
-                sync();
             }
-            if(valid) {
-                getCollidingEntities();
-            }
-        }
-        if(world.getTime() % 2 == 0) {
-            if(valid) {
-                if(onTicks < 60)
-                onTicks++;
-            }
-            else {
-                if(onTicks > 0)
-                    onTicks--;
+            if(world.getTime() % 2 == 0) {
+                if(valid) {
+                    if(onTicks < 60)
+                        onTicks++;
+                }
+                else {
+                    if(onTicks > 0)
+                        onTicks--;
+                }
             }
         }
     }

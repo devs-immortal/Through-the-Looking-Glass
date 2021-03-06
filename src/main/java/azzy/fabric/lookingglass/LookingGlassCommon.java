@@ -49,7 +49,8 @@ public class LookingGlassCommon implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-//		FFLog.info(LookingGlassInit.BLESSED_CONST);
+		if(!DEV_ENV)
+			FFLog.info(LookingGlassInit.BLESSED_CONST);
 
 		LookingGlassBlocks.init();
 		LookingGlassItems.init();
