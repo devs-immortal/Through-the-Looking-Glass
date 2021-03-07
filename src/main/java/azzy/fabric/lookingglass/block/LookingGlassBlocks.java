@@ -157,7 +157,15 @@ public class LookingGlassBlocks {
     public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 1));
     public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
     public static final Block FAST_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "fast_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 4));
-    public static final Block ETHEREAL_GLASS_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.ETHEREAL));
+    public static final Block DARK_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "dark_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.DARK_GLASS));
+    public static final Block ETHEREAL_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.ETHEREAL));
+    public static final Block DARK_ETHEREAL_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "dark_ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.DARK_ETHEREAL));
+    public static final Block REVERSE_ETHEREAL_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "reverse_ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.REVERSE_ETHEREAL));
+    public static final Block REVERSE_DARK_ETHEREAL_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "dark_reverse_ethereal_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.DARK_REVERSE_ETHEREAL));
+    public static final Block GHOST_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "ghost_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.GHOST_GLASS));
+    public static final Block DARK_GHOST_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "dark_ghost_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.DARK_GHOST_GLASS));
+    public static final Block GLOW_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "glow_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).lightLevel(15), GlassBlockTypes.GLOW_GLASS));
+    public static final Block RED_GLASS = Registry.register(Registry.BLOCK, new Identifier(MODID, "red_glass"), new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.RED_GLASS));
 
     //  BLOCK ENTITIES
     //Machines

@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.block;
+package azzy.fabric.lookingglass.util;
 
 import net.minecraft.entity.Entity;
 

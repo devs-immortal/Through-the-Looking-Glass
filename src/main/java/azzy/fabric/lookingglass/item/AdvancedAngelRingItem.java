@@ -44,6 +44,7 @@ public class AdvancedAngelRingItem extends Item {
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1, false, false));
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, Integer.MAX_VALUE, 3, false, false));
+                user.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, Integer.MAX_VALUE, 3, false, false));
                 user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
             }
         }

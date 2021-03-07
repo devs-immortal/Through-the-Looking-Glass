@@ -55,7 +55,17 @@ public class LookingGlassItems {
     // So if the user subsequently spreads out the lassos and uses them one at a time, they effectively duplicate the mob.  I've sidestepped the issue for now by forcing stack size to 1.
     public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings().maxCount(1), false));
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));
-    public static final Item ETHEREAL_GLASS_BLOCK = registerItem("ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.ETHEREAL_GLASS_BLOCK, defaultSettings()));
+
+    // Ethereal glass and variants.
+    public static final Item DARK_GLASS_ITEM = registerItem("dark_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item ETHEREAL_GLASS_ITEM = registerItem("ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item DARK_ETHEREAL_GLASS_ITEM = registerItem("dark_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item REVERSE_ETHEREAL_GLASS_ITEM = registerItem("reverse_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.REVERSE_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item REVERSE_DARK_ETHEREAL_GLASS_ITEM = registerItem("reverse_dark_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.REVERSE_DARK_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item GHOST_GLASS_ITEM = registerItem("ghost_glass", new EtherealGlassBlockItem(LookingGlassBlocks.GHOST_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item DARK_GHOST_GLASS_ITEM = registerItem("dark_ghost_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_GHOST_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item GLOW_GLASS_ITEM = registerItem("glow_glass", new EtherealGlassBlockItem(LookingGlassBlocks.GLOW_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item RED_GLASS_ITEM = registerItem("red_glass", new EtherealGlassBlockItem(LookingGlassBlocks.RED_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     //Upgrades
     public static final Item ROSE_CHIPSET = registerGeneratedItem("rose_chipset", new Item(defaultSettings()));

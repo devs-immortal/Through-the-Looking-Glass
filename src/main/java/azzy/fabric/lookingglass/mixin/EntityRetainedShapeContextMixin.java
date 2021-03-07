@@ -1,6 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
-import azzy.fabric.lookingglass.block.ShapeContextMixinInterface;
+import azzy.fabric.lookingglass.util.ShapeContextMixinInterface;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
