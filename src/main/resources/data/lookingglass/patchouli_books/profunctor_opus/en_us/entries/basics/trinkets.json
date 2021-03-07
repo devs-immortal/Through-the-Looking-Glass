@@ -1,0 +1,25 @@
+{
+  "name": "Trinkets",
+  "category": "basics",
+  "icon": "lookingglass:ring",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Trinkets are small, helpful gadgets that can be equipped in a variety of auxiliary slots. As you progress through the mod you will have the ability to craft many of them, each with their own advantages and disadvantages."
+    },
+    {
+      "type": "spotlight",
+      "title": "Rosy Ring",
+      "item": "lookingglass:ring",
+      "text": "Perhaps the most notable of them are the rings, finger-sized fistfuls of power."
+    },
+    {
+      "type": "crafting",
+      "title": "Rosy Ring",
+      "recipe": "lookingglass:manual/tool/ring_basic",
+      "text": "$(#FFB7F4)Doesn't taste like strawberry."
+    }
+  ],
+  "priority": true,
+  "sortnum": 2
+}

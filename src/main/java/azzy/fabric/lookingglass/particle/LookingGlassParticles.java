@@ -7,7 +7,7 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class TTLGParticles {
+public class LookingGlassParticles {
 
     public static DefaultParticleType NULL_TEAR_PARTICLE;
 

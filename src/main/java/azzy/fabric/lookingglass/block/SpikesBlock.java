@@ -30,17 +30,6 @@ public class SpikesBlock extends LookingGlassBlock {
     }
 
     /**
-     * I shouldn't need this, but since azzy's code in LookingGlassBlock is kinda bugged right now, I'll have this code.
-     *
-     * @param ctx Placement Context
-     * @return Block State
-     */
-    @Override
-    public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
-        return super.getPlacementState(ctx);
-    }
-
-    /**
      * I want mobs to be able to spawn in this block, as if this block is like grass.
      *
      * @return true

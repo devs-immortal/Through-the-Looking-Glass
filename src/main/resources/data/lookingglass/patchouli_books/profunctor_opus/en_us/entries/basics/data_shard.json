@@ -17,7 +17,7 @@
       "type": "crafting",
       "title": "Data Shard",
       "recipe": "lookingglass:manual/tool/data_shard",
-      "text": "   Glassy Floppy Discs"
+      "text": "   $(#FFB7F4)Glassy Floppy Discs"
     }
   ],
   "priority": true,

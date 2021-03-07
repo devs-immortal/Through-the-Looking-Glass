@@ -106,8 +106,6 @@ public class BlockInductorBlock extends AbstractInductorBlock implements FalseIn
                         world.removeBlock(probePos, true);
                         world.setBlockState(offPos, state);
                     }
-                    else if(state.getBlock() instanceof AbstractTesseractBlock){
-                    }
                     else {
                         BlockEntityMover.tryMoveEntity(world, probePos, facing);
                     }

@@ -1,0 +1,19 @@
+{
+  "name": "Luminar Energy",
+  "category": "basics",
+  "icon": "lookingglass:creative_energy_source",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Throughout your journey you will find yourself needing to dabble with a variety of machines and devices which require power. TTLG's power (Lumens, or Lu for short) is simple in fuction and fairly easy to produce, with there being a variety of generators to choose from, however it is important to note that there are no batteries to store said power with."
+    },
+    {
+      "type": "spotlight",
+      "title": "Not An RF Ripoff",
+      "item": "lookingglass:creative_energy_source",
+      "text": "You could set down a few stacks of wires for a makeshift battery, I am not going to stop you if you try, but why."
+    }
+  ],
+  "priority": true,
+  "sortnum": 1
+}

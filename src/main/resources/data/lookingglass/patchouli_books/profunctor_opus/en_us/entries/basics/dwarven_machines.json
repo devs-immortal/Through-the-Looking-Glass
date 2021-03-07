@@ -1,0 +1,25 @@
+{
+  "name": "Questionably Dwarven",
+  "category": "basics",
+  "icon": "lookingglass:dwarven_clay",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Who were they, how did they live, did they even exist? There are many questions to ask about the dwarves, none of which will be answered as we are here to exploit what is left of  them."
+    },
+    {
+      "type": "spotlight",
+      "title": "Dwarven Clay",
+      "item": "lookingglass:dwarven_clay",
+      "text": "Dwarven clay is a useful material unsurprisingly invented by dwarves, you will want to stock up on the stuff as it is very useful when it comes to machines."
+    },
+    {
+      "type": "crafting",
+      "title": "Dwarven Clay",
+      "recipe": "lookingglass:manual/machine/dwarven_clay",
+      "text": "$(#FFB7F4)Wait does this count as clay?"
+    }
+  ],
+  "priority": true,
+  "sortnum": 4
+}

@@ -41,10 +41,6 @@ public class LookingGlassItems {
         return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(rarity);
     }
 
-    private static FabricItemSettings eldenmetalSettings() {
-        return new FabricItemSettings().group(LOOKINGGLASS_ITEMS).fireproof().rarity(ELDENMETAL_RARITY);
-    }
-
     //Tools
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(defaultSettings().maxCount(16)));
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings().maxCount(1)));
@@ -82,12 +78,15 @@ public class LookingGlassItems {
     public static final Item SILICON_INDUCTION_COIL = registerGeneratedItem("silicon_induction_coil", new Item(defaultSettings()));
     public static final Item ROSE_GOLD_INGOT = registerGeneratedItem("rose_gold_ingot", new Item(defaultSettings()));
     public static final Item ROSE_GOLD_NUGGET = registerGeneratedItem("rose_gold_nugget", new Item(defaultSettings()));
+    public static final Item PINK_GEL = registerGeneratedItem("pink_gel", new Item(genericSettings(Rarity.UNCOMMON)));
     public static final Item CELESTIAL_AMALGAM = registerGeneratedItem("celestial_amalgam", new Item(genericSettings(FINIS_RARITY)));
     public static final Item FINIS_INGOT = registerGeneratedItem("finis_ingot", new Item(genericSettings(FINIS_RARITY)));
     public static final Item FINIS_NUGGET = registerGeneratedItem("finis_nugget", new Item(genericSettings(FINIS_RARITY)));
-    public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(eldenmetalSettings()));
-    public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(eldenmetalSettings()));
-    public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
+    public static final Item ELDENMETAL_INGOT = registerItem("eldenmetal_tear", new Item(genericSettings(ELDENMETAL_RARITY)));
+    public static final Item ELDENMETAL_NUGGET = registerItem("eldenmetal_drop", new Item(genericSettings(ELDENMETAL_RARITY)));
+    public static final Item LUPREVAN_GLASS = registerGeneratedItem("luprevan_glass", new Item(genericSettings(LUPREVAN_RARITY).fireproof()));
+    public static final Item LUPREVAN_GLASS_SHARD = registerGeneratedItem("luprevan_glass_shard", new Item(genericSettings(LUPREVAN_RARITY).fireproof()));
+    //public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
 
     //Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));

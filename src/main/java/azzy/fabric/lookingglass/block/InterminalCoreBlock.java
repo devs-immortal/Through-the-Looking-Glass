@@ -1,14 +1,11 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.particle.TTLGParticles;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.Random;

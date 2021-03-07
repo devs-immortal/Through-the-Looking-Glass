@@ -24,6 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -63,7 +64,7 @@ public class NebulousSaltBlock extends Block{
             if(!(entity instanceof PlayerEntity && ((PlayerEntity) entity).isCreative())) {
                 Random random = world.getRandom();
                 if(random.nextInt(101) == 0) {
-                    if(random.nextBoolean()) {
+                    if(entity instanceof LivingEntity && random.nextBoolean()) {
                         ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
                     }
                     else
@@ -73,6 +74,24 @@ public class NebulousSaltBlock extends Block{
                 }
             }
         }
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if(!world.isClient() && !player.isCreative()) {
+            Random random = world.getRandom();
+            int enchantability = Math.max(player.getStackInHand(Hand.MAIN_HAND).getItem().getEnchantability(), 0);
+            if(enchantability < 20 && random.nextInt(enchantability + 1) == 0) {
+                if(random.nextBoolean()) {
+                    player.applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
+                }
+                else
+                    player.requestTeleport(player.getX() + (random.nextInt(33) - 16), player.getY() + random.nextInt(9),player.getZ() + (random.nextInt(33) - 16));
+                world.playSoundFromEntity(null, player, SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.PLAYERS, 2.0F, 1.5F);
+                ((ServerWorld) world).spawnParticles(ParticleTypes.END_ROD, player.getX() + (player.getWidth() / 2.0), player.getY() + (player.getHeight() / 2.0), player.getZ() + (player.getWidth() / 2.0), 10 + world.getRandom().nextInt(10), 0, 0, 0, 0.08);
+            }
+        }
+        super.onBreak(world, pos, state, player);
     }
 
     @Override
