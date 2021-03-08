@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "lookingglass:block/ethereal_glass"
+    "all": "lookingglass:block/dark_glass"
   }
 }

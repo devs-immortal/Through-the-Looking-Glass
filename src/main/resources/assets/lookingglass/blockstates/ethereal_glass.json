@@ -1,13 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "minecraft:block/glass"
-      },
-      {
-        "model": "minecraft:block/glass",
-        "y": 90
-      }
-    ]
+    "": {
+      "model": "lookingglass:block/ethereal_glass"
+    }
   }
 }
