@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "lookingglass",
-  "version": "2.0.0-alpha.11",
+  "version": "2.0.0-alpha.13",
 
   "name": "Through The Looking Glass",
   "description": "Not a mod about glass working",
@@ -11,7 +11,7 @@
   ],
   "contact": {
     "homepage": "https://github.com/Dragonoidzero/Through-the-Looking-Glass",
-    "sources": ""
+    "sources": "https://github.com/Dragonoidzero/Through-the-Looking-Glass"
   },
 
   "license": "MIT but please no forge thx",

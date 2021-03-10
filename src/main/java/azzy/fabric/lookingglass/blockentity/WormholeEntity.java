@@ -31,7 +31,7 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     private HashMap<Entity, Long> receiverCooldown = new HashMap<>();
     private int onTicks;
     private final Consumer<Entity> teleporter = entity -> {
-        if(entity != null) {
+        if(world != null && entity != null && cachedOut != null) {
             cachedOut.notifyAssign(entity);
             entity.teleport(out.getX() + 0.5, out.getY() + 2, out.getZ() + 0.5);
             if(entity.hasPassengers() && entity.getPassengerList().get(0).getDimensions(EntityPose.STANDING).height > 1f)
@@ -97,15 +97,18 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     public void notifyMoved(BlockPos newPos) {}
 
     private void getCollidingEntities() {
-        Box hitbox = new Box(pos.up(), pos.add(1, 3, 1));
-        world.getEntitiesByType(EntityType.ITEM, hitbox, itemEntity -> itemEntity != null && (!receiverCooldown.containsKey(itemEntity) || receiverCooldown.get(itemEntity) == 0)).forEach( teleporter );
-        world.getEntitiesByClass(Entity.class, new Box(pos.up(), pos.add(1, 3, 1)), entity -> entity != null&& (!receiverCooldown.containsKey(entity) || receiverCooldown.get(entity) == 0) && entity.getDimensions(EntityPose.STANDING).height <= 1f && !(entity instanceof ItemEntity)).forEach( teleporter );
+        if(world != null && cachedOut != null && world.isChunkLoaded(cachedOut.pos)) {
+            Box hitbox = new Box(pos.up(), pos.add(1, 3, 1));
+            world.getEntitiesByType(EntityType.ITEM, hitbox, itemEntity -> itemEntity != null && (!receiverCooldown.containsKey(itemEntity) || receiverCooldown.get(itemEntity) == 0)).forEach( teleporter );
+            world.getEntitiesByClass(Entity.class, new Box(pos.up(), pos.add(1, 3, 1)), entity -> entity != null&& (!receiverCooldown.containsKey(entity) || receiverCooldown.get(entity) == 0) && entity.getDimensions(EntityPose.STANDING).height <= 1f && !(entity instanceof ItemEntity)).forEach( teleporter );
+        }
     }
 
     public void notifyAssign(Entity entity) {
         receiverCooldown.put(entity, 20L);
     }
 
+    @SuppressWarnings("unchecked")
     public boolean tryAssign(ItemStack stack) {
         Optional<Long> pos = (Optional<Long>) DataShardItem.getData(stack, DataShardItem.DataType.POS);
         if(pos.isPresent() && pos.get() != 0){
