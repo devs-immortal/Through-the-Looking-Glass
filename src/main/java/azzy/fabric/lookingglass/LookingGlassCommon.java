@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass;
 
 
+import azzy.fabric.incubus_core.datagen.Metadata;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
@@ -8,7 +9,6 @@ import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
-import azzy.fabric.lookingglass.util.datagen.Metadata;
 import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;

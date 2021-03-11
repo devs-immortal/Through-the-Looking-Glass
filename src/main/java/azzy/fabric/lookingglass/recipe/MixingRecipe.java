@@ -1,11 +1,9 @@
 package azzy.fabric.lookingglass.recipe;
 
+import azzy.fabric.incubus_core.json.JsonUtils;
+import azzy.fabric.incubus_core.recipe.IngredientStack;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
-import azzy.fabric.lookingglass.util.BufUtils;
-import azzy.fabric.lookingglass.util.IngredientStack;
-import azzy.fabric.lookingglass.util.json.JsonUtils;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.ItemStack;

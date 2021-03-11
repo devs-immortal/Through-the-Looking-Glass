@@ -1,11 +1,9 @@
 package azzy.fabric.lookingglass.recipe;
 
-import azzy.fabric.lookingglass.util.IngredientStack;
+import azzy.fabric.incubus_core.recipe.IngredientStack;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeType;
 
 import java.util.Collections;
 import java.util.List;

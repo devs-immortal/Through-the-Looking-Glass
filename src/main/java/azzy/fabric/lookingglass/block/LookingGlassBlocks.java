@@ -1,11 +1,8 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.incubus_core.datagen.*;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
-import azzy.fabric.lookingglass.util.datagen.BSJsonGen;
-import azzy.fabric.lookingglass.util.datagen.LootGen;
-import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
-import azzy.fabric.lookingglass.util.datagen.RecipeJsonGen;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -102,6 +99,8 @@ public class LookingGlassBlocks {
     public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)));
     public static final Block NETHERITE_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "netherite_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)));
 
+    public static final Block DIODE = registerBlock("diode", new DiodeBlock(FabricBlockSettings.copyOf(Blocks.REPEATER)), basicItem());
+
 
     //Decorative
     public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);
@@ -177,6 +176,7 @@ public class LookingGlassBlocks {
     //Devices
     public static final BlockEntityType<FishBreederEntity> FISH_BREEDER_ENTITY = registerEntity("fish_breeder_entity", FishBreederEntity::new, FISH_BREEDER_BLOCK);
     public static final BlockEntityType<CrateEntity> CRATE_ENTITY = registerEntity("crate_entity", CrateEntity::new, CRATE_BLOCK);
+    public static final BlockEntityType<DiodeEntity> DIODE_ENTITY = registerEntity("diode_entity", DiodeEntity::new, DIODE);
 
     //Tesseracts
     public static final BlockEntityType<BlockTesseractEntity> BLOCK_TESSERACT_ENTITY = registerEntity("block_tesseract", BlockTesseractEntity::new, BLOCK_TESSERACT_BLOCK);

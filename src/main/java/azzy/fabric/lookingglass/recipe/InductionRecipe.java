@@ -1,19 +1,16 @@
 package azzy.fabric.lookingglass.recipe;
 
+import azzy.fabric.incubus_core.recipe.IngredientStack;
 import azzy.fabric.lookingglass.block.BlockInductorBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.util.IngredientStack;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;

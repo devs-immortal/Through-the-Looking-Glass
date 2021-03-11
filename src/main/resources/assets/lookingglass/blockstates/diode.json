@@ -1,0 +1,60 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "powered": "false"
+      },
+      "apply": {
+        "model": "lookingglass:block/diode"
+      }
+    },
+    {
+      "when": {
+        "powered": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_on"
+      }
+    },
+    {
+      "when": {
+        "extension": 0
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_head_0"
+      }
+    },
+    {
+      "when": {
+        "extension": 1
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_head_1"
+      }
+    },
+    {
+      "when": {
+        "extension": 2
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_head_2"
+      }
+    },
+    {
+      "when": {
+        "extension": 3
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_head_3"
+      }
+    },
+    {
+      "when": {
+        "extension": 4
+      },
+      "apply": {
+        "model": "lookingglass:block/diode_head_4"
+      }
+    }
+  ]
+}

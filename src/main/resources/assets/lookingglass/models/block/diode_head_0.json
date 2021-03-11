@@ -1,0 +1,73 @@
+{
+	"credit": "Made by Azazelthedemonlord",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "lookingglass:block/diode",
+		"particle": "lookingglass:block/diode"
+	},
+	"elements": [
+		{
+			"name": "body",
+			"from": [4, 2, 4],
+			"to": [12, 4, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 10, 12]},
+			"faces": {
+				"north": {"uv": [10, 9.5, 14, 10.5], "texture": "#0"},
+				"east": {"uv": [10, 9.5, 14, 10.5], "texture": "#0"},
+				"south": {"uv": [10, 9.5, 14, 10.5], "texture": "#0"},
+				"west": {"uv": [10, 9.5, 14, 10.5], "texture": "#0"},
+				"up": {"uv": [2, 10, 6, 14], "texture": "#0"},
+				"down": {"uv": [2, 10, 6, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cap",
+			"from": [3, 4, 3],
+			"to": [13, 6, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 12, 12]},
+			"faces": {
+				"north": {"uv": [9.5, 1, 14.5, 2], "texture": "#0"},
+				"east": {"uv": [9.5, 1, 14.5, 2], "texture": "#0"},
+				"south": {"uv": [9.5, 1, 14.5, 2], "texture": "#0"},
+				"west": {"uv": [9.5, 1, 14.5, 2], "texture": "#0"},
+				"up": {"uv": [9.5, 1, 14.5, 6], "texture": "#0"},
+				"down": {"uv": [9.5, 1, 14.5, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"rotation": [0, 180, 0],
+			"translation": [0, 13, 7]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

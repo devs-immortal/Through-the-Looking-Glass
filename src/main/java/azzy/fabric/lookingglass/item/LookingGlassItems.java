@@ -1,10 +1,10 @@
 package azzy.fabric.lookingglass.item;
 
+import azzy.fabric.incubus_core.datagen.ModelJsonGen;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import azzy.fabric.lookingglass.util.datagen.ModelJsonGen;
 import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;

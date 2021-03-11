@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.util.json;
 
+import azzy.fabric.incubus_core.json.JsonUtils;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.EntityType;
 import net.minecraft.resource.ResourceManager;

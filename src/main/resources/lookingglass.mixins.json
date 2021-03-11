@@ -6,7 +6,6 @@
   "mixins": [
     "EntityRetainedShapeContextMixin",
     "FishKillMixin",
-    "IngredientMixin",
     "LithiumBlockEntityListMixin",
     "LivingEntityLootMixin",
     "RecipeMapAccessor",
