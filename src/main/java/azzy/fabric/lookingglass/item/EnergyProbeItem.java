@@ -32,7 +32,7 @@ public class EnergyProbeItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
-        EnergyIo io = EnergyApi.SIDED.get(world, context.getBlockPos(), context.getSide());
+        EnergyIo io = EnergyApi.SIDED.find(world, context.getBlockPos(), context.getSide());
         ItemStack stack = context.getStack();
         if(io != null && !world.isClient()) {
             String message = "";

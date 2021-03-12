@@ -29,7 +29,7 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     public void attemptPowerDraw() {
         List<EnergyIo> io = new ArrayList<>();
         for(Direction direction : Direction.values()) {
-            EnergyIo capacitor = EnergyApi.SIDED.get(world, pos.offset(direction), direction.getOpposite());
+            EnergyIo capacitor = EnergyApi.SIDED.find(world, pos.offset(direction), direction.getOpposite());
             if(capacitor != null && capacitor.supportsExtraction())
                 io.add(capacitor);
         }

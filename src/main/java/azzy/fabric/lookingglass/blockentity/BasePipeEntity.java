@@ -51,7 +51,7 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
                 if(entity != null) {
                     BlockEntityType<?> type = entity.getType();
                     if (type == getType()) {
-                        T io = lookup.get(world, pos.offset(direction), direction.getOpposite());
+                        T io = lookup.find(world, pos.offset(direction), direction.getOpposite());
                         if (io != null) {
                             if (!getCachedState().get(PipeBlock.getFACING().get(direction))) {
                                 world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), true));
@@ -66,7 +66,7 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
                 getIO().remove(direction);
             }
             else {
-                T io = lookup.get(world, pos.offset(direction), direction.getOpposite());
+                T io = lookup.find(world, pos.offset(direction), direction.getOpposite());
                 if(io != null){
                     if(!getCachedState().get(PipeBlock.getFACING().get(direction))) {
                         world.setBlockState(pos, world.getBlockState(pos).with(PipeBlock.getFACING().get(direction), true));

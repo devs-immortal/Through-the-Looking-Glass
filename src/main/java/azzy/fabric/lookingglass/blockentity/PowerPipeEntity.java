@@ -82,7 +82,7 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
             PowerPipeEntity cable = next.poll();
             if(cable.getType() == getType()) {
                 Arrays.stream(directions)
-                        .map(direction -> EnergyApi.SIDED.get(world, cable.pos.offset(direction), direction.getOpposite()))
+                        .map(direction -> EnergyApi.SIDED.find(world, cable.pos.offset(direction), direction.getOpposite()))
                         .filter(energyIo -> energyIo instanceof PowerPipeEntity && !neighbours.contains(energyIo))
                         .forEach(wire -> next.add(((PowerPipeEntity) wire).markTicked()));
                 neighbours.add(cable);
