@@ -1,8 +1,8 @@
 package azzy.fabric.lookingglass.blockentity;
 
+import azzy.fabric.incubus_core.be.BlockEntityMover;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.render.TesseractRenderable;
-import azzy.fabric.lookingglass.util.machine.BlockEntityMover;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

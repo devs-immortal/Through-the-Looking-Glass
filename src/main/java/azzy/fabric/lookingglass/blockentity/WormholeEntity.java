@@ -1,7 +1,7 @@
 package azzy.fabric.lookingglass.blockentity;
 
+import azzy.fabric.incubus_core.be.MovementSensitiveBlockEntity;
 import azzy.fabric.lookingglass.item.DataShardItem;
-import azzy.fabric.lookingglass.util.MovementSensitiveBlockEntity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

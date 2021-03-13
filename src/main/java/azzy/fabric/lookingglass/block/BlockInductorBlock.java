@@ -1,10 +1,10 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.incubus_core.be.BlockEntityMover;
+import azzy.fabric.incubus_core.be.FalseInventory;
 import azzy.fabric.lookingglass.mixin.RecipeMapAccessor;
 import azzy.fabric.lookingglass.recipe.InductionRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import azzy.fabric.lookingglass.util.machine.BlockEntityMover;
-import azzy.fabric.lookingglass.util.machine.FalseInventory;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
