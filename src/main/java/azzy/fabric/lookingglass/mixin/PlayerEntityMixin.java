@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,13 +10,13 @@ import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,9 +26,6 @@ import java.util.List;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-    @Unique
-    private static final List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH);
-
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -37,9 +35,13 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = {"onKilledOther"}, at = {@At("HEAD")}, cancellable = true)
     public void onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity, CallbackInfo ci) {
+        List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH);
+
         BlockPos enchanterPos = livingEntity.getBlockPos();
         BlockState enchanterBlockState = serverWorld.getBlockState(enchanterPos);
         Block enchanterBlock = enchanterBlockState.getBlock();
+
+        LookingGlassCommon.FFLog.warn("(" + enchanterPos.getX() + ", " + enchanterPos.getY() + ", " + enchanterPos.getZ() + "): " + enchanterBlock.toString());
 
         // The mob isn't killed on an enchanter.  We're not interested.
         if (!Blocks.ENCHANTING_TABLE.equals(enchanterBlock)) {
@@ -99,19 +101,24 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         int enchY = enchanterPos.getY();
         int enchZ = enchanterPos.getZ();
 
+        LookingGlassCommon.FFLog.warn("(" + enchX + ", " + enchY + ", " + enchZ + "): " + enchanterBlock.toString());
+
         for (int x = -5; x < 6; x++) {
             for (int y = -5; y < 6; y++) {
                 for (int z = -5; z < 6; z++) {
                     BlockPos currBlockPos = new BlockPos(enchX + x, enchY + y, enchZ + z);
 
-                    // Can't see the sky from this spot.  We don't convert it to cursed earth.
+                    // isSkyVisible only checks for light level.  So we can't really use it.
                     if (!serverWorld.isSkyVisible(currBlockPos))
                         continue;
 
                     BlockState currBlockState = serverWorld.getBlockState(currBlockPos);
                     Block currBlock = currBlockState.getBlock();
 
+                    LookingGlassCommon.FFLog.warn("(" + currBlockPos.getX() + ", " + currBlockPos.getY() + ", " + currBlockPos.getZ() + "): " + currBlock.toString());
+
                     if (CURSING_ELIGIBLE_BLOCKS.contains(currBlock)) {
+                        sendMessage(new LiteralText("Reached here"), true);
                         serverWorld.setBlockState(currBlockPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                     }
                 }
