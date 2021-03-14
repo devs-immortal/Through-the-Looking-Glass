@@ -155,5 +155,10 @@
 	"death.attack.fish_ex": "%1$s had his nuts chuckled, they may never be unchuckled",
 	"death.attack.fish_ex.player": "%1$s had his nuts chuckled, they may never be unchuckled",
 	"death.attack.forge": "%1$s found out that,§o surprisingly §r, stepping into the reality-piercing laser of pure energy is perhaps a bad idea.",
-	"death.attack.forge.player": "%1$s found out that,§o surprisingly §r, stepping into the reality-piercing laser of pure energy is perhaps a bad idea."
+	"death.attack.forge.player": "%1$s found out that,§o surprisingly §r, stepping into the reality-piercing laser of pure energy is perhaps a bad idea.",
+	"cursedearth.skynotvisible": "The sky must be visible over the enchanter",
+	"cursedearth.notrighttime": "The activation ritual must be done around midnight",
+	"cursedearth.noambientlight": "There should be no ambient light nearby",
+	"cursedearth.nosurroundingredstone": "The enchanter must be surrounded by redstone",
+	"cursedearth.notongrass": "The surroundings must be dirt or grass"
 }
