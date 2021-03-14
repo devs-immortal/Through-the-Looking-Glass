@@ -160,5 +160,5 @@
 	"cursedearth.notrighttime": "The activation ritual must be done around midnight",
 	"cursedearth.noambientlight": "There should be no ambient light nearby",
 	"cursedearth.nosurroundingredstone": "The enchanter must be surrounded by redstone",
-	"cursedearth.notongrass": "The surroundings must be dirt or grass"
+	"cursedearth.notongrass": "The enchanter must be on a suitable surface"
 }

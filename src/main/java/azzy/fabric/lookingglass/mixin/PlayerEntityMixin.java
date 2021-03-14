@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,12 +15,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
+    @Unique
+    private static final List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH);
+
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -64,6 +72,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 BlockPos surroundingBlockPos = new BlockPos(enchanterPos.getX() + x, enchanterPos.getY(), enchanterPos.getZ() + z);
                 BlockState surroundingBlockState = serverWorld.getBlockState(surroundingBlockPos);
                 Block surroundingBlock = surroundingBlockState.getBlock();
+                Block blockBeneath = serverWorld.getBlockState(surroundingBlockPos.down()).getBlock();
 
                 // The enchanter isn't surrounded by redstone.  Return doing nothing.
                 if (!Blocks.REDSTONE_WIRE.equals(surroundingBlock)) {
@@ -72,11 +81,41 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                         return;
                     }
                 }
+
+                // If the block beneath isn't suitable (dirt, grass, path, gravel, sand), we return doing nothing.
+                if (!CURSING_ELIGIBLE_BLOCKS.contains(blockBeneath)) {
+                    sendMessage(new TranslatableText("cursedearth.notongrass"), true);
+                    return;
+                }
             }
         }
 
+        // Everything appears to be kosher.  Let's channel Zeus and turn the surrounding eligible blocks into cursed earth.
         LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, serverWorld);
         lightningEntity.setPos(enchanterPos.getX(), enchanterPos.getY() + 1, enchanterPos.getZ());
         serverWorld.spawnEntity(lightningEntity);
+
+        int enchX = enchanterPos.getX();
+        int enchY = enchanterPos.getY();
+        int enchZ = enchanterPos.getZ();
+
+        for (int x = -5; x < 6; x++) {
+            for (int y = -5; y < 6; y++) {
+                for (int z = -5; z < 6; z++) {
+                    BlockPos currBlockPos = new BlockPos(enchX + x, enchY + y, enchZ + z);
+
+                    // Can't see the sky from this spot.  We don't convert it to cursed earth.
+                    if (!serverWorld.isSkyVisible(currBlockPos))
+                        continue;
+
+                    BlockState currBlockState = serverWorld.getBlockState(currBlockPos);
+                    Block currBlock = currBlockState.getBlock();
+
+                    if (CURSING_ELIGIBLE_BLOCKS.contains(currBlock)) {
+                        serverWorld.setBlockState(currBlockPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
+                    }
+                }
+            }
+        }
     }
 }
