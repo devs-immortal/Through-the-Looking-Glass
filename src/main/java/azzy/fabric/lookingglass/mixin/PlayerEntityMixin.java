@@ -35,7 +35,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = {"onKilledOther"}, at = {@At("HEAD")}, cancellable = true)
     public void onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity, CallbackInfo ci) {
-        List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH);
+        List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH, Blocks.COARSE_DIRT);
+        List<Block> CURSING_IGNORE_BLOCKS = Arrays.asList(Blocks.ENCHANTING_TABLE, Blocks.REDSTONE_WIRE, Blocks.GRASS, Blocks.SNOW, Blocks.FERN, Blocks.POPPY, Blocks.DANDELION, Blocks.ALLIUM, Blocks.CORNFLOWER, Blocks.SUNFLOWER, Blocks.SUGAR_CANE, Blocks.ROSE_BUSH, Blocks.WITHER_ROSE);
 
         BlockPos enchanterPos = livingEntity.getBlockPos();
         BlockState enchanterBlockState = serverWorld.getBlockState(enchanterPos);
@@ -108,8 +109,14 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 for (int z = -5; z < 6; z++) {
                     BlockPos currBlockPos = new BlockPos(enchX + x, enchY + y, enchZ + z);
 
-                    // isSkyVisible only checks for light level.  So we can't really use it.
-                    if (!serverWorld.isSkyVisible(currBlockPos))
+
+                    BlockPos blockAbovePos = currBlockPos.up();
+                    BlockState blockAboveState = serverWorld.getBlockState(blockAbovePos);
+                    Block blockAbove = blockAboveState.getBlock();
+
+                    // If the block above isn't a translucent block, ignore it and move to next one.
+                    // I kinda need to check this way since the isSkyVisible method of serverWorld isn't working properly in this version of fabric at least.
+                    if (!blockAbove.isTranslucent(blockAboveState, serverWorld, blockAbovePos))
                         continue;
 
                     BlockState currBlockState = serverWorld.getBlockState(currBlockPos);
