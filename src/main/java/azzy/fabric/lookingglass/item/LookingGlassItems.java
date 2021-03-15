@@ -14,6 +14,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -51,6 +52,7 @@ public class LookingGlassItems {
     // So if the user subsequently spreads out the lassos and uses them one at a time, they effectively duplicate the mob.  I've sidestepped the issue for now by forcing stack size to 1.
     public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings().maxCount(1), false));
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));
+    public static final Item SACRED_SHOVEL = registerItem("sacred_shovel", new SacredShovelItem(ToolMaterials.GOLD, defaultSettings().maxCount(1)));
 
     // Ethereal glass and variants.
     //      Is this really necessary?
