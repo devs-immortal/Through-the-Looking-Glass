@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "croptosis:apatite_ore"
+      }
+    ]
+  },
+  "output": {
+    "item": "croptosis:apatite",
+    "count": 3
+  },
+  "secondary": {
+    "item": "croptosis:apatite"
+  },
+  "chance": 0.2
+}

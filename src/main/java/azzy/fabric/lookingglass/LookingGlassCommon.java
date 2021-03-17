@@ -8,6 +8,7 @@ import azzy.fabric.lookingglass.feature.TTLGConfiguredFeatures;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
+import azzy.fabric.lookingglass.recipe.LookingGlassCompat;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import com.chocohead.mm.api.ClassTinkerers;
@@ -45,7 +46,7 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_items"), () -> new ItemStack(LookingGlassItems.DATA_SHARD));
 
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
-	public static final boolean REGEN_RECIPES = false, REGEN_ITEMS = true, REGEN_BLOCKS = true, REGEN_LOOT = true;
+	public static final boolean REGEN_RECIPES = true, REGEN_ITEMS = true, REGEN_BLOCKS = true, REGEN_LOOT = true;
 
 	@Override
 	public void onInitialize() {
@@ -59,6 +60,7 @@ public class LookingGlassCommon implements ModInitializer {
 		TTLGConfiguredFeatures.Registrar.init();
 		LookingGlassGUIs.initCommon();
 		LookingGlassRecipes.init();
+		LookingGlassCompat.init();
 		GeneralNetworking.init();
 
 		ResourceManagerHelperImpl.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {

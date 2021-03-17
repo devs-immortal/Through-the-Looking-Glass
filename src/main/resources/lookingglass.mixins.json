@@ -9,6 +9,7 @@
     "LithiumBlockEntityListMixin",
     "LivingEntityLootMixin",
     "PlayerEntityMixin",
+    "RecipeManagerMixin",
     "RecipeMapAccessor",
     "TextureUnregister"
   ],

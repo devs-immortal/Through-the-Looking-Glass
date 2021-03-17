@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:obsidian"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:obsidian_dusts",
+    "count": 4
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

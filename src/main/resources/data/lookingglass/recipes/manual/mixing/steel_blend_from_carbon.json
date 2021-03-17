@@ -1,0 +1,23 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+      {
+        "ingredient": [
+          {
+            "tag": "c:iron_dusts"
+          }
+        ]
+      },
+      {
+        "ingredient": [
+          {
+            "tag": "c:carbon_dusts"
+          }
+        ],
+        "count": 8
+      }
+  ],
+  "output": {
+    "item": "lookingglass:steel_blend"
+  }
+}

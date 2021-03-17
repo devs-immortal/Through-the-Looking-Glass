@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:warped_wart_block"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:brown_mushroom_block"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:steel_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:steel_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:none_dusts",
+    "count": 1
+  },
+  "chance": 0
+}

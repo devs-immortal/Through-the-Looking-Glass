@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "lighstones:blightstone_ore"
+      }
+    ]
+  },
+  "output": {
+    "item": "lighstones:blightstone",
+    "count": 6
+  },
+  "secondary": {
+    "item": "lighstones:blightstone",
+    "count": 4
+  },
+  "chance": 0.15
+}

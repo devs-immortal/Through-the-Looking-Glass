@@ -1,0 +1,25 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "tag": "c:ender_pearl_dusts"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:iron_ingots"
+        },
+        {
+          "item": "betterend:thallasium_ingot"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "item": "betterend:thallasium_ingot"
+  }
+}

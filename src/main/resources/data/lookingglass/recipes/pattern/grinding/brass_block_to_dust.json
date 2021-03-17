@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:brass_blocks"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:brass_dusts",
+    "count": 9
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}

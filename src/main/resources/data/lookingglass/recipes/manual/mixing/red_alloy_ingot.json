@@ -1,0 +1,22 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+      {
+        "ingredient": [
+          {
+            "tag": "c:iron_ingots"
+          }
+        ]
+      },
+      {
+        "ingredient": [
+          {
+            "tag": "c:redstone_dusts"
+          }
+        ]
+      }
+  ],
+  "output": {
+    "item": "rswires:red_alloy_ingot"
+  }
+}

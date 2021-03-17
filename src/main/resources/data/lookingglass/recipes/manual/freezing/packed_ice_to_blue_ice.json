@@ -1,0 +1,14 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:packed_ice"
+      }
+    ],
+    "count": 4
+  },
+  "output": {
+    "item": "minecraft:blue_ice"
+  }
+}

@@ -2,9 +2,12 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.incubus_core.json.JsonUtils;
 import azzy.fabric.incubus_core.recipe.IngredientStack;
+import azzy.fabric.incubus_core.recipe.OptionalStack;
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.PoweredFurnaceEntity;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -21,11 +24,13 @@ import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
 public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> {
 
+    public static final FreezingRecipe EMPTY = new FreezingRecipe(new Identifier(LookingGlassCommon.MODID, "empty"), IngredientStack.EMPTY, OptionalStack.EMPTY);
+
     private final IngredientStack input;
-    private final ItemStack output;
+    private final OptionalStack output;
     private final Identifier id;
 
-    public FreezingRecipe(Identifier id, IngredientStack input, ItemStack output) {
+    public FreezingRecipe(Identifier id, IngredientStack input, OptionalStack output) {
         this.input = input;
         this.output = output;
         this.id = id;
@@ -33,21 +38,32 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
 
     @Override
     public boolean matches(PoweredFurnaceEntity inv, World world) {
-        return input.test(inv.getStack(0));
+        return !isEmpty() && input.test(inv.getStack(0));
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this == EMPTY;
     }
 
     @Override
     public ItemStack craft(PoweredFurnaceEntity inv) {
         ItemStack outSlot = inv.getStack(1);
-        if(outSlot.isEmpty()) {
-            inv.setStack(1, output.copy());
-            inv.getStack(0).decrement(input.getCount());
+
+        ItemStack optional = output.getFirstStack();
+
+        if(optional != null) {
+            if(outSlot.isEmpty()) {
+                inv.setStack(1, optional.copy());
+                inv.getStack(0).decrement(input.getCount());
+            }
+            else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.itemMatch(outSlot)) {
+                inv.getStack(1).increment(output.getCount());
+                inv.getStack(0).decrement(input.getCount());
+            }
+            return optional.copy();
         }
-        else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-            inv.getStack(1).increment(output.getCount());
-            inv.getStack(0).decrement(input.getCount());
-        }
-        return output.copy();
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -57,7 +73,7 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
 
     @Override
     public ItemStack getOutput() {
-        return output;
+        return output.getFirstStack();
     }
 
     @Override
@@ -96,14 +112,20 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
         public FreezingRecipe read(Identifier id, JsonObject json) {
 
             IngredientStack input;
-            ItemStack output;
+            OptionalStack output;
 
             try {
                 if(!(json.has("input") && json.has("output")))
                     throw new MalformedJsonException("Invalid Freezing Recipe Json");
                 input = JsonUtils.ingredientFromJson(json.getAsJsonObject("input"));
-                output = JsonUtils.stackFromJson(json.getAsJsonObject("output"));
+                output = JsonUtils.optionalStackFromJson(json.getAsJsonObject("output"));
+
+                if(output.isEmpty())
+                    return EMPTY;
+
             } catch (Exception e) {
+                if(e instanceof JsonSyntaxException)
+                    return EMPTY;
                 FFLog.error("Exception found while loading Freezing recipe json " + id.toString() + " ", e);
                 return null;
             }
@@ -113,14 +135,14 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
 
         @Override
         public FreezingRecipe read(Identifier id, PacketByteBuf buf) {
-            ItemStack output = buf.readItemStack();
+            OptionalStack output = OptionalStack.fromByteBuf(buf);
             IngredientStack input = IngredientStack.fromByteBuf(buf);
             return new FreezingRecipe(id, input, output);
         }
 
         @Override
         public void write(PacketByteBuf buf, FreezingRecipe recipe) {
-            buf.writeItemStack(recipe.output);
+            recipe.output.write(buf);
             recipe.input.write(buf);
         }
     }

@@ -1,0 +1,31 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "item": "lookingglass:ancient_debris_dust"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:gold_dusts"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:magma_cream"
+        }
+      ],
+      "count": 2
+    }
+  ],
+  "output": {
+    "tag": "c:netherite_dusts"
+  }
+}

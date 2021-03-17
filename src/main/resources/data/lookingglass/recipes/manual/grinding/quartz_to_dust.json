@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:quartz"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:quartz_dusts"
+  },
+  "secondary": {
+    "item": "minecraft:air"
+  }
+}

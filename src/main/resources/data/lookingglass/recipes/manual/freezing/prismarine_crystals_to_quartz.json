@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:prismarine_crystals"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:quartz"
+  }
+}

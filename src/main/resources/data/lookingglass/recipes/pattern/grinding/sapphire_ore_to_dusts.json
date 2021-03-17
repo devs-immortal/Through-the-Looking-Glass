@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:sapphire_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:sapphire_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:peridot_dusts",
+    "count": 1
+  },
+  "chance": 0.15
+}

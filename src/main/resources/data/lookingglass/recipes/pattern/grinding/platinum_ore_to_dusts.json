@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:platinum_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:platinum_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:nickel_dusts",
+    "count": 1
+  },
+  "chance": 1.25
+}

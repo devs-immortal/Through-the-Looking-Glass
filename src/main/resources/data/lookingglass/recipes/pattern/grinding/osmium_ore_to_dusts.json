@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:osmium_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:osmium_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:platinum_dusts",
+    "count": 1
+  },
+  "chance": 0.01
+}

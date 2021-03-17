@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:diamond_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:diamonds",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:diamonds"
+  },
+  "chance": 0.2
+}

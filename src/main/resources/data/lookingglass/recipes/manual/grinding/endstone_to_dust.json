@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:end_stone"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:endstone_dusts"
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

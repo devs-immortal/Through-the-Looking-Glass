@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:thorium_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:thorium_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:uranium_dusts",
+    "count": 1
+  },
+  "chance": 0.1
+}

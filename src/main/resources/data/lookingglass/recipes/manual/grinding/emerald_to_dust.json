@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:emeralds"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:emerald_dusts"
+  },
+  "secondary": {
+    "item": "minecraft:air"
+  }
+}

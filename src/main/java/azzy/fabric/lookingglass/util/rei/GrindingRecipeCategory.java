@@ -32,7 +32,7 @@ public class GrindingRecipeCategory extends AbstractLookingGlassRecipeCategory<G
         widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + 5),
                 new LiteralText("secondary output chance")).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
         widgets.add(Widgets.createLabel(new Point(bounds.x + bounds.width - 5, bounds.y + 14),
-                new LiteralText((recipeDisplay.getRecipe().getChance() * 100.0) + "%")).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
+                new LiteralText(String.format("%.1f", (recipeDisplay.getRecipe().getChance() * 100.0)) + "%")).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
         return widgets;
     }
 

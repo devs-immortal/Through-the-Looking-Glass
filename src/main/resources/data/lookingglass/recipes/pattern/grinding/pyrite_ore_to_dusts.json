@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:pyrite_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:pyrite_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:sulfur_dusts",
+    "count": 1
+  },
+  "chance": 2
+}

@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:cinnabar_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:cinnabar_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:redstone_dusts",
+    "count": 1
+  },
+  "chance": 1
+}

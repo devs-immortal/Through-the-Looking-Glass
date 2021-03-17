@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:magnesium_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:magnesium_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:sphalerite_dusts",
+    "count": 1
+  },
+  "chance": 0.2
+}

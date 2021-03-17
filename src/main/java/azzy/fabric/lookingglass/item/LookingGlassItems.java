@@ -54,18 +54,6 @@ public class LookingGlassItems {
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));
     public static final Item SACRED_SHOVEL = registerItem("sacred_shovel", new SacredShovelItem(ToolMaterials.GOLD, defaultSettings().maxCount(1)));
 
-    // Ethereal glass and variants.
-    //      Is this really necessary?
-    //public static final Item DARK_GLASS_ITEM = registerItem("dark_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item ETHEREAL_GLASS_ITEM = registerItem("ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item DARK_ETHEREAL_GLASS_ITEM = registerItem("dark_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item REVERSE_ETHEREAL_GLASS_ITEM = registerItem("reverse_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.REVERSE_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item REVERSE_DARK_ETHEREAL_GLASS_ITEM = registerItem("reverse_dark_ethereal_glass", new EtherealGlassBlockItem(LookingGlassBlocks.REVERSE_DARK_ETHEREAL_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item GHOST_GLASS_ITEM = registerItem("ghost_glass", new EtherealGlassBlockItem(LookingGlassBlocks.GHOST_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item DARK_GHOST_GLASS_ITEM = registerItem("dark_ghost_glass", new EtherealGlassBlockItem(LookingGlassBlocks.DARK_GHOST_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item GLOW_GLASS_ITEM = registerItem("glow_glass", new EtherealGlassBlockItem(LookingGlassBlocks.GLOW_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    //public static final Item RED_GLASS_ITEM = registerItem("red_glass", new EtherealGlassBlockItem(LookingGlassBlocks.RED_GLASS, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-
     //Upgrades
     public static final Item ROSE_CHIPSET = registerGeneratedItem("rose_chipset", new Item(defaultSettings()));
     public static final Item BASIC_SPEED_UPGRADE = registerGeneratedItem("basic_speed_upgrade", new GenericUpgradeItem(defaultSettings(), 1.2, 0, 0.95, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD, LookingGlassMachine.MachineTier.BASIC));
@@ -75,6 +63,12 @@ public class LookingGlassItems {
     public static final Item BLAST_UPGRADE_ITEM = registerGeneratedItem("blast_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), RecipeType.BLASTING, PoweredFurnaceGuiDescription.class, 2.0, 0, 0.5, ModifierProvider.AdditivityType.ADD_MULT, ModifierProvider.AdditivityType.ADD));
 
     //Materials
+    public static final Item ENRICHED_CHARCOAL = registerGeneratedItem("enriched_charcoal", new Item(defaultSettings()));
+    public static final Item IRON_DUST = registerGeneratedItem("iron_dust", new Item(defaultSettings()));
+    public static final Item GOLD_DUST = registerGeneratedItem("gold_dust", new Item(defaultSettings()));
+    public static final Item ANCIENT_DEBRIS_DUST = registerGeneratedItem("ancient_debris_dust", new Item(defaultSettings()));
+    public static final Item NETHERITE_DUST = registerGeneratedItem("netherite_dust", new Item(defaultSettings()));
+    public static final Item STEEL_BLEND = registerGeneratedItem("steel_blend", new Item(defaultSettings()));
     public static final Item FISH_FEED = registerItem("fish_feed", new Item(defaultSettings().food(BAD_NOMS)));
     public static final Item DWARVEN_CLAY = registerGeneratedItem("dwarven_clay", new Item(defaultSettings()));
     public static final Item SILICON_INGOT = registerGeneratedItem("red_silicon_ingot", new Item(defaultSettings()));

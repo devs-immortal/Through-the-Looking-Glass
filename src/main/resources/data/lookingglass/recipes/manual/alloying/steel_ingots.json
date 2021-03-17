@@ -1,0 +1,24 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:clay_ball"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "lookingglass:steel_blend"
+        }
+      ],
+      "count": 2
+    }
+  ],
+  "output": {
+    "tag": "c:steel_ingots",
+    "count": 2
+  }
+}

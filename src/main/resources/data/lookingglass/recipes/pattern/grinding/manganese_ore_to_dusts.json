@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:manganese_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:manganese_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:sulfur_dusts",
+    "count": 1
+  },
+  "chance": 1.5
+}

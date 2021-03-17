@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:redstone_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:redstone_dusts",
+    "count": 4
+  },
+  "secondary": {
+    "tag": "c:redstone_dusts",
+    "count": 4
+  },
+  "chance": 0.5
+}

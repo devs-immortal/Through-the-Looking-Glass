@@ -2,9 +2,11 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.incubus_core.json.JsonUtils;
 import azzy.fabric.incubus_core.recipe.IngredientStack;
+import azzy.fabric.incubus_core.recipe.OptionalStack;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.GrinderEntity;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -17,17 +19,21 @@ import net.minecraft.world.World;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
+import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
 public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
+    public static final GrindingRecipe EMPTY = new GrindingRecipe(new Identifier(MODID, "empty"), IngredientStack.EMPTY, OptionalStack.EMPTY, OptionalStack.EMPTY, 0F);
+
     private final IngredientStack input;
-    private final ItemStack mainOutput, secondaryOutput;
+    private final OptionalStack mainOutput, secondaryOutput;
     private final float chance;
     private final Identifier id;
 
-    public GrindingRecipe(Identifier id, IngredientStack input, ItemStack outputTop, ItemStack outputBottom, float chance) {
+    public GrindingRecipe(Identifier id, IngredientStack input, OptionalStack outputTop, OptionalStack outputBottom, float chance) {
         this.input = input;
         this.mainOutput = outputTop;
         this.secondaryOutput = outputBottom;
@@ -37,38 +43,50 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public boolean matches(GrinderEntity inv, World world) {
-        return input.test(inv.getStack(0));
+        return !isEmpty() && input.test(inv.getStack(0));
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this == EMPTY;
     }
 
     @Override
     public ItemStack craft(GrinderEntity inv) {
         ItemStack outSlot = inv.getStack(1);
-        ItemStack secSlot = inv.getStack(2);
-        if(outSlot.isEmpty()) {
-            inv.setStack(1, mainOutput.copy());
-            inv.getStack(0).decrement(input.getCount());
-            if(inv.getWorld().getRandom().nextFloat() <= chance) {
+        ItemStack mainOptional = mainOutput.getFirstStack();
+        if(inv.getWorld() != null && mainOptional != null) {
+            if(outSlot.isEmpty()) {
+                inv.setStack(1, mainOptional.copy());
+                inv.getStack(0).decrement(input.getCount());
+                handleSecondaryOutputs(inv, inv.getWorld().getRandom());
+            }
+            else if(outSlot.getCount() + mainOutput.getCount() <= outSlot.getMaxCount() && mainOutput.itemMatch(outSlot)) {
+                inv.getStack(1).increment(mainOutput.getCount());
+                inv.getStack(0).decrement(input.getCount());
+                handleSecondaryOutputs(inv, inv.getWorld().getRandom());
+            }
+            return mainOptional.copy();
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    private void handleSecondaryOutputs(GrinderEntity inv, Random random) {
+        float trialChance = chance;
+        ItemStack secOptional = secondaryOutput.getFirstStack();
+        if(secOptional != null) {
+            while (random.nextFloat() <= trialChance) {
+                ItemStack secSlot = inv.getStack(2);
                 if(secSlot.isEmpty()) {
-                    inv.setStack(2, secondaryOutput.copy());
+                    inv.setStack(2, secOptional.copy());
                 }
-                else if(secSlot.getCount() + secSlot.getCount() <= secSlot.getMaxCount() && secSlot.isItemEqual(secSlot)) {
+                else if(secSlot.getCount() + secSlot.getCount() <= secSlot.getMaxCount() && secondaryOutput.itemMatch(secSlot)) {
                     inv.getStack(2).increment(secondaryOutput.getCount());
                 }
+                trialChance--;
             }
         }
-        else if(outSlot.getCount() + mainOutput.getCount() <= outSlot.getMaxCount() && mainOutput.isItemEqual(outSlot)) {
-            inv.getStack(1).increment(mainOutput.getCount());
-            inv.getStack(0).decrement(input.getCount());
-            if(inv.getWorld().getRandom().nextFloat() <= chance) {
-                if(secSlot.isEmpty()) {
-                    inv.setStack(2, secondaryOutput.copy());
-                }
-                else if(secSlot.getCount() + secSlot.getCount() <= secSlot.getMaxCount() && secSlot.isItemEqual(secSlot)) {
-                    inv.getStack(2).increment(secondaryOutput.getCount());
-                }
-            }
-        }
-        return mainOutput.copy();
     }
 
     @Override
@@ -78,7 +96,7 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public ItemStack getOutput() {
-        return mainOutput;
+        return mainOutput.getFirstStack();
     }
 
     @Override
@@ -113,7 +131,7 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
     @Override
     public List<ItemStack> getOutputs() {
-        return Arrays.asList(mainOutput, secondaryOutput);
+        return Arrays.asList(mainOutput.getFirstStack(), secondaryOutput.getFirstStack());
     }
 
     public float getChance() {
@@ -125,17 +143,25 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
         @Override
         public GrindingRecipe read(Identifier id, JsonObject json) {
             IngredientStack input;
-            ItemStack output, secondary;
-            float chance;
+            OptionalStack output, secondary;
+            float chance = 0;
 
             try {
                 if(!(json.has("output") && json.has("input")))
                     throw new MalformedJsonException("Invalid Grinding Recipe Json");
                 input = JsonUtils.ingredientFromJson(json.getAsJsonObject("input"));
-                output = JsonUtils.stackFromJson(json.getAsJsonObject("output"));
-                secondary = JsonUtils.stackFromJson(json.getAsJsonObject("secondary"));
-                chance = json.get("chance").getAsFloat();
+                output = JsonUtils.optionalStackFromJson(json.getAsJsonObject("output"));
+                secondary = JsonUtils.optionalStackFromJson(json.getAsJsonObject("secondary"));
+
+                if(output.isEmpty())
+                    return EMPTY;
+
+                if(!secondary.isEmpty())
+                    chance = json.get("chance").getAsFloat();
+
             } catch (Exception e) {
+                if(e instanceof JsonSyntaxException)
+                    return EMPTY;
                 FFLog.error("Exception found while loading Grinding recipe json " + id.toString() + " ", e);
                 return null;
             }
@@ -144,8 +170,8 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
         @Override
         public GrindingRecipe read(Identifier id, PacketByteBuf buf) {
-            ItemStack outputTop = buf.readItemStack();
-            ItemStack outputBottom = buf.readItemStack();
+            OptionalStack outputTop = OptionalStack.fromByteBuf(buf);
+            OptionalStack outputBottom = OptionalStack.fromByteBuf(buf);
             IngredientStack input = IngredientStack.fromByteBuf(buf);
             float chance = buf.readFloat();
             return new GrindingRecipe(id, input, outputTop, outputBottom, chance);
@@ -153,8 +179,8 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
 
         @Override
         public void write(PacketByteBuf buf, GrindingRecipe recipe) {
-            buf.writeItemStack(recipe.mainOutput);
-            buf.writeItemStack(recipe.secondaryOutput);
+            recipe.mainOutput.write(buf);
+            recipe.secondaryOutput.write(buf);
             recipe.input.write(buf);
             buf.writeFloat(recipe.chance);
         }

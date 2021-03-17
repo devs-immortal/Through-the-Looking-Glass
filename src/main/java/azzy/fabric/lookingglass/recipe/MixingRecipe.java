@@ -2,9 +2,12 @@ package azzy.fabric.lookingglass.recipe;
 
 import azzy.fabric.incubus_core.json.JsonUtils;
 import azzy.fabric.incubus_core.recipe.IngredientStack;
+import azzy.fabric.incubus_core.recipe.OptionalStack;
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import net.fabricmc.loader.lib.gson.MalformedJsonException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -14,17 +17,21 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
 
 public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
+    public static final MixingRecipe EMPTY = new MixingRecipe(new Identifier(LookingGlassCommon.MODID, "empty"), Collections.unmodifiableList(Arrays.asList(IngredientStack.EMPTY, IngredientStack.EMPTY, IngredientStack.EMPTY, IngredientStack.EMPTY)), OptionalStack.EMPTY);
+
     private final List<IngredientStack> ingredients;
-    private final ItemStack output;
+    private final OptionalStack output;
     private final Identifier id;
 
-    public MixingRecipe(Identifier id, List<IngredientStack> ingredients, ItemStack output) {
+    public MixingRecipe(Identifier id, List<IngredientStack> ingredients, OptionalStack output) {
         this.ingredients = ingredients;
         this.output = output;
         this.id = id;
@@ -32,21 +39,30 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public boolean matches(MixerEntity inv, World world) {
-        return IngredientStack.matchInvExclusively(inv, ingredients, 4, 0);
+        return !isEmpty() && IngredientStack.matchInvExclusively(inv, ingredients, 4, 0);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
     public ItemStack craft(MixerEntity inv) {
         ItemStack outSlot = inv.getStack(4);
-        if(outSlot.isEmpty()) {
-            inv.setStack(4, output.copy());
-            IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
+        ItemStack optional = output.getFirstStack();
+        if(optional != null) {
+            if(outSlot.isEmpty()) {
+                inv.setStack(4, optional.copy());
+                IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
+            }
+            else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.itemMatch(outSlot)) {
+                inv.getStack(4).increment(output.getCount());
+                IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
+            }
+            return optional.copy();
         }
-        else if(outSlot.getCount() + output.getCount() <= outSlot.getMaxCount() && output.isItemEqual(outSlot)) {
-            inv.getStack(4).increment(output.getCount());
-            IngredientStack.decrementExclusively(inv, ingredients, 4, 0);
-        }
-        return output.copy();
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -56,7 +72,7 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public ItemStack getOutput() {
-        return output;
+        return output.getFirstStack();
     }
 
     @Override
@@ -94,14 +110,20 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
         @Override
         public MixingRecipe read(Identifier id, JsonObject json) {
             List<IngredientStack> ingredients;
-            ItemStack output;
+            OptionalStack output;
 
             try {
                 if(!(json.has("inputs") && json.has("output")))
                     throw new MalformedJsonException("Invalid Alloying Recipe Json");
                 ingredients = JsonUtils.ingredientsFromJson(json.getAsJsonArray("inputs"), 4);
-                output = JsonUtils.stackFromJson(json.getAsJsonObject("output"));
+                output = JsonUtils.optionalStackFromJson(json.getAsJsonObject("output"));
+
+                if(output.isEmpty())
+                    return EMPTY;
+
             } catch (Exception e) {
+                if(e instanceof JsonSyntaxException)
+                    return EMPTY;
                 FFLog.error("Exception found while loading Alloying recipe json " + id.toString() + " ", e);
                 return null;
             }
@@ -111,14 +133,14 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
         @Override
         public MixingRecipe read(Identifier id, PacketByteBuf buf) {
-            ItemStack output = buf.readItemStack();
+            OptionalStack output = OptionalStack.fromByteBuf(buf);
             List<IngredientStack> ingredients = IngredientStack.decodeByteBuf(buf, 4);
             return new MixingRecipe(id, ingredients, output);
         }
 
         @Override
         public void write(PacketByteBuf buf, MixingRecipe recipe) {
-            buf.writeItemStack(recipe.output);
+            recipe.output.write(buf);
             recipe.getInputs().forEach(ingredientStack -> ingredientStack.write(buf));
         }
     }

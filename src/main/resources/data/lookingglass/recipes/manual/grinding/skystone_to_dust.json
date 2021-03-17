@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "appliedenergistics2:sky_stone_block"
+      }
+    ]
+  },
+  "output": {
+    "item": "appliedenergistics2:sky_dust",
+    "count": 2
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

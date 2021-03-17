@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:ender_pearl"
+      }
+    ]
+  },
+  "output": {
+    "item": "c:ender_pearl_dusts"
+  },
+  "secondary": {
+    "item": "c:ender_pearl_dusts",
+    "count": 1
+  },
+  "chance": 0.5
+}

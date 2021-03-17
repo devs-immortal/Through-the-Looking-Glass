@@ -1,0 +1,23 @@
+{
+  "type": "lookingglass:mixing",
+  "inputs": [
+      {
+        "ingredient": [
+          {
+            "tag": "c:iron_dusts"
+          }
+        ]
+      },
+      {
+        "ingredient": [
+          {
+            "item": "lookingglass:enriched_charcoal"
+          }
+        ],
+        "count": 2
+      }
+  ],
+  "output": {
+    "item": "lookingglass:steel_blend"
+  }
+}

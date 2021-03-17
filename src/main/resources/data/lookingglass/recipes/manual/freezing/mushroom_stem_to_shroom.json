@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:crimson_stem"
+      },
+      {
+        "item": "minecraft:warped_stem"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:mushroom_stem"
+  }
+}

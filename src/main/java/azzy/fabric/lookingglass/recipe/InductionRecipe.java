@@ -42,6 +42,11 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
     public ItemStack craft(BlockInductorBlock inv) {
         return ItemStack.EMPTY;
     }

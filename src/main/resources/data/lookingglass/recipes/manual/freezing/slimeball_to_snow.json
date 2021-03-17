@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:slime_ball"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:snowball"
+  }
+}

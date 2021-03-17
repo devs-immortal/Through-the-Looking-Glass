@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:netherite_ingots"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:netherite_dusts"
+  },
+  "secondary": {
+    "item": "none"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:sphalerite_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:sphalerite_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:cinnabar_dusts",
+    "count": 1
+  },
+  "chance": 0.5
+}
