@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "byg:pendorite_ore"
+      }
+    ]
+  },
+  "output": {
+    "item": "byg:pendorite_scraps"
+  },
+  "secondary": {
+    "item": "byg:pendorite_scraps"
+  },
+  "chance": 0.25
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "minecraft:charcoal"
+  },
+  "result": "lookingglass:enriched_charcoal",
+  "experience": 0.45,
+  "cookingtime": 200
+}

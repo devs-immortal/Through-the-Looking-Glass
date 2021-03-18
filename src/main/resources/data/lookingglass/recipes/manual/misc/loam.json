@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cpc",
+    "dmd",
+    "cpc"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:dirt"
+    },
+    "c": {
+      "item": "minecraft:clay_ball"
+    },
+    "m": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "patchouli:guide_book",
+    "data": {
+      "patchouli:book": "lookingglass:profunctor_opus"
+    }
+  }
+}

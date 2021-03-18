@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:emerald_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:emeralds",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:emeralds"
+  },
+  "chance": 0.2
+}

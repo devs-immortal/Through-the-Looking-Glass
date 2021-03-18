@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "indrev:nikolite_ore"
+      }
+    ]
+  },
+  "output": {
+    "tag": "indrev:nikolite_dust",
+    "count": 4
+  },
+  "secondary": {
+    "tag": "indrev:nikolite_dust",
+    "count": 4
+  },
+  "chance": 0.5
+}

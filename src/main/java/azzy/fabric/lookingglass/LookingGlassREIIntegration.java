@@ -8,17 +8,21 @@ import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeHelper;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import me.shedaniel.rei.plugin.DefaultPlugin;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
+
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class LookingGlassREIIntegration implements REIPluginV0 {
 
     @Override
     public void registerRecipeDisplays(RecipeHelper recipeHelper) {
-        recipeHelper.registerRecipes(LookingGlassRecipes.ALLOYING_RECIPE.getId(), AlloyingRecipe.class, LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.INDUCTION_RECIPE.getId(), InductionRecipe.class, LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.FREEZING_RECIPE.getId(), FreezingRecipe.class, LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.GRINDING_RECIPE.getId(), GrindingRecipe.class, LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.MIXING_RECIPE.getId(), MixingRecipe.class, LookingGlassRecipeDisplay::new);
+        recipeHelper.registerRecipes(LookingGlassRecipes.ALLOYING_RECIPE.getId(), generateRecipeConditional(AlloyingRecipe.class), LookingGlassRecipeDisplay::new);
+        recipeHelper.registerRecipes(LookingGlassRecipes.INDUCTION_RECIPE.getId(), generateRecipeConditional(InductionRecipe.class), LookingGlassRecipeDisplay::new);
+        recipeHelper.registerRecipes(LookingGlassRecipes.FREEZING_RECIPE.getId(), generateRecipeConditional(FreezingRecipe.class), LookingGlassRecipeDisplay::new);
+        recipeHelper.registerRecipes(LookingGlassRecipes.GRINDING_RECIPE.getId(), generateRecipeConditional(GrindingRecipe.class), LookingGlassRecipeDisplay::new);
+        recipeHelper.registerRecipes(LookingGlassRecipes.MIXING_RECIPE.getId(), generateRecipeConditional(MixingRecipe.class), LookingGlassRecipeDisplay::new);
     }
 
     @Override
@@ -46,5 +50,10 @@ public class LookingGlassREIIntegration implements REIPluginV0 {
     @Override
     public Identifier getPluginIdentifier() {
         return new Identifier(LookingGlassCommon.MODID, "lookingglass_rei_integration");
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static <T extends LookingGlassRecipe<?>> Predicate<Recipe> generateRecipeConditional(Class<T> clazz) {
+        return recipe -> clazz.isAssignableFrom(recipe.getClass()) && !((T) recipe).isEmpty();
     }
 }

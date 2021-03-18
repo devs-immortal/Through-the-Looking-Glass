@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:copper_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:copper_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:gold_dusts",
+    "count": 1
+  },
+  "chance": 0.25
+}

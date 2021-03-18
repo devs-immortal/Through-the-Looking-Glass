@@ -1,0 +1,24 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "tag": "c:zinc_ingots"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:copper_ingots"
+        }
+      ],
+      "count": 3
+    }
+  ],
+  "output": {
+    "tag": "c:brass_ingots",
+    "count": 4
+  }
+}

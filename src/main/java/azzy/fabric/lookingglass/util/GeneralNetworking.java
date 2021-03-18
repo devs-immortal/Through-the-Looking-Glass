@@ -31,7 +31,7 @@ public class GeneralNetworking {
             double disZ = packet.readDouble();
             double scale = packet.readDouble();
             String url = packet.readString(2048);
-            String sign = packet.readString(2048);
+            String sign = packet.readString(Short.MAX_VALUE);
             String color = packet.readString(256);
 
             minecraftServer.execute(() -> {

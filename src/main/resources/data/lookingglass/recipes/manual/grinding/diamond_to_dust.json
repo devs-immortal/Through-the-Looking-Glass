@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:diamonds"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:diamond_dusts"
+  },
+  "secondary": {
+    "item": "minecraft:air"
+  }
+}

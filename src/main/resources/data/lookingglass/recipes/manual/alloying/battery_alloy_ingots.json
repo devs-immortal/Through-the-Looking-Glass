@@ -1,0 +1,23 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "tag": "c:antimony_ingots"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:lead_ingots"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "tag": "c:battery_alloy_ingots",
+    "count": 2
+  }
+}

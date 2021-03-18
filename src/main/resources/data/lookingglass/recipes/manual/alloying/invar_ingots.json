@@ -1,0 +1,24 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "tag": "c:nickel_ingots"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:iron_ingots"
+        }
+      ],
+      "count": 2
+    }
+  ],
+  "output": {
+    "tag": "c:invar_ingots",
+    "count": 3
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:bauxite_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:bauxite_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:titanium_dusts",
+    "count": 1
+  },
+  "chance": 0.05
+}

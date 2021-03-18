@@ -1,0 +1,23 @@
+{
+  "type": "lookingglass:alloying",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "tag": "c:gold_ingots"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "tag": "c:silver_ingots"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "tag": "c:electrum_ingots",
+    "count": 2
+  }
+}

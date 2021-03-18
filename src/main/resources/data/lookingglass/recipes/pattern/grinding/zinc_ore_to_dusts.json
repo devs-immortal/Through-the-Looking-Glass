@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:zinc_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:zinc_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:sapphire_dusts",
+    "count": 1
+  },
+  "chance": 0.1
+}

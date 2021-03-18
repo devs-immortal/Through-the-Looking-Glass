@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface LookingGlassRecipe<C extends Inventory> extends Recipe<C> {
 
+    boolean isEmpty();
+
     @Override
     LookingGlassRecipeType<?> getType();
 

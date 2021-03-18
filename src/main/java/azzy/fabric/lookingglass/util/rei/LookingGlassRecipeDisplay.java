@@ -27,6 +27,10 @@ public class LookingGlassRecipeDisplay<R extends LookingGlassRecipe<?>> implemen
         this.outputs = CollectionUtils.map(EntryStack.ofItemStacks(recipe.getOutputs()), Collections::singletonList);
     }
 
+    @SuppressWarnings("unchecked")
+    public LookingGlassRecipeDisplay(Recipe<?> recipe) {
+        this((R) recipe);
+    }
 
     @Override
     public @NotNull List<List<EntryStack>> getResultingEntries() {

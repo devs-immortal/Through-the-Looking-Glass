@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:titanium_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:titanium_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:aluminum_dusts",
+    "count": 1
+  },
+  "chance": 1
+}

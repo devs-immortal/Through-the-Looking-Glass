@@ -1,0 +1,16 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:coal"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:coal_dusts"
+  },
+  "secondary": {
+    "item": "none"
+  }
+}

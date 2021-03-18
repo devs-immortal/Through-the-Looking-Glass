@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:tin_ingots"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:tin_dusts",
+    "count": 1
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}

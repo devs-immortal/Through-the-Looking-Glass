@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:uranium_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:uranium_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:lead_dusts",
+    "count": 1
+  },
+  "chance": 2
+}

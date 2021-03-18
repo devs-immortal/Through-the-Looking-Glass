@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "lookingglass:block/loam",
+    "top": "lookingglass:block/loam_farmland"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "croptosis:potash_ore"
+      }
+    ]
+  },
+  "output": {
+    "item": "croptosis:potash",
+    "count": 3
+  },
+  "secondary": {
+    "item": "croptosis:potash"
+  },
+  "chance": 0.2
+}

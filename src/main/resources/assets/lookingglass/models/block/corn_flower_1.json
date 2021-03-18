@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/high_crop",
+  "textures": {
+    "cross": "lookingglass:block/corn_flower_1"
+  }
+}

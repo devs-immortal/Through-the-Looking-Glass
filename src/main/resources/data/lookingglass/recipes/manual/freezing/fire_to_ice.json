@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:music_disc_pigstep"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:music_disc_stal"
+  }
+}

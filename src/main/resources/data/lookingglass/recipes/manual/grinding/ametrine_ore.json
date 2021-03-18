@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "byg:ametrine_ore"
+      }
+    ]
+  },
+  "output": {
+    "item": "byg:ametrine_gems"
+  },
+  "secondary": {
+    "item": "byg:ametrine_gems"
+  },
+  "chance": 0.25
+}

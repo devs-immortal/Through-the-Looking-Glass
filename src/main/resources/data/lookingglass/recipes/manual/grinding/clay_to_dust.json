@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:clay_dusts"
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

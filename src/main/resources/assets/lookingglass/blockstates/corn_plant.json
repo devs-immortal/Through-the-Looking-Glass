@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "base=true,flower=false,age=0": {
+      "model": "lookingglass:block/corn_base_0"
+    },
+    "base=true,flower=false,age=1": {
+      "model": "lookingglass:block/corn_base_1"
+    },
+    "base=true,flower=false,age=2": {
+      "model": "lookingglass:block/corn_base_2"
+    },
+    "base=true,flower=false,age=3": {
+      "model": "lookingglass:block/corn_base_3"
+    },
+    "flower=true,base=false,age=0": {
+      "model": "lookingglass:block/corn_flower_0"
+    },
+    "flower=true,base=false,age=1": {
+      "model": "lookingglass:block/corn_flower_1"
+    },
+    "base=false,flower=false,age=0": {
+      "model": "lookingglass:block/corn_mid_0"
+    },
+    "base=false,flower=false,age=1": {
+      "model": "lookingglass:block/corn_mid_1"
+    },
+    "base=false,flower=false,age=2": {
+      "model": "lookingglass:block/corn_mid_2"
+    },
+    "base=false,flower=false,age=3": {
+      "model": "lookingglass:block/corn_mid_3"
+    }
+  }
+}

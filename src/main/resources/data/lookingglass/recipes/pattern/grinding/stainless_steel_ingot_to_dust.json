@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:stainless_steel_ingots"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:stainless_steel_dusts",
+    "count": 1
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}

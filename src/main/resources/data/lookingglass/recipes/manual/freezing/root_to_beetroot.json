@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:crimson_roots"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:beetroot"
+  }
+}

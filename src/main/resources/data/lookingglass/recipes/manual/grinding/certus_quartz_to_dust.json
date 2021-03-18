@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "appliedenergistics2:certus_quartz_crystal"
+      },
+      {
+        "item": "appliedenergistics2:charged_certus_quartz_crystal"
+      }
+    ]
+  },
+  "output": {
+    "item": "appliedenergistics2:certus_quartz_dust"
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

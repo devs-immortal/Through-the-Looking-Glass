@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:blaze_powder"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:redstone"
+  }
+}

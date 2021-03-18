@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:sodium_ingots"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:sodium_dusts",
+    "count": 1
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}

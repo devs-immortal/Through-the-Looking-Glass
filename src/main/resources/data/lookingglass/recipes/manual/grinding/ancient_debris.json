@@ -1,0 +1,18 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:ancient_debris"
+      }
+    ]
+  },
+  "output": {
+    "item": "lookingglass:ancient_debris_dust"
+  },
+  "secondary": {
+    "tag": "c:obsidian_dusts",
+    "count": 2
+  },
+  "chance": 0.5
+}

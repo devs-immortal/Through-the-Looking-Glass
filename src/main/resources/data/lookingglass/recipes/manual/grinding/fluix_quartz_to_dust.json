@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "item": "appliedenergistics2:fluix_crystal"
+      }
+    ]
+  },
+  "output": {
+    "item": "appliedenergistics2:fluix_dust"
+  },
+  "secondary": {
+    "item": "none"
+  },
+  "chance": 0
+}

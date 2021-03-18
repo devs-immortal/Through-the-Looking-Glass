@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:sulfur_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:sulfur_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:coal_dusts",
+    "count": 1
+  },
+  "chance": 0.25
+}

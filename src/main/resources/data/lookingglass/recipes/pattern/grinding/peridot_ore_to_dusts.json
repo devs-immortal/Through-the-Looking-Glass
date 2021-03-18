@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:peridot_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:peridot_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:emerald_dusts",
+    "count": 1
+  },
+  "chance": 0.1
+}

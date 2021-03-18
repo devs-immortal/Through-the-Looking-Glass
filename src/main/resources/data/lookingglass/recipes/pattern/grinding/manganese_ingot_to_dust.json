@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:manganese_ingots"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:manganese_dusts",
+    "count": 1
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}

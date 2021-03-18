@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:coal_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:coal",
+    "count": 4
+  },
+  "secondary": {
+    "tag": "c:coal",
+    "count": 2
+  },
+  "chance": 0.25
+}

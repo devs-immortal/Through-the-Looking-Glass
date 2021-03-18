@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:mercury_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:mercury_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:silver_dusts",
+    "count": 1
+  },
+  "chance": 1
+}

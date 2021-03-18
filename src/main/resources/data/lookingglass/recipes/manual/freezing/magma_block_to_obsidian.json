@@ -1,0 +1,13 @@
+{
+  "type": "lookingglass:freezing",
+  "input": {
+    "ingredient": [
+      {
+        "item": "minecraft:magma_block"
+      }
+    ]
+  },
+  "output": {
+    "item": "minecraft:obsidian"
+  }
+}

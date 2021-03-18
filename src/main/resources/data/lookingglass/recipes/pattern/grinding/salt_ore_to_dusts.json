@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:salt_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:salt_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:clay_dusts",
+    "count": 1
+  },
+  "chance": 0.5
+}

@@ -1,0 +1,17 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:glowstone_blocks"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:glowstone_dusts",
+    "count": 4
+  },
+  "secondary": {
+    "item": "minecraft:air"
+  }
+}

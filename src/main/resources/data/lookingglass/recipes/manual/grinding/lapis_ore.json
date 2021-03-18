@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:lapis_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:lapis_lazulis",
+    "count": 8
+  },
+  "secondary": {
+    "tag": "c:lapis_lazulis",
+    "count": 4
+  },
+  "chance": 0.5
+}

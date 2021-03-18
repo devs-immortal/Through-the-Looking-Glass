@@ -1,0 +1,19 @@
+{
+  "type": "lookingglass:grinding",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:mercury_blocks"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:mercury_dusts",
+    "count": 9
+  },
+  "secondary": {
+    "tag": "c:null",
+    "count": 0
+  },
+  "chance": 0
+}
