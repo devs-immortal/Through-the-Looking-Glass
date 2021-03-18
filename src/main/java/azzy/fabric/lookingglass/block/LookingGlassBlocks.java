@@ -101,6 +101,10 @@ public class LookingGlassBlocks {
 
     public static final Block DIODE = registerBlock("diode", new DiodeBlock(FabricBlockSettings.copyOf(Blocks.REPEATER)), basicItem());
 
+    //Farming
+    public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
+    public static final Block CORN_PLANT = registerBlock("corn_plant", new CornPlantBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).ticksRandomly()), basicItem(), false);
+
 
     //Decorative
     public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);
@@ -121,7 +125,7 @@ public class LookingGlassBlocks {
     public static final Block REVERSE_DARK_ETHEREAL_GLASS = registerGeneratedBlock("dark_reverse_ethereal_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).blockVision((state, world, pos) -> false), GlassBlockTypes.DARK_REVERSE_ETHEREAL), null, null, basicItem(), SingletType.BLOCK);
     public static final Block GHOST_GLASS = registerGeneratedBlock("ghost_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).blockVision((state, world, pos) -> false), GlassBlockTypes.GHOST_GLASS), null, null, basicItem(), SingletType.BLOCK);
     public static final Block DARK_GHOST_GLASS = registerGeneratedBlock("dark_ghost_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).blockVision((state, world, pos) -> false), GlassBlockTypes.DARK_GHOST_GLASS), null, null, basicItem(), SingletType.BLOCK);
-    public static final Block GLOW_GLASS = registerGeneratedBlock("glow_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).lightLevel(15), GlassBlockTypes.GLOW_GLASS), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block GLOW_GLASS = registerGeneratedBlock("glow_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS).luminance(15), GlassBlockTypes.GLOW_GLASS), null, null, basicItem(), SingletType.BLOCK);
     public static final Block RED_GLASS = registerGeneratedBlock("red_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.RED_GLASS), null, null, basicItem(), SingletType.BLOCK);
 
     //Cores
@@ -149,8 +153,9 @@ public class LookingGlassBlocks {
     public static final Block FINIS_BLOCK = registerGeneratedBlock("finis_block", new Block(finisMachine()), null, null, genericItem(FINIS_RARITY, 64), SingletType.BLOCK);
     public static final Block ELDENMETAL_BLOCK = registerBlock("eldenmetal_block", new Block(FabricBlockSettings.copyOf(Blocks.OBSIDIAN).luminance(state -> 3).nonOpaque().sounds(LookingGlassSounds.ELDENMETAL)), basicItem().fireproof().rarity(ELDENMETAL_RARITY));
     public static final Block LUPREVAN_GLASS_BLOCK = registerGeneratedBlock("luprevan_glass_block", new Block(FabricBlockSettings.copyOf(Blocks.GLASS).strength(8, 500)), null, null, genericItem(LUPREVAN_RARITY, 64), SingletType.BLOCK);
-    public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SHROOMLIGHT).breakInstantly()));
+    public static final Block LOAM = registerGeneratedBlock("loam", new Block(FabricBlockSettings.copyOf(Blocks.DIRT)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
 
     //  BLOCK ENTITIES

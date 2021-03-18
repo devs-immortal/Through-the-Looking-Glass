@@ -62,6 +62,11 @@ public class LookingGlassItems {
     public static final Item FREEZER_UPGRADE_ITEM = registerGeneratedItem("freezer_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), LookingGlassRecipes.FREEZING_RECIPE, PoweredFurnaceGuiDescription.class, 2.0, 0, 4.0, ModifierProvider.AdditivityType.ADD, ModifierProvider.AdditivityType.ADD));
     public static final Item BLAST_UPGRADE_ITEM = registerGeneratedItem("blast_upgrade", new RecipeConvertingUpgradeItem<>(defaultSettings(), RecipeType.BLASTING, PoweredFurnaceGuiDescription.class, 2.0, 0, 0.5, ModifierProvider.AdditivityType.ADD_MULT, ModifierProvider.AdditivityType.ADD));
 
+    //Foods
+    public static final Item CORN_COB = registerGeneratedItem("corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0F).build())));
+    public static final Item ROASTED_CORN_COB = registerGeneratedItem("roasted_corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(6).saturationModifier(1.5F).build())));
+    public static final Item LEGENDARY_CORN_COB = registerGeneratedItem("legendary_corn_cob", new Item(genericSettings(Rarity.EPIC).fireproof().food(new FoodComponent.Builder().hunger(200).saturationModifier(4F).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 18000, 19), 1F).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 18000, 3), 1F).build())));
+
     //Materials
     public static final Item ENRICHED_CHARCOAL = registerGeneratedItem("enriched_charcoal", new Item(defaultSettings()));
     public static final Item IRON_DUST = registerGeneratedItem("iron_dust", new Item(defaultSettings()));

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "lookingglass:corn_cob"
+  },
+  "result": "lookingglass:roasted_corn_cob",
+  "experience": 0.2,
+  "cookingtime": 200
+}
