@@ -1,0 +1,24 @@
+{
+  "name": "Grinder Free Zone",
+  "category": "dwarven",
+  "icon": "lookingglass:grinder",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Oh hey it is time for the obligatory ore duplication. Mills are machines capable of a variety of things, all centered around reducing objects to a fine powder. From ore multiplication to corn granulation the Mill is a useful device for the aspiring machinist"
+    },
+    {
+      "type": "spotlight",
+      "title": "Mill",
+      "item": "lookingglass:grinder",
+      "text": "They are not essential for progression, but nice to have at any rate."
+    },
+    {
+      "type": "crafting",
+      "title": "Mill",
+      "recipe": "lookingglass:manual/machine/grinder",
+      "text": "   $(#FFB7F4)$(o)brrrrrrrrr"
+    }
+  ],
+  "sortnum": 3
+}

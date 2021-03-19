@@ -1,0 +1,7 @@
+{
+  "name": "Tools",
+  "parent": "lookingglass:machines",
+  "description": "Useful, portable devices for a great deal of situations.",
+  "icon": "lookingglass:energy_probe",
+  "sortnum": 0
+}

@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class CornPlantBlock extends PlantBlock {
+public class CornPlantBlock extends FernBlock {
 
     public static final BooleanProperty BASE = BooleanProperty.of("base");
     public static final BooleanProperty FLOWER = BooleanProperty.of("flower");
@@ -35,6 +35,10 @@ public class CornPlantBlock extends PlantBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        growInternal(state, world, pos, random);
+    }
+
+    private void growInternal(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(world.getLightLevel(pos) >= 9) {
             int height = 0;
 
@@ -115,11 +119,21 @@ public class CornPlantBlock extends PlantBlock {
     }
 
     @Override
+    public OffsetType getOffsetType() {
+        return OffsetType.XZ;
+    }
+
+    @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         if(!world.getBlockTickScheduler().isScheduled(pos.up(), this)) {
             world.getBlockTickScheduler().schedule(pos.up(), this, 1);
         }
+    }
+
+    @Override
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+        growInternal(state, world, pos, random);
     }
 
     @Override

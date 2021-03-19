@@ -1,0 +1,7 @@
+{
+  "name": "Upgrades",
+  "parent": "lookingglass:machines",
+  "description": "No you don't just make the same machine but slightly faster every five minutes, this is not gregtech.",
+  "icon": "lookingglass:rose_chipset",
+  "sortnum": 1
+}

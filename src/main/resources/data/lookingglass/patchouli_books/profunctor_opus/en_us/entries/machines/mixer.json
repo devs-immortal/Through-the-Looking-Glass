@@ -1,0 +1,24 @@
+{
+  "name": "Centrifugal Inversion",
+  "category": "dwarven",
+  "icon": "lookingglass:mixer",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A distant cousin of the alloy furnace, the Mixer is yet another rather important machine, being used in the production of a variety of useful substances, and key in the production of biofuel. The mixer is a notably slow machine so investing in speed upgrades is not a bad idea."
+    },
+    {
+      "type": "spotlight",
+      "title": "Mixer",
+      "item": "lookingglass:mixer",
+      "text": "An important use of this machine is the production of Pink Gel, which cannot be obtained through any other means."
+    },
+    {
+      "type": "crafting",
+      "title": "Mixer",
+      "recipe": "lookingglass:manual/machine/mixer",
+      "text": "   $(#FFB7F4)speen."
+    }
+  ],
+  "sortnum": 4
+}

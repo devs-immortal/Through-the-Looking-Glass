@@ -1,0 +1,24 @@
+{
+  "name": "Vortex Buffers",
+  "category": "dwarven",
+  "icon": "lookingglass:vacuum_hopper",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Vacuum Hoppers are handy devices that, as their name indicates, absorb items from significant distances. A Vacuum Hopper will teleport any one item within a 4 block radious into itself, it will attempt to do this every 20 ticks"
+    },
+    {
+      "type": "spotlight",
+      "title": "Vacuum Hopper",
+      "item": "lookingglass:vacuum_hopper",
+      "text": "What else do you want me to say, it is a vacuum hopper, every other mod in existence has one."
+    },
+    {
+      "type": "crafting",
+      "title": "Vacuum Hopper",
+      "recipe": "lookingglass:manual/machine/vacuum_hopper",
+      "text": "   $(#FFB7F4)engaging succ engines"
+    }
+  ],
+  "sortnum": 4
+}

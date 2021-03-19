@@ -1,0 +1,18 @@
+{
+  "name": "Wired",
+  "category": "dwarven",
+  "icon": "lookingglass:silicon_cable",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Cables are going to be an important part of your infrastructure unless you want your machines to be set up in lumps. Cables networks are capable of transferring power over large distances, they will input and output a certain amount of energy every tick and they will keep any stored energy balanced across the entire network."
+    },
+    {
+      "type": "crafting",
+      "title": "Silicon Cable",
+      "recipe": "lookingglass:manual/machine/silicon_cable",
+      "text": "   $(#FFB7F4)onefold transfer$(br)   twofold storage"
+    }
+  ],
+  "sortnum": 0
+}

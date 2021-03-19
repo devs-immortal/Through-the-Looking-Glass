@@ -1,0 +1,7 @@
+{
+  "name": "Dwarven Automata",
+  "parent": "lookingglass:machines",
+  "description": "Dwarves were clever little creatures, centuries later their inventions still see use.",
+  "icon": "lookingglass:alloy_furnace",
+  "sortnum": 2
+}

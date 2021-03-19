@@ -1,0 +1,24 @@
+{
+  "name": "Alloys And You",
+  "category": "dwarven",
+  "icon": "lookingglass:alloy_furnace",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Perhaps the single most important machine in this mod, Alloy Furnaces are key to progression, giving you access to a variety of important resources such as Silicon."
+    },
+    {
+      "type": "spotlight",
+      "title": "Powered Furnace",
+      "item": "lookingglass:alloy_furnace",
+      "text": "While being necessary for progression, the Alloy Furnace is also capable of producing a myriad of other materials."
+    },
+    {
+      "type": "crafting",
+      "title": "Powered Furnace",
+      "recipe": "lookingglass:manual/machine/alloy_furnace",
+      "text": "   $(#FFB7F4)2Lu per tick and the$(br)     world is yours"
+    }
+  ],
+  "sortnum": 1
+}

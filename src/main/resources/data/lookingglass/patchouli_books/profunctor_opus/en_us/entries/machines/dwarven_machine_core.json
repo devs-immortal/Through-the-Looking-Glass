@@ -1,0 +1,19 @@
+{
+  "name": "Heart Of Steel",
+  "category": "dwarven",
+  "icon": "lookingglass:dwarven_machine_core",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The keystone of a great deal of machines, Dwarven Machine Cores are... kind of useless on their own, however from their finely engineered mechanisms will serve as the heart and core of a variety of useful devices."
+    },
+    {
+      "type": "crafting",
+      "title": "Dwarven Machine Core",
+      "recipe": "lookingglass:manual/machine/dwarven_machine_core",
+      "text": "   $(#FFB7F4)subterranean engineering"
+    }
+  ],
+  "priority": true,
+  "sortnum": 0
+}

@@ -4,24 +4,20 @@ import dev.technici4n.fasttransferlib.api.Simulation;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.Direction;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyIo {
 
-    private final Direction[] directions = Direction.values();
     private final double maxPower, transferRate;
     private double power;
-    private boolean ticked;
+
 
     public PowerPipeEntity(BlockEntityType type, double transferRate) {
         super(type, EnergyApi.SIDED, true);
-        this.maxPower = transferRate * 8.0;
+        this.maxPower = transferRate * 2.0;
         this.transferRate = transferRate;
     }
 
@@ -47,23 +43,21 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
             }
         }
 
-        //Taken from Techreborn's CableBlockEntity, some of it at least
-
         List<PowerPipeEntity> cables = new ArrayList<>();
 
         if(!ticked) {
-            cables.addAll(getNeighbours());
+            getNeighbours().forEach(wire -> cables.add((PowerPipeEntity) wire));
         }
 
         if(cables.size() > 1) {
             double totalPower = cables.stream().mapToDouble(EnergyIo::getEnergy).sum();
-            double distributedpower = totalPower / cables.size();
+            double distributedPower = totalPower / cables.size();
 
-            cables.forEach(cable -> cable.setEnergy(distributedpower));
+            cables.forEach(cable -> cable.setEnergy(distributedPower));
         }
 
         markDirty();
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             sync();
         }
 
@@ -72,28 +66,6 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
 
     public double getTransferRate() {
         return transferRate;
-    }
-
-    public Set<PowerPipeEntity> getNeighbours() {
-        Set<PowerPipeEntity> neighbours = new HashSet<>();
-        Queue<PowerPipeEntity> next = new LinkedList<>();
-        next.add(this);
-        while (!next.isEmpty()) {
-            PowerPipeEntity cable = next.poll();
-            if(cable.getType() == getType()) {
-                Arrays.stream(directions)
-                        .map(direction -> EnergyApi.SIDED.find(world, cable.pos.offset(direction), direction.getOpposite()))
-                        .filter(energyIo -> energyIo instanceof PowerPipeEntity && !neighbours.contains(energyIo))
-                        .forEach(wire -> next.add(((PowerPipeEntity) wire).markTicked()));
-                neighbours.add(cable);
-            }
-        }
-        return neighbours;
-    }
-
-    public PowerPipeEntity markTicked() {
-        this.ticked = true;
-        return this;
     }
 
     private void setEnergy(double power) {
@@ -128,7 +100,7 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
         double remnant = Math.max(0, amount - Math.min(maxPower - power, transferRate));
         power =  power + (amount - remnant);
         markDirty();
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             sync();
         }
         return remnant;
@@ -142,7 +114,7 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
         double drain = Math.min(power, maxAmount);
         power -= drain;
         markDirty();
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             sync();
         }
         return drain;

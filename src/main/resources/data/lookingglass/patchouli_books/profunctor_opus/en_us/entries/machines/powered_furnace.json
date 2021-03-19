@@ -1,0 +1,24 @@
+{
+  "name": "Powered Smelting",
+  "category": "dwarven",
+  "icon": "lookingglass:powered_furnace",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A staple of any base and one of the first machines you should craft, Powered Furnaces are a significant step up from vanilla furnaces, being twice as fast as their cobblestone compatriots and significantly more efficient."
+    },
+    {
+      "type": "spotlight",
+      "title": "Powered Furnace",
+      "item": "lookingglass:powered_furnace",
+      "text": "On its own, a Powered Furnace will use 2Lu per tick while active, a humble amount when accounting for its speed."
+    },
+    {
+      "type": "crafting",
+      "title": "Powered Furnace",
+      "recipe": "lookingglass:manual/machine/powered_furnace",
+      "text": "   $(#FFB7F4)Goes well with a mill"
+    }
+  ],
+  "sortnum": 2
+}
