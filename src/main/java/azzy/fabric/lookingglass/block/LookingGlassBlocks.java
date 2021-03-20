@@ -111,7 +111,9 @@ public class LookingGlassBlocks {
     public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), genericItem(Rarity.UNCOMMON, 64), Items.GOLD_INGOT, false);
     public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SAND), basicItem(), Items.AIR, false);
     public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SOUL_SAND), basicItem(), Items.AIR, false);
-    public static final Block WHITESTONE_BLOCK = registerGeneratedBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), null, null, basicItem(), SingletType.BLOCK);
+    public static final Block WHITEDUST = registerBlock("whitedust", new SandBlock(0xd5c2ba, FabricBlockSettings.copyOf(Blocks.SAND)), basicItem());
+    public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), basicItem());
+    public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
     public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
@@ -186,6 +188,9 @@ public class LookingGlassBlocks {
 
     //Tesseracts
     public static final BlockEntityType<BlockTesseractEntity> BLOCK_TESSERACT_ENTITY = registerEntity("block_tesseract", BlockTesseractEntity::new, BLOCK_TESSERACT_BLOCK);
+
+    //Misc
+    public static final BlockEntityType<BrineFissureEntity> BRINE_FISSURE_ENTITY = registerEntity("brine_fissure_entity", BrineFissureEntity::new, BRINE_FISSURE);
 
     public static void init() {
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {

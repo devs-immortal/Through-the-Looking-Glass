@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.feature;
+package azzy.fabric.lookingglass.biome;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
@@ -13,6 +13,7 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
@@ -27,16 +28,23 @@ import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
 
 import java.util.function.Predicate;
 
-public class TTLGConfiguredFeatures {
+@SuppressWarnings("deprecation")
+public class LookingGlassConfiguredFeatures {
 
     public static Feature<SingleStateFeatureConfig> BOULDER_FEATURE;
-    public static RegistryFeature<?, ?> NEBULOUS_SALT_FLATS, WHITESTONE_BOULDERS;
+    public static Feature<SingleStateFeatureConfig> UNDERWATER_FEATURE;
+    public static RegistryFeature<?, ?> NEBULOUS_SALT_FLATS;
+    public static RegistryFeature<?, ?> SALT_DELTA, WHITESTONE_BOULDERS, BRINE_FISSURES;
 
     public static void init() {
         BOULDER_FEATURE = register("boulder", new BoulderFeature(SingleStateFeatureConfig.CODEC));
+        UNDERWATER_FEATURE = register("pos_predicate", new UnderWaterFeature(SingleStateFeatureConfig.CODEC));
+
+        SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), Blocks.CLAY.getDefaultState(), UniformIntDistribution.of(2, 5), UniformIntDistribution.of(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
+        BRINE_FISSURES = register("brine_fissures", UNDERWATER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(4));
 
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));
-        WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(1));
+        WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.HEIGHTMAP));
     }
 
     private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
@@ -45,7 +53,7 @@ public class TTLGConfiguredFeatures {
 
     private static <FC extends FeatureConfig> RegistryFeature<FC, ?> register(String id, ConfiguredFeature<FC, ?> configuredFeature) {
         Identifier registeredID = new Identifier(LookingGlassCommon.MODID, id);
-        return new RegistryFeature(Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, registeredID, configuredFeature), RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, registeredID));
+        return new RegistryFeature<>(Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, registeredID, configuredFeature), RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, registeredID));
     }
 
     public static class Configs {
@@ -68,7 +76,7 @@ public class TTLGConfiguredFeatures {
         }
     }
 
-    private static class RegistryFeature<T extends FeatureConfig, V extends Feature<T>> {
+    public static class RegistryFeature<T extends FeatureConfig, V extends Feature<T>> {
         private final ConfiguredFeature<T, V> feature;
         private final RegistryKey<ConfiguredFeature<?, ?>> registryKey;
 

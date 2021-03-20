@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/whitedust"
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 90,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 90,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 90,
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 180,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 180,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 180,
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 270
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 270,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 270,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/whitedust",
+        "y": 270,
+        "x": 270
+      }
+    ]
+  }
+}
