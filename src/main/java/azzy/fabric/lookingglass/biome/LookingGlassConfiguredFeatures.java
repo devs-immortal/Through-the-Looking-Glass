@@ -40,7 +40,7 @@ public class LookingGlassConfiguredFeatures {
         BOULDER_FEATURE = register("boulder", new BoulderFeature(SingleStateFeatureConfig.CODEC));
         UNDERWATER_FEATURE = register("pos_predicate", new UnderWaterFeature(SingleStateFeatureConfig.CODEC));
 
-        SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), Blocks.CLAY.getDefaultState(), UniformIntDistribution.of(2, 5), UniformIntDistribution.of(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
+        SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntDistribution.of(2, 5), UniformIntDistribution.of(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
         BRINE_FISSURES = register("brine_fissures", UNDERWATER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(4));
 
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));

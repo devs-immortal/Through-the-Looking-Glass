@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "lookingglass:block/salt_cluster_top",
+    "side": "lookingglass:block/salt_cluster_side"
+  }
+}

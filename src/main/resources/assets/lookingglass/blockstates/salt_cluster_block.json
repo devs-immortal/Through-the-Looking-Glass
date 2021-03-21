@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "lookingglass:block/salt_cluster_block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "lookingglass:block/salt_cluster_block"
+    },
+    "axis=z": {
+      "model": "lookingglass:block/salt_cluster_block",
+      "x": 90
+    }
+  }
+}

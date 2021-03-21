@@ -114,6 +114,7 @@ public class LookingGlassBlocks {
     public static final Block WHITEDUST = registerBlock("whitedust", new SandBlock(0xd5c2ba, FabricBlockSettings.copyOf(Blocks.SAND)), basicItem());
     public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), basicItem());
     public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
+    public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MaterialColor.WHITE)), basicItem());
     public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
