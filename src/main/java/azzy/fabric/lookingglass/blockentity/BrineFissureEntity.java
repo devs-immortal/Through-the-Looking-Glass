@@ -54,7 +54,7 @@ public class BrineFissureEntity extends BlockEntity implements Tickable {
                         }
                     }
                 }
-                world.getNonSpectatingEntities(LivingEntity.class, new Box(pos.add(-8, -0.5, -8), pos.add(8, 2.5, 8))).stream().filter(Entity::isInsideWaterOrBubbleColumn).forEach(entity -> {
+                world.getNonSpectatingEntities(LivingEntity.class, new Box(pos.add(-3, -0.5, -3), pos.add(3, 3, 3))).stream().filter(Entity::isInsideWaterOrBubbleColumn).forEach(entity -> {
                     if(!entity.isSubmergedInWater()) {
                         entity.applyStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 1));
                     }

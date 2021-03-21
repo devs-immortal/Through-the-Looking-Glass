@@ -15,6 +15,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.ProbabilityConfig;
 import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.ConfiguredDecorator;
@@ -31,17 +32,32 @@ import java.util.function.Predicate;
 @SuppressWarnings("deprecation")
 public class LookingGlassConfiguredFeatures {
 
-    public static Feature<SingleStateFeatureConfig> BOULDER_FEATURE;
-    public static Feature<SingleStateFeatureConfig> UNDERWATER_FEATURE;
+    public static Feature<SingleStateFeatureConfig> BOULDER_FEATURE, UNDERWATER_STATE_FEATURE;
+    public static Feature<BiFeatureConfig> UNDERWATER_CRUST_FEATURE, UNDERWATER_PLANT_FEATURE;
+    public static Feature<BasaltColumnsFeatureConfig> PILLAR_FEATURE;
     public static RegistryFeature<?, ?> NEBULOUS_SALT_FLATS;
-    public static RegistryFeature<?, ?> SALT_DELTA, WHITESTONE_BOULDERS, BRINE_FISSURES;
+    public static RegistryFeature<?, ?> SALT_DELTA, WHITESTONE_BOULDERS, BRINE_FISSURES, DEEP_BRINE_FISSURES, SALT_PILLARS;
+    public static RegistryFeature<?, ?> WHITEDUST_DISCS, CRACKED_CRUST, VOLCANIC_CRUST, RED_SEAGRASS;
 
     public static void init() {
         BOULDER_FEATURE = register("boulder", new BoulderFeature(SingleStateFeatureConfig.CODEC));
-        UNDERWATER_FEATURE = register("pos_predicate", new UnderWaterFeature(SingleStateFeatureConfig.CODEC));
+        UNDERWATER_STATE_FEATURE = register("underwater_state", new UnderwaterStateFeature(SingleStateFeatureConfig.CODEC));
+        UNDERWATER_CRUST_FEATURE = register("underwater_crust", new UnderwaterCrustFeature(BiFeatureConfig.CODEC));
+        PILLAR_FEATURE = register("pillars", new SaltPillarFeature(BasaltColumnsFeatureConfig.CODEC));
+        UNDERWATER_PLANT_FEATURE = register("underwater_plant", new UnderwaterPlantFeature(BiFeatureConfig.CODEC));
 
         SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntDistribution.of(2, 5), UniformIntDistribution.of(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
-        BRINE_FISSURES = register("brine_fissures", UNDERWATER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(4));
+        BRINE_FISSURES = register("brine_fissures", UNDERWATER_STATE_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(3));
+        DEEP_BRINE_FISSURES = register("deep_brine_fissures", UNDERWATER_STATE_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(6));
+
+        SALT_PILLARS = register("salt_pillars", PILLAR_FEATURE.configure(new BasaltColumnsFeatureConfig(UniformIntDistribution.of(2, 1), UniformIntDistribution.of(5, 5))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+
+        WHITEDUST_DISCS = register("whitedust_discs", Feature.DISK.configure(new DiskFeatureConfig(LookingGlassBlocks.WHITEDUST.getDefaultState(), UniformIntDistribution.of(3, 2), 1, ImmutableList.of(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState()))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+
+        CRACKED_CRUST = register("cracked_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), LookingGlassBlocks.WHITESTONE_CRACKED.getDefaultState(), 0.225F, UniformIntDistribution.of(5, 3))).applyChance(3).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        VOLCANIC_CRUST = register("volcanic_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(Blocks.BASALT.getDefaultState(), LookingGlassBlocks.HOT_BASALT.getDefaultState(), 0.125F, UniformIntDistribution.of(4, 2))).applyChance(2).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+
+        RED_SEAGRASS = register("red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), 0.0F, UniformIntDistribution.of(0))).repeat(48).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
 
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));
         WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.HEIGHTMAP));

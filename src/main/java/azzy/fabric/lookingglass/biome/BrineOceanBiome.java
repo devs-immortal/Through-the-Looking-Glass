@@ -21,11 +21,12 @@ public class BrineOceanBiome {
             )
     );
 
-    public static final Biome BRINE_DELTA = createBrineBiome(-0.05F, 0.125F, false);
-    public static final Biome BRINE_OCEAN = createBrineBiome(-0.8F, 0.25F, true);
-    public static final Biome BRINE_CRAGS = createBrineBiome(-0.2F, 0.4F, false);
+    public static final Biome BRINE_DELTA = createBrineBiome(-0.05F, 0.13F, false, false);
+    public static final Biome BRINE_OCEAN = createBrineBiome(-0.75F, 0.3F, true, false);
+    public static final Biome BRINE_CRAGS = createBrineBiome(-0.2F, 0.25F, false, false);
+    public static final Biome BRINE_CHASM = createBrineBiome(-1.9F, 0.9F, true, true);
 
-    public static Biome createBrineBiome(float depth, float scale, boolean dust) {
+    public static Biome createBrineBiome(float depth, float scale, boolean discs, boolean deep) {
         SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addDesertMobs(spawnSettings);
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings);
@@ -34,25 +35,38 @@ public class BrineOceanBiome {
         generationSettings.surfaceBuilder(BRINE_SURFACE_BUILDER);
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, LookingGlassConfiguredFeatures.SALT_DELTA.getFeature());
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, LookingGlassConfiguredFeatures.WHITESTONE_BOULDERS.getFeature());
-        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.BRINE_FISSURES.getFeature());
+        generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, deep ? LookingGlassConfiguredFeatures.DEEP_BRINE_FISSURES.getFeature()  : LookingGlassConfiguredFeatures.BRINE_FISSURES.getFeature());
+
+        if(discs) {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.WHITEDUST_DISCS.getFeature());
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.CRACKED_CRUST.getFeature());
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.RED_SEAGRASS.getFeature());
+        }
+        else {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.SALT_PILLARS.getFeature());
+        }
+
+        if(deep) {
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.VOLCANIC_CRUST.getFeature());
+        }
 
         DefaultBiomeFeatures.addDefaultUndergroundStructures(generationSettings);
-        DefaultBiomeFeatures.addLandCarvers(generationSettings);
+        DefaultBiomeFeatures.addOceanCarvers(generationSettings);
+        DefaultBiomeFeatures.addOceanStructures(generationSettings);
         DefaultBiomeFeatures.addDungeons(generationSettings);
         DefaultBiomeFeatures.addMineables(generationSettings);
         DefaultBiomeFeatures.addDefaultOres(generationSettings);
         DefaultBiomeFeatures.addDefaultDisks(generationSettings);
-        DefaultBiomeFeatures.addFrozenTopLayer(generationSettings);
 
         return new Biome.Builder()
-                .precipitation(Biome.Precipitation.NONE)
+                .precipitation(Biome.Precipitation.RAIN)
                 .category(Biome.Category.OCEAN)
                 .depth(depth)
                 .scale(scale)
                 .temperature(1.8F)
-                .downfall(0.0F)
+                .downfall(1.5F)
                 .effects(new BiomeEffects.Builder()
-                .waterColor(0xa9fffc)
+                .waterColor(0x8ceae6)
                 .waterFogColor(0x8ceae6)
                 .fogColor(0xffebd4)
                 .skyColor(0xc0e5f2)
