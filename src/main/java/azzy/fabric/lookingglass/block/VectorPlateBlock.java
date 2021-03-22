@@ -112,7 +112,7 @@ public class VectorPlateBlock extends LookingGlassBlock {
         switch (facingDirection) {
             case NORTH:
                 // North (-z) direction
-                entity.addVelocity(2, 0, -1 * velocity);
+                entity.addVelocity(0, 0, -1 * velocity);
                 break;
             case EAST:
                 // East (x) direction
@@ -136,6 +136,4 @@ public class VectorPlateBlock extends LookingGlassBlock {
             SpikeUtility.damageEntity(entity, world, spikeUpgrade);
         }
     }
-
-
 }
