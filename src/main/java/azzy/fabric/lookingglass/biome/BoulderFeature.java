@@ -52,7 +52,7 @@ public class BoulderFeature extends Feature<SingleStateFeatureConfig> {
         int length = random.nextInt(8) + 3;
         int height = random.nextInt(8) + 3;
 
-        BlockPos finalPos = pos;
+        BlockPos finalPos = pos.down(height / 3);
         BlockPos.iterate(pos.add(-width, -height, -length), pos.add(width, height, length)).forEach(placePos -> {
             if(testElipsoid(width, height, length, placePos, finalPos)) {
                 world.setBlockState(placePos, config.state, 2);

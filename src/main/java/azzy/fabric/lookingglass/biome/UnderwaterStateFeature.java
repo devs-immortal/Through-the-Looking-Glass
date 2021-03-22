@@ -15,17 +15,14 @@ import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 
 import java.util.Random;
 
-import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
+public class UnderwaterStateFeature extends Feature<SingleStateFeatureConfig> {
 
-public class UnderWaterFeature extends Feature<SingleStateFeatureConfig> {
-
-    public UnderWaterFeature(Codec<SingleStateFeatureConfig> configCodec) {
+    public UnderwaterStateFeature(Codec<SingleStateFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     @Override
     public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, SingleStateFeatureConfig config) {
-        //pos = world.getTopPosition(Heightmap.Type.WORLD_SURFACE, pos).down();
         if(!world.isWater(pos)) {
             return false;
         }

@@ -104,7 +104,7 @@ public class LookingGlassBlocks {
     //Farming
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block CORN_PLANT = registerBlock("corn_plant", new CornPlantBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).ticksRandomly()), basicItem(), false);
-
+    public static final Block RED_SEAGRASS = registerBlock("red_seagrass", new RedSeagrassBlock(FabricBlockSettings.copyOf(Blocks.SEAGRASS)), basicItem(), false);
 
     //Decorative
     public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);
@@ -115,10 +115,12 @@ public class LookingGlassBlocks {
     public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), basicItem());
     public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
     public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MaterialColor.WHITE)), basicItem());
+    public static final Block WHITESTONE_CRACKED = registerBlock("cracked_whitestone", new SandBlock(0x8a706b, FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GILDED_BLACKSTONE)), basicItem());
     public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
     public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHITESTONE_TILE.asItem(), false);
+    public static final Block HOT_BASALT = registerBlock("hot_basalt", new MagmaBlock(FabricBlockSettings.copyOf(Blocks.BASALT).luminance(4)), basicItem());
     public static final Block[] BASALT_BRICK_SET = registerBuildingBlocks("basalt_bricks", FabricBlockSettings.copyOf(Blocks.POLISHED_BASALT), basicItem(), Items.POLISHED_BASALT, false);
     public static final Block HERRINGBONE_OAK_PLANKS = registerBlock("herringbone_oak_planks", new HerringboneWoodBlock(FabricBlockSettings.copyOf(Blocks.OAK_PLANKS)), basicItem());
     public static final Block DARK_GLASS = registerGeneratedBlock("dark_glass", new EtherealGlassBlock(FabricBlockSettings.copyOf(Blocks.GLASS), GlassBlockTypes.DARK_GLASS), null, null, basicItem(), SingletType.BLOCK);

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/hot_basalt"
+      },
+      {
+        "model": "lookingglass:block/hot_basalt",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/hot_basalt",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/hot_basalt",
+        "y": 270
+      }
+    ]
+  }
+}

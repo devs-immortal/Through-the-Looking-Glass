@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/cracked_whitestone"
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 90,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 90,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 90,
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 180,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 180,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 180,
+        "x": 270
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 270
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 270,
+        "x": 90
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 270,
+        "x": 180
+      },
+      {
+        "model": "lookingglass:block/cracked_whitestone",
+        "y": 270,
+        "x": 270
+      }
+    ]
+  }
+}
