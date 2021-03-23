@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "lookingglass:block/tall_red_seagrass_bottom"
+    },
+    "half=upper": {
+      "model": "lookingglass:block/tall_red_seagrass_top"
+    }
+  }
+}

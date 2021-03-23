@@ -54,16 +54,16 @@ public class BrineFissureEntity extends BlockEntity implements Tickable {
                         }
                     }
                 }
-                world.getNonSpectatingEntities(LivingEntity.class, new Box(pos.add(-3, -0.5, -3), pos.add(3, 3, 3))).stream().filter(Entity::isInsideWaterOrBubbleColumn).forEach(entity -> {
-                    if(!entity.isSubmergedInWater()) {
-                        entity.applyStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 1));
-                    }
-                    else {
-                        entity.damage(DamageSource.IN_FIRE, 1F);
-                    }
-                    Vec3d velocity = entity.getVelocity();
-                    entity.setVelocity(velocity.x, Math.max(-0.3, velocity.y - 0.0005), velocity.z);
-                });
+                //world.getNonSpectatingEntities(LivingEntity.class, new Box(pos.add(-3, -0.5, -3), pos.add(3, 3, 3))).stream().filter(Entity::isInsideWaterOrBubbleColumn).forEach(entity -> {
+                //    if(!entity.isSubmergedInWater()) {
+                //        entity.applyStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 20, 1));
+                //    }
+                //    else {
+                //        entity.damage(DamageSource.IN_FIRE, 1F);
+                //    }
+                //    Vec3d velocity = entity.getVelocity();
+                //    entity.setVelocity(velocity.x, Math.max(-0.3, velocity.y - 0.0005), velocity.z);
+                //});
             }
         }
     }

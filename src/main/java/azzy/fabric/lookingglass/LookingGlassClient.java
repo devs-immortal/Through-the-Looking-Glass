@@ -34,7 +34,7 @@ public class LookingGlassClient implements ClientModInitializer {
         //Render layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), FISH_BREEDER_BLOCK, BLOCK_TESSERACT_BLOCK, GHOST_GLASS, ETHEREAL_GLASS, REVERSE_ETHEREAL_GLASS, RED_GLASS);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), WOODEN_SPIKE_BLOCK, IRON_SPIKE_BLOCK, DIAMOND_SPIKE_BLOCK, NETHERITE_SPIKE_BLOCK);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), CORN_PLANT);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), CORN_PLANT, RED_SEAGRASS, TALL_RED_SEAGRASS);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), CREATIVE_ENERGY_SOURCE_BLOCK, PINK_GEL_BLOCK, DARK_GLASS, DARK_GHOST_GLASS, DARK_ETHEREAL_GLASS, REVERSE_DARK_ETHEREAL_GLASS, GLOW_GLASS);
 
         LookingGlassParticles.init();

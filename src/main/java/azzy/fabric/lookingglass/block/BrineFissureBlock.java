@@ -40,8 +40,6 @@ public class BrineFissureBlock extends Block implements BlockEntityProvider {
         if (!entity.isFireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
             entity.damage(DamageSource.HOT_FLOOR, 10.0F);
         }
-
-        super.onSteppedOn(world, pos, entity);
     }
 
     @Override

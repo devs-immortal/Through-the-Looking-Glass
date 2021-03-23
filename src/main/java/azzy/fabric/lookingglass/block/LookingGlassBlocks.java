@@ -105,6 +105,7 @@ public class LookingGlassBlocks {
     public static final Block SALMON_EGGS = registerBlock("salmon_egg", new SalmonEggBlock(FabricBlockSettings.copyOf(Blocks.TURTLE_EGG).sounds(BlockSoundGroup.HONEY).ticksRandomly()), basicItem());
     public static final Block CORN_PLANT = registerBlock("corn_plant", new CornPlantBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES).ticksRandomly()), basicItem(), false);
     public static final Block RED_SEAGRASS = registerBlock("red_seagrass", new RedSeagrassBlock(FabricBlockSettings.copyOf(Blocks.SEAGRASS)), basicItem(), false);
+    public static final Block TALL_RED_SEAGRASS = registerBlock("tall_red_seagrass", new TallSeagrassBlock(FabricBlockSettings.copyOf(RED_SEAGRASS)), basicItem(), false);
 
     //Decorative
     public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);

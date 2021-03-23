@@ -29,7 +29,7 @@ public class UnderwaterPlantFeature extends Feature<BiFeatureConfig> {
             boolean tall = random.nextDouble() < config.chance;
             BlockState blockState = tall ? config.secondaryState : config.primaryState;
             if (blockState.canPlaceAt(structureWorldAccess, blockPos2)) {
-                if (tall) {
+                if (tall && blockState.getBlock() instanceof TallSeagrassBlock) {
                     BlockState blockState2 = blockState.with(TallSeagrassBlock.HALF, DoubleBlockHalf.UPPER);
                     BlockPos blockPos3 = blockPos2.up();
                     if (structureWorldAccess.getBlockState(blockPos3).isOf(Blocks.WATER)) {

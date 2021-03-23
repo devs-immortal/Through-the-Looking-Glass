@@ -26,7 +26,7 @@ public class BrineOceanBiome {
     public static final Biome BRINE_CRAGS = createBrineBiome(-0.2F, 0.25F, false, false);
     public static final Biome BRINE_CHASM = createBrineBiome(-1.9F, 0.9F, true, true);
 
-    public static Biome createBrineBiome(float depth, float scale, boolean discs, boolean deep) {
+    public static Biome createBrineBiome(float depth, float scale, boolean ocean, boolean deep) {
         SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
         DefaultBiomeFeatures.addDesertMobs(spawnSettings);
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings);
@@ -37,17 +37,20 @@ public class BrineOceanBiome {
         generationSettings.feature(GenerationStep.Feature.SURFACE_STRUCTURES, LookingGlassConfiguredFeatures.WHITESTONE_BOULDERS.getFeature());
         generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, deep ? LookingGlassConfiguredFeatures.DEEP_BRINE_FISSURES.getFeature()  : LookingGlassConfiguredFeatures.BRINE_FISSURES.getFeature());
 
-        if(discs) {
+        if(ocean) {
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.WHITEDUST_DISCS.getFeature());
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.CRACKED_CRUST.getFeature());
+            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.SALT_DISCS.getFeature());
+
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.RED_SEAGRASS.getFeature());
-        }
-        else {
-            generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.SALT_PILLARS.getFeature());
         }
 
         if(deep) {
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.VOLCANIC_CRUST.getFeature());
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.DENSE_RED_SEAGRASS.getFeature());
+        }
+        else {
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.SPARSE_RED_SEAGRASS.getFeature());
         }
 
         DefaultBiomeFeatures.addDefaultUndergroundStructures(generationSettings);

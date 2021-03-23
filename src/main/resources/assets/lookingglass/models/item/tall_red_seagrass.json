@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "lookingglass:item/red_seagrass_item"
+    "layer0": "lookingglass:item/tall_red_seagrass_item"
   }
 }
