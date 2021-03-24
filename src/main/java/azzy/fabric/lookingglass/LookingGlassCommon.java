@@ -6,6 +6,7 @@ import azzy.fabric.lookingglass.biome.LookingGlassBiomes;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import azzy.fabric.lookingglass.biome.LookingGlassConfiguredFeatures;
+import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
@@ -59,6 +60,7 @@ public class LookingGlassCommon implements ModInitializer {
 		LookingGlassEffects.init();
 		LookingGlassConfiguredFeatures.init();
 		LookingGlassConfiguredFeatures.Registrar.init();
+		LookingGlassEntities.init();
 		LookingGlassBiomes.init();
 		LookingGlassGUIs.initCommon();
 		LookingGlassRecipes.init();

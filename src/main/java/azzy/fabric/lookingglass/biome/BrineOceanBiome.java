@@ -1,6 +1,8 @@
 package azzy.fabric.lookingglass.biome;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import azzy.fabric.lookingglass.entity.LookingGlassEntities;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
@@ -43,14 +45,18 @@ public class BrineOceanBiome {
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.SALT_DISCS.getFeature());
 
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.RED_SEAGRASS.getFeature());
+
+            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 15, 8, 20));
+            DefaultBiomeFeatures.addWarmOceanMobs(spawnSettings, 8, 3);
+        }
+        else {
+            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.SPARSE_RED_SEAGRASS.getFeature());
+            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 10, 4, 10));
+            DefaultBiomeFeatures.addWarmOceanMobs(spawnSettings, 4, 1);
         }
 
         if(deep) {
             generationSettings.feature(GenerationStep.Feature.UNDERGROUND_ORES, LookingGlassConfiguredFeatures.VOLCANIC_CRUST.getFeature());
-            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.DENSE_RED_SEAGRASS.getFeature());
-        }
-        else {
-            generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.SPARSE_RED_SEAGRASS.getFeature());
         }
 
         DefaultBiomeFeatures.addDefaultUndergroundStructures(generationSettings);

@@ -1,5 +1,7 @@
 package azzy.fabric.lookingglass;
 
+import azzy.fabric.lookingglass.entity.LookingGlassEntities;
+import azzy.fabric.lookingglass.entity.model.FlarefinKoiRenderer;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.particle.LookingGlassParticles;
 import azzy.fabric.lookingglass.render.*;
@@ -10,7 +12,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.entity.Entity;
+
+import java.util.function.Supplier;
 
 import static azzy.fabric.lookingglass.block.LookingGlassBlocks.*;
 
@@ -30,6 +37,8 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(BLOCK_TESSERACT_ENTITY, TesseractRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(FISH_BREEDER_ENTITY, FishBreederRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(CREATIVE_ENERGY_SOURCE_ENTITY, CreativeEnergySourceRenderer::new);
+
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, (dispatcher, context) -> new FlarefinKoiRenderer(dispatcher));
 
         //Render layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), FISH_BREEDER_BLOCK, BLOCK_TESSERACT_BLOCK, GHOST_GLASS, ETHEREAL_GLASS, REVERSE_ETHEREAL_GLASS, RED_GLASS);
