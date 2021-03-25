@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -33,7 +32,6 @@ public class AdvancedAngelRingItem extends Item {
                 // If the item is giving flight, remove it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.revokeFrom(user, VanillaAbilities.ALLOW_FLYING);
                 user.clearStatusEffects();
-                user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
             } else {
                 // Otherwise, grant it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.grantTo(user, VanillaAbilities.ALLOW_FLYING);
@@ -45,7 +43,6 @@ public class AdvancedAngelRingItem extends Item {
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, Integer.MAX_VALUE, 1, false, false));
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, Integer.MAX_VALUE, 3, false, false));
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, Integer.MAX_VALUE, 3, false, false));
-                user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
             }
         }
 
