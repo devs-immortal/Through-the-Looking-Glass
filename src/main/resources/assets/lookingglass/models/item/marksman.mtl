@@ -1,0 +1,17 @@
+# Blender MTL File: 'None'
+# Material Count: 5
+
+newmtl mat1
+texture minecraft:block/stone
+
+newmtl mat2
+texture minecraft:block/stone
+
+newmtl mat3
+texture minecraft:block/stone
+
+newmtl mat4
+texture minecraft:block/stone
+
+newmtl mat5
+texture minecraft:block/stone
