@@ -10,7 +10,6 @@ import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
@@ -124,7 +123,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                     LookingGlassCommon.FFLog.warn("(" + currBlockPos.getX() + ", " + currBlockPos.getY() + ", " + currBlockPos.getZ() + "): " + currBlock.toString());
 
                     if (CURSING_ELIGIBLE_BLOCKS.contains(currBlock)) {
-                        sendMessage(new LiteralText("Reached here"), true);
                         serverWorld.setBlockState(currBlockPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
                     }
                 }

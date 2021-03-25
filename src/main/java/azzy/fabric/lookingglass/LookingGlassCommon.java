@@ -6,6 +6,7 @@ import azzy.fabric.lookingglass.biome.LookingGlassBiomes;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import azzy.fabric.lookingglass.biome.LookingGlassConfiguredFeatures;
+import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
@@ -47,7 +48,7 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_items"), () -> new ItemStack(LookingGlassItems.DATA_SHARD));
 
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
-	public static final boolean REGEN_RECIPES = true, REGEN_ITEMS = true, REGEN_BLOCKS = true, REGEN_LOOT = true;
+	public static final boolean REGEN_RECIPES = true, REGEN_ITEMS = false, REGEN_BLOCKS = true, REGEN_LOOT = true;
 
 	@Override
 	public void onInitialize() {
@@ -59,6 +60,7 @@ public class LookingGlassCommon implements ModInitializer {
 		LookingGlassEffects.init();
 		LookingGlassConfiguredFeatures.init();
 		LookingGlassConfiguredFeatures.Registrar.init();
+		LookingGlassEntities.init();
 		LookingGlassBiomes.init();
 		LookingGlassGUIs.initCommon();
 		LookingGlassRecipes.init();

@@ -93,6 +93,7 @@ public class LookingGlassItems {
     //Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
+    public static final Item MARKSMAN_REVOLVER = registerItem("marksman_revolver", new RevolverItem(defaultSettings().rarity(WORLDFORGE_RARITY).fireproof()));
 
     //Registry shenanigans
     public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof()));
