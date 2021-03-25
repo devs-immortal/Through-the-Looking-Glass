@@ -9,6 +9,7 @@ import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
 // This ring gives creative flight when it's equipped.
@@ -28,7 +29,10 @@ public class SimpleAngelRingItem extends TrinketItem {
     @Override
     public void onEquip(PlayerEntity player, ItemStack stack) {
         if (!player.getEntityWorld().isClient) {
-            player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
+            // Stupid network handler will be null if the client is just starting up.
+            if (((ServerPlayerEntity) player).networkHandler != null)
+                player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
+
             ANGEL_RING.grantTo(player, VanillaAbilities.ALLOW_FLYING);
         }
     }
@@ -36,7 +40,10 @@ public class SimpleAngelRingItem extends TrinketItem {
     @Override
     public void onUnequip(PlayerEntity player, ItemStack stack) {
         if (!player.getEntityWorld().isClient && !player.isCreative() && !player.isSpectator()) {
-            player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
+            // Stupid network handler will be null if the client is just starting up.
+            if (((ServerPlayerEntity) player).networkHandler != null)
+                player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
+
             ANGEL_RING.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
         }
     }
