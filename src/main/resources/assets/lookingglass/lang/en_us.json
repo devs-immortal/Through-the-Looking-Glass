@@ -139,6 +139,8 @@
 	"item.lookingglass.ring": "Rosy Ring",
 	"item.lookingglass.simple_angel_ring": "Angel Ring",
 	"item.lookingglass.advanced_angel_ring": "Advanced Angel Ring",
+	"item.lookingglass.angelRing.flightEnabled": "Flight Enabled",
+	"item.lookingglass.angelRing.flightDisabled": "Flight Disabled",
 	"item.lookingglass.goldenlasso.hostile_mob": "Golden lasso only works on passive mobs",
 	"item.lookingglass.goldenlasso.peaceful": "This world is peaceful",
 	"item.lookingglass.goldenlasso.taboo_entity": "Entity blacklisted or not whitelisted",
