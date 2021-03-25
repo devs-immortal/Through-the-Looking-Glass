@@ -48,7 +48,7 @@ public class LookingGlassCommon implements ModInitializer {
 	public static final ItemGroup LOOKINGGLASS_ITEMS = FabricItemGroupBuilder.build(new Identifier(MODID, "looking_items"), () -> new ItemStack(LookingGlassItems.DATA_SHARD));
 
 	public static final boolean DEV_ENV = FabricLoader.getInstance().isDevelopmentEnvironment();
-	public static final boolean REGEN_RECIPES = true, REGEN_ITEMS = true, REGEN_BLOCKS = true, REGEN_LOOT = true;
+	public static final boolean REGEN_RECIPES = true, REGEN_ITEMS = false, REGEN_BLOCKS = true, REGEN_LOOT = true;
 
 	@Override
 	public void onInitialize() {
