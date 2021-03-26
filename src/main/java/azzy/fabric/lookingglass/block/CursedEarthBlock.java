@@ -25,11 +25,10 @@ import net.minecraft.world.biome.SpawnSettings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 @SuppressWarnings({"deprecated"})
 public class CursedEarthBlock extends LookingGlassBlock {
-    public static final UUID CURSE_UUID = UUID.fromString("A223344A-B55B-C66C-D77D-E8888888888E");
+
 
     public CursedEarthBlock(FabricBlockSettings settings) {
         super(settings, false);

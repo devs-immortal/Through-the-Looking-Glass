@@ -1,21 +1,18 @@
 package azzy.fabric.lookingglass.item;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
 import dev.emi.trinkets.api.SlotGroups;
 import dev.emi.trinkets.api.Slots;
 import dev.emi.trinkets.api.TrinketItem;
-import io.github.ladysnake.pal.AbilitySource;
-import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
+import static azzy.fabric.lookingglass.LookingGlassConstants.*;
+
 // This ring gives creative flight when it's equipped.
 public class SimpleAngelRingItem extends TrinketItem {
-    public static final AbilitySource ANGEL_RING = Pal.getAbilitySource(LookingGlassCommon.MODID, "simple_angel_ring");
-
     public SimpleAngelRingItem(Settings settings) {
         super(settings);
     }
@@ -31,7 +28,7 @@ public class SimpleAngelRingItem extends TrinketItem {
         if (!player.getEntityWorld().isClient) {
             // Stupid network handler will be null if the client is just starting up.
             if (((ServerPlayerEntity) player).networkHandler != null)
-                player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
+                player.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_ANGEL_RING_FLIGHT_ENABLED), true);
 
             ANGEL_RING.grantTo(player, VanillaAbilities.ALLOW_FLYING);
         }
@@ -42,7 +39,7 @@ public class SimpleAngelRingItem extends TrinketItem {
         if (!player.getEntityWorld().isClient && !player.isCreative() && !player.isSpectator()) {
             // Stupid network handler will be null if the client is just starting up.
             if (((ServerPlayerEntity) player).networkHandler != null)
-                player.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
+                player.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_ANGEL_RING_FLIGHT_DISABLED), true);
 
             ANGEL_RING.revokeFrom(player, VanillaAbilities.ALLOW_FLYING);
         }

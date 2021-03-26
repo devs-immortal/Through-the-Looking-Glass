@@ -30,12 +30,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static azzy.fabric.lookingglass.LookingGlassConstants.*;
+
 @SuppressWarnings("rawtypes")
 public class LassoItem extends Item {
     private static final String MOB_KEY = "MOB_KEY";
     private static final String MOB_TYPE = "MOB_TYPE";
     private static final String MOB_HEALTH = "MOB_HEALTH";
     private static final String MOB_MAX_HEALTH = "MOB_MAX_HEALTH";
+
     private final boolean isCursed;
 
     public LassoItem(FabricItemSettings lassoSettings, boolean isCursed) {
@@ -62,7 +65,7 @@ public class LassoItem extends Item {
             if (context.getPlayer() == null)
                 return ActionResult.FAIL;
 
-            context.getPlayer().sendMessage(new TranslatableText("item.lookingglass.goldenlasso.peaceful"), true);
+            context.getPlayer().sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_GOLDENLASSO_PEACEFUL), true);
             return ActionResult.FAIL;
         }
 
@@ -116,7 +119,7 @@ public class LassoItem extends Item {
 
         if (!LookingGlassJsonManager.canLassoCapture(entity.getType(), isCursed)) {
             // The entity has been blacklisted OR not whitelisted.
-            user.sendMessage(new TranslatableText("item.lookingglass.goldenlasso.taboo_entity"), true);
+            user.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_GOLDENLASSO_TABOO_ENTITY), true);
             return ActionResult.PASS;
         }
 
@@ -125,7 +128,7 @@ public class LassoItem extends Item {
         if ((!isCursed) && (entity instanceof HostileEntity)) {
             // On the client side, send a notification message about the faux pas.
             if (user.getEntityWorld().isClient)
-                user.sendMessage(new TranslatableText("item.lookingglass.goldenlasso.hostile_mob"), true);
+                user.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_GOLDENLASSO_HOSTILE_MOB), true);
             return ActionResult.PASS;
         }
 

@@ -1,8 +1,5 @@
 package azzy.fabric.lookingglass.item;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
-import io.github.ladysnake.pal.AbilitySource;
-import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,13 +12,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import static azzy.fabric.lookingglass.LookingGlassConstants.*;
+
 // This Ring will have an expensive recipe.  This is really not a ring.  It's an item that on use, rewards the user with creative flight - forever.
 // On use again, it will remove creative flight.  So you get flight without having to carry around the item.
 // The recipe cost will reflect the same.
 // For a simpler item that gives creative flight on equip, check out the SimpleAngelRing class.
 public class AdvancedAngelRingItem extends Item {
-    public static final AbilitySource ADVANCED_ANGEL_RING_ABILITY_SOURCE = Pal.getAbilitySource(LookingGlassCommon.MODID, "advanced_angel_ring");
-
     public AdvancedAngelRingItem(Settings settings) {
         super(settings);
     }
@@ -36,7 +33,7 @@ public class AdvancedAngelRingItem extends Item {
                 user.clearStatusEffects();
                 // Stupid network handler will be null if the client is just starting up.
                 if (((ServerPlayerEntity) user).networkHandler != null)
-                    user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightDisabled"), true);
+                    user.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_ANGEL_RING_FLIGHT_DISABLED), true);
             } else {
                 // Otherwise, grant it.
                 ADVANCED_ANGEL_RING_ABILITY_SOURCE.grantTo(user, VanillaAbilities.ALLOW_FLYING);
@@ -50,7 +47,7 @@ public class AdvancedAngelRingItem extends Item {
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, Integer.MAX_VALUE, 3, false, false));
                 // Stupid network handler will be null if the client is just starting up.
                 if (((ServerPlayerEntity) user).networkHandler != null)
-                    user.sendMessage(new TranslatableText("item.lookingglass.angelRing.flightEnabled"), true);
+                    user.sendMessage(new TranslatableText(ITEM_LOOKINGGLASS_ANGEL_RING_FLIGHT_ENABLED), true);
             }
         }
 
