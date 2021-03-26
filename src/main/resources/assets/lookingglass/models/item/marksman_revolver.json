@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:item/generated",
+  "model": "lookingglass:models/item/marksman.obj",
+  "display": {
+    "gui": {
+      "rotation": [ 60, 120, 180 ],
+      "translation": [ 0, 0, 0],
+      "scale":[ 0.5, 0.5, 0.5 ]
+    },
+    "ground": {
+      "rotation": [ 90, 180, 180 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    },
+    "fixed": {
+      "rotation": [ 90, 180, 180 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [ 90, 180, 180 ],
+      "translation": [ 2, 3, -4 ],
+      "scale": [ 0.20, 0.20, 0.20 ]
+    },
+    "firstperson_righthand": {
+      "rotation": [ 90, 180, 180 ],
+      "translation": [ 0, 6, -5 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [ 90, 180, 180 ],
+      "translation": [ -5, 6, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    }
+  }
+}

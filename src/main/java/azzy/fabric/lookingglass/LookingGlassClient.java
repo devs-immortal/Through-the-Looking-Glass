@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass;
 
+import azzy.fabric.lookingglass.entity.EntitySpawnPacket;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.entity.model.FlarefinKoiRenderer;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
@@ -13,10 +14,18 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 import static azzy.fabric.lookingglass.block.LookingGlassBlocks.*;
@@ -27,6 +36,33 @@ public class LookingGlassClient implements ClientModInitializer {
     public static int textureIdCounter = 0;
     public static final int LIGHTMAP_MAX_LUMINANCE = 14680160;
     //private static Future<?> layerCleanLock;
+
+    public static final Identifier PacketID = new Identifier(LookingGlassCommon.MODID, "spawn_packet");
+
+    public void receiveEntityPacket() {
+        ClientSidePacketRegistry.INSTANCE.register(PacketID, (ctx, byteBuf) -> {
+            EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
+            UUID uuid = byteBuf.readUuid();
+            int entityId = byteBuf.readVarInt();
+            Vec3d pos = EntitySpawnPacket.PacketBufUtil.readVec3d(byteBuf);
+            float pitch = EntitySpawnPacket.PacketBufUtil.readAngle(byteBuf);
+            float yaw = EntitySpawnPacket.PacketBufUtil.readAngle(byteBuf);
+            ctx.getTaskQueue().execute(() -> {
+                if (MinecraftClient.getInstance().world == null)
+                    throw new IllegalStateException("Tried to spawn entity in a null world!");
+                Entity e = et.create(MinecraftClient.getInstance().world);
+                if (e == null)
+                    throw new IllegalStateException("Failed to create instance of entity \"" + Registry.ENTITY_TYPE.getId(et) + "\"!");
+                e.updateTrackedPosition(pos);
+                e.setPos(pos.x, pos.y, pos.z);
+                e.pitch = pitch;
+                e.yaw = yaw;
+                e.setEntityId(entityId);
+                e.setUuid(uuid);
+                MinecraftClient.getInstance().world.addEntity(entityId, e);
+            });
+        });
+    }
 
     @Override
     public void onInitializeClient() {
@@ -39,6 +75,9 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(CREATIVE_ENERGY_SOURCE_ENTITY, CreativeEnergySourceRenderer::new);
 
         EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, (dispatcher, context) -> new FlarefinKoiRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.REVOLVER_SHOT_ENTITY_TYPE, (dispatcher, context) -> new FlyingItemEntityRenderer(dispatcher, context.getItemRenderer()));
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.TOSSED_COIN_ENTITY_TYPE, (dispatcher, context) -> new FlyingItemEntityRenderer(dispatcher, context.getItemRenderer()));
+        receiveEntityPacket();
 
         //Render layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), FISH_BREEDER_BLOCK, BLOCK_TESSERACT_BLOCK, GHOST_GLASS, ETHEREAL_GLASS, REVERSE_ETHEREAL_GLASS, RED_GLASS);

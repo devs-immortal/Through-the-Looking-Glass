@@ -13,9 +13,13 @@ public class LookingGlassEntities {
 
     public static final EntityType<FlarefinKoiEntity> FLAREFIN_KOI_ENTITY_TYPE = register("flarefin_koi", FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FlarefinKoiEntity::new).dimensions(EntityDimensions.fixed(1F, 0.3125F)).build(), FlarefinKoiEntity.createFlarefinAttributes());
 
-    public static final EntityType<RevolverShotEntity> REVOLVER_SHOT_ENTITY_TYPE = register("revolver_shot", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RevolverShotEntity::new).dimensions(EntityDimensions.fixed(.1F,.1F)).trackRangeBlocks(4).trackedUpdateRate(10).build());
+    public static final EntityType<RevolverShotEntity> REVOLVER_SHOT_ENTITY_TYPE = register("revolver_shot", FabricEntityTypeBuilder.<RevolverShotEntity>create(SpawnGroup.MISC, RevolverShotEntity::new).dimensions(EntityDimensions.fixed(.1F,.1F)).trackRangeBlocks(4).trackedUpdateRate(10).build());
+
+    public static final EntityType<TossedCoinEntity> TOSSED_COIN_ENTITY_TYPE = register("tossed_coin", FabricEntityTypeBuilder.<TossedCoinEntity>create(SpawnGroup.MISC, TossedCoinEntity::new).dimensions(EntityDimensions.fixed(.25F, .25F)).trackRangeBlocks(4).trackedUpdateRate(10).build());
 
     public static void init() {}
+
+
 
     public static <E extends LivingEntity> EntityType<E> register(String name, EntityType<E> type, @Nullable DefaultAttributeContainer.Builder attributes) {
         Registry.register(Registry.ENTITY_TYPE, new Identifier(LookingGlassCommon.MODID, name), type);
