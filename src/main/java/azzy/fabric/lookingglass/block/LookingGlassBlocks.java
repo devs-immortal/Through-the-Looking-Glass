@@ -1,6 +1,9 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.incubus_core.datagen.*;
+import azzy.fabric.incubus_core.datagen.BSJsonGen;
+import azzy.fabric.incubus_core.datagen.LootGen;
+import azzy.fabric.incubus_core.datagen.ModelJsonGen;
+import azzy.fabric.incubus_core.datagen.RecipeJsonGen;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
@@ -79,6 +82,7 @@ public class LookingGlassBlocks {
     public static final Block GRINDER_BLOCK = registerBlock("grinder", new GrinderBlock(dwarvenMachine()), basicItem());
     public static final Block MIXER_BLOCK = registerBlock("mixer", new MixerBlock(dwarvenMachine()), basicItem());
     public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
+
     // Vector plates move entities around.
     public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 1));
     public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
@@ -163,6 +167,10 @@ public class LookingGlassBlocks {
     public static final Block LOAM = registerGeneratedBlock("loam", new Block(FabricBlockSettings.copyOf(Blocks.DIRT)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
+
+    // Unstable Blocks
+    public static final Block UNSTABLE_ENCHANTER_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableEnchanterBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE).nonOpaque()));
+    public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE).nonOpaque()));
 
     //  BLOCK ENTITIES
     //Machines
