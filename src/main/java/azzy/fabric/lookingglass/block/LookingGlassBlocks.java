@@ -169,8 +169,8 @@ public class LookingGlassBlocks {
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
 
     // Unstable Blocks
-    public static final Block UNSTABLE_ENCHANTER_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableEnchanterBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE).nonOpaque()));
-    public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE).nonOpaque()));
+    public static final Block UNSTABLE_ENCHANTER_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableEnchanterBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
+    public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
 
     //  BLOCK ENTITIES
     //Machines
