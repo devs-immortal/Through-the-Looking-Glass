@@ -14,5 +14,5 @@ public interface LookingGlassConstants {
     String ITEM_LOOKINGGLASS_GOLDENLASSO_PEACEFUL = "item.lookingglass.goldenlasso.peaceful";
     String ITEM_LOOKINGGLASS_GOLDENLASSO_TABOO_ENTITY = "item.lookingglass.goldenlasso.taboo_entity";
     String ITEM_LOOKINGGLASS_GOLDENLASSO_HOSTILE_MOB = "item.lookingglass.goldenlasso.hostile_mob";
-    String UNSTABLE_MULTI_BLOCK_FORMED = "unstable.multiblock";
+    String UNSTABLE_MULTI_BLOCK_FORMED = "unstable_multiblock";
 }

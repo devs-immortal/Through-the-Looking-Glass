@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -19,6 +20,14 @@ public class UnstableEnchanterBlock extends LookingGlassBlock {
 
     public UnstableEnchanterBlock(Settings settings) {
         super(settings, false);
+        BlockState defaultState = getStateManager().getDefaultState();
+        setDefaultState(defaultState.with(MULTI_BLOCK_FORMED, false));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(MULTI_BLOCK_FORMED);
+        super.appendProperties(builder);
     }
 
     @Override
@@ -37,5 +46,9 @@ public class UnstableEnchanterBlock extends LookingGlassBlock {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    public void overrideDefaultState(BlockState state) {
+        setDefaultState(state);
     }
 }
