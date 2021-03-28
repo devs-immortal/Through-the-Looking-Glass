@@ -1,12 +1,19 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.blockentity.DisplayPedestalEntity;
 import azzy.fabric.lookingglass.util.ParticleUtils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -17,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("deprecated")
-public class DisplayPedestalBlock extends LookingGlassBlock {
+public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEntityProvider {
     private static final VoxelShape SHAPE = Block.createCuboidShape(5, 0, 5, 11, 12, 11);
 
     public DisplayPedestalBlock(Settings settings) {
@@ -60,7 +67,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock {
             unstableAltarPos = new BlockPos(posX, posY, posZ);
             unstableAltarState = world.getBlockState(unstableAltarPos);
             unstableAltarBlock = unstableAltarState.getBlock();
-            if (LookingGlassBlocks.UNSTABLE_ENCHANTER_BLOCK.equals(unstableAltarBlock)) {
+            if (LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.equals(unstableAltarBlock)) {
                 unstableAltarFound = true;
                 break;
             }
@@ -93,7 +100,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock {
             return;
         }
 
-        ((UnstableEnchanterBlock) unstableAltarBlock).overrideDefaultState(LookingGlassBlocks.UNSTABLE_ENCHANTER_BLOCK.getDefaultState().with(UnstableEnchanterBlock.MULTI_BLOCK_FORMED, true));
+        ((UnstableEnchanterBlock) unstableAltarBlock).overrideDefaultState(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.getDefaultState().with(UnstableEnchanterBlock.MULTI_BLOCK_FORMED, true));
 
         if (!world.isClient) {
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), unstableAltarPos, 1.2, 30);
@@ -102,5 +109,55 @@ public class DisplayPedestalBlock extends LookingGlassBlock {
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(2), 1.2, 30);
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(3), 1.2, 30);
         }
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        // Nothing to do if the player is using while in sneak mode.
+        if (player.isInSneakingPose())
+            return ActionResult.PASS;
+
+        BlockEntity entity = world.getBlockEntity(pos);
+        ItemStack stack = player.getStackInHand(hand);
+
+        DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) entity;
+
+        // Shouldn't happen in normal usage, but better safe than sorry.
+        if (displayPedestalEntity == null)
+            return ActionResult.PASS;
+        ItemStack inventory = displayPedestalEntity.getStack(0);
+        if (inventory.isEmpty()) {
+            // There's nothing in the display stand.  Take the stack from player and return.
+            displayPedestalEntity.setStack(0, stack);
+            player.setStackInHand(hand, ItemStack.EMPTY);
+            return ActionResult.SUCCESS;
+        }
+
+        // Get the max stack size.
+        int maxStackSize = inventory.getMaxCount();
+        int currentCount = inventory.getCount();
+
+        // The display stand is already full.  Return doing nothing.
+        if (currentCount == maxStackSize) {
+            return ActionResult.FAIL;
+        }
+
+        int difference = maxStackSize - currentCount;
+
+        // Move as much as we possibly can.
+        int toMoveCount = Math.min(difference, stack.getCount());
+        ItemStack toMoveStack = stack.copy();
+        toMoveStack.setCount(toMoveCount);
+
+        displayPedestalEntity.setStack(0, toMoveStack);
+        stack.decrement(toMoveCount);
+
+        return ActionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockView world) {
+        return new DisplayPedestalEntity();
     }
 }

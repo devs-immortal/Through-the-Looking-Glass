@@ -169,7 +169,7 @@ public class LookingGlassBlocks {
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
 
     // Unstable Blocks
-    public static final Block UNSTABLE_ENCHANTER_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableEnchanterBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
+    public static final Block UNSTABLE_ALTAR_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableEnchanterBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
     public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
 
     //  BLOCK ENTITIES
@@ -203,10 +203,12 @@ public class LookingGlassBlocks {
 
     //Misc
     public static final BlockEntityType<BrineFissureEntity> BRINE_FISSURE_ENTITY = registerEntity("brine_fissure_entity", BrineFissureEntity::new, BRINE_FISSURE);
+    public static final BlockEntityType<DisplayPedestalEntity> DISPLAY_PEDESTAL_ENTITY = registerEntity("display_pedestal_entity", DisplayPedestalEntity::new, DISPLAY_PEDESTAL_BLOCK);
+    public static final BlockEntityType<UnstableAltarEntity> UNSTABLE_ALTAR_ENTITY = registerEntity("unstable_altar_entity", UnstableAltarEntity::new, UNSTABLE_ALTAR_BLOCK);
 
     public static void init() {
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {
-            if(!((PowerPipeEntity) blockEntity).powered())
+            if (!((PowerPipeEntity) blockEntity).powered())
                 return (EnergyIo) blockEntity;
             return null;
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
