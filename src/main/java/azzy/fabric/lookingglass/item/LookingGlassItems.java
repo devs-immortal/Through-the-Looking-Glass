@@ -106,6 +106,8 @@ public class LookingGlassItems {
     public static final Item SLOW_VECTOR_PLATE_BLOCK = registerItem("slow_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item NORMAL_VECTOR_PLATE_BLOCK = registerItem("normal_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item FAST_VECTOR_PLATE_BLOCK = registerItem("fast_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item UNSTABLE_ENCHANTER_BLOCK = registerItem("unstable_altar", new UnstableAltarBlockItem(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item DISPLAY_PEDESTAL_BLOCK = registerItem("display_pedestal", new DisplayPedestalBlockItem(LookingGlassBlocks.DISPLAY_PEDESTAL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);

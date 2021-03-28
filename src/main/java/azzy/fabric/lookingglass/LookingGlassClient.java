@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -26,7 +25,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import static azzy.fabric.lookingglass.block.LookingGlassBlocks.*;
 
@@ -69,6 +67,8 @@ public class LookingGlassClient implements ClientModInitializer {
         //Registering renderers
         BlockEntityRendererRegistry.INSTANCE.register(PROJECTORENTITY, ProjectorRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(CHUNKLOADER_ENTITY, ChunkAnchorRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(DISPLAY_PEDESTAL_ENTITY, DisplayPedestalRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(UNSTABLE_ALTAR_ENTITY, UnstableAltarRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(WORMHOLE_ENTITY, WormholeRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(BLOCK_TESSERACT_ENTITY, TesseractRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(FISH_BREEDER_ENTITY, FishBreederRenderer::new);

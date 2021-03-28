@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/display_pedestal"
+      },
+      {
+        "model": "lookingglass:block/display_pedestal",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/display_pedestal",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/display_pedestal",
+        "y": 270
+      }
+    ]
+  }
+}

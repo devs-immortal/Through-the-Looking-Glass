@@ -1,6 +1,9 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.incubus_core.datagen.*;
+import azzy.fabric.incubus_core.datagen.BSJsonGen;
+import azzy.fabric.incubus_core.datagen.LootGen;
+import azzy.fabric.incubus_core.datagen.ModelJsonGen;
+import azzy.fabric.incubus_core.datagen.RecipeJsonGen;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
@@ -57,9 +60,11 @@ public class LookingGlassBlocks {
     private static FabricBlockSettings paleMachine() {
         return FabricBlockSettings.of(Material.METAL).nonOpaque().sounds(BlockSoundGroup.GLASS).breakByTool(FabricToolTags.PICKAXES, 1).strength(1f, 8f);
     }
+
     private static FabricBlockSettings finisMachine() {
         return FabricBlockSettings.of(Material.AGGREGATE).sounds(LookingGlassSounds.FINIS).breakByTool(FabricToolTags.PICKAXES, 4).strength(5f, 10f);
     }
+
     private static FabricBlockSettings eldenMachine() {
         return FabricBlockSettings.of(Material.METAL).sounds(LookingGlassSounds.ELDENMETAL).breakByTool(FabricToolTags.PICKAXES, 4).requiresTool().strength(3f, 800f);
     }
@@ -79,6 +84,7 @@ public class LookingGlassBlocks {
     public static final Block GRINDER_BLOCK = registerBlock("grinder", new GrinderBlock(dwarvenMachine()), basicItem());
     public static final Block MIXER_BLOCK = registerBlock("mixer", new MixerBlock(dwarvenMachine()), basicItem());
     public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
+
     // Vector plates move entities around.
     public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 1));
     public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 2));
@@ -117,7 +123,7 @@ public class LookingGlassBlocks {
     public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
     public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MaterialColor.WHITE)), basicItem());
     public static final Block WHITESTONE_CRACKED = registerBlock("cracked_whitestone", new SandBlock(0x8a706b, FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GILDED_BLACKSTONE)), basicItem());
-    public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone",FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
+    public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block[] WHITESTONE_BRICK_SET = registerBuildingBlocks("whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHISTONE_POLISHED[0].asItem(), false);
     public static final Block[] WHITESTONE_LARGE_BRICK_SET = registerBuildingBlocks("large_whitestone_bricks", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), WHITESTONE_TILE.asItem(), false);
@@ -164,6 +170,10 @@ public class LookingGlassBlocks {
     public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
 
+    // Unstable Blocks
+    public static final Block UNSTABLE_ALTAR_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableAltarBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
+    public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
+
     //  BLOCK ENTITIES
     //Machines
     public static final BlockEntityType<ProjectorEntity> PROJECTORENTITY = registerEntity("projector_entity", ProjectorEntity::new, PROJECTORBLOCK);
@@ -195,10 +205,12 @@ public class LookingGlassBlocks {
 
     //Misc
     public static final BlockEntityType<BrineFissureEntity> BRINE_FISSURE_ENTITY = registerEntity("brine_fissure_entity", BrineFissureEntity::new, BRINE_FISSURE);
+    public static final BlockEntityType<DisplayPedestalEntity> DISPLAY_PEDESTAL_ENTITY = registerEntity("display_pedestal_entity", DisplayPedestalEntity::new, DISPLAY_PEDESTAL_BLOCK);
+    public static final BlockEntityType<UnstableAltarEntity> UNSTABLE_ALTAR_ENTITY = registerEntity("unstable_altar_entity", UnstableAltarEntity::new, UNSTABLE_ALTAR_BLOCK);
 
     public static void init() {
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {
-            if(!((PowerPipeEntity) blockEntity).powered())
+            if (!((PowerPipeEntity) blockEntity).powered())
                 return (EnergyIo) blockEntity;
             return null;
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
@@ -208,11 +220,11 @@ public class LookingGlassBlocks {
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {
-        Identifier id =  new Identifier(MODID, name);
+        Identifier id = new Identifier(MODID, name);
         Block block = Registry.register(Registry.BLOCK, id, item);
         Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
 
-        if(genLoot && DEV_ENV && REGEN_LOOT)
+        if (genLoot && DEV_ENV && REGEN_LOOT)
             LootGen.genSimpleBlockDropTable(METADATA, block);
 
         return block;
@@ -223,12 +235,12 @@ public class LookingGlassBlocks {
     }
 
     public static Block registerGeneratedBlock(String name, Block item, @Nullable Identifier parent, @Nullable Identifier texture, Item.Settings settings, SingletType type) {
-        Identifier id =  new Identifier(MODID, name);
+        Identifier id = new Identifier(MODID, name);
         Block block = Registry.register(Registry.BLOCK, id, item);
         Registry.register(Registry.ITEM, id, new BlockItem(block, settings));
 
-        if(DEV_ENV) {
-            if(REGEN_BLOCKS) {
+        if (DEV_ENV) {
+            if (REGEN_BLOCKS) {
                 Identifier texId = texture == null ? new Identifier(MODID, "block/" + name) : texture;
 
                 switch (type) {
@@ -237,7 +249,7 @@ public class LookingGlassBlocks {
                         ModelJsonGen.genBlockJson(METADATA, texId, new Identifier(MODID, name), "");
                         break;
                     case SLAB:
-                        BSJsonGen.genSlabBS(METADATA, id, Objects.requireNonNull(parent),"block/");
+                        BSJsonGen.genSlabBS(METADATA, id, Objects.requireNonNull(parent), "block/");
                         ModelJsonGen.genSlabJsons(METADATA, texId, new Identifier(MODID, name), "");
                         break;
                     case STAIRS:
@@ -257,7 +269,7 @@ public class LookingGlassBlocks {
                     default:
                 }
             }
-            if(REGEN_LOOT) {
+            if (REGEN_LOOT) {
                 LootGen.genSimpleBlockDropTable(METADATA, block);
             }
         }
@@ -276,7 +288,7 @@ public class LookingGlassBlocks {
                 registerBlock(baseName + "_wall", new WallBlock(blockSettings), itemSettings)
         };
 
-        if(DEV_ENV) {
+        if (DEV_ENV) {
             Identifier texId = new Identifier(MODID, "block/" + baseName);
             Identifier parentId = new Identifier(MODID, baseName);
 
@@ -290,18 +302,17 @@ public class LookingGlassBlocks {
             ModelJsonGen.genWallJsons(METADATA, texId, new Identifier(MODID, baseName + "_wall"), "");
         }
 
-        if(baseIngredient != null && REGEN_RECIPES)
+        if (baseIngredient != null && REGEN_RECIPES)
             registerBuildingRecipes(baseName, blocks, baseIngredient, nines);
 
         return blocks;
     }
 
     public static void registerBuildingRecipes(String baseName, Block[] blocks, Item baseIngredient, boolean nines) {
-        if(baseIngredient != Items.AIR)  {
-            if(nines) {
+        if (baseIngredient != Items.AIR) {
+            if (nines) {
                 RecipeJsonGen.gen3x3Recipe(METADATA, baseName, baseIngredient, blocks[0].asItem(), 9);
-            }
-            else {
+            } else {
                 RecipeJsonGen.gen2x2Recipe(METADATA, baseName, baseIngredient, blocks[0].asItem(), 4);
             }
         }
@@ -310,7 +321,7 @@ public class LookingGlassBlocks {
         RecipeJsonGen.genWallRecipe(METADATA, baseName + "_walls", blocks[0].asItem(), blocks[3].asItem(), 6);
     }
 
-    private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, Supplier<T> item, Block block){
+    private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, Supplier<T> item, Block block) {
         return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, name), BlockEntityType.Builder.create(item, block).build(null));
     }
 

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "lookingglass:block/unstable_altar"
+      },
+      {
+        "model": "lookingglass:block/unstable_altar",
+        "y": 90
+      },
+      {
+        "model": "lookingglass:block/unstable_altar",
+        "y": 180
+      },
+      {
+        "model": "lookingglass:block/unstable_altar",
+        "y": 270
+      }
+    ]
+  }
+}
