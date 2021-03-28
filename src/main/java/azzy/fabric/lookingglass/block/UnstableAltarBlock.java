@@ -1,16 +1,15 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.blockentity.DisplayPedestalEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import azzy.fabric.lookingglass.blockentity.UnstableAltarEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -18,47 +17,24 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
-import static azzy.fabric.lookingglass.LookingGlassConstants.UNSTABLE_MULTI_BLOCK_FORMED;
+import java.util.List;
 
 @SuppressWarnings("deprecated")
 public class UnstableAltarBlock extends LookingGlassBlock implements BlockEntityProvider {
-    public static final BooleanProperty MULTI_BLOCK_FORMED = BooleanProperty.of(UNSTABLE_MULTI_BLOCK_FORMED);
     private static final VoxelShape SHAPE = Block.createCuboidShape(3, 0, 3, 13, 13, 13);
 
     public UnstableAltarBlock(Settings settings) {
         super(settings, false);
         BlockState defaultState = getStateManager().getDefaultState();
-        setDefaultState(defaultState.with(MULTI_BLOCK_FORMED, false).with(WATERLOGGED, false));
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(MULTI_BLOCK_FORMED);
-        super.appendProperties(builder);
-    }
-
-    @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        boolean multiblockFormed = false;
-        if (state.contains(MULTI_BLOCK_FORMED))
-            multiblockFormed = state.get(MULTI_BLOCK_FORMED);
-
-        // The unstable multiblock isn't formed.  Just return.
-        if (!multiblockFormed) {
-            super.onEntityCollision(state, world, pos, entity);
-            return;
-        }
+        setDefaultState(defaultState.with(WATERLOGGED, false));
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
-    }
-
-    public void overrideDefaultState(BlockState state) {
-        setDefaultState(state);
     }
 
     @Override
@@ -109,5 +85,33 @@ public class UnstableAltarBlock extends LookingGlassBlock implements BlockEntity
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return new UnstableAltarEntity();
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        UnstableAltarEntity unstableAltarEntity = (UnstableAltarEntity) world.getBlockEntity(pos);
+        if (unstableAltarEntity != null) {
+            if (unstableAltarEntity.isMultiBlockFormed) {
+                // Multiblock is formed successfully.  Destroy it since the user is breaking the pedestal, which is a part of it.
+                List<LookingGlassBE> multiBlockEntitiesList = unstableAltarEntity.multiBlockBlockEntitiesList;
+
+                for (LookingGlassBE lookingGlassBE : multiBlockEntitiesList) {
+                    if (lookingGlassBE instanceof UnstableAltarEntity) {
+                        UnstableAltarEntity iteratedUnstableAltarEntity = (UnstableAltarEntity) lookingGlassBE;
+                        iteratedUnstableAltarEntity.multiBlockBlockEntitiesList = null;
+                        iteratedUnstableAltarEntity.multiBlockPositionsList = null;
+                        iteratedUnstableAltarEntity.isMultiBlockFormed = false;
+                    } else {
+                        DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) lookingGlassBE;
+                        iteratedDisplayPedestalEntity.multiBlockBlockEntitiesList = null;
+                        iteratedDisplayPedestalEntity.multiBlockPositionsList = null;
+                        iteratedDisplayPedestalEntity.isMultiBlockFormed = false;
+                    }
+                }
+            }
+        }
+
+        world.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 6.0f, Explosion.DestructionType.DESTROY);
+        super.onBreak(world, pos, state, player);
     }
 }

@@ -31,6 +31,9 @@ public class UnstableAltarRenderer extends BlockEntityRenderer<UnstableAltarEnti
         // Move the item
         matrices.translate(0.5, 1.25 + offset, 0.5);
 
+        // Scale the item to be bigger.
+        matrices.scale(2, 2, 2);
+
         // Rotate the item
         matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 4));
         int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());

@@ -1,6 +1,10 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.LookingGlassConstants;
 import azzy.fabric.lookingglass.blockentity.DisplayPedestalEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
+import azzy.fabric.lookingglass.blockentity.UnstableAltarEntity;
 import azzy.fabric.lookingglass.util.ParticleUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -100,7 +104,41 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
             return;
         }
 
-        ((UnstableAltarBlock) unstableAltarBlock).overrideDefaultState(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.getDefaultState().with(UnstableAltarBlock.MULTI_BLOCK_FORMED, true));
+        List<BlockPos> multiBlockPositionList = new ArrayList<>();
+        multiBlockPositionList.add(unstableAltarPos);
+        multiBlockPositionList.addAll(pedestalPositionList);
+        List<LookingGlassBE> multiBlockTileEntityList = new ArrayList<>();
+        multiBlockTileEntityList.add((LookingGlassBE) world.getBlockEntity(unstableAltarPos));
+
+        for (BlockPos displayPedestalBlockPos : pedestalPositionList) {
+            DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) world.getBlockEntity(displayPedestalBlockPos);
+            // This shouldn't be occurring either.  Return silently doing nothing.
+            if (displayPedestalEntity == null) {
+                LookingGlassCommon.FFLog.warn("Not able to get display pedestal's tile entity'.  Kindly contact the mod authors at '" + LookingGlassConstants.GITHUB_ISSUE_URL + "' to log an issue.");
+                return;
+            }
+            multiBlockTileEntityList.add(displayPedestalEntity);
+        }
+        UnstableAltarEntity unstableAltarEntity = (UnstableAltarEntity) world.getBlockEntity(unstableAltarPos);
+        // This shouldn't be occurring either.  Return silently doing nothing.
+        if (unstableAltarEntity == null) {
+            LookingGlassCommon.FFLog.warn("Not able to get unstable altar's tile entity.  Kindly contact the mod authors at '" + LookingGlassConstants.GITHUB_ISSUE_URL + "' to log an issue.");
+            return;
+        }
+        // Set the flag that the multiblock has been formed! - STARTS
+        unstableAltarEntity.isMultiBlockFormed = true;
+        unstableAltarEntity.multiBlockBlockEntitiesList = multiBlockTileEntityList;
+        unstableAltarEntity.multiBlockPositionsList = multiBlockPositionList;
+
+        for (LookingGlassBE lookingGlassBE : multiBlockTileEntityList) {
+            if (lookingGlassBE instanceof DisplayPedestalEntity) {
+                DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) lookingGlassBE;
+                displayPedestalEntity.isMultiBlockFormed = true;
+                displayPedestalEntity.multiBlockBlockEntitiesList = multiBlockTileEntityList;
+                displayPedestalEntity.multiBlockPositionsList = multiBlockPositionList;
+            }
+        }
+        // Set the flag that the multiblock has been formed! - ENDS
 
         if (!world.isClient) {
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), unstableAltarPos, 1.2, 30);
@@ -130,6 +168,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
             // There's nothing in the display stand.  Take the stack from player and return.
             displayPedestalEntity.setStack(0, stack);
             player.setStackInHand(hand, ItemStack.EMPTY);
+            checkStartRitual(state, world, pos, player, hand, hit);
             return ActionResult.SUCCESS;
         }
 
@@ -152,7 +191,60 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
         displayPedestalEntity.setStack(0, toMoveStack);
         stack.decrement(toMoveCount);
 
+        checkStartRitual(state, world, pos, player, hand, hit);
+
         return ActionResult.SUCCESS;
+    }
+
+    public void checkStartRitual(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) world.getBlockEntity(pos);
+        // Shouldn't occur.  Return doing nothing.
+        if (displayPedestalEntity == null) {
+            LookingGlassCommon.FFLog.warn("Not able to get display pedestal's tile entity'.  Kindly contact the mod authors at '" + LookingGlassConstants.GITHUB_ISSUE_URL + "' to log an issue.");
+            return;
+        }
+
+        if (!displayPedestalEntity.isMultiBlockFormed) {
+            // Multiblock isn't formed.  Return doing nothing.
+            return;
+        }
+        List<BlockPos> multiBlockPosList = displayPedestalEntity.multiBlockPositionsList;
+        List<LookingGlassBE> multiBlockEntityList = displayPedestalEntity.multiBlockBlockEntitiesList;
+
+        if (!world.isClient) {
+            for (int i = 1; i < 5; i++) {
+                // First entry in the lists is the unstable altar.  The remaining 4 are the display pedestals.
+                DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) multiBlockEntityList.get(i);
+                ParticleUtils.spawnItemParticles((ServerWorld) world, multiBlockPosList.get(0), multiBlockPosList.get(i), iteratedDisplayPedestalEntity.getStack(0));
+            }
+        }
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) world.getBlockEntity(pos);
+        if (displayPedestalEntity != null) {
+            if (displayPedestalEntity.isMultiBlockFormed) {
+                // Multiblock is formed successfully.  Destroy it since the user is breaking the pedestal, which is a part of it.
+                List<LookingGlassBE> multiBlockEntitiesList = displayPedestalEntity.multiBlockBlockEntitiesList;
+
+                for (LookingGlassBE lookingGlassBE : multiBlockEntitiesList) {
+                    if (lookingGlassBE instanceof UnstableAltarEntity) {
+                        UnstableAltarEntity unstableAltarEntity = (UnstableAltarEntity) lookingGlassBE;
+                        unstableAltarEntity.multiBlockBlockEntitiesList = null;
+                        unstableAltarEntity.multiBlockPositionsList = null;
+                        unstableAltarEntity.isMultiBlockFormed = false;
+                    } else {
+                        DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) lookingGlassBE;
+                        iteratedDisplayPedestalEntity.multiBlockBlockEntitiesList = null;
+                        iteratedDisplayPedestalEntity.multiBlockPositionsList = null;
+                        iteratedDisplayPedestalEntity.isMultiBlockFormed = false;
+                    }
+                }
+            }
+        }
+
+        super.onBreak(world, pos, state, player);
     }
 
     @Nullable
