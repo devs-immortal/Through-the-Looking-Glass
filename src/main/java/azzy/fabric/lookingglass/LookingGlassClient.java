@@ -68,6 +68,7 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(PROJECTORENTITY, ProjectorRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(CHUNKLOADER_ENTITY, ChunkAnchorRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(DISPLAY_PEDESTAL_ENTITY, DisplayPedestalRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(UNSTABLE_ALTAR_ENTITY, UnstableAltarRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(WORMHOLE_ENTITY, WormholeRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(BLOCK_TESSERACT_ENTITY, TesseractRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(FISH_BREEDER_ENTITY, FishBreederRenderer::new);

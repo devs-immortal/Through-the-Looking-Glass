@@ -100,7 +100,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
             return;
         }
 
-        ((UnstableEnchanterBlock) unstableAltarBlock).overrideDefaultState(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.getDefaultState().with(UnstableEnchanterBlock.MULTI_BLOCK_FORMED, true));
+        ((UnstableAltarBlock) unstableAltarBlock).overrideDefaultState(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.getDefaultState().with(UnstableAltarBlock.MULTI_BLOCK_FORMED, true));
 
         if (!world.isClient) {
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), unstableAltarPos, 1.2, 30);
