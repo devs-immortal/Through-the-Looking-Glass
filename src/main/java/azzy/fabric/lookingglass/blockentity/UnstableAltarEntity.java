@@ -141,7 +141,9 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
             for (int i = 1; i < multiBlockBlockEntitiesList.size(); i++) {
                 // First entry in the lists is the unstable altar.  The remaining 4 are the display pedestals.
                 DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) multiBlockBlockEntitiesList.get(i);
-                ParticleUtils.spawnItemParticles((ServerWorld) world, pos, multiBlockPositionsList.get(i), iteratedDisplayPedestalEntity.getStack(0));
+                ItemStack itemStack = iteratedDisplayPedestalEntity.getStack(0);
+                if (!ItemStack.EMPTY.equals(itemStack))
+                    ParticleUtils.spawnItemParticles((ServerWorld) world, pos, multiBlockPositionsList.get(i), itemStack);
             }
         }
     }
