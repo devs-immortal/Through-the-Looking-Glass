@@ -46,17 +46,27 @@ public class UnstableAltarBlock extends LookingGlassBlock implements BlockEntity
         BlockEntity entity = world.getBlockEntity(pos);
         ItemStack stack = player.getStackInHand(hand);
 
+        // The player's hand is empty.  Return doing nothing.
+        if (ItemStack.EMPTY.equals(stack))
+            return ActionResult.PASS;
+
         UnstableAltarEntity unstableAltarEntity = (UnstableAltarEntity) entity;
 
         // Shouldn't happen in normal usage, but better safe than sorry.
         if (unstableAltarEntity == null)
             return ActionResult.PASS;
         ItemStack inventory = unstableAltarEntity.getStack(0);
+
         if (inventory.isEmpty()) {
             // There's nothing in the display stand.  Take the stack from player and return.
             unstableAltarEntity.setStack(0, stack);
             player.setStackInHand(hand, ItemStack.EMPTY);
             return ActionResult.SUCCESS;
+        }
+
+        // The item in player's hand is different from the item in the pedestal.
+        if (!stack.isItemEqual(inventory)) {
+            return ActionResult.PASS;
         }
 
         // Get the max stack size.

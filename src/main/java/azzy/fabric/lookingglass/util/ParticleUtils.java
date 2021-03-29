@@ -8,6 +8,8 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Random;
+
 @SuppressWarnings("unused")
 public class ParticleUtils {
     public static final DustParticleEffect RED = new DustParticleEffect(1.0F, 0.0F, 0.0F, 1.0F);
@@ -25,14 +27,15 @@ public class ParticleUtils {
     }
 
     public static void spawnItemParticles(ServerWorld serverWorld, BlockPos enchanterBlockPos, BlockPos pedestalPos, ItemStack stack) {
-        double x = pedestalPos.getX() + (serverWorld.getRandom().nextDouble() * 0.2D) + 0.4D;
-        double y = pedestalPos.getY() + (serverWorld.getRandom().nextDouble() * 0.2D) + 1.2D;
-        double z = pedestalPos.getZ() + (serverWorld.getRandom().nextDouble() * 0.2D) + 0.4D;
+        Random random = serverWorld.random;
+        double x = pedestalPos.getX() + (random.nextDouble() * 0.2D) + 0.4D;
+        double y = pedestalPos.getY() + (random.nextDouble() * 0.2D) + 1.2D;
+        double z = pedestalPos.getZ() + (random.nextDouble() * 0.2D) + 0.4D;
 
         double velX = enchanterBlockPos.getX() - pedestalPos.getX();
-        double velY = 0.25D;
+        double velY = 1.25D;
         double velZ = enchanterBlockPos.getZ() - pedestalPos.getZ();
 
-        serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), x, y, z, 0, velX, velY, velZ, 0.18D);
+        serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), x, y, z, 0, velX, velY, velZ, 0.10D);
     }
 }

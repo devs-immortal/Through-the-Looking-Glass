@@ -53,54 +53,58 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         boolean unstableAltarFound = false;
         BlockPos unstableAltarPos = null;
-        BlockState unstableAltarState;
-        Block unstableAltarBlock = null;
         List<BlockPos> pedestalPositionList = new ArrayList<>();
-        List<BlockState> pedestalBlockStateList = new ArrayList<>();
 
-        // Don't want to do these in the client.
-//        if(!world.isClient)
-//            return;
-
-        BlockPos[] cardinalPositions = {new BlockPos(-3, 0, 0), new BlockPos(0, 0, -3), new BlockPos(3, 0, 0), new BlockPos(0, 0, 3)};
-
-        for (BlockPos tmpPos : cardinalPositions) {
-            int posX = pos.getX() + tmpPos.getX();
-            int posZ = pos.getZ() + tmpPos.getZ();
-            int posY = pos.getY();
-            unstableAltarPos = new BlockPos(posX, posY, posZ);
-            unstableAltarState = world.getBlockState(unstableAltarPos);
-            unstableAltarBlock = unstableAltarState.getBlock();
-            if (LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.equals(unstableAltarBlock)) {
-                unstableAltarFound = true;
+        for (int x = -3; x < 4; x += 3) {
+            if (unstableAltarFound)
                 break;
+
+            for (int z = -3; z < 4; z += 3) {
+                int posX = pos.getX() + x;
+                int posZ = pos.getZ() + z;
+                int posY = pos.getY();
+
+                BlockPos tmpUnstableAltarPos = new BlockPos(posX, posY, posZ);
+                BlockState tmpUnstableAltarState = world.getBlockState(tmpUnstableAltarPos);
+                Block tmpUnstableAltarBlock = tmpUnstableAltarState.getBlock();
+                if (LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK.equals(tmpUnstableAltarBlock)) {
+                    unstableAltarFound = true;
+                    unstableAltarPos = tmpUnstableAltarPos;
+                    break;
+                }
             }
         }
+
         // Didn't find unstable altar anywhere.  Silently return doing nothing.
         if (!unstableAltarFound) {
             return;
         }
 
-        // Found the unstable altar.  Now check in all 4 cardinal directions to see if we can find display pedestals.
-        for (BlockPos cardinalPosition : cardinalPositions) {
-            int posX = unstableAltarPos.getX() + cardinalPosition.getX();
-            int posY = unstableAltarPos.getY();
-            int posZ = unstableAltarPos.getZ() + cardinalPosition.getZ();
+        // Found the unstable altar.  Now check in all directions to see if we can find display pedestals.
+        for (int x = -3; x < 4; x += 3) {
+            for (int z = -3; z < 4; z += 3) {
+                // Central spot.  Since we already found the unstable altar, we don't need to check it again.
+                if ((x == 0) && (z == 0))
+                    continue;
 
-            BlockPos pedestalPos = new BlockPos(posX, posY, posZ);
-            BlockState pedestalBlockState = world.getBlockState(pedestalPos);
-            Block pedestalBlock = pedestalBlockState.getBlock();
+                int posX = unstableAltarPos.getX() + x;
+                int posY = unstableAltarPos.getY();
+                int posZ = unstableAltarPos.getZ() + z;
 
-            // This block isn't a display pedestal.  Keep moving.
-            if (!LookingGlassBlocks.DISPLAY_PEDESTAL_BLOCK.equals(pedestalBlock))
-                continue;
+                BlockPos pedestalPos = new BlockPos(posX, posY, posZ);
+                BlockState pedestalBlockState = world.getBlockState(pedestalPos);
+                Block pedestalBlock = pedestalBlockState.getBlock();
 
-            pedestalPositionList.add(pedestalPos);
-            pedestalBlockStateList.add(pedestalBlockState);
+                // This block isn't a display pedestal.  Keep moving.
+                if (!LookingGlassBlocks.DISPLAY_PEDESTAL_BLOCK.equals(pedestalBlock))
+                    continue;
+
+                pedestalPositionList.add(pedestalPos);
+            }
         }
 
-        if (pedestalPositionList.size() < 4) {
-            // We didn't find all 4 pedestals.  Return silently doing nothing.
+        if (pedestalPositionList.size() < 8) {
+            // We didn't find all 8 pedestals.  Return silently doing nothing.
             return;
         }
 
@@ -140,23 +144,28 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
         }
         // Set the flag that the multiblock has been formed! - ENDS
 
+        // Celebratory particle effects.
         if (!world.isClient) {
             ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), unstableAltarPos, 1.2, 30);
-            ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(0), 1.2, 30);
-            ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(1), 1.2, 30);
-            ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(2), 1.2, 30);
-            ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPositionList.get(3), 1.2, 30);
+            for (BlockPos pedestalPos : pedestalPositionList) {
+                ParticleUtils.spawnParticles(ParticleUtils.GREEN, ((ServerWorld) world), pedestalPos, 1.2, 30);
+            }
         }
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         // Nothing to do if the player is using while in sneak mode.
-        if (player.isInSneakingPose())
+        if (player.isInSneakingPose()) {
             return ActionResult.PASS;
+        }
 
         BlockEntity entity = world.getBlockEntity(pos);
         ItemStack stack = player.getStackInHand(hand);
+
+        // The player's hand is empty.  Return doing nothing.
+        if (ItemStack.EMPTY.equals(stack))
+            return ActionResult.PASS;
 
         DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) entity;
 
@@ -168,8 +177,12 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
             // There's nothing in the display stand.  Take the stack from player and return.
             displayPedestalEntity.setStack(0, stack);
             player.setStackInHand(hand, ItemStack.EMPTY);
-            checkStartRitual(state, world, pos, player, hand, hit);
             return ActionResult.SUCCESS;
+        }
+
+        // The item in player's hand is different from the item in the pedestal.
+        if (!stack.isItemEqual(inventory)) {
+            return ActionResult.PASS;
         }
 
         // Get the max stack size.
@@ -191,33 +204,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
         displayPedestalEntity.setStack(0, toMoveStack);
         stack.decrement(toMoveCount);
 
-        checkStartRitual(state, world, pos, player, hand, hit);
-
         return ActionResult.SUCCESS;
-    }
-
-    public void checkStartRitual(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        DisplayPedestalEntity displayPedestalEntity = (DisplayPedestalEntity) world.getBlockEntity(pos);
-        // Shouldn't occur.  Return doing nothing.
-        if (displayPedestalEntity == null) {
-            LookingGlassCommon.FFLog.warn("Not able to get display pedestal's tile entity'.  Kindly contact the mod authors at '" + LookingGlassConstants.GITHUB_ISSUE_URL + "' to log an issue.");
-            return;
-        }
-
-        if (!displayPedestalEntity.isMultiBlockFormed) {
-            // Multiblock isn't formed.  Return doing nothing.
-            return;
-        }
-        List<BlockPos> multiBlockPosList = displayPedestalEntity.multiBlockPositionsList;
-        List<LookingGlassBE> multiBlockEntityList = displayPedestalEntity.multiBlockBlockEntitiesList;
-
-        if (!world.isClient) {
-            for (int i = 1; i < 5; i++) {
-                // First entry in the lists is the unstable altar.  The remaining 4 are the display pedestals.
-                DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) multiBlockEntityList.get(i);
-                ParticleUtils.spawnItemParticles((ServerWorld) world, multiBlockPosList.get(0), multiBlockPosList.get(i), iteratedDisplayPedestalEntity.getStack(0));
-            }
-        }
     }
 
     @Override
