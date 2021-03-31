@@ -1,0 +1,20 @@
+{
+  "type": "UNSTABLE_ALTAR_RECIPES",
+  "recipes": [
+    {
+      "inputs": [
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot"
+      ],
+      "outputs": [
+        {
+          "item": "lookingglass:gold_bricks",
+          "count": 4
+        }
+      ],
+      "instability": 1
+    }
+  ]
+}

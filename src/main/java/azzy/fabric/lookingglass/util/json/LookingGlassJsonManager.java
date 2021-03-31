@@ -1,17 +1,19 @@
 package azzy.fabric.lookingglass.util.json;
 
 import azzy.fabric.incubus_core.json.JsonUtils;
+import azzy.fabric.lookingglass.vo.UnstableAltarRecipeVO;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.FFLog;
@@ -27,6 +29,7 @@ public class LookingGlassJsonManager {
     private static final Set<EntityType<?>> GOLDEN_LASSO_ENTITIES_BLACKLIST = new HashSet<>();
     private static final Set<EntityType<?>> CURSED_LASSO_ENTITIES_BLACKLIST = new HashSet<>();
     private static final Map<String, Integer> SPIKE_DAMAGE_LIST = new HashMap<>();
+    public static final Map<String, UnstableAltarRecipeVO> UNSTABLE_ALTAR_RECIPE_MAP = new HashMap<>();
 
     public static void load(ResourceManager manager) {
         GOLDEN_LASSO_ENTITIES_WHITELIST.clear();
@@ -34,6 +37,7 @@ public class LookingGlassJsonManager {
         GOLDEN_LASSO_ENTITIES_BLACKLIST.clear();
         CURSED_LASSO_ENTITIES_BLACKLIST.clear();
         SPIKE_DAMAGE_LIST.clear();
+        UNSTABLE_ALTAR_RECIPE_MAP.clear();
 
         manager.findResources("lookingglass/item_config", path -> path.endsWith(".json")).forEach(identifier -> loadItemConfigs(manager, identifier));
     }
@@ -85,6 +89,8 @@ public class LookingGlassJsonManager {
             case SPIKE_DAMAGE:
                 SPIKE_DAMAGE_LIST.clear();
                 break;
+            case UNSTABLE_ALTAR_RECIPES:
+                UNSTABLE_ALTAR_RECIPE_MAP.clear();
         }
     }
 
@@ -105,36 +111,83 @@ public class LookingGlassJsonManager {
         SPIKE_DAMAGE_LIST.put(NETHERITE_SPIKE, (parent.has(NETHERITE_SPIKE)) ? parent.get(NETHERITE_SPIKE).getAsInt() : 14);
     }
 
+    private static void loadUnstableAltarRecipes(JsonObject parent, ItemConfigType configType) {
+        if (parent.has("recipes")) {
+            parent.getAsJsonArray("recipes").forEach(jsonElement -> {
+                UnstableAltarRecipeVO unstableAltarRecipeVO = new UnstableAltarRecipeVO();
+
+                JsonObject jsonObject = (JsonObject) jsonElement;
+                JsonArray inputs = jsonObject.getAsJsonArray("inputs");
+                inputs.forEach(inputElement -> {
+                    String itemId = inputElement.getAsString();
+                    unstableAltarRecipeVO.inputList = addItemToList(unstableAltarRecipeVO.inputList, itemId, 1);
+                });
+                JsonArray outputs = jsonObject.getAsJsonArray("outputs");
+                outputs.forEach(outputElement -> {
+                    JsonObject outputObject = outputElement.getAsJsonObject();
+                    String itemId = outputObject.get("item").getAsString();
+                    int count = outputObject.get("count").getAsInt();
+                    unstableAltarRecipeVO.outputList = addItemToList(unstableAltarRecipeVO.outputList, itemId, count);
+                });
+
+                unstableAltarRecipeVO.instability = jsonObject.get("instability").getAsInt();
+                UNSTABLE_ALTAR_RECIPE_MAP.put(unstableAltarRecipeVO.generateKey(), unstableAltarRecipeVO);
+            });
+        }
+    }
+
+    private static List<ItemStack> addItemToList(List<ItemStack> inputList, String itemId, int count) {
+        if (StringUtils.isBlank(itemId))
+            return inputList;
+        if (inputList == null)
+            return null;
+
+        Item item = Registry.ITEM.get(Identifier.tryParse(itemId));
+        ItemStack itemStack = new ItemStack(item);
+        itemStack.setCount(count);
+        inputList.add(itemStack);
+
+        return inputList;
+    }
+
+    private static void loadLassoConfigs(JsonObject parent, ItemConfigType configType) {
+        if (parent.has("whitelist")) {
+            parent.getAsJsonArray("whitelist").forEach(jsonElement -> {
+                EntityType<?> type = Registry.ENTITY_TYPE.get(Identifier.tryParse(jsonElement.getAsString()));
+                switch (configType) {
+                    case GOLDEN_LASSO:
+                        GOLDEN_LASSO_ENTITIES_WHITELIST.add(type);
+                        break;
+                    case CURSED_LASSO:
+                        CURSED_LASSO_ENTITIES_WHITELIST.add(type);
+                        break;
+                }
+            });
+        } else {
+            parent.getAsJsonArray("blacklist").forEach(jsonElement -> {
+                EntityType<?> type = Registry.ENTITY_TYPE.get(Identifier.tryParse(jsonElement.getAsString()));
+                switch (configType) {
+                    case GOLDEN_LASSO:
+                        GOLDEN_LASSO_ENTITIES_BLACKLIST.add(type);
+                        break;
+                    case CURSED_LASSO:
+                        CURSED_LASSO_ENTITIES_BLACKLIST.add(type);
+                        break;
+                }
+            });
+        }
+    }
+
     private enum ItemConfigType {
         GOLDEN_LASSO(LookingGlassJsonManager::loadLassoConfigs),
         CURSED_LASSO(LookingGlassJsonManager::loadLassoConfigs),
-        SPIKE_DAMAGE(LookingGlassJsonManager::loadSpikeConfigs);
+        SPIKE_DAMAGE(LookingGlassJsonManager::loadSpikeConfigs),
+        UNSTABLE_ALTAR_RECIPES(LookingGlassJsonManager::loadUnstableAltarRecipes);
 
         private final BiConsumer<JsonObject, ItemConfigType> processor;
 
         ItemConfigType(BiConsumer<JsonObject, ItemConfigType> processor) {
             this.processor = processor;
-        }
-    }
-
-    private static void loadLassoConfigs(JsonObject parent, ItemConfigType configType) {
-        if(parent.has("whitelist")) {
-            parent.getAsJsonArray("whitelist").forEach(jsonElement -> {
-                EntityType<?> type = Registry.ENTITY_TYPE.get(Identifier.tryParse(jsonElement.getAsString()));
-                switch (configType) {
-                    case GOLDEN_LASSO: GOLDEN_LASSO_ENTITIES_WHITELIST.add(type); break;
-                    case CURSED_LASSO: CURSED_LASSO_ENTITIES_WHITELIST.add(type); break;
-                }
-            });
-        }
-        else {
-            parent.getAsJsonArray("blacklist").forEach(jsonElement -> {
-                EntityType<?> type = Registry.ENTITY_TYPE.get(Identifier.tryParse(jsonElement.getAsString()));
-                switch (configType) {
-                    case GOLDEN_LASSO: GOLDEN_LASSO_ENTITIES_BLACKLIST.add(type); break;
-                    case CURSED_LASSO: CURSED_LASSO_ENTITIES_BLACKLIST.add(type); break;
-                }
-            });
         }
     }
 }
