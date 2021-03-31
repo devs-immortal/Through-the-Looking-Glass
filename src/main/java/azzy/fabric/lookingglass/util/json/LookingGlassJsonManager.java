@@ -136,7 +136,7 @@ public class LookingGlassJsonManager {
         }
     }
 
-    private static List<ItemStack> addItemToList(List<ItemStack> inputList, String itemId, int count) {
+    public static List<ItemStack> addItemToList(List<ItemStack> inputList, String itemId, int count) {
         if (StringUtils.isBlank(itemId))
             return inputList;
         if (inputList == null)

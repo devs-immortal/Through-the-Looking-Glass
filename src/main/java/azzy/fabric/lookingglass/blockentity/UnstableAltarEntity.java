@@ -4,6 +4,8 @@ import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.LookingGlassConstants;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.util.ParticleUtils;
+import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
+import azzy.fabric.lookingglass.vo.UnstableAltarRecipeVO;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -19,6 +21,9 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
     public boolean isMultiBlockFormed = false;
     public List<BlockPos> multiBlockPositionsList = null;
     public List<LookingGlassBE> multiBlockBlockEntitiesList = null;
+    int craftingCheckCounter = 0;
+    boolean craftingInProgress = false;
+    UnstableAltarRecipeVO unstableAltarRecipeVO = null;
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
@@ -115,6 +120,58 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
         super(LookingGlassBlocks.UNSTABLE_ALTAR_ENTITY, 1);
     }
 
+    public void startCrafting() {
+        if (!craftingInProgress) {
+            UnstableAltarRecipeVO recipeVO = new UnstableAltarRecipeVO();
+            for (LookingGlassBE lookingGlassBE : multiBlockBlockEntitiesList) {
+                UnstableAltarEntity unstableAltarEntity;
+                DisplayPedestalEntity displayPedestalEntity;
+
+                if (lookingGlassBE instanceof UnstableAltarEntity) {
+                    unstableAltarEntity = (UnstableAltarEntity) lookingGlassBE;
+                    ItemStack itemStack = unstableAltarEntity.getStack(0);
+                    if (ItemStack.EMPTY.equals(itemStack))
+                        continue;
+                    recipeVO.inputList.add(itemStack);
+                } else if (lookingGlassBE instanceof DisplayPedestalEntity) {
+                    displayPedestalEntity = (DisplayPedestalEntity) lookingGlassBE;
+                    ItemStack itemStack = displayPedestalEntity.getStack(0);
+                    if (ItemStack.EMPTY.equals(itemStack))
+                        continue;
+                    recipeVO.inputList.add(itemStack);
+                } else {
+                    // Should never occur in real world.
+                    LookingGlassCommon.FFLog.warn("Invalid entity found in unstable altar multiblock: '" + lookingGlassBE + "'");
+                    return;
+                }
+            }
+
+            unstableAltarRecipeVO = LookingGlassJsonManager.UNSTABLE_ALTAR_RECIPE_MAP.get(recipeVO.generateKey());
+        }
+
+        if (unstableAltarRecipeVO != null) {
+            // Found a valid recipe.
+            craftingInProgress = true;
+
+            if (!world.isClient) {
+                // Shouldn't ever happen.  But weirder things have happened.  Here, I'm checking to see if the multiblock only ever needs the unstable altar
+                // (I'm thinking about make the # of required display pedestals configurable.
+                // This is just a fail-safe check.
+                // TODO:  Modify this to be a configuration driven setting to allow for a configurable number of pedestals in the multiblock.  This number will be unstable altar + # of pedestals.
+                if (multiBlockBlockEntitiesList.size() < 9)
+                    return;
+
+                for (int i = 1; i < multiBlockBlockEntitiesList.size(); i++) {
+                    // First entry in the lists is the unstable altar.  The remaining 4 are the display pedestals.
+                    DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) multiBlockBlockEntitiesList.get(i);
+                    ItemStack itemStack = iteratedDisplayPedestalEntity.getStack(0);
+                    if (!ItemStack.EMPTY.equals(itemStack))
+                        ParticleUtils.spawnItemParticles((ServerWorld) world, pos, multiBlockPositionsList.get(i), itemStack);
+                }
+            }
+        }
+    }
+
     public void tick() {
         // The multiblock isn't formed or the world is invalid.  There's nothing to do here.
         if (!isMultiBlockFormed || (world == null))
@@ -130,21 +187,10 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
             return;
         }
 
-        if (!world.isClient) {
-            // Shouldn't ever happen.  But weirder things have happened.  Here, I'm checking to see if the multiblock only ever needs the unstable altar
-            // (I'm thinking about make the # of required display pedestals configurable.
-            // This is just a fail-safe check.
-            // TODO:  Modify this to be a configuration driven setting to allow for a configurable number of pedestals in the multiblock.  This number will be unstable altar + # of pedestals.
-            if (multiBlockBlockEntitiesList.size() < 9)
-                return;
-
-            for (int i = 1; i < multiBlockBlockEntitiesList.size(); i++) {
-                // First entry in the lists is the unstable altar.  The remaining 4 are the display pedestals.
-                DisplayPedestalEntity iteratedDisplayPedestalEntity = (DisplayPedestalEntity) multiBlockBlockEntitiesList.get(i);
-                ItemStack itemStack = iteratedDisplayPedestalEntity.getStack(0);
-                if (!ItemStack.EMPTY.equals(itemStack))
-                    ParticleUtils.spawnItemParticles((ServerWorld) world, pos, multiBlockPositionsList.get(i), itemStack);
-            }
+        // Only do crafting check every second or so.
+        if ((craftingCheckCounter++ == 20) || (craftingInProgress)) {
+            craftingCheckCounter = 0;
+            startCrafting();
         }
     }
 }
