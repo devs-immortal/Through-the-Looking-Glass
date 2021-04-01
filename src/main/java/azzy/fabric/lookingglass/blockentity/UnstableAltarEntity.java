@@ -153,7 +153,7 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
             // Found a valid recipe.
             craftingInProgress = true;
 
-            if (!world.isClient) {
+            if ((world != null) && !world.isClient) {
                 // Shouldn't ever happen.  But weirder things have happened.  Here, I'm checking to see if the multiblock only ever needs the unstable altar
                 // (I'm thinking about make the # of required display pedestals configurable.
                 // This is just a fail-safe check.
@@ -173,8 +173,8 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
     }
 
     public void tick() {
-        // The multiblock isn't formed or the world is invalid.  There's nothing to do here.
-        if (!isMultiBlockFormed || (world == null))
+        // The multiblock isn't formed.  There's nothing to do here.
+        if (!isMultiBlockFormed)
             return;
 
         // Only occurs on server reload.  I thought about persisting this data, but ultimately decided against it since it's not really necessary to persist.
@@ -187,8 +187,8 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
             return;
         }
 
-        // Only do crafting check every second or so.
-        if ((craftingCheckCounter++ == 20) || (craftingInProgress)) {
+        // Only do crafting check every second or so.  Doing a greater than or equals check to avoid lag induced tick misses.
+        if ((craftingCheckCounter++ >= 20) || (craftingInProgress)) {
             craftingCheckCounter = 0;
             startCrafting();
         }
