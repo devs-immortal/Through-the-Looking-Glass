@@ -15,6 +15,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -169,6 +170,7 @@ public class LookingGlassBlocks {
     public static final Block LOAM = registerGeneratedBlock("loam", new Block(FabricBlockSettings.copyOf(Blocks.DIRT)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
+    public static final EclipseRoseBlock ECLIPSE_ROSE = Registry.register(Registry.BLOCK, new Identifier(MODID, "eclipse_rose"), new EclipseRoseBlock(StatusEffects.WITHER, FabricBlockSettings.of(Material.PLANT).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.GRASS)));
 
     // Unstable Blocks
     public static final Block UNSTABLE_ALTAR_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableAltarBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));

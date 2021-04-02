@@ -84,8 +84,8 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:1.16.7"
 	modImplementation "com.github.CaffeineMC:lithium-fabric:mc1.16.5-0.6.4"
 
-	modImplementation "dev.monarkhes:myron:1.5.0"
-	include "dev.monarkhes:myron:1.5.0"
+	modImplementation "dev.monarkhes:myron:1.6.0"
+	include "dev.monarkhes:myron:1.6.0"
 }
 
 processResources {

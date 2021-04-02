@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.incubus_core.datagen.ModelJsonGen;
+import azzy.fabric.lookingglass.block.EclipseRoseBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
@@ -108,6 +109,7 @@ public class LookingGlassItems {
     public static final Item FAST_VECTOR_PLATE_BLOCK = registerItem("fast_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item UNSTABLE_ENCHANTER_BLOCK = registerItem("unstable_altar", new UnstableAltarBlockItem(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item DISPLAY_PEDESTAL_BLOCK = registerItem("display_pedestal", new DisplayPedestalBlockItem(LookingGlassBlocks.DISPLAY_PEDESTAL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
+    public static final Item ECLIPSE_ROSE_BLOCK = registerItem("eclipse_rose", new EclipseRoseBlockItem(LookingGlassBlocks.ECLIPSE_ROSE, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);
