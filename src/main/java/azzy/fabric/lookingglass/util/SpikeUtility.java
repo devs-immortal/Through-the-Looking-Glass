@@ -61,7 +61,7 @@ public class SpikeUtility {
 
     public static void damageEntity(Entity entity, World world, int spikeType) {
         // Don't hurt players.  Don't hurt items.
-        if ((entity instanceof PlayerEntity) || !(entity instanceof LivingEntity) || (world == null) || (world.getServer() == null))
+        if (!(entity instanceof LivingEntity) || (world == null) || (world.getServer() == null))
             return;
 
         int damage = LookingGlassJsonManager.getDamageForSpike(spikeType);

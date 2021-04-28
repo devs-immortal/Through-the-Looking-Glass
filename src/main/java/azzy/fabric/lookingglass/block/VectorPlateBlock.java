@@ -25,12 +25,12 @@ import java.lang.ref.WeakReference;
 
 public class VectorPlateBlock extends LookingGlassBlock {
     public static final IntProperty SPIKE_UPGRADE = IntProperty.of("spike_upgrade", 0, 4);
-    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 2, 16);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
     private final WeakReference<ServerPlayerEntity> fakePlayer = null;
     private final ServerPlayerEntity fakePlayerEntity = null;
-    private final int velocity;
+    private final float velocity;
 
-    public VectorPlateBlock(FabricBlockSettings settings, int velocity) {
+    public VectorPlateBlock(FabricBlockSettings settings, float velocity) {
         super(settings, false);
         BlockState defaultState = getStateManager().getDefaultState();
         setDefaultState(defaultState.with(SPIKE_UPGRADE, 0));
@@ -96,10 +96,6 @@ public class VectorPlateBlock extends LookingGlassBlock {
         if (world.isClient)
             return;
 
-        // Don't hurt players.  Don't hurt items.
-        if (entity instanceof PlayerEntity)
-            return;
-
         // Just a NPE avoidance check.
         if (world.getServer() == null)
             return;
@@ -110,21 +106,35 @@ public class VectorPlateBlock extends LookingGlassBlock {
         // Here is the spike damage of the codebase.
         int spikeUpgrade = state.get(SPIKE_UPGRADE);
         switch (facingDirection) {
-            case NORTH:
+            case NORTH: {
                 // North (-z) direction
-                entity.addVelocity(0, 0, -1 * velocity);
+
+                double vel = entity.getVelocity().z;
+                if(vel > -velocity * 5)
+                    entity.addVelocity(0, 0, -velocity);
                 break;
-            case EAST:
+            }
+            case EAST: {
                 // East (x) direction
-                entity.addVelocity(velocity, 0, 0);
+                double vel = entity.getVelocity().z;
+                if(vel < velocity * 5)
+                    entity.addVelocity(velocity, 0, 0);
                 break;
-            case SOUTH:
+            }
+            case SOUTH: {
                 // South (z) direction
-                entity.addVelocity(0, 0, velocity);
+                double vel = entity.getVelocity().z;
+                if(vel < velocity * 5)
+                    entity.addVelocity(0, 0, velocity);
                 break;
-            case WEST:
+            }
+            case WEST: {
                 // West (-x) direction
-                entity.addVelocity(-1 * velocity, 0, 0);
+                double vel = entity.getVelocity().x;
+                if(vel > -velocity * 5)
+                    entity.addVelocity(-velocity, 0, 0);
+                break;
+            }
         }
 
         // We move items, but we don't damage them - bad karma!

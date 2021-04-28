@@ -17,7 +17,9 @@ public class ClientNetworkingUtils {
 
             minecraftClient.execute(() -> {
                 Text text = new TranslatableText(translationKey);
-                MinecraftClient.getInstance().player.sendMessage(text, true);
+                if (MinecraftClient.getInstance().player != null) {
+                    MinecraftClient.getInstance().player.sendMessage(text, true);
+                }
             });
         }));
 
@@ -27,7 +29,9 @@ public class ClientNetworkingUtils {
             final int count = packetByteBuf.readInt();
 
             minecraftClient.execute(() -> {
-                BoneMealItem.createParticles(minecraftClient.world, pos, count);
+                if (minecraftClient.world != null) {
+                    BoneMealItem.createParticles(minecraftClient.world, pos, count);
+                }
             });
         })));
     }

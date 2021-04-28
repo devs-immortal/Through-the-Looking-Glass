@@ -13,9 +13,7 @@ import dev.emi.trinkets.api.TrinketSlots;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -47,13 +45,9 @@ public class LookingGlassItems {
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(defaultSettings().maxCount(16)));
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings().maxCount(1)));
     public static final Item BASE_RING = registerGeneratedItem("ring", new Item(defaultSettings().rarity(Rarity.UNCOMMON).maxCount(8)));
-    public static final Item SIMPLE_ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
-    public static final Item ADVANCED_ANGEL_RING = registerItem("advanced_angel_ring", new AdvancedAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(LUPREVAN_RARITY).fireproof().maxCount(1)));
-    // I should consider fixing the potential bug where user changes the stack size for lasso, has more than one in a stack and uses on an entity.  It makes ALL the lassos get the entity.
-    // So if the user subsequently spreads out the lassos and uses them one at a time, they effectively duplicate the mob.  I've sidestepped the issue for now by forcing stack size to 1.
+    public static final Item ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
     public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings().maxCount(1), false));
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));
-    public static final Item SACRED_SHOVEL = registerItem("sacred_shovel", new SacredShovelItem(ToolMaterials.GOLD, defaultSettings().maxCount(1)));
 
     //Upgrades
     public static final Item ROSE_CHIPSET = registerGeneratedItem("rose_chipset", new Item(defaultSettings()));
@@ -67,6 +61,8 @@ public class LookingGlassItems {
     public static final Item CORN_COB = registerGeneratedItem("corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0F).build())));
     public static final Item ROASTED_CORN_COB = registerGeneratedItem("roasted_corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(6).saturationModifier(1.5F).build())));
     public static final Item LEGENDARY_CORN_COB = registerGeneratedItem("legendary_corn_cob", new Item(genericSettings(Rarity.EPIC).fireproof().food(new FoodComponent.Builder().hunger(200).saturationModifier(4F).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 18000, 19), 1F).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 18000, 3), 1F).build())));
+    public static final Item FLAREFIN_KOI = registerGeneratedItem("raw_flarefin_koi", new Item(genericSettings(Rarity.COMMON).fireproof().food(new FoodComponent.Builder().meat().hunger(2).saturationModifier(0.1F).build())));
+    public static final Item COOKED_FLAREFIN_KOI = registerGeneratedItem("cooked_flarefin_koi", new Item(genericSettings(Rarity.COMMON).fireproof().food(new FoodComponent.Builder().meat().hunger(8).saturationModifier(0.9F).build())));
 
     //Materials
     public static final Item ENRICHED_CHARCOAL = registerGeneratedItem("enriched_charcoal", new Item(defaultSettings()));
@@ -91,7 +87,14 @@ public class LookingGlassItems {
     public static final Item LUPREVAN_GLASS_SHARD = registerGeneratedItem("luprevan_glass_shard", new Item(genericSettings(LUPREVAN_RARITY).fireproof()));
     //public static final Item ELDENMETAL_GEMSTONE = registerItem("eldenmetal_gem", new Item(eldenmetalSettings()));
 
-    //Weapons
+    //Toolsets
+    public static final Item FINIS_SWORD = registerItem("finis_sword", new LookingGlassSwordItem(LookingGlassToolMaterials.FINIS, 3, -2.4F, genericSettings(Rarity.RARE)));
+    public static final Item FINIS_SHOVEL = registerItem("finis_shovel", new LookingGlassShovelItem(LookingGlassToolMaterials.FINIS, 1.5F, -3.0F, genericSettings(Rarity.RARE)));
+    public static final Item FINIS_PICKAXE = registerItem("finis_pickaxe", new LookingGlassPickaxeItem(LookingGlassToolMaterials.FINIS, 1, -2.8F, genericSettings(Rarity.RARE)));
+    public static final Item FINIS_AXE = registerItem("finis_axe", new LookingGlassAxeItem(LookingGlassToolMaterials.FINIS, 5, -3.0F, genericSettings(Rarity.RARE)));
+    public static final Item FINIS_HOE = registerItem("finis_hoe", new LookingGlassHoeItem(LookingGlassToolMaterials.FINIS, -3, 0F, genericSettings(Rarity.RARE)));
+
+    //Unique Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
     public static final Item MARKSMAN_REVOLVER = registerItem("marksman_revolver", new RevolverItem(defaultSettings().rarity(WORLDFORGE_RARITY).fireproof()));

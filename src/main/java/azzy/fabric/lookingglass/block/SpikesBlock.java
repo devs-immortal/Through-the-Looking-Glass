@@ -29,16 +29,6 @@ public class SpikesBlock extends LookingGlassBlock {
         super.appendProperties(builder);
     }
 
-    /**
-     * I want mobs to be able to spawn in this block, as if this block is like grass.
-     *
-     * @return true
-     */
-    @Override
-    public boolean canMobSpawnInside() {
-        return true;
-    }
-
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.empty();

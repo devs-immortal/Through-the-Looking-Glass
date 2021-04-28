@@ -44,7 +44,7 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this == EMPTY;
     }
 
     @Override

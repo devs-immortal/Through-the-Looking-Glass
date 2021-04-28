@@ -29,7 +29,7 @@ public class UnderwaterStateFeature extends Feature<SingleStateFeatureConfig> {
 
         if(!world.isWater(pos.down())) {
             world.setBlockState(pos.down(), config.state, 2);
-            world.getBlockTickScheduler().schedule(pos.down(), LookingGlassBlocks.BRINE_FISSURE, 0, TickPriority.EXTREMELY_HIGH);
+            world.getBlockTickScheduler().schedule(pos.down(), config.state.getBlock(), 0, TickPriority.EXTREMELY_HIGH);
             return true;
         }
 

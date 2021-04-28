@@ -31,6 +31,5 @@ public class LookingGlassBiomes {
         OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_CRAGS_KEY, 0.2);
         OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_DELTA_KEY, 0.3);
         OverworldBiomes.addHillsBiome(BRINE_CHASM_KEY, BRINE_OCEAN_KEY, 0.06);
-
     }
 }

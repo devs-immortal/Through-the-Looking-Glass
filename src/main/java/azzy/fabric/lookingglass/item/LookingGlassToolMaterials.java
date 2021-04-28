@@ -10,6 +10,9 @@ import java.util.function.Supplier;
 public enum LookingGlassToolMaterials implements ToolMaterial {
     FISH(-1, 2645, 3.5F, 0.0F, 30, () -> {
         return Ingredient.fromTag(ItemTags.FISHES);
+    }),
+    FINIS(4, 1561, 7F, 3.0F, 40, () -> {
+        return Ingredient.ofItems(LookingGlassItems.FINIS_INGOT);
     });
 
     private final int miningLevel;
