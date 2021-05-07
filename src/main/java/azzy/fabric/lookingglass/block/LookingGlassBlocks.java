@@ -8,16 +8,19 @@ import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
+import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
@@ -85,6 +88,8 @@ public class LookingGlassBlocks {
     public static final Block GRINDER_BLOCK = registerBlock("grinder", new GrinderBlock(dwarvenMachine()), basicItem());
     public static final Block MIXER_BLOCK = registerBlock("mixer", new MixerBlock(dwarvenMachine()), basicItem());
     public static final Block VACUUM_HOPPER_BLOCK = registerBlock("vacuum_hopper", new VacuumHopperBlock(dwarvenMachine(), 20, 4, 9), basicItem());
+    public static final Block SUFFUSER_BLOCK = registerBlock("suffuser", new SuffuserBlock(dwarvenMachine()), basicItem());
+    public static final Block ENCHANTER_BLOCK = registerBlock("enchanter", new EnchanterBlock(dwarvenMachine()), basicItem());
 
     // Vector plates move entities around.
     public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 0.15F));
@@ -171,6 +176,7 @@ public class LookingGlassBlocks {
     public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
     public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
     public static final EclipseRoseBlock ECLIPSE_ROSE = Registry.register(Registry.BLOCK, new Identifier(MODID, "eclipse_rose"), new EclipseRoseBlock(StatusEffects.WITHER, FabricBlockSettings.of(Material.PLANT).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.GRASS)));
+    public static final Block TINY_TATER = registerBlock("tiny_tater", new TinyTaterBlock(FabricBlockSettings.copyOf(Blocks.PUMPKIN).nonOpaque()), genericItem(Rarity.EPIC, 16).equipmentSlot(stack -> EquipmentSlot.HEAD));
 
     // Unstable Blocks
     public static final Block UNSTABLE_ALTAR_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableAltarBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
@@ -189,6 +195,8 @@ public class LookingGlassBlocks {
     public static final BlockEntityType<AlloyFurnaceEntity> ALLOY_FURNACE_ENTITY = registerEntity("alloy_furnace_entity", AlloyFurnaceEntity::new, ALLOY_FURNACE_BLOCK);
     public static final BlockEntityType<GrinderEntity> GRINDER_ENTITY = registerEntity("grinder_entity", GrinderEntity::new, GRINDER_BLOCK);
     public static final BlockEntityType<MixerEntity> MIXER_ENTITY = registerEntity("mixer_entity", MixerEntity::new, MIXER_BLOCK);
+    public static final BlockEntityType<SuffuserEntity> SUFFUSER_ENTITY = registerEntity("suffuser_entity", SuffuserEntity::new, SUFFUSER_BLOCK);
+    public static final BlockEntityType<EnchanterEntity> ENCHANTER_ENTITY = registerEntity("enchanter_entity", EnchanterEntity::new, ENCHANTER_BLOCK);
 
     //Power
     public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);
@@ -218,7 +226,7 @@ public class LookingGlassBlocks {
         }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
 
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
-                CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY, GRINDER_ENTITY, MIXER_ENTITY);
+                CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY, GRINDER_ENTITY, MIXER_ENTITY, SUFFUSER_ENTITY);
     }
 
     public static Block registerBlock(String name, Block item, Item.Settings settings, boolean genLoot) {

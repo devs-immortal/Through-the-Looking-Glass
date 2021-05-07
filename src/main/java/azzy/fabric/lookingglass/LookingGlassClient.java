@@ -74,6 +74,7 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(BLOCK_TESSERACT_ENTITY, TesseractRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(FISH_BREEDER_ENTITY, FishBreederRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(CREATIVE_ENERGY_SOURCE_ENTITY, CreativeEnergySourceRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(SUFFUSER_ENTITY, SuffuserRenderer::new);
 
         EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, (dispatcher, context) -> new FlarefinKoiRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.REVOLVER_SHOT_ENTITY_TYPE, (dispatcher, context) -> new FlyingItemEntityRenderer(dispatcher, context.getItemRenderer()));

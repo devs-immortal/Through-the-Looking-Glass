@@ -1,0 +1,9 @@
+{
+  "parent": "lookingglass:base/machine_triside",
+  "textures": {
+    "front": "lookingglass:block/suffuser_front",
+    "sides": "lookingglass:block/suffuser_side",
+    "up": "lookingglass:block/suffuser_top",
+    "down": "lookingglass:block/machine_side"
+  }
+}

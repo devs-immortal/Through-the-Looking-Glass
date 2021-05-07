@@ -57,6 +57,8 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
         return remnant;
     }
 
+    protected void notifyRedstoneActivation() {}
+
     @Override
     public double getEnergyCapacity() {
         return baseMaxPower;
@@ -92,20 +94,20 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     @Override
     public void fromClientTag(CompoundTag tag) {
         power = tag.getDouble("power");
+        super.fromClientTag(tag);
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
         tag.putDouble("power", power);
-        return tag;
+        return super.toClientTag(tag);
     }
 
     public enum MachineTier {
         BASIC(0),
         ADVANCED(1),
         FINIS(2),
-        ELDEN(3),
-        LUPREVAN(3),
+        SECRET(3),
         ENDGAME(4);
 
         public final int tier;

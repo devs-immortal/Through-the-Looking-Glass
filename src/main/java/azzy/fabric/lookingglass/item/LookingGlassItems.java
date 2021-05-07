@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.incubus_core.datagen.ModelJsonGen;
+import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.block.EclipseRoseBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
@@ -61,6 +62,7 @@ public class LookingGlassItems {
     public static final Item CORN_COB = registerGeneratedItem("corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0F).build())));
     public static final Item ROASTED_CORN_COB = registerGeneratedItem("roasted_corn_cob", new Item(defaultSettings().food(new FoodComponent.Builder().hunger(6).saturationModifier(1.5F).build())));
     public static final Item LEGENDARY_CORN_COB = registerGeneratedItem("legendary_corn_cob", new Item(genericSettings(Rarity.EPIC).fireproof().food(new FoodComponent.Builder().hunger(200).saturationModifier(4F).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 18000, 19), 1F).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 18000, 3), 1F).build())));
+    public static final Item TATER_FRIES = registerGeneratedItem("tater_fries", new Item(genericSettings(WORLDFORGE_RARITY).food(new FoodComponent.Builder().hunger(10).saturationModifier(2F).meat().snack().build())));
     public static final Item FLAREFIN_KOI = registerGeneratedItem("raw_flarefin_koi", new Item(genericSettings(Rarity.COMMON).fireproof().food(new FoodComponent.Builder().meat().hunger(2).saturationModifier(0.1F).build())));
     public static final Item COOKED_FLAREFIN_KOI = registerGeneratedItem("cooked_flarefin_koi", new Item(genericSettings(Rarity.COMMON).fireproof().food(new FoodComponent.Builder().meat().hunger(8).saturationModifier(0.9F).build())));
 

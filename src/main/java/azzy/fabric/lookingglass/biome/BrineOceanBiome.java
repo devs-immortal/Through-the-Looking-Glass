@@ -46,12 +46,12 @@ public class BrineOceanBiome {
 
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.RED_SEAGRASS.getFeature());
 
-            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 15, 8, 20));
+            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 35, 5, 12));
             DefaultBiomeFeatures.addWarmOceanMobs(spawnSettings, 8, 3);
         }
         else {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.SPARSE_RED_SEAGRASS.getFeature());
-            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 10, 4, 10));
+            spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 15, 3, 9));
             DefaultBiomeFeatures.addWarmOceanMobs(spawnSettings, 4, 1);
         }
 

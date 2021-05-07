@@ -1,0 +1,8 @@
+{
+  "parent": "lookingglass:base/machine_bordered",
+  "textures": {
+    "sides": "lookingglass:block/enchanter_side",
+    "up": "lookingglass:block/enchanter_top",
+    "down": "lookingglass:block/machine_base"
+  }
+}

@@ -108,7 +108,7 @@ public class FlarefinKoiEntity extends CodEntity implements Angerable {
         this.goalSelector.add(3, new FollowTargetGoal<>(this, DolphinEntity.class, true));
         this.goalSelector.add(3, new FollowTargetGoal<>(this, TurtleEntity.class, true));
         this.goalSelector.add(4, new FollowTargetGoal<>(this, SquidEntity.class, true));
-        this.goalSelector.add(4, new FishJumpGoal(this, 2));
+        this.goalSelector.add(4, new FishJumpGoal(this, 20));
     }
 
     @Override

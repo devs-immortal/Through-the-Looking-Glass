@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lookingglass:block/tiny_tater",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lookingglass:block/tiny_tater"
+    },
+    "facing=south": {
+      "model": "lookingglass:block/tiny_tater",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "lookingglass:block/tiny_tater",
+      "y": 270
+    }
+  }
+}

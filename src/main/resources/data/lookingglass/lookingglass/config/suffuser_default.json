@@ -1,0 +1,10 @@
+{
+  "type": "SUFFUSER_BOOSTING_BLOCKS",
+  "replace": false,
+  "entries": [
+    {
+      "block": "minecraft:bookshelf",
+      "power": 10
+    }
+  ]
+}

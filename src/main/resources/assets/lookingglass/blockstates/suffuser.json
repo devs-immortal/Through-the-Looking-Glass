@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "lookingglass:block/suffuser",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "lookingglass:block/suffuser"
+    },
+    "facing=south": {
+      "model": "lookingglass:block/suffuser",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "lookingglass:block/suffuser",
+      "y": 270
+    }
+  }
+}

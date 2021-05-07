@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class LookingGlassEntities {
 
-    public static final EntityType<FlarefinKoiEntity> FLAREFIN_KOI_ENTITY_TYPE = register("flarefin_koi", FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, FlarefinKoiEntity::new).dimensions(EntityDimensions.fixed(1F, 0.3125F)).build(), FlarefinKoiEntity.createFlarefinAttributes());
+    public static final EntityType<FlarefinKoiEntity> FLAREFIN_KOI_ENTITY_TYPE = register("flarefin_koi", FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, FlarefinKoiEntity::new).dimensions(EntityDimensions.fixed(1F, 0.3125F)).build(), FlarefinKoiEntity.createFlarefinAttributes());
 
     public static final EntityType<RevolverShotEntity> REVOLVER_SHOT_ENTITY_TYPE = register("revolver_shot", FabricEntityTypeBuilder.<RevolverShotEntity>create(SpawnGroup.MISC, RevolverShotEntity::new).dimensions(EntityDimensions.fixed(.1F,.1F)).trackRangeBlocks(4).trackedUpdateRate(10).build());
 

@@ -2,9 +2,11 @@ package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.blockentity.LookingGlassUpgradeableMachine;
 import azzy.fabric.lookingglass.blockentity.PowerPipeEntity;
+import azzy.fabric.lookingglass.blockentity.SuffuserEntity;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,13 +34,19 @@ public class EnergyProbeItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
-        EnergyIo io = EnergyApi.SIDED.find(world, context.getBlockPos(), context.getSide());
+        BlockPos pos = context.getBlockPos();
+        EnergyIo io = EnergyApi.SIDED.find(world, pos, context.getSide());
         ItemStack stack = context.getStack();
         if(io != null && !world.isClient()) {
             String message = "";
             if(stack.getOrCreateTag().contains("mode") && stack.getOrCreateTag().getBoolean("mode")) {
                 if(io instanceof LookingGlassUpgradeableMachine) {
-                    message = "process time - " + ((LookingGlassUpgradeableMachine) io).getProcessTime() + " ticks";
+                    if(io instanceof SuffuserEntity) {
+                        ((SuffuserEntity) io).updateEnchantingPower();
+                        message = "enchanting power - " + ((SuffuserEntity) io).getEnchantingPower();
+                    } else {
+                        message = "process time - " + ((LookingGlassUpgradeableMachine) io).getProcessTime() + " ticks";
+                    }
                 }
                 else if(io instanceof PowerPipeEntity) {
                     message = "network size - " + ((PowerPipeEntity) io).getNeighbours().size() +" cables";

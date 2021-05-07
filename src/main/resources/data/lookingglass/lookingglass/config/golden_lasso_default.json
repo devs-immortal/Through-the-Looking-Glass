@@ -1,5 +1,6 @@
 {
   "type": "GOLDEN_LASSO",
+  "replace": false,
   "blacklist": [
     "minecraft:wither",
     "minecraft:ender_dragon"
