@@ -1,7 +1,6 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.NullCableEntity;
-import azzy.fabric.lookingglass.blockentity.SiliconCableEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;

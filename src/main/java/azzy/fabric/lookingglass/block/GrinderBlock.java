@@ -1,29 +1,17 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import azzy.fabric.lookingglass.blockentity.GrinderEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
-
-import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
-import static net.minecraft.state.property.Properties.LIT;
 
 public class GrinderBlock extends HorizontalMachineBlock implements BlockEntityProvider {
 

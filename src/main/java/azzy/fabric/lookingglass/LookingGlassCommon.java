@@ -3,14 +3,14 @@ package azzy.fabric.lookingglass;
 
 import azzy.fabric.incubus_core.datagen.Metadata;
 import azzy.fabric.lookingglass.biome.LookingGlassBiomes;
+import azzy.fabric.lookingglass.biome.LookingGlassConfiguredFeatures;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.effects.LookingGlassEffects;
-import azzy.fabric.lookingglass.biome.LookingGlassConfiguredFeatures;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
-import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.recipe.LookingGlassCompat;
+import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import com.chocohead.mm.api.ClassTinkerers;

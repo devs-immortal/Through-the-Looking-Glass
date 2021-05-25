@@ -1,18 +1,13 @@
 package azzy.fabric.lookingglass.mixin;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.effects.ErasureDamageSource;
 import azzy.fabric.lookingglass.effects.FalsePlayerDamageSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

@@ -29,7 +29,7 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
 
         double bounce = Math.sin((world.getTime() + tickDelta) / 18);
         float count = entity.getStack(0).getCount() * 2;
-        float speen = -(world.getTime() + tickDelta);
+        float spin = -(world.getTime() + tickDelta);
         int tearLight = 14680160;
         ItemStack focus = new ItemStack(Items.CHISELED_QUARTZ_BLOCK);
 
@@ -37,13 +37,13 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
         bounce /= 4;
         matrices.translate(0.5, (1.25 + (count/ 5)) + bounce, 0.5);
         bounce *= 4;
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(speen * Math.max(1, count/2)));
+        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(spin * Math.max(1, count/2)));
         MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
         matrices.pop();
 
         matrices.push();
         bounce /= 2.5;
-        speen = -speen;
+        spin = -spin;
         matrices.translate(0.5, (1.375 + (count/ 5)) + bounce, 0.5);
         matrices.scale(0.75f, 0.75f, 0.75f);
         float secSpeen = (world.getTime() + tickDelta);
@@ -51,7 +51,7 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
         matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(secSpeen));
         matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(secSpeen));
         for(int i = (int) count; i > 0; i--){
-            float tertiarySpeen = (speen * Math.max(1, count / 4)) / 4;
+            float tertiarySpeen = (spin * Math.max(1, count / 4)) / 4;
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(tertiarySpeen));
             if(i % 2 == 0){
                 matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(tertiarySpeen * 1.5f));
@@ -62,9 +62,9 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(360f/count));
             double offset = Math.max((count / 6), 1);
             matrices.translate(offset, 0, 0);
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((speen * (count)) + 90));
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((spin * (count)) + 90));
             MinecraftClient.getInstance().getItemRenderer().renderItem(focus, ModelTransformation.Mode.GROUND, tearLight, overlay, matrices, vertexConsumers);
-            matrices.multiply(Vector3f.NEGATIVE_Y.getDegreesQuaternion((speen * (count)) + 90));
+            matrices.multiply(Vector3f.NEGATIVE_Y.getDegreesQuaternion((spin * (count)) + 90));
             matrices.translate(-offset, 0, 0);
         }
         matrices.pop();

@@ -8,7 +8,6 @@ import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -20,7 +19,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
@@ -128,6 +126,8 @@ public class LookingGlassBlocks {
     public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), basicItem());
     public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
     public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MaterialColor.WHITE)), basicItem());
+    public static final Block SALT_LAMP = registerBlock("salt_lamp", new SaltLampBlock(FabricBlockSettings.copyOf(Blocks.LANTERN).nonOpaque().luminance(15)), basicItem());
+    public static final Block ENCHANTED_SALT_LAMP = registerBlock("salt_lamp_enchanted", new EnchantedSaltLampBlock(FabricBlockSettings.copyOf(SALT_LAMP)), genericItem(Rarity.EPIC, 64));
     public static final Block WHITESTONE_CRACKED = registerBlock("cracked_whitestone", new SandBlock(0x8a706b, FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GILDED_BLACKSTONE)), basicItem());
     public static final Block[] WHISTONE_POLISHED = registerBuildingBlocks("polished_whitestone", FabricBlockSettings.copyOf(WHITESTONE_BLOCK), basicItem(), Items.AIR, false);
     public static final Block WHITESTONE_TILE = registerGeneratedBlock("whitestone_tile", new Block(FabricBlockSettings.copyOf(WHITESTONE_BLOCK)), null, null, basicItem(), SingletType.BLOCK);
@@ -217,6 +217,8 @@ public class LookingGlassBlocks {
     public static final BlockEntityType<BrineFissureEntity> BRINE_FISSURE_ENTITY = registerEntity("brine_fissure_entity", BrineFissureEntity::new, BRINE_FISSURE);
     public static final BlockEntityType<DisplayPedestalEntity> DISPLAY_PEDESTAL_ENTITY = registerEntity("display_pedestal_entity", DisplayPedestalEntity::new, DISPLAY_PEDESTAL_BLOCK);
     public static final BlockEntityType<UnstableAltarEntity> UNSTABLE_ALTAR_ENTITY = registerEntity("unstable_altar_entity", UnstableAltarEntity::new, UNSTABLE_ALTAR_BLOCK);
+    public static final BlockEntityType<EnchantedSaltLampEntity> ENCHANTED_SALT_LAMP_ENTITY = registerEntity("enchanted_salt_lamp_entity", EnchantedSaltLampEntity::new, ENCHANTED_SALT_LAMP);
+
 
     public static void init() {
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {

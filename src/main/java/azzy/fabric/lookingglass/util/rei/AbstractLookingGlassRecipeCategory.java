@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.util.rei;
 
-import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipeType;
 import me.shedaniel.rei.api.EntryStack;

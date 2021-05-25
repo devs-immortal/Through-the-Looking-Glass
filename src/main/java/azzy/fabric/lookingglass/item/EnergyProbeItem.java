@@ -6,7 +6,6 @@ import azzy.fabric.lookingglass.blockentity.SuffuserEntity;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,9 +20,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public class EnergyProbeItem extends Item {
 

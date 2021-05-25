@@ -11,7 +11,6 @@ import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class LookingGlassREIIntegration implements REIPluginV0 {

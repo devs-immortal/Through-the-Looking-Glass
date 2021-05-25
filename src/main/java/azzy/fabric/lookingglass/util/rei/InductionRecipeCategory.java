@@ -1,7 +1,6 @@
 package azzy.fabric.lookingglass.util.rei;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.InductionRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import me.shedaniel.math.Point;

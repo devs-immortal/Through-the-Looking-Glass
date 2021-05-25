@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.blockentity.PowerPipeEntity;
 import azzy.fabric.lookingglass.blockentity.SiliconCableEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.world.BlockView;

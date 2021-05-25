@@ -1,23 +1,15 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;
-import net.minecraft.item.BoneMealItem;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Random;
 
 public class GrowthCoreBlock extends CoreBlock {

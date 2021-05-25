@@ -7,7 +7,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyIo {
 

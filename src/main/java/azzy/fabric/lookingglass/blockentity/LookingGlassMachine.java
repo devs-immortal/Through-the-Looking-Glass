@@ -12,7 +12,9 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class LookingGlassMachine extends LookingGlassBE implements Tickable, EnergyIo, NamedScreenHandlerFactory {
 

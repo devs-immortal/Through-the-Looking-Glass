@@ -1,6 +1,5 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
 import azzy.fabric.lookingglass.blockentity.MixerEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

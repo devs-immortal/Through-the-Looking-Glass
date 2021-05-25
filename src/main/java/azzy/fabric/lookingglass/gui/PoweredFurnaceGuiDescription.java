@@ -2,14 +2,11 @@ package azzy.fabric.lookingglass.gui;
 
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.client.BackgroundType;
-import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.widget.WBar;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 
 public class PoweredFurnaceGuiDescription extends UpgradeableMachineGuiDescription {

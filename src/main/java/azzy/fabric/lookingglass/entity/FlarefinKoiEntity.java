@@ -3,7 +3,6 @@ package azzy.fabric.lookingglass.entity;
 import azzy.fabric.lookingglass.effects.PiercingEntityDamageSource;
 import azzy.fabric.lookingglass.entity.ai.DynamicAttackGoal;
 import azzy.fabric.lookingglass.entity.ai.FishJumpGoal;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

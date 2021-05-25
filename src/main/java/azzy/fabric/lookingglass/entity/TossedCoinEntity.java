@@ -1,11 +1,11 @@
 package azzy.fabric.lookingglass.entity;
 
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import azzy.fabric.lookingglass.LookingGlassClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.Packet;
 import net.minecraft.sound.SoundEvents;

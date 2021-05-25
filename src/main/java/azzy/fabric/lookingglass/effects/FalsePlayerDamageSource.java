@@ -1,9 +1,6 @@
 package azzy.fabric.lookingglass.effects;
 
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-
-import java.lang.reflect.Field;
 
 public class FalsePlayerDamageSource extends ErasureDamageSource {
 

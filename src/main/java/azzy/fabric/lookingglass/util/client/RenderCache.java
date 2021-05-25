@@ -11,7 +11,10 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
 import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;

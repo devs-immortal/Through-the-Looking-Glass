@@ -1,8 +1,8 @@
 package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.LookingGlassClient;
-import azzy.fabric.lookingglass.util.client.RenderCache;
 import azzy.fabric.lookingglass.blockentity.ProjectorEntity;
+import azzy.fabric.lookingglass.util.client.RenderCache;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -16,8 +16,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

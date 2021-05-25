@@ -7,13 +7,11 @@ import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
 
 import static net.minecraft.state.property.Properties.LIT;

@@ -23,7 +23,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class FishBreederBlock extends LookingGlassBlock implements BlockEntityProvider {
 

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "lookingglass:block/salt_lamp_enchanted_floored"
+    },
+    "hanging=true": {
+      "model": "lookingglass:block/salt_lamp_enchanted_hanging"
+    }
+  }
+}

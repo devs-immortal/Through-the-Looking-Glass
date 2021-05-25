@@ -1,7 +1,6 @@
 package azzy.fabric.lookingglass.mixin;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.WitherRoseBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

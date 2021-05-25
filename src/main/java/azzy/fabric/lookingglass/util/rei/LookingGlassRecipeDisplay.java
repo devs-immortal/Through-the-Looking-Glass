@@ -1,9 +1,6 @@
 package azzy.fabric.lookingglass.util.rei;
 
-import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipe;
-import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
-import com.google.common.collect.ImmutableList;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeDisplay;
 import me.shedaniel.rei.utils.CollectionUtils;

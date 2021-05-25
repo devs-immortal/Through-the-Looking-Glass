@@ -1,12 +1,7 @@
 package azzy.fabric.lookingglass.biome;
 
-import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.gen.chunk.ChunkGenerator;

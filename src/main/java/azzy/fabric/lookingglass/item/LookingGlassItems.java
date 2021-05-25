@@ -1,8 +1,6 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.incubus_core.datagen.ModelJsonGen;
-import azzy.fabric.lookingglass.LookingGlassCommon;
-import azzy.fabric.lookingglass.block.EclipseRoseBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
@@ -14,7 +12,8 @@ import dev.emi.trinkets.api.TrinketSlots;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.*;
+import net.minecraft.item.FoodComponent;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
