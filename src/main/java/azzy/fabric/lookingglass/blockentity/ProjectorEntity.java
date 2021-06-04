@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -21,6 +21,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,8 +35,8 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     public String sign, url, color;
     public DefaultedList<ItemStack> inventory;
 
-    public ProjectorEntity() {
-        super(PROJECTORENTITY);
+    public ProjectorEntity(BlockPos pos, BlockState state) {
+        super(PROJECTORENTITY, pos, state);
         inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
         displayState = 0;
         sign = "";
@@ -51,8 +52,8 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, inventory);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        Inventories.writeNbt(tag, inventory);
 
         tag.putDouble("rotX", rotX);
         tag.putDouble("rotY", rotY);
@@ -67,7 +68,7 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         tag.putString("image", url);
 
         tag.putInt("state", displayState);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     public void setUrl(String url) {
@@ -75,8 +76,8 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        Inventories.fromTag(tag, inventory);
+    public void readNbt(NbtCompound tag) {
+        Inventories.readNbt(tag, inventory);
 
         rotX = tag.getDouble("rotX");
         rotY = tag.getDouble("rotY");
@@ -91,12 +92,12 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
         url = tag.getString("image");
 
         displayState = tag.getInt("state");
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        Inventories.toTag(compoundTag, inventory);
+    public NbtCompound toClientTag(NbtCompound compoundTag) {
+        Inventories.writeNbt(compoundTag, inventory);
         compoundTag.putDouble("rotX", rotX);
         compoundTag.putDouble("rotY", rotY);
         compoundTag.putDouble("rotZ", rotZ);
@@ -114,13 +115,8 @@ public class ProjectorEntity extends BlockEntity implements BlockEntityClientSer
     }
 
     @Override
-    public double getSquaredRenderDistance() {
-        return 2048D;
-    }
-
-    @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        Inventories.fromTag(compoundTag, inventory);
+    public void fromClientTag(NbtCompound compoundTag) {
+        Inventories.readNbt(compoundTag, inventory);
         rotX = compoundTag.getDouble("rotX");
         rotY = compoundTag.getDouble("rotY");
         rotZ = compoundTag.getDouble("rotZ");

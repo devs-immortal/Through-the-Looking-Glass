@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import static azzy.fabric.lookingglass.item.LookingGlassItems.DATA_SHARD;
 
@@ -42,8 +43,9 @@ public class WormholeBlock extends LookingGlassBlock implements BlockEntityProvi
         return Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 5.0, 14.0);
     }
 
+    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new WormholeEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new WormholeEntity(pos, state);
     }
 }

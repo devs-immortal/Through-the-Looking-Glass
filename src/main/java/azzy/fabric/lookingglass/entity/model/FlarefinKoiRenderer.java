@@ -5,9 +5,9 @@ import azzy.fabric.lookingglass.entity.FlarefinKoiEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3f;
 
 public class FlarefinKoiRenderer extends MobEntityRenderer<FlarefinKoiEntity, FlarefinKoiModel> {
 
@@ -27,10 +27,10 @@ public class FlarefinKoiRenderer extends MobEntityRenderer<FlarefinKoiEntity, Fl
         super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
         if(entity.getAir() <= 20) {
             float i = 4.3F * MathHelper.sin(0.6F * animationProgress);
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(i));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(i));
             if (!entity.isTouchingWater()) {
                 matrices.translate(0.10000000149011612D, 0.10000000149011612D, -0.10000000149011612D);
-                matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
             }
         }
     }

@@ -5,11 +5,13 @@ import azzy.fabric.lookingglass.gui.GrinderGuiDescription;
 import azzy.fabric.lookingglass.recipe.GrindingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -22,8 +24,8 @@ public class GrinderEntity extends LookingGlassUpgradeableMachine implements Pro
     private GrindingRecipe trackedRecipe;
     private int progress;
 
-    public GrinderEntity() {
-        super(LookingGlassBlocks.GRINDER_ENTITY, LookingGlassRecipes.GRINDING_RECIPE, MachineTier.BASIC, 3, 200, 1000, 4);
+    public GrinderEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.GRINDER_ENTITY, pos, state, LookingGlassRecipes.GRINDING_RECIPE, MachineTier.BASIC, 3, 200, 1000, 4);
     }
 
     @Override

@@ -11,7 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
@@ -66,15 +66,15 @@ public class SpecialAnnulationCoreEntity extends BlockEntity implements Inventor
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, inv);
-        return super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        Inventories.writeNbt(tag, inv);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        Inventories.fromTag(tag, inv);
-        super.fromTag(state, tag);
+    public void readNbt(BlockState state, NbtCompound tag) {
+        Inventories.readNbt(tag, inv);
+        super.readNbt(state, tag);
     }
 
     @Override

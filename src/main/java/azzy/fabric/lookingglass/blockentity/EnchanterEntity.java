@@ -4,8 +4,9 @@ import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public class EnchanterEntity extends LookingGlassMachine {
@@ -14,8 +15,8 @@ public class EnchanterEntity extends LookingGlassMachine {
     private float totalEnchantingPower;
     private boolean active;
 
-    public EnchanterEntity() {
-        super(LookingGlassBlocks.ENCHANTER_ENTITY, MachineTier.ADVANCED, 2, 1000);
+    public EnchanterEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.ENCHANTER_ENTITY, pos, state, MachineTier.ADVANCED, 2, 1000);
     }
 
     @Override
@@ -35,12 +36,12 @@ public class EnchanterEntity extends LookingGlassMachine {
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        return super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
     }
 }

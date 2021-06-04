@@ -8,8 +8,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3f;
 
 public class DisplayPedestalRenderer extends BlockEntityRenderer<DisplayPedestalEntity> {
     public DisplayPedestalRenderer(BlockEntityRenderDispatcher dispatcher) {
@@ -32,7 +32,7 @@ public class DisplayPedestalRenderer extends BlockEntityRenderer<DisplayPedestal
         matrices.translate(0.5, 1.25 + offset, 0.5);
 
         // Rotate the item
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 4));
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 4));
         int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
         MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers);
         matrices.pop();

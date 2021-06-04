@@ -14,10 +14,16 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class SuffuserBlock extends HorizontalMachineBlock implements BlockEntityProvider {
+public class SuffuserBlock extends HorizontalMachineBlock {
 
     public SuffuserBlock(Settings settings) {
         super(settings, false, 13);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new SuffuserEntity(pos, state);
     }
 
     @Override
@@ -46,11 +52,5 @@ public class SuffuserBlock extends HorizontalMachineBlock implements BlockEntity
             }
         }
         return super.onUse(state, world, pos, player, hand, hit);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new SuffuserEntity();
     }
 }

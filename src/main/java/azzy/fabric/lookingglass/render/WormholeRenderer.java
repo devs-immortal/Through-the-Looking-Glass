@@ -8,8 +8,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.EndPortalBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {
@@ -32,9 +32,9 @@ public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {
             matrices.push();
             matrices.translate(0.5, 2.0 + Math.sin((world.getTime() - offset + tickDelta) / 5) / 2, 0.5);
             matrices.scale(0.15F, 0.15F, 0.15F);
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + offset + tickDelta)));
-            matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((world.getTime() * 2 + offset + tickDelta)));
-            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((world.getTime() * 7 - offset + tickDelta)));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + offset + tickDelta)));
+            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((world.getTime() * 2 + offset + tickDelta)));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((world.getTime() * 7 - offset + tickDelta)));
             matrices.scale(scale, scale, scale);
 
             RenderHelper.renderVCNCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.getPortalLayer(EndPortalBlockEntityRenderer.PORTAL_TEXTURE, 1)), 255, 255, 255, alpha);

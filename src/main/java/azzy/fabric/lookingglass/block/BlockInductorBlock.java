@@ -98,7 +98,7 @@ public class BlockInductorBlock extends AbstractInductorBlock implements FalseIn
         for(; max >= 1; max--) {
             BlockPos probePos = pos.offset(facing, max);
             BlockPos offPos = probePos.offset(facing);
-            if(world.isChunkLoaded(probePos.getX() >> 4, probePos.getZ() >> 4) && world.isAir(offPos) && World.isInBuildLimit(offPos) && border.contains(offPos)) {
+            if(world.isChunkLoaded(probePos.getX() >> 4, probePos.getZ() >> 4) && world.isAir(offPos) && world.isInBuildLimit(offPos) && border.contains(offPos)) {
                 BlockState state = world.getBlockState(probePos);
                 BlockEntity entity = world.getBlockEntity(probePos);
                 if(!(state.getHardness(world, probePos) < 0.0F || state.isAir() || state.getFluidState() != Fluids.EMPTY.getDefaultState())) {

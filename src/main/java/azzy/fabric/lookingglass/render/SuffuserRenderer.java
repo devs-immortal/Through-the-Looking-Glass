@@ -8,8 +8,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 public class SuffuserRenderer extends BlockEntityRenderer<SuffuserEntity> {
@@ -26,7 +26,7 @@ public class SuffuserRenderer extends BlockEntityRenderer<SuffuserEntity> {
         if(world != null && !stack.isEmpty()) {
             matrices.push();
             matrices.translate(0.5, 1.334F + Math.sin((world.getTime() + tickDelta) / 24F) / 8F, 0.5);
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 12F));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((world.getTime() + tickDelta) * 12F));
             MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, WorldRenderer.getLightmapCoordinates(world, entity.getPos().up()), overlay, matrices, vertexConsumers);
             matrices.pop();
         }

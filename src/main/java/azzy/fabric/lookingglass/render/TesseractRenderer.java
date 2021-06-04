@@ -10,8 +10,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class TesseractRenderer<T extends TesseractRenderable> extends BlockEntityRenderer {
@@ -33,8 +33,8 @@ public class TesseractRenderer<T extends TesseractRenderable> extends BlockEntit
                 float verDegs = (float) Math.toDegrees(Math.atan(pos.y / horComp));
                 if(!(pos.z < 0))
                     verDegs = -verDegs;
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(horDegs));
-                matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(verDegs));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(horDegs));
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(verDegs));
                 MinecraftClient.getInstance().getItemRenderer().renderItem(((TesseractRenderable) entity).getCoreItem(), ModelTransformation.Mode.NONE, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE, overlay, matrices, vertexConsumers);
                 matrices.pop();
             }
@@ -42,9 +42,9 @@ public class TesseractRenderer<T extends TesseractRenderable> extends BlockEntit
             matrices.push();
             matrices.translate(0.5, 0.5, 0.5);
             matrices.scale(0.45F, 0.45F, 0.45F);
-            matrices.multiply(Vector3f.NEGATIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 2F));
-            matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(45));
-            matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(45));
+            matrices.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 2F));
+            matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(45));
+            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(45));
             Triple<Integer, Integer, Integer> color = ((TesseractRenderable) entity).getColor();
             RenderHelper.renderVCNCuboid(matrices, vertexConsumers.getBuffer(TTLGRenderLayers.FLAT_BLOOM), color.getLeft(), color.getMiddle(), color.getRight(), 150);
             matrices.pop();

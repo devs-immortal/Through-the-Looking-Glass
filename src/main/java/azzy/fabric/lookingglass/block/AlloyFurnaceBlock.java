@@ -1,11 +1,14 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.AlloyFurnaceEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -24,15 +27,21 @@ import java.util.Random;
 import static net.minecraft.state.property.Properties.HORIZONTAL_FACING;
 import static net.minecraft.state.property.Properties.LIT;
 
-public class AlloyFurnaceBlock extends HorizontalMachineBlock implements BlockEntityProvider {
+public class AlloyFurnaceBlock extends HorizontalMachineBlock {
 
     public AlloyFurnaceBlock(Settings settings) {
         super(settings, false, 9);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new AlloyFurnaceEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new AlloyFurnaceEntity(pos, state);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return LookingGlassBE::tickStatic;
     }
 
     @Override

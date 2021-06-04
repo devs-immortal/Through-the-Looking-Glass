@@ -30,9 +30,10 @@ public class PoweredFurnaceBlock extends HorizontalMachineBlock implements Block
         super(settings, false, 13);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new PoweredFurnaceEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new PoweredFurnaceEntity(pos, state);
     }
 
     @Override

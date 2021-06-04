@@ -62,7 +62,7 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
     }
 
     @Override
-    public ItemStack getRecipeKindIcon() {
+    public ItemStack createIcon() {
         return new ItemStack(LookingGlassBlocks.BLOCK_INDUCTOR_BLOCK);
     }
 

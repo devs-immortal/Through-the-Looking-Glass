@@ -5,7 +5,8 @@ import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
     private double power;
 
 
-    public PowerPipeEntity(BlockEntityType type, double transferRate) {
-        super(type, EnergyApi.SIDED, true);
+    public PowerPipeEntity(BlockEntityType type, BlockPos pos, BlockState state, double transferRate) {
+        super(type, pos, state, EnergyApi.SIDED, true);
         this.maxPower = transferRate * 2.0;
         this.transferRate = transferRate;
     }
@@ -123,24 +124,24 @@ public class PowerPipeEntity extends BasePipeEntity<EnergyIo> implements EnergyI
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         tag.putDouble("power", power);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void readNbt(NbtCompound tag) {
         power = tag.getDouble("power");
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         power = tag.getDouble("power");
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
+    public NbtCompound toClientTag(NbtCompound tag) {
         tag.putDouble("power", power);
         return tag;
     }

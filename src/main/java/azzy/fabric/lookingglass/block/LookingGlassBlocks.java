@@ -4,12 +4,14 @@ import azzy.fabric.incubus_core.datagen.BSJsonGen;
 import azzy.fabric.incubus_core.datagen.LootGen;
 import azzy.fabric.incubus_core.datagen.ModelJsonGen;
 import azzy.fabric.incubus_core.datagen.RecipeJsonGen;
+import azzy.fabric.lookingglass.block.LookingGlassBlocks.SingletType;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -118,14 +120,14 @@ public class LookingGlassBlocks {
     public static final Block TALL_RED_SEAGRASS = registerBlock("tall_red_seagrass", new TallSeagrassBlock(FabricBlockSettings.copyOf(RED_SEAGRASS)), basicItem(), false);
 
     //Decorative
-    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MaterialColor.DIRT), basicItem(), Items.AIR, false);
+    public static final Block[] ADOBE_BRICK_SET = registerBuildingBlocks("adobe_bricks", FabricBlockSettings.copyOf(Blocks.BRICKS).materialColor(MapColor.DIRT_BROWN), basicItem(), Items.AIR, false);
     public static final Block[] GOLD_BRICK_SET = registerBuildingBlocks("gold_bricks", FabricBlockSettings.copyOf(Blocks.GOLD_BLOCK).sounds(BlockSoundGroup.CHAIN), genericItem(Rarity.UNCOMMON, 64), Items.GOLD_INGOT, false);
     public static final Block[] SAND_BRICK_SET = registerBuildingBlocks("sand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SAND), basicItem(), Items.AIR, false);
     public static final Block[] SOULSAND_BRICK_SET = registerBuildingBlocks("soulsand_bricks", FabricBlockSettings.copyOf(Blocks.SANDSTONE).sounds(BlockSoundGroup.SOUL_SAND), basicItem(), Items.AIR, false);
     public static final Block WHITEDUST = registerBlock("whitedust", new SandBlock(0xd5c2ba, FabricBlockSettings.copyOf(Blocks.SAND)), basicItem());
-    public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MaterialColor.WHITE)), basicItem());
+    public static final Block WHITESTONE_BLOCK = registerBlock("whitestone", new Block(FabricBlockSettings.copyOf(Blocks.STONE).sounds(BlockSoundGroup.BONE).materialColor(MapColor.WHITE)), basicItem());
     public static final Block BRINE_FISSURE = registerBlock("brine_fissure", new BrineFissureBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).ticksRandomly().luminance(5).postProcess((state, world, pos) -> true).allowsSpawning((state, world, pos, type) -> false)), basicItem());
-    public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MaterialColor.WHITE)), basicItem());
+    public static final Block SALT_CLUSTER_BLOCK = registerBlock("salt_cluster_block", new PillarBlock(FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GLASS).materialColor(MapColor.WHITE)), basicItem());
     public static final Block SALT_LAMP = registerBlock("salt_lamp", new SaltLampBlock(FabricBlockSettings.copyOf(Blocks.LANTERN).nonOpaque().luminance(15)), basicItem());
     public static final Block ENCHANTED_SALT_LAMP = registerBlock("salt_lamp_enchanted", new EnchantedSaltLampBlock(FabricBlockSettings.copyOf(SALT_LAMP)), genericItem(Rarity.EPIC, 64));
     public static final Block WHITESTONE_CRACKED = registerBlock("cracked_whitestone", new SandBlock(0x8a706b, FabricBlockSettings.copyOf(WHITESTONE_BLOCK).sounds(BlockSoundGroup.GILDED_BLACKSTONE)), basicItem());
@@ -333,8 +335,8 @@ public class LookingGlassBlocks {
         RecipeJsonGen.genWallRecipe(METADATA, baseName + "_walls", blocks[0].asItem(), blocks[3].asItem(), 6);
     }
 
-    private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, Supplier<T> item, Block block) {
-        return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, name), BlockEntityType.Builder.create(item, block).build(null));
+    private static <T extends BlockEntity> BlockEntityType<T> registerEntity(String name, FabricBlockEntityTypeBuilder.Factory<T> item, Block block) {
+        return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, name), FabricBlockEntityTypeBuilder.create(item, block).build(null));
     }
 
     enum SingletType {

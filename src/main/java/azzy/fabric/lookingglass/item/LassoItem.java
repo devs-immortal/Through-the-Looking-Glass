@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -71,7 +71,7 @@ public class LassoItem extends Item {
 
         ServerWorld world = (ServerWorld) genericWorld;
         ItemStack itemStack = context.getStack();
-        CompoundTag stackTag = itemStack.getSubTag(MOB_KEY);
+        NbtCompound stackTag = itemStack.getSubTag(MOB_KEY);
 
         if (stackTag == null) {
             return ActionResult.PASS;
@@ -137,7 +137,7 @@ public class LassoItem extends Item {
 
         // If we use the ItemStack that's been provided, the lasso won't work in creative.
         // Because, in creative mode, we get a copy of the itemstack that the user is wielding, not the actual itemstack.
-        CompoundTag stackTag = stack.getOrCreateSubTag(MOB_KEY);
+        NbtCompound stackTag = stack.getOrCreateSubTag(MOB_KEY);
         EntityType entityType = entity.getType();
         Identifier entityId = Registry.ENTITY_TYPE.getId(entityType);
         float currentHealth = entity.getHealth();
@@ -162,7 +162,7 @@ public class LassoItem extends Item {
      */
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        CompoundTag stackTag = stack.getSubTag(MOB_KEY);
+        NbtCompound stackTag = stack.getSubTag(MOB_KEY);
         if (stackTag == null)
             return;
 

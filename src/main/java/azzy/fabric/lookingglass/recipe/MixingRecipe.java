@@ -76,12 +76,12 @@ public class MixingRecipe implements LookingGlassRecipe<MixerEntity> {
     }
 
     @Override
-    public ItemStack getRecipeKindIcon() {
+    public ItemStack createIcon() {
         return new ItemStack(LookingGlassBlocks.MIXER_BLOCK);
     }
 
     @Override
-    public DefaultedList<Ingredient> getPreviewInputs() {
+    public DefaultedList<Ingredient> getIngredients() {
         return IngredientStack.listIngredients(ingredients);
     }
 

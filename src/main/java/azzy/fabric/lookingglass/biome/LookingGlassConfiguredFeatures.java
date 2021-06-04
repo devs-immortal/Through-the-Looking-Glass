@@ -70,7 +70,7 @@ public class LookingGlassConfiguredFeatures {
 
     private static <FC extends FeatureConfig> RegistryFeature<FC, ?> register(String id, ConfiguredFeature<FC, ?> configuredFeature) {
         Identifier registeredID = new Identifier(LookingGlassCommon.MODID, id);
-        return new RegistryFeature<>(Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, registeredID, configuredFeature), RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, registeredID));
+        return new RegistryFeature<>(Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, registeredID, configuredFeature), RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY, registeredID));
     }
 
     public static class Configs {

@@ -5,11 +5,13 @@ import azzy.fabric.lookingglass.gui.AlloyingFurnaceGuiDescription;
 import azzy.fabric.lookingglass.recipe.AlloyingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -21,8 +23,8 @@ public class AlloyFurnaceEntity extends LookingGlassUpgradeableMachine implement
     private AlloyingRecipe trackedRecipe;
     private int progress;
 
-    public AlloyFurnaceEntity() {
-        super(LookingGlassBlocks.ALLOY_FURNACE_ENTITY, null, MachineTier.BASIC, 3, 200, 1000, 2);
+    public AlloyFurnaceEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.ALLOY_FURNACE_ENTITY, pos, state, null, MachineTier.BASIC, 3, 200, 1000, 2);
     }
 
     @Override

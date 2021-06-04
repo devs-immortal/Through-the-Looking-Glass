@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 import java.util.*;
@@ -23,8 +24,8 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
     protected final Direction[] directions = Direction.values();
     protected boolean ticked;
 
-    public BasePipeEntity(BlockEntityType<?> type, BlockApiLookup<T, Direction> lookup, boolean strict) {
-        super(type);
+    public BasePipeEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, BlockApiLookup<T, Direction> lookup, boolean strict) {
+        super(type, pos, state);
         this.lookup = lookup;
         this.strict = strict;
     }

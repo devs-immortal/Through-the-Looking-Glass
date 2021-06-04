@@ -9,9 +9,11 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class LookingGlassBE extends BlockEntity implements SidedInventory, InventoryWrapper, BlockEntityClientSerializable {
@@ -19,31 +21,37 @@ public abstract class LookingGlassBE extends BlockEntity implements SidedInvento
     protected final int offset = LookingGlassCommon.RANDOM.nextInt(20);
     protected DefaultedList<ItemStack> inventory;
 
-    public LookingGlassBE(BlockEntityType<?> type, int invSize) {
-        super(type);
+    public LookingGlassBE(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
+        super(type, pos, state);
         inventory = DefaultedList.ofSize(invSize, ItemStack.EMPTY);
     }
 
-    @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, inventory);
-        return super.toTag(tag);
+    public abstract void tick();
+
+    public static <T extends BlockEntity> void tickStatic(World world, BlockPos pos, BlockState state, T t) {
+        ((LookingGlassBE) t).tick();
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        Inventories.fromTag(tag, inventory);
-        super.fromTag(state, tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        Inventories.writeNbt(tag, inventory);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
-        Inventories.fromTag(tag, inventory);
+    public void readNbt(NbtCompound tag) {
+        Inventories.readNbt(tag, inventory);
+        super.readNbt(tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
-        Inventories.toTag(tag, inventory);
+    public void fromClientTag(NbtCompound tag) {
+        Inventories.readNbt(tag, inventory);
+    }
+
+    @Override
+    public NbtCompound toClientTag(NbtCompound tag) {
+        Inventories.writeNbt(tag, inventory);
         return tag;
     }
 
@@ -73,7 +81,7 @@ public abstract class LookingGlassBE extends BlockEntity implements SidedInvento
 
     @Override
     public ItemStack getStack(int slot) {
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             markDirty();
             sync();
         }
@@ -83,7 +91,7 @@ public abstract class LookingGlassBE extends BlockEntity implements SidedInvento
     @Override
     public void setStack(int slot, ItemStack stack) {
         InventoryWrapper.super.setStack(slot, stack);
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             markDirty();
             sync();
         }
@@ -91,7 +99,7 @@ public abstract class LookingGlassBE extends BlockEntity implements SidedInvento
 
     @Override
     public ItemStack removeStack(int slot, int count) {
-        if(!world.isClient()) {
+        if(world != null && !world.isClient()) {
             markDirty();
             sync();
         }

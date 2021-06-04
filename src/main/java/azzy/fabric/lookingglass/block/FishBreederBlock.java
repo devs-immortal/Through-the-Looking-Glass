@@ -85,7 +85,7 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
                                 if(world.isWater(spawnPos)) {
                                     world.spawnParticles(ParticleTypes.HEART, fishEntity.getX(), fishEntity.getY(), fishEntity.getZ(), 3 + random.nextInt(4), 0, 0, 0, 0.05);
                                     CodEntity codEntity = EntityType.COD.create(world);
-                                    codEntity.updatePosition(spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5);
+                                    codEntity.setPosition(spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5);
                                     codEntity.setFromBucket(true);
                                     world.spawnEntity(codEntity);
                                 }
@@ -98,7 +98,7 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
                                 if(world.isWater(spawnPos)) {
                                     world.spawnParticles(ParticleTypes.HEART, fishEntity.getX(), fishEntity.getY(), fishEntity.getZ(), 3 + random.nextInt(4), 0, 0, 0, 0.05);
                                     TropicalFishEntity tropEntity = EntityType.TROPICAL_FISH.create(world);
-                                    tropEntity.updatePosition(spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5);
+                                    tropEntity.setPosition(spawnPos.getX() + 0.5, spawnPos.getY() + 0.5, spawnPos.getZ() + 0.5);
                                     tropEntity.setFromBucket(true);
                                     world.spawnEntity(tropEntity);
                                 }

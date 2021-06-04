@@ -13,15 +13,16 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class GrinderBlock extends HorizontalMachineBlock implements BlockEntityProvider {
+public class GrinderBlock extends HorizontalMachineBlock {
 
     public GrinderBlock(Settings settings) {
         super(settings, false, 0);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new GrinderEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new GrinderEntity(pos, state);
     }
 
     @Override

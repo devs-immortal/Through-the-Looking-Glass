@@ -4,7 +4,7 @@ import azzy.fabric.lookingglass.block.DiodeBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Tickable;
 
@@ -76,12 +76,12 @@ public class DiodeEntity extends BlockEntity implements Tickable {
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        return super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(BlockState state, NbtCompound tag) {
+        super.readNbt(state, tag);
     }
 }

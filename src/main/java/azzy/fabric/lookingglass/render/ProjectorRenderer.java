@@ -9,11 +9,11 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -32,14 +33,13 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
+public class ProjectorRenderer implements BlockEntityRenderer<ProjectorEntity> {
 
     //hoi
     private RenderLayer renderLayer;
     private NativeImageBackedTexture texture = null;
 
-    public ProjectorRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public ProjectorRenderer(BlockEntityRendererFactory.Context context) {
     }
 
     @Override
@@ -56,9 +56,9 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         matrices.push();
 
         matrices.translate(blockEntity.disX, blockEntity.disY, blockEntity.disZ);
-        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((float) blockEntity.rotX));
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((float) blockEntity.rotY));
-        matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((float) blockEntity.rotZ));
+        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((float) blockEntity.rotX));
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((float) blockEntity.rotY));
+        matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((float) blockEntity.rotZ));
         matrices.scale((float) blockEntity.scale, (float) blockEntity.scale, (float) blockEntity.scale);
 
         if (blockEntity.displayState == 0) {
@@ -119,18 +119,18 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
             if(texture.getImage() != null) {
                 matrices.scale(1, ((float) texture.getImage().getHeight()) / texture.getImage().getWidth(), 1);
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180F));
-                matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180F));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180F));
+                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180F));
                 matrices.translate(0, -1, 0);
                 consumer.vertex(matrix.getModel(), 0, 1, 0).color(255, 255, 255, 255).texture(1, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
                 consumer.vertex(matrix.getModel(), 0, 0, 0).color(255, 255, 255, 255).texture(1, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
                 consumer.vertex(matrix.getModel(), 1, 0, 0).color(255, 255, 255, 255).texture(0, 0).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
                 consumer.vertex(matrix.getModel(), 1, 1, 0).color(255, 255, 255, 255).texture(0, 1).light(14680160).normal(matrix.getNormal(), 1, 1, 1).next();
 
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-180F));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-180F));
             }
 
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 
             Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).apply(new Identifier("minecraft:block/obsidian"));
             VertexConsumer backface = vertexConsumers.getBuffer(RenderLayer.getSolid());
@@ -153,8 +153,8 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
         else if(blockEntity.displayState == 2){
             matrices.scale(0.1f, 0.1f, 0.1f);
             matrices.translate(0, 2f, 0);
-            matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
             try {
                 MinecraftClient.getInstance().textRenderer.draw(matrices, blockEntity.sign, -(blockEntity.sign.length() * 6f) / 2f, 0f, Integer.parseInt(blockEntity.color.replace("0x", ""), 16));
             } catch(Exception suckItTrollzer) {}
@@ -194,14 +194,14 @@ public class ProjectorRenderer extends BlockEntityRenderer<ProjectorEntity> {
 
         matrices.translate(0.5, 1 + offset, 0.5);
         matrices.scale(0.2f, 0.2f, 0.2f);
-        matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
-        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
         MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
-        matrices.multiply(Vector3f.NEGATIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
-        matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
+        matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
         MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
-        matrices.multiply(Vector3f.NEGATIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
-        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 1));
+        matrices.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
+        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 1));
         MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
 
         matrices.pop();

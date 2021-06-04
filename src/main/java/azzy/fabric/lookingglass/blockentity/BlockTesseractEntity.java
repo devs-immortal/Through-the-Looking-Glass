@@ -11,7 +11,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -117,17 +117,17 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         if(movePos != null)
             tag.putLong("target", movePos.asLong());
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void readNbt(BlockState state, NbtCompound tag) {
         if(tag.contains("target"))
             movePos = BlockPos.fromLong(tag.getLong("target"));
-        super.fromTag(state, tag);
+        super.readNbt(state, tag);
     }
 
     @Override
@@ -151,14 +151,14 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
+    public NbtCompound toClientTag(NbtCompound tag) {
         if(movePos != null)
             tag.putLong("target", movePos.asLong());
         return tag;
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         if(tag.contains("target"))
             movePos = BlockPos.fromLong(tag.getLong("target"));
     }

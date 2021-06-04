@@ -76,7 +76,7 @@ public class LookingGlassCommon implements ModInitializer {
 			}
 
 			@Override
-			public void apply(ResourceManager manager) {
+			public void reload(ResourceManager manager) {
 				LookingGlassJsonManager.load(manager);
 			}
 		});

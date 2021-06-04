@@ -34,7 +34,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @Inject(method = {"onKilledOther"}, at = {@At("HEAD")}, cancellable = true)
     public void onKilledOther(ServerWorld serverWorld, LivingEntity livingEntity, CallbackInfo ci) {
-        List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.GRASS_PATH, Blocks.COARSE_DIRT);
+        List<Block> CURSING_ELIGIBLE_BLOCKS = Arrays.asList(Blocks.DIRT, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.SAND, Blocks.DIRT_PATH, Blocks.COARSE_DIRT);
 
         BlockPos enchanterPos = livingEntity.getBlockPos();
         BlockState enchanterBlockState = serverWorld.getBlockState(enchanterPos);

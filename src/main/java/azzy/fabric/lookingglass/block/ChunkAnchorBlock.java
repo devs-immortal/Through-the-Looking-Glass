@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -81,8 +82,9 @@ public class ChunkAnchorBlock extends LookingGlassBlock implements BlockEntityPr
         return SHAPE;
     }
 
+    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new ChunkAnchorEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new ChunkAnchorEntity(pos, state);
     }
 }

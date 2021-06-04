@@ -5,25 +5,25 @@ import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class LookingGlassMachine extends LookingGlassBE implements Tickable, EnergyIo, NamedScreenHandlerFactory {
+public abstract class LookingGlassMachine extends LookingGlassBE implements EnergyIo, NamedScreenHandlerFactory {
 
     protected final MachineTier machineTier;
     protected final double baseMaxPower;
     protected double power;
 
-    public LookingGlassMachine(BlockEntityType<?> type, MachineTier tier, int invSize, double baseMaxPower) {
-        super(type, invSize);
+    public LookingGlassMachine(BlockEntityType<?> type, BlockPos pos, BlockState state, MachineTier tier, int invSize, double baseMaxPower) {
+        super(type, pos, state, invSize);
         this.machineTier = tier;
         this.baseMaxPower = baseMaxPower;
     }
@@ -82,25 +82,25 @@ public abstract class LookingGlassMachine extends LookingGlassBE implements Tick
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         tag.putDouble("power", power);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void readNbt(NbtCompound tag) {
         power = tag.getDouble("power");
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         power = tag.getDouble("power");
         super.fromClientTag(tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
+    public NbtCompound toClientTag(NbtCompound tag) {
         tag.putDouble("power", power);
         return super.toClientTag(tag);
     }

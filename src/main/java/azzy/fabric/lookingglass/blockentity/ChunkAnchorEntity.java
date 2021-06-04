@@ -6,12 +6,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static azzy.fabric.lookingglass.block.LookingGlassBlocks.CHUNKLOADER_ENTITY;
 
-public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity, BlockEntityClientSerializable, InventoryWrapper, Tickable {
+public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity, BlockEntityClientSerializable, InventoryWrapper {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private Set<ChunkPos> loadedChunks = new HashSet<>();
@@ -28,8 +28,8 @@ public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity,
     private BlockPos lastPos;
     private int lastRadius;
 
-    public ChunkAnchorEntity() {
-        super(CHUNKLOADER_ENTITY);
+    public ChunkAnchorEntity(BlockPos pos, BlockState state) {
+        super(CHUNKLOADER_ENTITY, pos, state);
         lastRadius = 0;
         lastPos = pos;
     }
@@ -39,7 +39,6 @@ public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity,
         return inventory;
     }
 
-    @Override
     public void tick() {
         if(world.isClient())
             return;
@@ -59,6 +58,10 @@ public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity,
         else if(lastRadius != 0){
             lastRadius = 0;
         }
+    }
+
+    public static <T extends BlockEntity> void tickStatic(World world, BlockPos pos, BlockState state, T t) {
+        ((ChunkAnchorEntity) t).tick();
     }
 
     public void recalcChunks(int radius, ServerWorld world, LoadAction action) {
@@ -142,17 +145,12 @@ public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity,
     }
 
     @Override
-    public double getSquaredRenderDistance() {
-        return 128;
-    }
-
-    @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, inventory);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        Inventories.writeNbt(tag, inventory);
         tag.putBoolean("check", check);
         tag.putInt("radius", lastRadius);
         tag.putLong("lastPos", lastPos.asLong());
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     public void requestCheck() {
@@ -170,22 +168,22 @@ public class ChunkAnchorEntity extends BlockEntity implements ChunkLoaderEntity,
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        Inventories.fromTag(tag, inventory);
+    public void readNbt(NbtCompound tag) {
+        Inventories.readNbt(tag, inventory);
         check = tag.getBoolean("check");
         lastRadius = tag.getInt("radius");
         lastPos = BlockPos.fromLong(tag.getLong("lastPos"));
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        Inventories.fromTag(compoundTag, inventory);
+    public void fromClientTag(NbtCompound compoundTag) {
+        Inventories.readNbt(compoundTag, inventory);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        Inventories.toTag(compoundTag, inventory);
+    public NbtCompound toClientTag(NbtCompound compoundTag) {
+        Inventories.writeNbt(compoundTag, inventory);
         return compoundTag;
     }
 }

@@ -19,6 +19,8 @@ import java.util.concurrent.Future;
 import static azzy.fabric.lookingglass.LookingGlassClient.textureIdCounter;
 import static azzy.fabric.lookingglass.LookingGlassCommon.MODID;
 
+import azzy.fabric.lookingglass.util.client.RenderCache.MirrorFuture;
+
 public class RenderCache {
 
     private static HashMap<String, MirrorFuture<AbstractTexture>> futureCache;

@@ -6,7 +6,7 @@ import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
@@ -16,8 +16,8 @@ public class SuffuserEntity extends LookingGlassUpgradeableMachine implements En
     private int range;
     private int enchantingPower;
 
-    public SuffuserEntity() {
-        super(LookingGlassBlocks.SUFFUSER_ENTITY, null, MachineTier.ADVANCED, 1, 1, 5000, 1);
+    public SuffuserEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.SUFFUSER_ENTITY, pos, state, null, MachineTier.ADVANCED, 1, 1, 5000, 1);
     }
 
 
@@ -48,16 +48,16 @@ public class SuffuserEntity extends LookingGlassUpgradeableMachine implements En
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         tag.putInt("range", range);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void readNbt(NbtCompound tag) {
         range = tag.getInt("range");
         updateEnchantingPower();
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override

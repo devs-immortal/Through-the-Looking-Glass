@@ -10,7 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
@@ -75,7 +75,7 @@ public class EnergyProbeItem extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         HitResult result = user.raycast(5 + user.getAttributeValue(ReachEntityAttributes.REACH), 1f, false);
         if(result.getType() == HitResult.Type.MISS && user.isSneaking()) {
-            CompoundTag tag = user.getStackInHand(hand).getOrCreateTag();
+            NbtCompound tag = user.getStackInHand(hand).getOrCreateTag();
             if(!tag.contains("mode"))
                 tag.putBoolean("mode", true);
             tag.putBoolean("mode", !tag.getBoolean("mode"));

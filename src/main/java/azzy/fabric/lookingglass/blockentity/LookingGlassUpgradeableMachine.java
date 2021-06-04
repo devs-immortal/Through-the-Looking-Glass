@@ -2,11 +2,13 @@ package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.util.machine.ModifierProvider;
 import azzy.fabric.lookingglass.util.machine.RecipeConversionProvider;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,8 +18,8 @@ public abstract class LookingGlassUpgradeableMachine extends LookingGlassMachine
     private final int baseProcessTime;
     private final RecipeType<?> recipeType;
 
-    public LookingGlassUpgradeableMachine(BlockEntityType<?> type, RecipeType<?> recipeType, MachineTier tier, int invSize, int baseProcessTime, double baseMaxPower, double basePowerUsage) {
-        super(type, tier, invSize + 4, baseMaxPower);
+    public LookingGlassUpgradeableMachine(BlockEntityType<?> type, BlockPos pos, BlockState state, RecipeType<?> recipeType, MachineTier tier, int invSize, int baseProcessTime, double baseMaxPower, double basePowerUsage) {
+        super(type, pos, state, tier, invSize + 4, baseMaxPower);
         this.basePowerUsage = basePowerUsage;
         this.baseProcessTime = baseProcessTime;
         this.recipeType = recipeType;

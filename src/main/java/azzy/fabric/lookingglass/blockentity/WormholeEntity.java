@@ -10,12 +10,12 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static azzy.fabric.lookingglass.block.LookingGlassBlocks.WORMHOLE_ENTITY;
 
-public class WormholeEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable, MovementSensitiveBlockEntity {
+public class WormholeEntity extends BlockEntity implements BlockEntityClientSerializable, MovementSensitiveBlockEntity {
 
     private BlockPos out = BlockPos.ORIGIN;
     private WormholeEntity cachedOut;
@@ -43,11 +43,10 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
         }
     };
 
-    public WormholeEntity() {
-        super(WORMHOLE_ENTITY);
+    public WormholeEntity(BlockPos pos, BlockState state) {
+        super(WORMHOLE_ENTITY, pos, state);
     }
 
-    @Override
     public void tick() {
         if(world != null) {
             if(!world.isClient()) {
@@ -80,6 +79,10 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
                 }
             }
         }
+    }
+
+    public static <T extends BlockEntity> void tickStatic(World world, BlockPos pos, BlockState state, T t) {
+        ((WormholeEntity) t).tick();
     }
 
     @Override
@@ -126,30 +129,30 @@ public class WormholeEntity extends BlockEntity implements Tickable, BlockEntity
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         tag.putLong("out", out.asLong());
         tag.putInt("ticks", onTicks);
         tag.putBoolean("valid", valid);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
+    public void readNbt(NbtCompound tag) {
         out = BlockPos.fromLong(tag.getLong("out"));
         onTicks = tag.getInt("ticks");
         valid = tag.getBoolean("valid");
-        super.fromTag(state, tag);
+        super.readNbt(tag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
+    public NbtCompound toClientTag(NbtCompound tag) {
         tag.putInt("ticks", onTicks);
         tag.putBoolean("valid", valid);
         return tag;
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         onTicks = tag.getInt("ticks");
         valid = tag.getBoolean("valid");
     }

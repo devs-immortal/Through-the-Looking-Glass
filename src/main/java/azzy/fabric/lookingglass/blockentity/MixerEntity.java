@@ -5,11 +5,13 @@ import azzy.fabric.lookingglass.gui.MixerGuiDescription;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.recipe.MixingRecipe;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -22,8 +24,8 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
     private MixingRecipe trackedRecipe;
     private int progress;
 
-    public MixerEntity() {
-        super(LookingGlassBlocks.MIXER_ENTITY, LookingGlassRecipes.MIXING_RECIPE, MachineTier.BASIC, 5, 400, 1000, 3);
+    public MixerEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.MIXER_ENTITY, pos, state, LookingGlassRecipes.MIXING_RECIPE, MachineTier.BASIC, 5, 400, 1000, 3);
     }
 
     @Override

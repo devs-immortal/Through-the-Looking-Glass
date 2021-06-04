@@ -126,7 +126,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
                         }
 
                         Block neighbor = world.getBlockState(tmpPos).getBlock();
-                        if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.GRASS_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
+                        if ((neighbor == Blocks.DIRT) || (neighbor == Blocks.GRASS_BLOCK) || (neighbor == Blocks.DIRT_PATH) || (neighbor == Blocks.COARSE_DIRT)) {
                             if (random.nextInt(500) == 0) {
                                 // 1 in 500 chance to turn neighbor into cursed earth.
                                 world.setBlockState(tmpPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
@@ -201,7 +201,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
     private void spawnMobs(ServerWorld world, BlockPos pos, Random random) {
         Biome biome = world.getBiome(pos);
         SpawnSettings spawnSettings = biome.getSpawnSettings();
-        List<SpawnSettings.SpawnEntry> list = spawnSettings.getSpawnEntry(SpawnGroup.MONSTER);
+        List<SpawnSettings.SpawnEntry> list = spawnSettings.getSpawnEntries(SpawnGroup.MONSTER);
 
         if (!list.isEmpty()) {
             SpawnSettings.SpawnEntry spawnEntry = WeightedPicker.getRandom(random, list);

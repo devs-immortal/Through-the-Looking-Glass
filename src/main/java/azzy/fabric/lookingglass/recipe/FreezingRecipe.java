@@ -77,12 +77,12 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
     }
 
     @Override
-    public ItemStack getRecipeKindIcon() {
+    public ItemStack createIcon() {
         return new ItemStack(LookingGlassBlocks.ALLOY_FURNACE_BLOCK);
     }
 
     @Override
-    public DefaultedList<Ingredient> getPreviewInputs() {
+    public DefaultedList<Ingredient> getIngredients() {
         return IngredientStack.listIngredients(Collections.singletonList(input));
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -45,7 +45,7 @@ public class DataShardItem extends Item {
         World world = context.getWorld();
         if(context.getPlayer().isSneaking()) {
             clearNBT(context.getStack());
-            CompoundTag tag = context.getStack().getOrCreateSubTag("data");
+            NbtCompound tag = context.getStack().getOrCreateSubTag("data");
             tag.putLong("pos", pos.asLong());
             tag.putString("id", Registry.BLOCK.getId(world.getBlockState(pos).getBlock()).toString());
             context.getPlayer().getItemCooldownManager().set(this, 5);
@@ -76,7 +76,7 @@ public class DataShardItem extends Item {
 
     public static Optional<?> getData(ItemStack stack, DataType type) {
         if(stack.getOrCreateTag().contains("data")) {
-            CompoundTag data = stack.getSubTag("data");
+            NbtCompound data = stack.getSubTag("data");
             switch (type) {
                 case POS: return Optional.of(data.getLong("pos"));
                 case ID: return Optional.of(data.getString("id"));
@@ -94,7 +94,7 @@ public class DataShardItem extends Item {
         Text text = new LiteralText("§8VVVVVV");
         List<Text> secText = new ArrayList<>();
         if(stack.getOrCreateTag().contains("data")) {
-            CompoundTag data = stack.getSubTag("data");
+            NbtCompound data = stack.getSubTag("data");
             if(data.contains("pos")) {
                 text = new LiteralText("§b" + BlockPos.fromLong(data.getLong("pos")).toShortString());
                 if(data.contains("id")) {
@@ -164,7 +164,7 @@ public class DataShardItem extends Item {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         clearNBT(stack);
-        CompoundTag tag = stack.getOrCreateSubTag("data");
+        NbtCompound tag = stack.getOrCreateSubTag("data");
         if(target instanceof PlayerEntity) {
             tag.putUuid("uuid", target.getUuid());
         }

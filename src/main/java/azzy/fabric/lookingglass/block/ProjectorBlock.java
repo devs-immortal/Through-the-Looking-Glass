@@ -18,6 +18,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class ProjectorBlock extends LookingGlassBlock implements BlockEntityProvider {
 
@@ -69,8 +70,9 @@ public class ProjectorBlock extends LookingGlassBlock implements BlockEntityProv
         return shape;
     }
 
+    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView blockView){
-        return new ProjectorEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new ProjectorEntity(pos, state);
     }
 }

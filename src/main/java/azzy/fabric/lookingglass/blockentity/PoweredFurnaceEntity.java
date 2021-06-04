@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass.blockentity;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -23,8 +25,8 @@ public class PoweredFurnaceEntity extends LookingGlassUpgradeableMachine impleme
     private Recipe trackedRecipe;
     private int progress;
 
-    public PoweredFurnaceEntity() {
-        super(LookingGlassBlocks.POWERED_FURNACE_ENTITY, RecipeType.SMELTING, MachineTier.BASIC, 2, 100, 1000, 2);
+    public PoweredFurnaceEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.POWERED_FURNACE_ENTITY, pos, state, RecipeType.SMELTING, MachineTier.BASIC, 2, 100, 1000, 2);
     }
 
     @Override

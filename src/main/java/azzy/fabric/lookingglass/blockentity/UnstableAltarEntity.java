@@ -9,7 +9,7 @@ import azzy.fabric.lookingglass.vo.UnstableAltarRecipeVO;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
@@ -26,15 +26,15 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
     UnstableAltarRecipeVO unstableAltarRecipeVO = null;
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
         tag.putBoolean("isMultiBlockFormed", isMultiBlockFormed);
         return tag;
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(BlockState state, NbtCompound tag) {
+        super.readNbt(state, tag);
 
         isMultiBlockFormed = tag.getBoolean("isMultiBlockFormed");
     }
