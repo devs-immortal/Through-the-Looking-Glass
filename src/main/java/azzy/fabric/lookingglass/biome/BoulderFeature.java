@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass.biome;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,7 +23,11 @@ public class BoulderFeature extends Feature<SingleStateFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random,  BlockPos pos, SingleStateFeatureConfig config) {
+    public boolean generate(FeatureContext<SingleStateFeatureConfig> context) {
+        final StructureWorldAccess world = context.getWorld();
+        final Random random = context.getRandom();
+        final SingleStateFeatureConfig config = context.getConfig();
+        BlockPos pos = context.getOrigin();
         for (int loops = 0; !world.getBlockState(pos).isOf(Blocks.BEDROCK) && loops < 500; pos = pos.down()) {
 
             loops++;
@@ -40,8 +46,8 @@ public class BoulderFeature extends Feature<SingleStateFeatureConfig> {
                 return false;
 
             if (!world.isAir(pos.down())) {
-                Block block = world.getBlockState(pos.down()).getBlock();
-                if (BlockTags.SAND.contains(block) || isStone(block) || block.is(LookingGlassBlocks.WHITEDUST)) {
+                BlockState block = world.getBlockState(pos.down());
+                if (BlockTags.SAND.contains(block.getBlock()) || isStone(block) || block.isOf(LookingGlassBlocks.WHITEDUST)) {
                     break;
                 }
             }

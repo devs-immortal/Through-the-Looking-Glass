@@ -4,91 +4,92 @@
 
 	package azzy.fabric.lookingglass.entity.model;
 
+import azzy.fabric.lookingglass.LookingGlassCommon;
+import azzy.fabric.lookingglass.LookingGlassConstants;
 import azzy.fabric.lookingglass.entity.FlarefinKoiEntity;
-import net.minecraft.client.model.ModelPart;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
+    public static final EntityModelLayer LAYER = new EntityModelLayer(new Identifier(LookingGlassCommon.MODID, "flarefin_koi"), "main");
 
-	private float curPitch = 0;
+    public ModelPart torso;
+    public ModelPart leftFin;
+    public ModelPart rightFin;
+    public ModelPart tail;
+
+    public FlarefinKoiModel(ModelPart root) {
+        this.torso = root.getChild("torso");
+        this.torso = root.getChild("leftFin");
+        this.torso = root.getChild("rightFin");
+        this.torso = root.getChild("tail");
+    }
+
+    private float curPitch = 0;
 	boolean pitchInit = false;
 
-	private final ModelPart torso;
-	private final ModelPart left_fin;
-	private final ModelPart cube_r1;
-	private final ModelPart cube_r2;
-	private final ModelPart right_fin;
-	private final ModelPart cube_r3;
-	private final ModelPart cube_r4;
-	private final ModelPart tail;
-	private final ModelPart left_back;
-	private final ModelPart right_back;
+    public static TexturedModelData getTexturedModelData() {
+        ModelData data = new ModelData();
 
-	public FlarefinKoiModel() {
-		textureWidth = 32;
-		textureHeight = 32;
-		torso = new ModelPart(this);
-		torso.setPivot(0.0F, 21.5F, 0.0F);
-		torso.setTextureOffset(0, 0).addCuboid(0.0F, -3.5F, -6.0F, 0.0F, 2.0F, 8.0F, 0.0F, false);
-		torso.setTextureOffset(0, 19).addCuboid(-1.0F, -1.5F, -8.0F, 2.0F, 3.0F, 10.0F, 0.0F, false);
-		torso.setTextureOffset(0, 0).addCuboid(-1.0F, 1.5F, -8.0F, 0.0F, 1.0F, 1.0F, 0.0F, false);
-		torso.setTextureOffset(0, 0).addCuboid(1.0F, 1.5F, -8.0F, 0.0F, 1.0F, 1.0F, 0.0F, false);
+        final ModelPartData torso = data.getRoot().addChild(
+                "torso",
+                ModelPartBuilder.create()
+                    .uv(0, 0).cuboid(0, -3.5f, -6f, 0, 2, 8)
+                    .uv(0, 19).cuboid(-1, -1.5f, -8f, 2, 2, 10)
+                    .uv(0, 0).cuboid(-1, 1.5f, -8f, 0, 1, 1)
+                    .cuboid(1, 1.5f, -8f, 0, 1, 1),
+                ModelTransform.pivot(0, 21.5f, 0)
+        );
 
-		left_fin = new ModelPart(this);
-		left_fin.setPivot(1.0F, 0.5F, -3.5F);
-		torso.addChild(left_fin);
-		
+        final ModelPartData leftFin = torso.addChild("left_fin", ModelPartBuilder.create(), ModelTransform.pivot(1, 0.5f, -3.5f));
+        leftFin.addChild(
+                "cube_r1",
+                ModelPartBuilder.create().uv(12, 0).cuboid(0.255f, 0.5f, 2, 3, 0, 2),
+                ModelTransform.of(0, 0, 0.5f, 0, 0, 0.3927f)
+        );
 
-		cube_r1 = new ModelPart(this);
-		cube_r1.setPivot(0.0F, 0.0F, 0.5F);
-		left_fin.addChild(cube_r1);
-		setRotationAngle(cube_r1, 0.0F, 0.0F, 0.3927F);
-		cube_r1.setTextureOffset(12, 0).addCuboid(0.225F, 0.5F, 2.0F, 3.0F, 0.0F, 2.0F, 0.0F, false);
+        leftFin.addChild(
+                "cube_r2",
+                ModelPartBuilder.create().uv(0, 0).cuboid(0f, 0f, -1.5f, 4, 0, 5),
+                ModelTransform.of(0, 0, -1, 0.3927F, 0, 0.6545F)
+        );
 
-		cube_r2 = new ModelPart(this);
-		cube_r2.setPivot(0.0F, 0.0F, -1.0F);
-		left_fin.addChild(cube_r2);
-		setRotationAngle(cube_r2, 0.3927F, 0.0F, 0.6545F);
-		cube_r2.setTextureOffset(0, 0).addCuboid(0.0F, 0.0F, -1.5F, 4.0F, 0.0F, 5.0F, 0.0F, false);
+        final ModelPartData rightFin = torso.addChild("right_fin", ModelPartBuilder.create(), ModelTransform.pivot(-1, 0.5f, -3f));
+        rightFin.addChild(
+                "cube_r3",
+                ModelPartBuilder.create().uv(12, 0).cuboid(-3.2F, 0.5f, 2.5f, 3, 0, 2),
+                ModelTransform.of(0, 0, -0.5f, 0, 0, -0.3927f)
+        );
 
-		right_fin = new ModelPart(this);
-		right_fin.setPivot(-1.0F, 0.5F, -3.0F);
-		torso.addChild(right_fin);
-		
+        rightFin.addChild(
+                "cube_r4",
+                ModelPartBuilder.create().uv(0, 0).cuboid(-4f, 0f, -1.5f, 4, 0, 5),
+                ModelTransform.of(0, 0, -1.5f, 0.3927F, 0, -0.6545F)
+        );
 
-		cube_r3 = new ModelPart(this);
-		cube_r3.setPivot(0.0F, 0.0F, -0.5F);
-		right_fin.addChild(cube_r3);
-		setRotationAngle(cube_r3, 0.0F, 0.0F, -0.3927F);
-		cube_r3.setTextureOffset(12, 0).addCuboid(-3.2F, 0.5F, 2.5F, 3.0F, 0.0F, 2.0F, 0.0F, true);
+        final ModelPartData tail = torso.addChild("tail", ModelPartBuilder.create(), ModelTransform.pivot(0, 0, 2));
+        tail.addChild(
+                "left_back",
+                ModelPartBuilder.create().uv(18, 0).cuboid(0, -2.5f, 0, 0, 4, 7),
+                ModelTransform.rotation(0, -0.1745f, 0)
+        );
 
-		cube_r4 = new ModelPart(this);
-		cube_r4.setPivot(0.0F, 0.0F, -1.5F);
-		right_fin.addChild(cube_r4);
-		setRotationAngle(cube_r4, 0.3927F, 0.0F, -0.6545F);
-		cube_r4.setTextureOffset(0, 0).addCuboid(-4.0F, 0.0F, -1.5F, 4.0F, 0.0F, 5.0F, 0.0F, true);
+        tail.addChild(
+                "right_back",
+                ModelPartBuilder.create().uv(18, 0).cuboid(0, -2.5F, 0, 0, 4, 7),
+                ModelTransform.rotation(0, 0.1745F, 0)
+        );
 
-		tail = new ModelPart(this);
-		tail.setPivot(0.0F, 0.0F, 2.0F);
-		torso.addChild(tail);
-		
-
-		left_back = new ModelPart(this);
-		left_back.setPivot(0.0F, 0.0F, 0.0F);
-		tail.addChild(left_back);
-		setRotationAngle(left_back, 0.0F, -0.1745F, 0.0F);
-		left_back.setTextureOffset(18, 0).addCuboid(0.0F, -2.5F, 0.0F, 0.0F, 4.0F, 7.0F, 0.0F, false);
-
-		right_back = new ModelPart(this);
-		right_back.setPivot(0.0F, 0.0F, 0.0F);
-		tail.addChild(right_back);
-		setRotationAngle(right_back, 0.0F, 0.1745F, 0.0F);
-		right_back.setTextureOffset(18, 0).addCuboid (0.0F, -2.5F, 0.0F, 0.0F, 4.0F, 7.0F, 0.0F, false);
-	}
+        return TexturedModelData.of(data, 32, 32);
+    }
 
 	@Override
 	public void setAngles(FlarefinKoiEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
@@ -118,8 +119,8 @@ public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
 		}
 
 		tail.yaw = -f * 0.45F * MathHelper.sin(0.6F * ageInTicks);
-		left_fin.roll = -f * 0.45F * MathHelper.sin(0.35F * ageInTicks);
-		right_fin.roll = f * 0.45F * MathHelper.sin(0.35F * ageInTicks);
+		leftFin.roll = -f * 0.45F * MathHelper.sin(0.35F * ageInTicks);
+		rightFin.roll = f * 0.45F * MathHelper.sin(0.35F * ageInTicks);
 	}
 
 	@Override
@@ -127,14 +128,7 @@ public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
 		torso.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
-	public void setRotationAngle(ModelPart bone, float x, float y, float z) {
-		bone.pitch = x;
-		bone.yaw = y;
-		bone.roll = z;
-	}
-
 	private float pitchFromVerticalVelocity(FlarefinKoiEntity entity) {
 		return Math.max(-1, Math.min((float) entity.getVelocity().y * -8, 1));
 	}
-
 }

@@ -55,7 +55,7 @@ public class FishJumpGoal extends DiveJumpingGoal {
 
     public boolean shouldContinue() {
         double d = this.fish.getVelocity().y;
-        return (!(d * d < 0.029999999329447746D) || this.fish.pitch == 0.0F || !(Math.abs(this.fish.pitch) < 10.0F) || !this.fish.isTouchingWater()) && !this.fish.isOnGround();
+        return (!(d * d < 0.029999999329447746D) || this.fish.getPitch() == 0.0F || !(Math.abs(this.fish.getPitch()) < 10.0F) || !this.fish.isTouchingWater()) && !this.fish.isOnGround();
     }
 
     public boolean canStop() {
@@ -69,7 +69,7 @@ public class FishJumpGoal extends DiveJumpingGoal {
     }
 
     public void stop() {
-        this.fish.pitch = 0.0F;
+        this.fish.setPitch(0.0F);
     }
 
     public void tick() {
@@ -84,12 +84,12 @@ public class FishJumpGoal extends DiveJumpingGoal {
         }
 
         Vec3d vec3d = this.fish.getVelocity();
-        if (vec3d.y * vec3d.y < 0.029999999329447746D && this.fish.pitch != 0.0F) {
-            this.fish.pitch = MathHelper.lerpAngle(this.fish.pitch, 0.0F, 0.2F);
+        if (vec3d.y * vec3d.y < 0.029999999329447746D && this.fish.getPitch() != 0.0F) {
+            this.fish.setPitch(MathHelper.lerpAngle(this.fish.getPitch(), 0.0F, 0.2F));
         } else {
             double d = Math.sqrt(Entity.squaredHorizontalLength(vec3d));
             double e = Math.signum(-vec3d.y) * Math.acos(d / vec3d.length()) * 57.2957763671875D;
-            this.fish.pitch = (float)e;
+            this.fish.setPitch((float)e);
         }
 
     }

@@ -19,7 +19,7 @@ import java.util.Optional;
 import static net.minecraft.state.property.Properties.LIT;
 
 @SuppressWarnings("unchecked")
-public class MixerEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder {
+public class MixerEntity extends LookingGlassUpgradeableMachine implements PropertyDelegateHolder, LookingGlassTickable {
 
     private MixingRecipe trackedRecipe;
     private int progress;
@@ -30,29 +30,25 @@ public class MixerEntity extends LookingGlassUpgradeableMachine implements Prope
 
     @Override
     public void tick() {
-        if(!world.isClient()) {
-            if(trackedRecipe == null) {
-                Optional<MixingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
-                recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
+        if (trackedRecipe == null) {
+            Optional<MixingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(getRecipeType(), this, world);
+            recipeOptional.ifPresent(recipe -> trackedRecipe = recipe);
+            tickRecipeProgression();
+        } else {
+            if (trackedRecipe.matches(this, world)) {
                 tickRecipeProgression();
+                if (!getCachedState().get(LIT))
+                    world.setBlockState(pos, getCachedState().with(LIT, true));
+            } else {
+                trackedRecipe = null;
+                progress = 0;
+                if (getCachedState().get(LIT))
+                    world.setBlockState(pos, getCachedState().with(LIT, false));
             }
-            else {
-                if(trackedRecipe.matches(this, world)) {
-                    tickRecipeProgression();
-                    if(!getCachedState().get(LIT))
-                        world.setBlockState(pos, getCachedState().with(LIT, true));
-                }
-                else {
-                    trackedRecipe = null;
-                    progress = 0;
-                    if(getCachedState().get(LIT))
-                        world.setBlockState(pos, getCachedState().with(LIT, false));
-                }
-            }
-            attemptPowerDraw();
-            markDirty();
-            sync();
         }
+        attemptPowerDraw();
+        markDirty();
+        sync();
     }
 
     private void tickRecipeProgression() {

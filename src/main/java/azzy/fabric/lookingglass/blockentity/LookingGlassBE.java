@@ -26,10 +26,8 @@ public abstract class LookingGlassBE extends BlockEntity implements SidedInvento
         inventory = DefaultedList.ofSize(invSize, ItemStack.EMPTY);
     }
 
-    public abstract void tick();
-
     public static <T extends BlockEntity> void tickStatic(World world, BlockPos pos, BlockState state, T t) {
-        ((LookingGlassBE) t).tick();
+        ((LookingGlassTickable) t).tick();
     }
 
     @Override

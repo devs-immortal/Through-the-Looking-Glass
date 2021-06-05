@@ -1,8 +1,11 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.BrineFissureEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class BrineFissureBlock extends Block implements BlockEntityProvider {
+public class BrineFissureBlock extends BlockWithEntity implements BlockEntityProvider {
 
     public BrineFissureBlock(Settings settings) {
         super(settings);
@@ -44,7 +47,7 @@ public class BrineFissureBlock extends Block implements BlockEntityProvider {
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BubbleColumnBlock.update(world, pos.up(), true);
+        BubbleColumnBlock.update(world, pos.up(), state);
     }
 
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -62,7 +65,13 @@ public class BrineFissureBlock extends Block implements BlockEntityProvider {
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new BrineFissureEntity();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return LookingGlassBE::tickStatic;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new BrineFissureEntity(pos, state);
     }
 }

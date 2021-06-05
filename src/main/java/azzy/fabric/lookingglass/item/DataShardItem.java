@@ -74,17 +74,19 @@ public class DataShardItem extends Item {
         return super.use(world, user, hand);
     }
 
-    public static Optional<?> getData(ItemStack stack, DataType type) {
+    @SuppressWarnings("unchecked")
+    public static <T> Optional<T> getData(ItemStack stack, DataType type) {
         if(stack.getOrCreateTag().contains("data")) {
             NbtCompound data = stack.getSubTag("data");
-            switch (type) {
-                case POS: return Optional.of(data.getLong("pos"));
-                case ID: return Optional.of(data.getString("id"));
-                case ENTITY: return Optional.of(data.getString("entity"));
-                case ENTITYID: return Optional.of(data.getInt("entity_id"));
-                case UUID: return Optional.of(data.getUuid("uuid"));
-                case INV: return Optional.empty();
-            }
+            Optional<?> result = switch (type) {
+                case POS -> Optional.of(data.getLong("pos"));
+                case ID -> Optional.of(data.getString("id"));
+                case ENTITY -> Optional.of(data.getString("entity"));
+                case ENTITYID -> Optional.of(data.getInt("entity_id"));
+                case UUID -> Optional.of(data.getUuid("uuid"));
+                default -> Optional.empty();
+            };
+            return (Optional<T>) result;
         }
         return Optional.empty();
     }

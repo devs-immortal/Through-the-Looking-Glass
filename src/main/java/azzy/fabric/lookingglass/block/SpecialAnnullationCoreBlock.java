@@ -58,8 +58,9 @@ public class SpecialAnnullationCoreBlock extends CoreBlock implements BlockEntit
         }
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new SpecialAnnulationCoreEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new SpecialAnnulationCoreEntity(pos, state);
     }
 }

@@ -1,9 +1,12 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import azzy.fabric.lookingglass.blockentity.SuffuserEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;

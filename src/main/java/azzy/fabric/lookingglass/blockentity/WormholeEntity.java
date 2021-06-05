@@ -113,9 +113,8 @@ public class WormholeEntity extends BlockEntity implements BlockEntityClientSeri
         receiverCooldown.put(entity, 20L);
     }
 
-    @SuppressWarnings("unchecked")
     public boolean tryAssign(ItemStack stack) {
-        Optional<Long> pos = (Optional<Long>) DataShardItem.getData(stack, DataShardItem.DataType.POS);
+        Optional<Long> pos = DataShardItem.getData(stack, DataShardItem.DataType.POS);
         if(pos.isPresent() && pos.get() != 0){
             out = BlockPos.fromLong(pos.get());
             markDirty();

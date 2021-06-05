@@ -7,16 +7,17 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3f;
 
 import java.util.Random;
 
 @SuppressWarnings("unused")
 public class ParticleUtils {
-    public static final DustParticleEffect RED = new DustParticleEffect(1.0F, 0.0F, 0.0F, 1.0F);
-    public static final DustParticleEffect GREEN = new DustParticleEffect(0.0F, 1.0F, 0.0F, 1.0F);
-    public static final DustParticleEffect BLUE = new DustParticleEffect(0.0F, 0.0F, 1.0F, 1.0F);
-    public static final DustParticleEffect CYAN = new DustParticleEffect(0.0F, 1.0F, 1.0F, 1.0F);
-    public static final DustParticleEffect PURPLE = new DustParticleEffect(1.0F, 0.0F, 1.0F, 1.0F);
+    public static final DustParticleEffect RED = new DustParticleEffect(new Vec3f(1.0F, 0.0F, 0.0F), 1.0F);
+    public static final DustParticleEffect GREEN = new DustParticleEffect(new Vec3f(0.0F, 1.0F, 0.0F), 1.0F);
+    public static final DustParticleEffect BLUE = new DustParticleEffect(new Vec3f(0.0F, 0.0F, 1.0F), 1.0F);
+    public static final DustParticleEffect CYAN = new DustParticleEffect(new Vec3f(0.0F, 1.0F, 1.0F), 1.0F);
+    public static final DustParticleEffect PURPLE = new DustParticleEffect(new Vec3f(1.0F, 0.0F, 1.0F), 1.0F);
 
     public static <T extends ParticleEffect> void spawnParticles(T particle, ServerWorld world, BlockPos pos, double yOffset, int count) {
         double x = pos.getX() + 0.5D;

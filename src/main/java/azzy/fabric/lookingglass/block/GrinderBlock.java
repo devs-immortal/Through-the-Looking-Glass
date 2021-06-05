@@ -1,9 +1,12 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.GrinderEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -17,6 +20,11 @@ public class GrinderBlock extends HorizontalMachineBlock {
 
     public GrinderBlock(Settings settings) {
         super(settings, false, 0);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient() ? null : LookingGlassBE::tickStatic;
     }
 
     @Nullable

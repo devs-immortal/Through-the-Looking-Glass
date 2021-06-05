@@ -31,8 +31,9 @@ public class CrateBlock extends LookingGlassBlock implements BlockEntityProvider
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new CrateEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CrateEntity(pos, state);
     }
 }

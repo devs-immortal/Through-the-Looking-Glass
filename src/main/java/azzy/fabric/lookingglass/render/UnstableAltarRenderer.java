@@ -6,14 +6,15 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 
-public class UnstableAltarRenderer extends BlockEntityRenderer<UnstableAltarEntity> {
-    public UnstableAltarRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+public class UnstableAltarRenderer implements BlockEntityRenderer<UnstableAltarEntity> {
+    public UnstableAltarRenderer(BlockEntityRendererFactory.Context ctx) {
+
     }
 
     @Override
@@ -37,7 +38,7 @@ public class UnstableAltarRenderer extends BlockEntityRenderer<UnstableAltarEnti
         // Rotate the item
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((entity.getWorld().getTime() + tickDelta) * 4));
         int lightAbove = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().up());
-        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, lightAbove, overlay, matrices, vertexConsumers, 0);
         matrices.pop();
     }
 

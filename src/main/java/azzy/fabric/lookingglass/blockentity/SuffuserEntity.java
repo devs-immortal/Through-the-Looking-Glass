@@ -59,7 +59,4 @@ public class SuffuserEntity extends LookingGlassUpgradeableMachine implements En
         updateEnchantingPower();
         super.readNbt(tag);
     }
-
-    @Override
-    public void tick() {}
 }

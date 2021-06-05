@@ -2,26 +2,27 @@ package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
-public class VacuumHopperEntity extends LookingGlassBE implements Tickable {
+public class VacuumHopperEntity extends LookingGlassBE implements LookingGlassTickable {
 
     private final int delay, radius;
     private final boolean advanced = this.getType() == LookingGlassBlocks.ADVANCED_VACUUM_HOPPER_ENTITY;
 
-    public VacuumHopperEntity(BlockEntityType<?> type, int invSize, int delay, int radious) {
-        super(type, invSize);
+    public VacuumHopperEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize, int delay, int radious) {
+        super(type, pos, state, invSize);
         this.radius = radious;
         this.delay = delay;
     }

@@ -7,7 +7,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,17 +24,22 @@ public class UnderwaterCrustFeature extends Feature<BiFeatureConfig> {
     }
 
     @Override
-    public boolean generate(StructureWorldAccess world, ChunkGenerator chunkGenerator, Random random, BlockPos center, BiFeatureConfig config) {
-        if(!world.getFluidState(center).isIn(FluidTags.WATER))
+    public boolean generate(FeatureContext<BiFeatureConfig> context) {
+        final ChunkGenerator chunkGenerator = context.getGenerator();
+        final StructureWorldAccess world = context.getWorld();
+        final BiFeatureConfig config = context.getConfig();
+        final Random random = context.getRandom();
+        BlockPos center = context.getOrigin();
+        if (!world.getFluidState(center).isIn(FluidTags.WATER))
             return false;
 
         center = center.down();
 
-        int radius = config.scale.getValue(random);
+        int radius = config.scale.get(random);
 
         centers = generateCircleAndCenters(world, center, radius, random, config);
 
-        radius = config.scale.getValue(random);
+        radius = config.scale.get(random);
 
         Queue<BlockPos> holder = new LinkedList<>();
 
@@ -43,7 +50,7 @@ public class UnderwaterCrustFeature extends Feature<BiFeatureConfig> {
         centers.clear();
         centers.addAll(holder);
 
-        radius = config.scale.getValue(random);
+        radius = config.scale.get(random);
 
         for (BlockPos newCenter : centers) {
             generateCircleAndCenters(world, newCenter, radius, random, config);

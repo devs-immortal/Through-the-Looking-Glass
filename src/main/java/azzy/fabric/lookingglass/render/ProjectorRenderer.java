@@ -147,7 +147,7 @@ public class ProjectorRenderer implements BlockEntityRenderer<ProjectorEntity> {
                 manager.getModelRenderer().render(blockEntity.getWorld(), manager.getModel(state), state, blockEntity.getPos().up(), matrices, vertexConsumers.getBuffer(RenderLayers.getMovingBlockLayer(state)), false, new Random(), state.getRenderingSeed(blockEntity.getPos()), OverlayTexture.DEFAULT_UV);
             }
             else {
-                MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.NONE, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+                MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.NONE, LookingGlassClient.LIGHTMAP_MAX_LUMINANCE, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 3);
             }
         }
         else if(blockEntity.displayState == 2){
@@ -196,13 +196,13 @@ public class ProjectorRenderer implements BlockEntityRenderer<ProjectorEntity> {
         matrices.scale(0.2f, 0.2f, 0.2f);
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
         matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 4));
         matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 1);
         matrices.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 6));
         matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion((blockEntity.getWorld().getTime() + tickDelta) * 1));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(speen, ModelTransformation.Mode.NONE, 14680160, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 2);
 
         matrices.pop();
     }

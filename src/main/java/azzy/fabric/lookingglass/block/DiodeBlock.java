@@ -1,11 +1,14 @@
 package azzy.fabric.lookingglass.block;
 
 import azzy.fabric.lookingglass.blockentity.DiodeEntity;
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -44,7 +47,7 @@ public class DiodeBlock extends LookingGlassBlock implements BlockEntityProvider
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!player.abilities.allowModifyWorld) {
+        if (!player.getAbilities().allowModifyWorld) {
             return ActionResult.PASS;
         } else {
             world.setBlockState(pos, state.cycle(EXTENSION), 3);
@@ -86,8 +89,14 @@ public class DiodeBlock extends LookingGlassBlock implements BlockEntityProvider
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new DiodeEntity();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return LookingGlassBE::tickStatic;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new DiodeEntity(pos, state);
     }
 
     static {

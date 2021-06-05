@@ -1,18 +1,18 @@
 package azzy.fabric.lookingglass.blockentity;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 
 import java.util.Random;
 
-public class BrineFissureEntity extends BlockEntity implements Tickable {
+public class BrineFissureEntity extends BlockEntity implements LookingGlassTickable {
 
-    public BrineFissureEntity() {
-        super(LookingGlassBlocks.BRINE_FISSURE_ENTITY);
+    public BrineFissureEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.BRINE_FISSURE_ENTITY, pos, state);
     }
 
     @Override

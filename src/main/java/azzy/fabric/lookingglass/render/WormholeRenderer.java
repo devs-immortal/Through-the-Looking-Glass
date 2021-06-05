@@ -6,16 +6,16 @@ import azzy.fabric.lookingglass.util.client.TTLGRenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.EndPortalBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-public class WormholeRenderer extends BlockEntityRenderer<WormholeEntity> {
+public class WormholeRenderer implements BlockEntityRenderer<WormholeEntity> {
 
-    public WormholeRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public WormholeRenderer(BlockEntityRendererFactory.Context ctx) {
     }
 
     @Override

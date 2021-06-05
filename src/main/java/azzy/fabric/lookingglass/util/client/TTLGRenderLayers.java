@@ -5,6 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderPhase;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
@@ -30,10 +31,10 @@ public abstract class TTLGRenderLayers extends RenderLayer{
 
         return RenderLayer.of(DYNAMIC_RENDERLAYER + texture,
                 VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
-                GL11.GL_QUADS, 256, false, true, parameters);
+                VertexFormat.DrawMode.QUADS, 256, false, true, parameters);
     }
 
-    public static final RenderLayer FLAT_BLOOM = RenderLayer.of("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, GL11.GL_QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).diffuseLighting(DISABLE_DIFFUSE_LIGHTING).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).fog(NO_FOG).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
+    public static final RenderLayer FLAT_BLOOM = RenderLayer.of("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).diffuseLighting(DISABLE_DIFFUSE_LIGHTING).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).fog(NO_FOG).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
 
     public static RenderLayer getPortalLayer(Identifier texture, int blendMode) {
         Transparency transparency2;

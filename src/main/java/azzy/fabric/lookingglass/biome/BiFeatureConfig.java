@@ -3,7 +3,7 @@ package azzy.fabric.lookingglass.biome;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
-import net.minecraft.world.gen.UniformIntDistribution;
+import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.world.gen.feature.FeatureConfig;
 
 public class BiFeatureConfig implements FeatureConfig {
@@ -15,7 +15,7 @@ public class BiFeatureConfig implements FeatureConfig {
             return diskFeatureConfig.secondaryState;
         }), Codec.floatRange(0, 1).fieldOf("chance").forGetter((diskFeatureConfig) -> {
             return diskFeatureConfig.chance;
-        }), UniformIntDistribution.CODEC.fieldOf("scale").forGetter((diskFeatureConfig) -> {
+        }), IntProvider.VALUE_CODEC.fieldOf("scale").forGetter((diskFeatureConfig) -> {
             return diskFeatureConfig.scale;
         })).apply(biFeatureConfigInstance, BiFeatureConfig::new);
     });
@@ -23,9 +23,9 @@ public class BiFeatureConfig implements FeatureConfig {
     public final BlockState primaryState;
     public final BlockState secondaryState;
     public final Float chance;
-    public final UniformIntDistribution scale;
+    public final IntProvider scale;
 
-    public BiFeatureConfig(BlockState primaryState, BlockState secondaryState, float chance, UniformIntDistribution scale) {
+    public BiFeatureConfig(BlockState primaryState, BlockState secondaryState, float chance, IntProvider scale) {
         this.primaryState = primaryState;
         this.secondaryState = secondaryState;
         this.chance = chance;

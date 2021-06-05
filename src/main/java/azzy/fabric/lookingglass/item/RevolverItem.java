@@ -25,7 +25,7 @@ public class RevolverItem extends Item {
         if (!world.isClient) {
             RevolverShotEntity shotEntity = new RevolverShotEntity(world, user);
             shotEntity.setItem(itemStack);
-            shotEntity.setProperties(user, user.pitch, user.yaw, 0.0F, 50F, 0F);
+            shotEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 50F, 0F);
             world.spawnEntity(shotEntity); // spawns entity
         }
         return TypedActionResult.success(itemStack, world.isClient());
