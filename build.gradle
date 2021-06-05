@@ -27,8 +27,12 @@ repositories {
 	}
 	maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
 	maven {
-		name = "Ladysnake Libs"
-		url = "https://dl.bintray.com/ladysnake/libs"
+		name = 'Ladysnake Mods'
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+		content {
+			includeGroup 'io.github.ladysnake'
+			includeGroupByRegex 'io\\.github\\.onyxstudios.*'
+		}
 	}
 	maven { url 'https://maven.blamejared.com' }
 	maven {
