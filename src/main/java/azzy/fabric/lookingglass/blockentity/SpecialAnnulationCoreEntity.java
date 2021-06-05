@@ -17,6 +17,7 @@ import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
 import java.lang.ref.WeakReference;
@@ -26,8 +27,8 @@ public class SpecialAnnulationCoreEntity extends BlockEntity implements Inventor
     private final DefaultedList<ItemStack> inv = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private WeakReference<ServerPlayerEntity> fakePlayer = null;
 
-    public SpecialAnnulationCoreEntity() {
-        super(LookingGlassBlocks.SPECIAL_ANNULATION_CORE_ENTITY);
+    public SpecialAnnulationCoreEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.SPECIAL_ANNULATION_CORE_ENTITY, pos, state);
     }
 
     public void setItem(ItemStack item) {
@@ -46,7 +47,7 @@ public class SpecialAnnulationCoreEntity extends BlockEntity implements Inventor
 
     public void attack(LivingEntity target) {
         if(fakePlayer == null || fakePlayer.get() == null) {
-            fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat"), new ServerPlayerInteractionManager((ServerWorld) world)));
+            fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "iritat")));
             fakePlayer.get().setInvulnerable(true);
             fakePlayer.get().setBoundingBox(new Box(0, 0, 0, 0, 0, 0));
         }
@@ -72,9 +73,9 @@ public class SpecialAnnulationCoreEntity extends BlockEntity implements Inventor
     }
 
     @Override
-    public void readNbt(BlockState state, NbtCompound tag) {
+    public void readNbt(NbtCompound tag) {
         Inventories.readNbt(tag, inv);
-        super.readNbt(state, tag);
+        super.readNbt(tag);
     }
 
     @Override

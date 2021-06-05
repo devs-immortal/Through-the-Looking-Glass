@@ -116,8 +116,9 @@ public class FishBreederBlock extends LookingGlassBlock implements BlockEntityPr
         return new BlockPos(pos.getX() + random.nextInt(11) - 5, pos.getY() - random.nextInt(6), pos.getZ() + random.nextInt(11) - 5);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return new FishBreederEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new FishBreederEntity(pos, state);
     }
 }

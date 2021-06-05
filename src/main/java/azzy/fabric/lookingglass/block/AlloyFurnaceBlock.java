@@ -41,7 +41,7 @@ public class AlloyFurnaceBlock extends HorizontalMachineBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return LookingGlassBE::tickStatic;
+        return world.isClient() ? null : LookingGlassBE::tickStatic;
     }
 
     @Override

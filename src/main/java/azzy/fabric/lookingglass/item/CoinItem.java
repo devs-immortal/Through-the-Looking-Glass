@@ -22,7 +22,7 @@ public class CoinItem extends Item{
         if (!world.isClient) {
             TossedCoinEntity shotEntity = new TossedCoinEntity(world, user);
             shotEntity.setItem(itemStack);
-            shotEntity.setProperties(user, user.pitch, user.yaw, 0.0F, 1F, 1F);
+            shotEntity.setProperties(user, user.getPitch(), user.getYaw(), 0.0F, 1F, 1F);
             world.spawnEntity(shotEntity); // spawns entity
         }
         return TypedActionResult.success(itemStack, world.isClient());

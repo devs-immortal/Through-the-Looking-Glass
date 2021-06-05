@@ -20,11 +20,6 @@ public class EnchanterEntity extends LookingGlassMachine {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void notifyRedstoneActivation() {
         super.notifyRedstoneActivation();
     }

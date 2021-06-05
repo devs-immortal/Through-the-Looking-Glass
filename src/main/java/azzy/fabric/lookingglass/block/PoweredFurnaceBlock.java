@@ -1,11 +1,14 @@
 package azzy.fabric.lookingglass.block;
 
+import azzy.fabric.lookingglass.blockentity.LookingGlassBE;
 import azzy.fabric.lookingglass.blockentity.PoweredFurnaceEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -28,6 +31,11 @@ public class PoweredFurnaceBlock extends HorizontalMachineBlock implements Block
 
     public PoweredFurnaceBlock(Settings settings) {
         super(settings, false, 13);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient() ? null : LookingGlassBE::tickStatic;
     }
 
     @Nullable

@@ -16,18 +16,15 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.Triple;
-
-import java.util.Optional;
 
 public class BlockTesseractEntity extends BlockEntity implements BlockEntityClientSerializable, TesseractRenderable {
 
     private static final ItemStack core = new ItemStack(Items.ENDER_EYE);
     private BlockPos movePos;
 
-    public BlockTesseractEntity() {
-        super(LookingGlassBlocks.BLOCK_TESSERACT_ENTITY);
+    public BlockTesseractEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.BLOCK_TESSERACT_ENTITY, pos, state);
     }
 
     public void moveBlock(Direction direction) {
@@ -105,13 +102,11 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
         sync();
     }
 
-    public boolean setTarget(Optional<Long> encodedPos) {
-        if(encodedPos.isPresent() && encodedPos.get() != 0L) {
-            BlockPos pos = BlockPos.fromLong(encodedPos.get());
-            if(pos != this.pos && World.isInBuildLimit(pos)) {
-                movePos = pos;
-                return true;
-            }
+    public boolean setTarget(long encodedPos) {
+        BlockPos pos = BlockPos.fromLong(encodedPos);
+        if (pos != this.pos && world.isInBuildLimit(pos)) {
+            movePos = pos;
+            return true;
         }
         return false;
     }
@@ -124,10 +119,10 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
     }
 
     @Override
-    public void readNbt(BlockState state, NbtCompound tag) {
+    public void readNbt(NbtCompound tag) {
         if(tag.contains("target"))
             movePos = BlockPos.fromLong(tag.getLong("target"));
-        super.readNbt(state, tag);
+        super.readNbt(tag);
     }
 
     @Override

@@ -57,7 +57,7 @@ public class RevolverShotEntity extends ThrownItemEntity {
     protected void onCollision(HitResult hitResult) { // called on collision with a block
         super.onCollision(hitResult);
         if (!this.world.isClient) { // checks if the world is client
-            this.remove(); // kills the projectile
+            this.remove(RemovalReason.KILLED); // kills the projectile
         }
 
     }

@@ -83,7 +83,7 @@ public class SpikeUtility {
             case 4:
                 // Diamond spikes and above cause player damage.  7 for diamond and 14 for netherite.
                 if ((fakePlayer == null) || (fakePlayerEntity == null)) {
-                    fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "TTLG_Spike_Player"), new ServerPlayerInteractionManager((ServerWorld) world)));
+                    fakePlayer = new WeakReference<>(new ServerPlayerEntity(world.getServer(), (ServerWorld) world, new GameProfile(null, "TTLG_Spike_Player")));
                     fakePlayerEntity = fakePlayer.get();
 
                     if (fakePlayerEntity == null) {

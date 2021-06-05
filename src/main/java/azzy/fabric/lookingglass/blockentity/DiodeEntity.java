@@ -4,16 +4,15 @@ import azzy.fabric.lookingglass.block.DiodeBlock;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.Tickable;
+import net.minecraft.util.math.BlockPos;
 
-public class DiodeEntity extends BlockEntity implements Tickable {
+public class DiodeEntity extends BlockEntity implements LookingGlassTickable {
 
     private int timer, power;
 
-    public DiodeEntity() {
-        super(LookingGlassBlocks.DIODE_ENTITY);
+    public DiodeEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.DIODE_ENTITY, pos, state);
     }
 
     @Override
@@ -60,28 +59,18 @@ public class DiodeEntity extends BlockEntity implements Tickable {
     }
 
     public void updateTimer(int length) {
-        switch (length) {
-            case 0: timer = 2; break;
-            case 1: timer = 10; break;
-            case 2: timer = 20; break;
-            case 3: timer = 100; break;
-            case 4: timer = 200; break;
-            default: timer = 0;
-        }
+        timer = switch (length) {
+            case 0 -> 2;
+            case 1 -> 10;
+            case 2 -> 20;
+            case 3 -> 100;
+            case 4 -> 200;
+            default -> 0;
+        };
         markDirty();
     }
 
     public int getRedstonePower() {
         return power;
-    }
-
-    @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
-        return super.writeNbt(tag);
-    }
-
-    @Override
-    public void readNbt(BlockState state, NbtCompound tag) {
-        super.readNbt(state, tag);
     }
 }

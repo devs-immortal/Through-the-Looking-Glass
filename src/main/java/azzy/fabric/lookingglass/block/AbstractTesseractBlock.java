@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass.block;
 
+import com.mojang.datafixers.util.Function3;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,13 +14,14 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public abstract class AbstractTesseractBlock extends LookingGlassBlock implements BlockEntityProvider {
 
-    private final Supplier<BlockEntity> blockEntity;
+    private final BiFunction<BlockPos, BlockState, BlockEntity> blockEntity;
 
-    public AbstractTesseractBlock(Supplier<BlockEntity> blockEntity, Settings settings) {
+    public AbstractTesseractBlock(BiFunction<BlockPos, BlockState, BlockEntity> blockEntity, Settings settings) {
         super(settings, true);
         this.blockEntity = blockEntity;
     }
@@ -40,8 +42,9 @@ public abstract class AbstractTesseractBlock extends LookingGlassBlock implement
         return true;
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockEntity createBlockEntity(BlockView world) {
-        return blockEntity.get();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return blockEntity.apply(pos, state);
     }
 }

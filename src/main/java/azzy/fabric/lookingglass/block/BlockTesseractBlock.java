@@ -30,6 +30,7 @@ public class BlockTesseractBlock extends AbstractTesseractBlock {
     boolean setData(World world, BlockPos pos, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BlockEntity entity = world.getBlockEntity(pos);
-        return ((BlockTesseractEntity) entity).setTarget((Optional<Long>) DataShardItem.getData(stack, DataShardItem.DataType.POS));
+        final Optional<Long> dataPosition = DataShardItem.getData(stack, DataShardItem.DataType.POS);
+        return dataPosition.isPresent() && dataPosition.get() != 0 && ((BlockTesseractEntity) entity).setTarget(dataPosition.get());
     }
 }

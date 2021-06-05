@@ -4,6 +4,7 @@ import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -148,7 +149,7 @@ public class LassoItem extends Item {
         stackTag.putString(MOB_HEALTH, decimalFormat.format(currentHealth));
         stackTag.putString(MOB_MAX_HEALTH, decimalFormat.format(maxHealth));
 
-        entity.remove();
+        entity.remove(Entity.RemovalReason.DISCARDED);
         return ActionResult.SUCCESS;
     }
 

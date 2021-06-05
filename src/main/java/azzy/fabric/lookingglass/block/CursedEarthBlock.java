@@ -14,6 +14,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.collection.WeightedPicker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -24,6 +25,7 @@ import net.minecraft.world.biome.SpawnSettings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @SuppressWarnings({"deprecated"})
@@ -167,7 +169,7 @@ public class CursedEarthBlock extends LookingGlassBlock {
                         z = entity.getZ();
                     }
 
-                    entity.remove();
+                    entity.remove(Entity.RemovalReason.DISCARDED);
                 } else {
                     consideredEntities.add(entity);
                 }
@@ -201,14 +203,13 @@ public class CursedEarthBlock extends LookingGlassBlock {
     private void spawnMobs(ServerWorld world, BlockPos pos, Random random) {
         Biome biome = world.getBiome(pos);
         SpawnSettings spawnSettings = biome.getSpawnSettings();
-        List<SpawnSettings.SpawnEntry> list = spawnSettings.getSpawnEntries(SpawnGroup.MONSTER);
+        Optional<SpawnSettings.SpawnEntry> spawnEntry = spawnSettings.getSpawnEntries(SpawnGroup.MONSTER).getOrEmpty(random);
 
-        if (!list.isEmpty()) {
-            SpawnSettings.SpawnEntry spawnEntry = WeightedPicker.getRandom(random, list);
+        if (spawnEntry.isPresent()) {
 
             try {
-                if (spawnEntry.type.isSummonable() && SpawnHelper.canSpawn(SpawnRestriction.getLocation(spawnEntry.type), world, pos.up(), spawnEntry.type)) {
-                    LivingEntity spawnedEntity = (LivingEntity) spawnEntry.type.spawn(world, null, null, null, pos, SpawnReason.COMMAND, true, false);
+                if (spawnEntry.get().type.isSummonable() && SpawnHelper.canSpawn(SpawnRestriction.getLocation(spawnEntry.get().type), world, pos.up(), spawnEntry.get().type)) {
+                    LivingEntity spawnedEntity = (LivingEntity) spawnEntry.get().type.spawn(world, null, null, null, pos, SpawnReason.COMMAND, true, false);
                     if (spawnedEntity == null) {
                         throw new Exception("Unable to spawn mob at position (x, y, z): (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + ").");
                     }

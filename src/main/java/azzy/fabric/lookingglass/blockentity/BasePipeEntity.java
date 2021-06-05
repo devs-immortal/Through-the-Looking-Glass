@@ -7,15 +7,16 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable, BlockEntityClientSerializable, RedstoneReactiveEntity {
-
+public abstract class BasePipeEntity<T> extends BlockEntity implements BlockEntityClientSerializable, RedstoneReactiveEntity {
     private final BlockApiLookup<T, Direction> lookup;
     private final boolean strict;
     protected final int offset = LookingGlassCommon.RANDOM.nextInt(10);
@@ -30,17 +31,25 @@ public abstract class BasePipeEntity<T> extends BlockEntity implements Tickable,
         this.strict = strict;
     }
 
-    @Override
-    public void tick() {
-        if(world != null && !world.isClient()) {
-            if(IO.isEmpty())
-                revalidateConnections();
-            Set<T> ioSet = checkConnections();
-            connectionTest();
-            revalidateConnections();
-            if(!ioSet.isEmpty())
-                performTransfers(ioSet);
-        }
+    @Nullable
+    public static <T, E extends BasePipeEntity<T>, A extends BlockEntity> BlockEntityTicker<A> getTicker(World world, BlockEntityType<A> givenType, BlockEntityType<E> expectedType) {
+        final BlockEntityTicker<? extends E> tick = BasePipeEntity::tick;
+        return !world.isClient() && expectedType == givenType ? cast(tick) : null;
+    }
+
+    public static <T, E extends BasePipeEntity<T>> void tick(World world, BlockPos pos, BlockState state, E entity) {
+        if (entity.IO.isEmpty())
+            entity.revalidateConnections();
+        Set<T> ioSet = entity.checkConnections();
+        entity.connectionTest();
+        entity.revalidateConnections();
+        if (!ioSet.isEmpty())
+            entity.performTransfers(ioSet);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <F, T> T cast(F from) {
+        return (T) from;
     }
 
     public Set<T> checkConnections() {

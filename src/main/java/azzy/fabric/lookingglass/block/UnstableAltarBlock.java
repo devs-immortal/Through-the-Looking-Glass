@@ -8,6 +8,8 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -93,8 +95,14 @@ public class UnstableAltarBlock extends LookingGlassBlock implements BlockEntity
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new UnstableAltarEntity();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return LookingGlassBE::tickStatic;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new UnstableAltarEntity(pos, state);
     }
 
     @Override

@@ -28,11 +28,11 @@ public class LoamFarmlandBlock extends FarmlandBlock {
 
     }
 
-    public void onLandedUpon(World world, BlockPos pos, Entity entity, float distance) {
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float distance) {
         if (!world.isClient && world.random.nextFloat() < distance - 0.5F && entity instanceof LivingEntity && (entity instanceof PlayerEntity || world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) && entity.getWidth() * entity.getWidth() * entity.getHeight() > 0.512F) {
             world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(world.getBlockState(pos), LookingGlassBlocks.LOAM.getDefaultState(), world, pos));
         }
 
-        super.onLandedUpon(world, pos, entity, distance);
+        super.onLandedUpon(world, state, pos, entity, distance);
     }
 }

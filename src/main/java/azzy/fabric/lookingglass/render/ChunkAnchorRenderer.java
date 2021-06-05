@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantments;
@@ -14,13 +15,15 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
-public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> {
+public class ChunkAnchorRenderer implements BlockEntityRenderer<ChunkAnchorEntity> {
 
     private static final ItemStack item = new ItemStack(LookingGlassItems.DATA_SHARD);
 
-    public ChunkAnchorRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    static {
         item.addEnchantment(Enchantments.SHARPNESS, 1);
+    }
+
+    public ChunkAnchorRenderer(BlockEntityRendererFactory.Context ctx) {
     }
 
     @Override
@@ -38,7 +41,7 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
         matrices.translate(0.5, (1.25 + (count/ 5)) + bounce, 0.5);
         bounce *= 4;
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(spin * Math.max(1, count/2)));
-        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
         matrices.pop();
 
         matrices.push();
@@ -63,7 +66,7 @@ public class ChunkAnchorRenderer extends BlockEntityRenderer<ChunkAnchorEntity> 
             double offset = Math.max((count / 6), 1);
             matrices.translate(offset, 0, 0);
             matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((spin * (count)) + 90));
-            MinecraftClient.getInstance().getItemRenderer().renderItem(focus, ModelTransformation.Mode.GROUND, tearLight, overlay, matrices, vertexConsumers);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(focus, ModelTransformation.Mode.GROUND, tearLight, overlay, matrices, vertexConsumers, 1);
             matrices.multiply(Vec3f.NEGATIVE_Y.getDegreesQuaternion((spin * (count)) + 90));
             matrices.translate(-offset, 0, 0);
         }

@@ -9,13 +9,14 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.ConfiguredDecorator;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -46,19 +47,19 @@ public class LookingGlassConfiguredFeatures {
         PILLAR_FEATURE = register("pillars", new SaltPillarFeature(BasaltColumnsFeatureConfig.CODEC));
         UNDERWATER_PLANT_FEATURE = register("underwater_plant", new UnderwaterPlantFeature(BiFeatureConfig.CODEC));
 
-        SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntDistribution.of(2, 5), UniformIntDistribution.of(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
+        SALT_DELTA = register("salt_delta", Feature.DELTA_FEATURE.configure(new DeltaFeatureConfig(Blocks.WATER.getDefaultState(), LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntProvider.create(2, 5), UniformIntProvider.create(0, 2))).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(40))));
         BRINE_FISSURES = register("brine_fissures", UNDERWATER_STATE_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(3));
         DEEP_BRINE_FISSURES = register("deep_brine_fissures", UNDERWATER_STATE_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.BRINE_FISSURE.getDefaultState())).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP).repeatRandomly(6));
 
-        WHITEDUST_DISCS = register("whitedust_discs", Feature.DISK.configure(new DiskFeatureConfig(LookingGlassBlocks.WHITEDUST.getDefaultState(), UniformIntDistribution.of(4, 2), 1, ImmutableList.of(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState()))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
-        SALT_DISCS = register("salt_discs", Feature.DISK.configure(new DiskFeatureConfig(LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntDistribution.of(2, 1), 2, ImmutableList.of(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState()))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        WHITEDUST_DISCS = register("whitedust_discs", Feature.DISK.configure(new DiskFeatureConfig(LookingGlassBlocks.WHITEDUST.getDefaultState(), UniformIntProvider.create(4, 2), 1, ImmutableList.of(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState()))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        SALT_DISCS = register("salt_discs", Feature.DISK.configure(new DiskFeatureConfig(LookingGlassBlocks.SALT_CLUSTER_BLOCK.getDefaultState(), UniformIntProvider.create(2, 1), 2, ImmutableList.of(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState()))).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
 
-        CRACKED_CRUST = register("cracked_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), LookingGlassBlocks.WHITESTONE_CRACKED.getDefaultState(), 0.225F, UniformIntDistribution.of(5, 3))).applyChance(3).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
-        VOLCANIC_CRUST = register("volcanic_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(Blocks.BASALT.getDefaultState(), LookingGlassBlocks.HOT_BASALT.getDefaultState(), 0.195F, UniformIntDistribution.of(4, 2))).applyChance(2).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        CRACKED_CRUST = register("cracked_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState(), LookingGlassBlocks.WHITESTONE_CRACKED.getDefaultState(), 0.225F, UniformIntProvider.create(5, 3))).applyChance(3).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        VOLCANIC_CRUST = register("volcanic_crust", UNDERWATER_CRUST_FEATURE.configure(new BiFeatureConfig(Blocks.BASALT.getDefaultState(), LookingGlassBlocks.HOT_BASALT.getDefaultState(), 0.195F, UniformIntProvider.create(4, 2))).applyChance(2).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
 
-        SPARSE_RED_SEAGRASS = register("sparse_red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), Blocks.SEAGRASS.getDefaultState(), 0.0025F, UniformIntDistribution.of(0))).repeat(10).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
-        RED_SEAGRASS = register("red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), LookingGlassBlocks.TALL_RED_SEAGRASS.getDefaultState(), 0.1F, UniformIntDistribution.of(0))).repeat(16).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(4))));
-        DENSE_RED_SEAGRASS = register("dense_red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), LookingGlassBlocks.TALL_RED_SEAGRASS.getDefaultState(), 0.45F, UniformIntDistribution.of(0))).repeat(40).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(7))));
+        SPARSE_RED_SEAGRASS = register("sparse_red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), Blocks.SEAGRASS.getDefaultState(), 0.0025F, ConstantIntProvider.create(0))).repeat(10).decorate(ConfiguredFeatures.Decorators.SQUARE_TOP_SOLID_HEIGHTMAP));
+        RED_SEAGRASS = register("red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), LookingGlassBlocks.TALL_RED_SEAGRASS.getDefaultState(), 0.1F, ConstantIntProvider.create(0))).repeat(16).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(4))));
+        DENSE_RED_SEAGRASS = register("dense_red_seagrass", UNDERWATER_PLANT_FEATURE.configure(new BiFeatureConfig(LookingGlassBlocks.RED_SEAGRASS.getDefaultState(), LookingGlassBlocks.TALL_RED_SEAGRASS.getDefaultState(), 0.45F, ConstantIntProvider.create(0))).repeat(40).decorate(Decorator.COUNT_MULTILAYER.configure(new CountConfig(7))));
 
         NEBULOUS_SALT_FLATS = register("nebulous_salt_flats", Feature.RANDOM_SELECTOR.configure(Configs.END_SALT_FLATS_CONFIG).decorate(new ConfiguredDecorator<>(Decorator.CHANCE, new ChanceDecoratorConfig(50))).decorate(ConfiguredFeatures.Decorators.TOP_SOLID_HEIGHTMAP));
         WHITESTONE_BOULDERS = register("whitestone_boulders", BOULDER_FEATURE.configure(new SingleStateFeatureConfig(LookingGlassBlocks.WHITESTONE_BLOCK.getDefaultState())).decorate(ConfiguredFeatures.Decorators.HEIGHTMAP));
@@ -75,7 +76,7 @@ public class LookingGlassConfiguredFeatures {
 
     public static class Configs {
         public static final RandomPatchFeatureConfig END_SALTS_CONFIG = new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(LookingGlassBlocks.NEBULOUS_SALTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).blacklist(ImmutableSet.of(LookingGlassBlocks.NEBULOUS_SALTS.getDefaultState())).spreadZ(128).spreadX(128).spreadY(16).tries(5000).build();
-        public static final TreeFeatureConfig END_HALITE_CRYSTAL_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(LookingGlassBlocks.NEBULOUS_HALITE.getDefaultState()), new BlobFoliagePlacer(UniformIntDistribution.of(0), UniformIntDistribution.of(0), 0), new LargeOakTrunkPlacer(5, 3, 7), new TwoLayersFeatureSize(3, 0, 0)).build();
+        public static final TreeFeatureConfig END_HALITE_CRYSTAL_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(LookingGlassBlocks.NEBULOUS_HALITE.getDefaultState()), new LargeOakTrunkPlacer(5, 3, 7), new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new SimpleBlockStateProvider(Blocks.AIR.getDefaultState()), new BlobFoliagePlacer(ConstantIntProvider.create(0), ConstantIntProvider.create(0), 0), new TwoLayersFeatureSize(3, 0, 0)).build();
 
         public static final RandomFeatureConfig END_SALT_FLATS_CONFIG = new RandomFeatureConfig(
                 ImmutableList.of(Feature.TREE.configure(END_HALITE_CRYSTAL_CONFIG).withChance(0.1F)), Feature.RANDOM_PATCH.configure(END_SALTS_CONFIG)

@@ -13,6 +13,7 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -28,23 +29,27 @@ public class SaltPillarFeature extends Feature<BasaltColumnsFeatureConfig> {
         super(codec);
     }
 
-    public boolean generate(StructureWorldAccess structureWorldAccess, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, BasaltColumnsFeatureConfig basaltColumnsFeatureConfig) {
+    @Override
+    public boolean generate(FeatureContext<BasaltColumnsFeatureConfig> context) {
+        final ChunkGenerator chunkGenerator = context.getGenerator();
+        final StructureWorldAccess structureWorldAccess = context.getWorld();
+        final BlockPos blockPos = context.getOrigin();
+        final BasaltColumnsFeatureConfig basaltColumnsFeatureConfig = context.getConfig();
+        final Random random = context.getRandom();
         int i = chunkGenerator.getSeaLevel();
         if (!method_30379(structureWorldAccess, i, blockPos.mutableCopy())) {
             return false;
         } else {
-            int j = basaltColumnsFeatureConfig.getHeight().getValue(random);
+            int j = basaltColumnsFeatureConfig.getHeight().get(random);
             boolean bl = random.nextFloat() < 0.9F;
             int k = Math.min(j, bl ? 5 : 8);
             int l = bl ? 50 : 15;
             boolean bl2 = false;
-            Iterator var12 = BlockPos.iterateRandomly(random, l, blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k).iterator();
 
-            while(var12.hasNext()) {
-                BlockPos blockPos2 = (BlockPos)var12.next();
+            for (BlockPos blockPos2 : BlockPos.iterateRandomly(random, l, blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k)) {
                 int m = j - blockPos2.getManhattanDistance(blockPos);
                 if (m >= 0) {
-                    bl2 |= this.method_27096(structureWorldAccess, i, blockPos2, m, basaltColumnsFeatureConfig.getReach().getValue(random));
+                    bl2 |= this.method_27096(structureWorldAccess, i, blockPos2, m, basaltColumnsFeatureConfig.getReach().get(random));
                 }
             }
 
@@ -54,7 +59,7 @@ public class SaltPillarFeature extends Feature<BasaltColumnsFeatureConfig> {
 
     private boolean method_27096(WorldAccess worldAccess, int i, BlockPos blockPos, int j, int k) {
         boolean bl = false;
-        Iterator var7 = BlockPos.iterate(blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k).iterator();
+        Iterator<BlockPos> var7 = BlockPos.iterate(blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k).iterator();
 
         while(true) {
             int l;
@@ -64,7 +69,7 @@ public class SaltPillarFeature extends Feature<BasaltColumnsFeatureConfig> {
                     return bl;
                 }
 
-                BlockPos blockPos2 = (BlockPos)var7.next();
+                BlockPos blockPos2 = var7.next();
                 l = blockPos2.getManhattanDistance(blockPos);
                 blockPos3 = method_27095(worldAccess, i, blockPos2) ? method_27094(worldAccess, i, blockPos2.mutableCopy(), l) : method_27098(worldAccess, blockPos2.mutableCopy(), l);
             } while(blockPos3 == null);

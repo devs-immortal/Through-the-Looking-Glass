@@ -67,7 +67,7 @@ public class InductionRecipe implements LookingGlassRecipe<BlockInductorBlock> {
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainingStacks(BlockInductorBlock inventory) {
+    public DefaultedList<ItemStack> getRemainder(BlockInductorBlock inventory) {
         return DefaultedList.of();
     }
 

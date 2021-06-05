@@ -169,7 +169,7 @@ public class DisplayPedestalBlock extends LookingGlassBlock implements BlockEnti
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new DisplayPedestalEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new DisplayPedestalEntity(pos, state);
     }
 }

@@ -38,7 +38,7 @@ public class SacredShovelItem extends ToolItem {
                         world.setBlockState(scanPos, Blocks.DIRT.getDefaultState());
                         ItemStack cursedEarthItemStack = LookingGlassItems.CURSED_EARTH_BLOCK.getDefaultStack();
                         cursedEarthItemStack.setCount(1);
-                        user.inventory.insertStack(cursedEarthItemStack);
+                        user.getInventory().insertStack(cursedEarthItemStack);
                         return super.use(world, user, hand);
                     }
                 }

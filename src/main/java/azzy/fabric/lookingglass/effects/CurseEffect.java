@@ -1,6 +1,7 @@
 package azzy.fabric.lookingglass.effects;
 
 import com.google.common.collect.Maps;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -56,7 +57,7 @@ public class CurseEffect extends StatusEffect {
         // This method kills the entity.  First, it tries to remove them elegantly, without them dropping any items.
         // If that fails, it goes ahead and applies an OUT_OF_WORLD damage to kill them dead.
         if(!(entity instanceof PlayerEntity)) {
-            entity.remove();
+            entity.remove(Entity.RemovalReason.KILLED);
             entity.kill();
         }
         else {

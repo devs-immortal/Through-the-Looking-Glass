@@ -3,6 +3,7 @@ package azzy.fabric.lookingglass.entity.model;
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import azzy.fabric.lookingglass.entity.FlarefinKoiEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -13,8 +14,8 @@ public class FlarefinKoiRenderer extends MobEntityRenderer<FlarefinKoiEntity, Fl
 
     private static final Identifier TEXTURE = new Identifier(LookingGlassCommon.MODID, "textures/entity/flarefin_koi.png");
 
-    public FlarefinKoiRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new FlarefinKoiModel(), 0.3f);
+    public FlarefinKoiRenderer(EntityRendererFactory.Context context) {
+        super(context, new FlarefinKoiModel(context.getPart(FlarefinKoiModel.LAYER)), 0.3f);
     }
 
     @Override

@@ -95,9 +95,9 @@ public abstract class FishKillMixin extends LivingEntity {
                     if (bl6) {
                         if (j > 0) {
                             if (target instanceof LivingEntity) {
-                                ((LivingEntity)target).takeKnockback((float)j * 0.5F, (double) MathHelper.sin(this.yaw * 0.017453292F), (double)(-MathHelper.cos(this.yaw * 0.017453292F)));
+                                ((LivingEntity)target).takeKnockback((float)j * 0.5F, (double) MathHelper.sin(this.getYaw() * 0.017453292F), (double)(-MathHelper.cos(this.getYaw() * 0.017453292F)));
                             } else {
-                                target.addVelocity((double)(-MathHelper.sin(this.yaw * 0.017453292F) * (float)j * 0.5F), 0.1D, (double)(MathHelper.cos(this.yaw * 0.017453292F) * (float)j * 0.5F));
+                                target.addVelocity((double)(-MathHelper.sin(this.getYaw() * 0.017453292F) * (float)j * 0.5F), 0.1D, (double)(MathHelper.cos(this.getYaw() * 0.017453292F) * (float)j * 0.5F));
                             }
 
                             this.setVelocity(this.getVelocity().multiply(0.6D, 1.0D, 0.6D));
@@ -129,7 +129,7 @@ public abstract class FishKillMixin extends LivingEntity {
                                 } while(livingEntity instanceof ArmorStandEntity && ((ArmorStandEntity)livingEntity).isMarker());
 
                                 if (this.squaredDistanceTo(livingEntity) < 9.0D) {
-                                    livingEntity.takeKnockback(0.4F, (double)MathHelper.sin(this.yaw * 0.017453292F), (double)(-MathHelper.cos(this.yaw * 0.017453292F)));
+                                    livingEntity.takeKnockback(0.4F, (double)MathHelper.sin(this.getYaw() * 0.017453292F), (double)(-MathHelper.cos(this.getYaw() * 0.017453292F)));
                                     livingEntity.damage(new FishDamageSource(fish.isDivine()), m);
                                 }
                             }

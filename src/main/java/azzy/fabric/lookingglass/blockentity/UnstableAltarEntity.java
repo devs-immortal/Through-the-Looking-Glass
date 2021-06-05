@@ -11,13 +11,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
+public class UnstableAltarEntity extends LookingGlassBE {
     public boolean isMultiBlockFormed = false;
     public List<BlockPos> multiBlockPositionsList = null;
     public List<LookingGlassBE> multiBlockBlockEntitiesList = null;
@@ -33,8 +32,8 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
     }
 
     @Override
-    public void readNbt(BlockState state, NbtCompound tag) {
-        super.readNbt(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
 
         isMultiBlockFormed = tag.getBoolean("isMultiBlockFormed");
     }
@@ -116,8 +115,8 @@ public class UnstableAltarEntity extends LookingGlassBE implements Tickable {
         }
     }
 
-    public UnstableAltarEntity() {
-        super(LookingGlassBlocks.UNSTABLE_ALTAR_ENTITY, 1);
+    public UnstableAltarEntity(BlockPos pos, BlockState state) {
+        super(LookingGlassBlocks.UNSTABLE_ALTAR_ENTITY, pos, state, 1);
     }
 
     public void startCrafting() {

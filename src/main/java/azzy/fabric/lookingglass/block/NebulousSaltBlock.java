@@ -67,7 +67,7 @@ public class NebulousSaltBlock extends Block{
             int enchantability = Math.max(player.getStackInHand(Hand.MAIN_HAND).getItem().getEnchantability(), 0);
             if(enchantability < 20 && random.nextInt(enchantability + 1) == 0) {
                 if(random.nextBoolean()) {
-                    player.applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false));
+                    player.applyStatusEffect(new StatusEffectInstance(StatusEffects.LEVITATION, 10 + random.nextInt(20), 39, false, false, false), null);
                 }
                 else
                     player.requestTeleport(player.getX() + (random.nextInt(33) - 16), player.getY() + random.nextInt(9),player.getZ() + (random.nextInt(33) - 16));

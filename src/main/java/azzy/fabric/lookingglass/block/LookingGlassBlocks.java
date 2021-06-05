@@ -190,8 +190,8 @@ public class LookingGlassBlocks {
     public static final BlockEntityType<ChunkAnchorEntity> CHUNKLOADER_ENTITY = registerEntity("chunkloader_entity", ChunkAnchorEntity::new, CHUNKLOADERBLOCK);
     public static final BlockEntityType<WormholeEntity> WORMHOLE_ENTITY = registerEntity("wormhole_entity", WormholeEntity::new, WORMHOLEBLOCK);
     public static final BlockEntityType<SpecialAnnulationCoreEntity> SPECIAL_ANNULATION_CORE_ENTITY = registerEntity("special_annulation_core_entity", SpecialAnnulationCoreEntity::new, ANNULATION_CORE_2B);
-    public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", () -> new VacuumHopperEntity(LookingGlassBlocks.VACUUM_HOPPER_ENTITY, 9, 20, 4), VACUUM_HOPPER_BLOCK);
-    public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", () -> new VacuumHopperEntity(LookingGlassBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
+    public static final BlockEntityType<VacuumHopperEntity> VACUUM_HOPPER_ENTITY = registerEntity("vacuum_hopper_entity", (pos, state) -> new VacuumHopperEntity(LookingGlassBlocks.VACUUM_HOPPER_ENTITY, pos, state, 9, 20, 4), VACUUM_HOPPER_BLOCK);
+    public static final BlockEntityType<VacuumHopperEntity> ADVANCED_VACUUM_HOPPER_ENTITY = registerEntity("advanced_vacuum_hopper_entity", (pos, state) -> new VacuumHopperEntity(LookingGlassBlocks.ADVANCED_VACUUM_HOPPER_ENTITY, pos, state, 27, 5, 8), ADVANCED_VACUUM_HOPPER_BLOCK);
 
     public static final BlockEntityType<PoweredFurnaceEntity> POWERED_FURNACE_ENTITY = registerEntity("powered_furnace_entity", PoweredFurnaceEntity::new, POWERED_FURNACE_BLOCK);
     public static final BlockEntityType<AlloyFurnaceEntity> ALLOY_FURNACE_ENTITY = registerEntity("alloy_furnace_entity", AlloyFurnaceEntity::new, ALLOY_FURNACE_BLOCK);

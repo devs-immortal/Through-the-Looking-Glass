@@ -21,9 +21,8 @@ public class AngelBlock extends Block {
         angelBlockStack.setCount(1);
 
         // Try to port the angel block directly into the player inventory.  If you can't do that, drop it at their feet.
-        if (!player.inventory.insertStack(angelBlockStack)) {
-            ItemEntity angelBlockItemEntity = new ItemEntity(world, player.getX(), player.getY(), player.getZ());
-            angelBlockItemEntity.setStack(angelBlockStack);
+        if (!player.getInventory().insertStack(angelBlockStack)) {
+            ItemEntity angelBlockItemEntity = new ItemEntity(world, player.getX(), player.getY(), player.getZ(), angelBlockStack);
             world.spawnEntity(angelBlockItemEntity);
         }
     }

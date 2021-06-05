@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass;
 
 import azzy.fabric.lookingglass.entity.EntitySpawnPacket;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
+import azzy.fabric.lookingglass.entity.model.FlarefinKoiModel;
 import azzy.fabric.lookingglass.entity.model.FlarefinKoiRenderer;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.particle.LookingGlassParticles;
@@ -13,6 +14,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -53,8 +55,8 @@ public class LookingGlassClient implements ClientModInitializer {
                     throw new IllegalStateException("Failed to create instance of entity \"" + Registry.ENTITY_TYPE.getId(et) + "\"!");
                 e.updateTrackedPosition(pos);
                 e.setPos(pos.x, pos.y, pos.z);
-                e.pitch = pitch;
-                e.yaw = yaw;
+                e.setPitch(pitch);
+                e.setYaw(yaw);
                 e.setEntityId(entityId);
                 e.setUuid(uuid);
                 MinecraftClient.getInstance().world.addEntity(entityId, e);
@@ -75,9 +77,12 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(CREATIVE_ENERGY_SOURCE_ENTITY, CreativeEnergySourceRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(SUFFUSER_ENTITY, SuffuserRenderer::new);
 
-        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, (dispatcher, context) -> new FlarefinKoiRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.REVOLVER_SHOT_ENTITY_TYPE, (dispatcher, context) -> new FlyingItemEntityRenderer(dispatcher, context.getItemRenderer()));
-        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.TOSSED_COIN_ENTITY_TYPE, (dispatcher, context) -> new FlyingItemEntityRenderer(dispatcher, context.getItemRenderer()));
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, FlarefinKoiRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.REVOLVER_SHOT_ENTITY_TYPE, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.TOSSED_COIN_ENTITY_TYPE, FlyingItemEntityRenderer::new);
+
+        EntityModelLayerRegistry.registerModelLayer(FlarefinKoiModel.LAYER, FlarefinKoiModel::getTexturedModelData);
+
         receiveEntityPacket();
 
         //Render layers
