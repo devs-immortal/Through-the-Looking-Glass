@@ -28,9 +28,9 @@ public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
 
     public FlarefinKoiModel(ModelPart root) {
         this.torso = root.getChild("torso");
-        this.torso = root.getChild("leftFin");
-        this.torso = root.getChild("rightFin");
-        this.torso = root.getChild("tail");
+        this.leftFin = torso.getChild("left_fin");
+        this.rightFin = torso.getChild("right_fin");
+        this.torso = torso.getChild("tail");
     }
 
     private float curPitch = 0;
