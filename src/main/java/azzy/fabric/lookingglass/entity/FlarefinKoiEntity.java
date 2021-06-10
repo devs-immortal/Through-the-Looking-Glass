@@ -51,7 +51,7 @@ public class FlarefinKoiEntity extends CodEntity implements Angerable {
     public void onBubbleColumnCollision(boolean drag) {
         if(drag)
             if(world.isClient) {
-                this.applyStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 5), null);
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 5), null);
             }
     }
 
@@ -81,7 +81,7 @@ public class FlarefinKoiEntity extends CodEntity implements Angerable {
         if(!bl)
             bl = alt;
         if (bl) {
-            this.dealDamage(this, target);
+            this.applyDamageEffects(this, target);
             this.onAttacking(target);
         }
 

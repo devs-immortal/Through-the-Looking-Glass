@@ -30,7 +30,7 @@ import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
 import java.util.function.Predicate;
 
 @SuppressWarnings("deprecation")
-public class LookingGlassConfiguredFeatures {
+public class LookingGlassConfiguredFeatures extends ConfiguredFeatures {
 
     public static Feature<SingleStateFeatureConfig> BOULDER_FEATURE, UNDERWATER_STATE_FEATURE;
     public static Feature<BiFeatureConfig> UNDERWATER_CRUST_FEATURE, UNDERWATER_PLANT_FEATURE;

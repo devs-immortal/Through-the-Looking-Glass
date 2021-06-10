@@ -6,9 +6,7 @@ import azzy.fabric.lookingglass.blockentity.LookingGlassMachine;
 import azzy.fabric.lookingglass.gui.PoweredFurnaceGuiDescription;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.machine.ModifierProvider;
-import dev.emi.trinkets.api.SlotGroups;
-import dev.emi.trinkets.api.Slots;
-import dev.emi.trinkets.api.TrinketSlots;
+import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -34,7 +32,6 @@ public class LookingGlassItems {
     }
 
     public static void init() {
-        TrinketSlots.addSlot(SlotGroups.OFFHAND, Slots.RING, new Identifier("trinkets", "textures/item/empty_trinket_slot_ring.png"));
     }
 
     private static FabricItemSettings genericSettings(Rarity rarity) {
@@ -44,7 +41,7 @@ public class LookingGlassItems {
     //Tools
     public static final Item DATA_SHARD = registerItem("data_shard", new DataShardItem(defaultSettings().maxCount(16)));
     public static final Item ENERGY_PROBE = registerItem("energy_probe", new EnergyProbeItem(defaultSettings().maxCount(1)));
-    public static final Item BASE_RING = registerGeneratedItem("ring", new Item(defaultSettings().rarity(Rarity.UNCOMMON).maxCount(8)));
+    public static final Item BASE_RING = registerGeneratedItem("ring", new TrinketItem(defaultSettings().rarity(Rarity.UNCOMMON).maxCount(8)));
     public static final Item ANGEL_RING = registerItem("simple_angel_ring", new SimpleAngelRingItem(new FabricItemSettings().group(LOOKINGGLASS_ITEMS).rarity(FINIS_RARITY).maxCount(1)));
     public static final Item GOLDEN_LASSO = registerItem("golden_lasso", new LassoItem(defaultSettings().maxCount(1), false));
     public static final Item CURSED_LASSO = registerItem("cursed_lasso", new LassoItem(defaultSettings().maxCount(1), true));

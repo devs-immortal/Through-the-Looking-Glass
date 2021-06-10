@@ -87,7 +87,7 @@ public class FishJumpGoal extends DiveJumpingGoal {
         if (vec3d.y * vec3d.y < 0.029999999329447746D && this.fish.getPitch() != 0.0F) {
             this.fish.setPitch(MathHelper.lerpAngle(this.fish.getPitch(), 0.0F, 0.2F));
         } else {
-            double d = Math.sqrt(Entity.squaredHorizontalLength(vec3d));
+            double d = vec3d.horizontalLengthSquared();
             double e = Math.signum(-vec3d.y) * Math.acos(d / vec3d.length()) * 57.2957763671875D;
             this.fish.setPitch((float)e);
         }

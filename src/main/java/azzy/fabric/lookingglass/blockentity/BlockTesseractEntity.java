@@ -68,7 +68,7 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
                 case MOVE: {
                     BlockEntity entity = world.getBlockEntity(movePos);
                     if(entity != null) {
-                        BlockEntityMover.directEntityMove(world, movePos, target);
+                        BlockEntityMover.directEntityMove((ServerWorld) world, movePos, target);
                     }
                     else {
                         world.setBlockState(target, world.getBlockState(movePos));
@@ -80,7 +80,7 @@ public class BlockTesseractEntity extends BlockEntity implements BlockEntityClie
                     world.breakBlock(target, true);
                     BlockEntity entity = world.getBlockEntity(movePos);
                     if(entity != null) {
-                        BlockEntityMover.directEntityMove(world, movePos, target);
+                        BlockEntityMover.directEntityMove((ServerWorld) world, movePos, target);
                     }
                     else {
                         world.setBlockState(target, world.getBlockState(movePos));

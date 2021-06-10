@@ -22,7 +22,7 @@ public class EnchantedSaltLampEntity extends BlockEntity implements LookingGlass
         if(world != null && !world.isClient() && (world.getTime() ) % 100 == 0) {
             List<LivingEntity> entities = world.getEntitiesByClass(LivingEntity.class, new Box(pos.add(-5, -7, -5), pos.add(6, 4, 6)), livingEntity -> true);
             for (LivingEntity entity : entities) {
-                entity.applyStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 1, true, false, true), null);
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 200, 1, true, false, true), null);
             }
         }
     }

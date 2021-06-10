@@ -58,7 +58,7 @@ public class EclipseRoseBlock extends WitherRoseBlock {
                 }
                 // Add blindness effect if a player comes in contact with the plant
                 StatusEffectInstance blindnessEffectInstance = new StatusEffectInstance(StatusEffects.BLINDNESS, 120, 0);
-                livingEntity.applyStatusEffect(blindnessEffectInstance, null);
+                livingEntity.addStatusEffect(blindnessEffectInstance);
             }
         }
     }

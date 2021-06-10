@@ -2,23 +2,27 @@ package azzy.fabric.lookingglass.util.rei;
 
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipeType;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.gui.entries.RecipeEntry;
-import me.shedaniel.rei.gui.entries.SimpleRecipeEntry;
-import net.minecraft.client.resource.language.I18n;
+import me.shedaniel.rei.api.client.gui.DisplayRenderer;
+import me.shedaniel.rei.api.client.gui.Renderer;
+import me.shedaniel.rei.api.client.gui.SimpleDisplayRenderer;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.entry.EntryStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractLookingGlassRecipeCategory<R extends LookingGlassRecipe<?>> implements RecipeCategory<LookingGlassRecipeDisplay<R>> {
+public abstract class AbstractLookingGlassRecipeCategory<R extends LookingGlassRecipe<?>> implements DisplayCategory<LookingGlassREIisplay<R>> {
 
     private final LookingGlassRecipeType<R> recipeType;
-    private final EntryStack logo;
+    private final EntryStack<?> logo;
 
-    public AbstractLookingGlassRecipeCategory(LookingGlassRecipeType<R> recipeType, EntryStack logo) {
+    public AbstractLookingGlassRecipeCategory(LookingGlassRecipeType<R> recipeType, EntryStack<?> logo) {
         this.recipeType = recipeType;
         this.logo = logo;
     }
@@ -29,28 +33,33 @@ public abstract class AbstractLookingGlassRecipeCategory<R extends LookingGlassR
     }
 
     @Override
-    public @NotNull String getCategoryName() {
-        return I18n.translate(recipeType.getId().toString());
-    }
-
-    @Override
-    public @NotNull RecipeEntry getSimpleRenderer(LookingGlassRecipeDisplay<R> recipe) {
-        return SimpleRecipeEntry.create(Collections.singletonList(recipe.getInputEntries().get(0)), recipe.getOutputEntries());
-    }
-
-    @NotNull
-    @Override
-    public EntryStack getLogo() {
+    public Renderer getIcon() {
         return logo;
     }
 
-    public List<EntryStack> getInput(LookingGlassRecipeDisplay<R> recipeDisplay, int index) {
-        List<List<EntryStack>> inputs = recipeDisplay.getInputEntries();
-        return inputs.size() > index ? inputs.get(index) : Collections.emptyList();
+    @Override
+    public CategoryIdentifier<? extends LookingGlassREIisplay<R>> getCategoryIdentifier() {
+        return CategoryIdentifier.of(recipeType.getId());
     }
 
-    public List<EntryStack> getOutput(LookingGlassRecipeDisplay<R> recipeDisplay, int index) {
-        List<List<EntryStack>> outputs = recipeDisplay.getResultingEntries();
-        return outputs.size() > index ? outputs.get(index) : Collections.emptyList();
+    @Override
+    public Text getTitle() {
+        return new TranslatableText(recipeType.getId().toString());
+    }
+
+    @Override
+    public DisplayRenderer getDisplayRenderer(LookingGlassREIisplay<R> display) {
+        return SimpleDisplayRenderer.from(Collections.singletonList(display.getInputEntries().get(0)), display.getOutputEntries());
+    }
+
+
+    public EntryIngredient getInput(LookingGlassREIisplay<R> recipeDisplay, int index) {
+        List<EntryIngredient> inputs = recipeDisplay.getInputEntries();
+        return inputs.size() > index ? inputs.get(index) : EntryIngredient.empty();
+    }
+
+    public EntryIngredient getOutput(LookingGlassREIisplay<R> recipeDisplay, int index) {
+        List<EntryIngredient> outputs = recipeDisplay.getOutputEntries();
+        return outputs.size() > index ? outputs.get(index) : EntryIngredient.empty();
     }
 }

@@ -35,7 +35,7 @@ import static azzy.fabric.lookingglass.block.LookingGlassBlocks.PROJECTORBLOCK;
 public class LookingGlassCommon implements ModInitializer {
 	public static final String MODID = "lookingglass";
 
-	public static final Metadata METADATA = new Metadata(MODID);
+	public static final Metadata METADATA = new Metadata(MODID, "LG_GEN");
 
 	public static final Rarity FINIS_RARITY = ClassTinkerers.getEnum(Rarity.class, "FINIS");
 	public static final Rarity ELDENMETAL_RARITY = ClassTinkerers.getEnum(Rarity.class, "NULL");

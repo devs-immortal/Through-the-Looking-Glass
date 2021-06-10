@@ -9,6 +9,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.DefaultedRegistry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -163,7 +164,7 @@ public class CornPlantBlock extends FernBlock {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         if(!world.isClient()) {
             BlockState floor = world.getBlockState(pos.down());
-            return floor.isOf(LookingGlassBlocks.LOAM) || floor.isOf(Blocks.DIRT) || floor.isOf(Blocks.GRASS_BLOCK) || floor.isOf(Blocks.PODZOL) || ((ServerWorld) world).getTagManager().getBlocks().getTagOrEmpty(new Identifier("c", "dirt")).contains(floor.getBlock());
+            return floor.isOf(LookingGlassBlocks.LOAM) || floor.isOf(Blocks.DIRT) || floor.isOf(Blocks.GRASS_BLOCK) || floor.isOf(Blocks.PODZOL) || ((ServerWorld) world).getTagManager().getOrCreateTagGroup(DefaultedRegistry.BLOCK_KEY).getTagOrEmpty(new Identifier("c", "dirt")).contains(floor.getBlock());
         }
         return false;
     }

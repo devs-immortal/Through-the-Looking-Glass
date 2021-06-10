@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.render;
 
 import azzy.fabric.lookingglass.LookingGlassClient;
 import azzy.fabric.lookingglass.blockentity.BlockTesseractEntity;
+import azzy.fabric.lookingglass.util.client.RenderHelper;
 import azzy.fabric.lookingglass.util.client.TTLGRenderLayers;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -11,10 +12,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import org.apache.commons.lang3.tuple.Triple;
-import vazkii.patchouli.client.RenderHelper;
 
 public class TesseractRenderer<T extends BlockTesseractEntity & TesseractRenderable> implements BlockEntityRenderer<T> {
     public TesseractRenderer(BlockEntityRendererFactory.Context ctx) {

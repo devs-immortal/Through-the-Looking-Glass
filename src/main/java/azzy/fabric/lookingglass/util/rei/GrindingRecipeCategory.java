@@ -5,9 +5,10 @@ import azzy.fabric.lookingglass.recipe.GrindingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.widgets.Widgets;
-import me.shedaniel.rei.gui.widget.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.common.entry.EntryStack;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.text.LiteralText;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,11 +18,11 @@ import java.util.List;
 public class GrindingRecipeCategory extends AbstractLookingGlassRecipeCategory<GrindingRecipe> {
 
     public GrindingRecipeCategory() {
-        super(LookingGlassRecipes.GRINDING_RECIPE, EntryStack.create(LookingGlassBlocks.GRINDER_BLOCK));
+        super(LookingGlassRecipes.GRINDING_RECIPE, EntryStacks.of(LookingGlassBlocks.GRINDER_BLOCK));
     }
 
     @Override
-    public @NotNull List<Widget> setupDisplay(LookingGlassRecipeDisplay<GrindingRecipe> recipeDisplay, Rectangle bounds) {
+    public @NotNull List<Widget> setupDisplay(LookingGlassREIisplay<GrindingRecipe> recipeDisplay, Rectangle bounds) {
         List<Widget> widgets = new ArrayList<>();
         Point start = new Point(bounds.getCenterX() - 41, bounds.y + 20);
         widgets.add(Widgets.createCategoryBase(bounds));

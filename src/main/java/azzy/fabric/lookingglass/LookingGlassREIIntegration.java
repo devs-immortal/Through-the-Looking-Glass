@@ -4,51 +4,45 @@ import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.*;
 import azzy.fabric.lookingglass.util.rei.*;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.RecipeHelper;
-import me.shedaniel.rei.api.plugins.REIPluginV0;
-import me.shedaniel.rei.plugin.DefaultPlugin;
+import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
+import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
+import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.util.EntryStacks;
+import me.shedaniel.rei.plugin.client.DefaultClientPlugin;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.util.Identifier;
 
 import java.util.function.Predicate;
 
-public class LookingGlassREIIntegration implements REIPluginV0 {
-
+public class LookingGlassREIIntegration implements REIClientPlugin {
     @Override
-    public void registerRecipeDisplays(RecipeHelper recipeHelper) {
-        recipeHelper.registerRecipes(LookingGlassRecipes.ALLOYING_RECIPE.getId(), generateRecipeConditional(AlloyingRecipe.class), LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.INDUCTION_RECIPE.getId(), generateRecipeConditional(InductionRecipe.class), LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.FREEZING_RECIPE.getId(), generateRecipeConditional(FreezingRecipe.class), LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.GRINDING_RECIPE.getId(), generateRecipeConditional(GrindingRecipe.class), LookingGlassRecipeDisplay::new);
-        recipeHelper.registerRecipes(LookingGlassRecipes.MIXING_RECIPE.getId(), generateRecipeConditional(MixingRecipe.class), LookingGlassRecipeDisplay::new);
+    public void registerDisplays(DisplayRegistry registry) {
+        registry.registerFiller(LookingGlassRecipe.class, LookingGlassREIisplay::new);
+        //recipeHelper.registerRecipes(LookingGlassRecipes.ALLOYING_RECIPE.getId(), generateRecipeConditional(AlloyingRecipe.class), LookingGlassRecipeDisplay::new);
+        //recipeHelper.registerRecipes(LookingGlassRecipes.INDUCTION_RECIPE.getId(), generateRecipeConditional(InductionRecipe.class), LookingGlassRecipeDisplay::new);
+        //recipeHelper.registerRecipes(LookingGlassRecipes.FREEZING_RECIPE.getId(), generateRecipeConditional(FreezingRecipe.class), LookingGlassRecipeDisplay::new);
+        //recipeHelper.registerRecipes(LookingGlassRecipes.GRINDING_RECIPE.getId(), generateRecipeConditional(GrindingRecipe.class), LookingGlassRecipeDisplay::new);
+        //recipeHelper.registerRecipes(LookingGlassRecipes.MIXING_RECIPE.getId(), generateRecipeConditional(MixingRecipe.class), LookingGlassRecipeDisplay::new);
     }
 
-    @Override
-    public void registerPluginCategories(RecipeHelper recipeHelper) {
-        recipeHelper.registerCategory(new AlloyingRecipeCategory());
-        recipeHelper.registerCategory(new InductionRecipeCategory());
-        recipeHelper.registerCategory(new FreezingRecipeCategory());
-        recipeHelper.registerCategory(new GrindingRecipeCategory());
-        recipeHelper.registerCategory(new MixingRecipeCategory());
-    }
 
     @Override
-    public void registerOthers(RecipeHelper recipeHelper) {
-        recipeHelper.registerWorkingStations(DefaultPlugin.SMELTING, EntryStack.create(LookingGlassBlocks.POWERED_FURNACE_BLOCK));
+    public void registerCategories(CategoryRegistry registry) {
+        registry.add(new AlloyingRecipeCategory());
+        registry.add(new InductionRecipeCategory());
+        registry.add(new FreezingRecipeCategory());
+        registry.add(new GrindingRecipeCategory());
+        registry.add(new MixingRecipeCategory());
 
-        recipeHelper.registerWorkingStations(LookingGlassRecipes.ALLOYING_RECIPE.getId(), EntryStack.create(LookingGlassBlocks.ALLOY_FURNACE_BLOCK));
-        recipeHelper.registerWorkingStations(LookingGlassRecipes.INDUCTION_RECIPE.getId(), EntryStack.create(LookingGlassBlocks.BLOCK_INDUCTOR_BLOCK));
-        recipeHelper.registerWorkingStations(LookingGlassRecipes.GRINDING_RECIPE.getId(), EntryStack.create(LookingGlassBlocks.GRINDER_BLOCK));
-        recipeHelper.registerWorkingStations(LookingGlassRecipes.MIXING_RECIPE.getId(), EntryStack.create(LookingGlassBlocks.MIXER_BLOCK));
+        registry.addWorkstations(CategoryIdentifier.of(LookingGlassRecipes.ALLOYING_RECIPE.getId()), EntryStacks.of(LookingGlassBlocks.ALLOY_FURNACE_BLOCK));
+        registry.addWorkstations(CategoryIdentifier.of(DefaultClientPlugin.SMELTING.getIdentifier()), EntryStacks.of(LookingGlassBlocks.POWERED_FURNACE_BLOCK));
 
-        recipeHelper.registerWorkingStations(DefaultPlugin.BLASTING, EntryStack.create(LookingGlassItems.BLAST_UPGRADE_ITEM));
-        recipeHelper.registerWorkingStations(LookingGlassRecipes.FREEZING_RECIPE.getId(), EntryStack.create(LookingGlassItems.FREEZER_UPGRADE_ITEM));
-    }
+        registry.addWorkstations(CategoryIdentifier.of(LookingGlassRecipes.INDUCTION_RECIPE.getId()), EntryStacks.of(LookingGlassBlocks.BLOCK_INDUCTOR_BLOCK));
+        registry.addWorkstations(CategoryIdentifier.of(LookingGlassRecipes.GRINDING_RECIPE.getId()), EntryStacks.of(LookingGlassBlocks.GRINDER_BLOCK));
+        registry.addWorkstations(CategoryIdentifier.of(LookingGlassRecipes.MIXING_RECIPE.getId()), EntryStacks.of(LookingGlassBlocks.MIXER_BLOCK));
 
-    @Override
-    public Identifier getPluginIdentifier() {
-        return new Identifier(LookingGlassCommon.MODID, "lookingglass_rei_integration");
+        registry.addWorkstations(CategoryIdentifier.of(DefaultClientPlugin.BLASTING.getIdentifier()), EntryStacks.of(LookingGlassItems.BLAST_UPGRADE_ITEM));
+        registry.addWorkstations(CategoryIdentifier.of(LookingGlassRecipes.FREEZING_RECIPE.getId()), EntryStacks.of(LookingGlassItems.FREEZER_UPGRADE_ITEM));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

@@ -3,10 +3,7 @@ package azzy.fabric.lookingglass.util.client;
 import azzy.fabric.lookingglass.LookingGlassCommon;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderPhase;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
@@ -16,7 +13,7 @@ public abstract class TTLGRenderLayers extends RenderLayer{
 
 
     private TTLGRenderLayers() {
-        super("ae", VertexFormats.POSITION, 0, 0, false, true, null, null);
+        super("ae", VertexFormats.POSITION, VertexFormat.DrawMode.QUADS, 0, false, true, null, null);
     }
 
     public static RenderLayer getTransNoDiff(Identifier texture){
@@ -24,17 +21,17 @@ public abstract class TTLGRenderLayers extends RenderLayer{
                 .builder()
                 .texture(new RenderPhase.Texture(texture, true, true))
                 .transparency(TRANSLUCENT_TRANSPARENCY)
-                .diffuseLighting(DISABLE_DIFFUSE_LIGHTING)
+                .shader(Shader.NO_SHADER)
                 .lightmap(ENABLE_LIGHTMAP)
                 .overlay(DISABLE_OVERLAY_COLOR)
                 .build(true);
 
-        return RenderLayer.of(DYNAMIC_RENDERLAYER + texture,
+        return RenderLayerConstructor.buildMultiPhase(DYNAMIC_RENDERLAYER + texture,
                 VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL,
                 VertexFormat.DrawMode.QUADS, 256, false, true, parameters);
     }
 
-    public static final RenderLayer FLAT_BLOOM = RenderLayer.of("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).diffuseLighting(DISABLE_DIFFUSE_LIGHTING).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).fog(NO_FOG).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
+    public static final RenderLayer FLAT_BLOOM = RenderLayerConstructor.buildMultiPhase("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).shader(Shader.NO_SHADER).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
 
     public static RenderLayer getPortalLayer(Identifier texture, int blendMode) {
         Transparency transparency2;
@@ -47,6 +44,6 @@ public abstract class TTLGRenderLayers extends RenderLayer{
             texture2 = new Texture(texture, false, false);
         }
 
-        return of("ff_portal_layer", VertexFormats.POSITION_COLOR, 7, 256, false, true, RenderLayer.MultiPhaseParameters.builder().transparency(transparency2).texture(texture2).texturing(new PortalTexturing(blendMode)).fog(BLACK_FOG).build(false));
+        return RenderLayerConstructor.buildMultiPhase("ff_portal_layer", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().transparency(transparency2).texture(texture2).texturing(Texturing.DEFAULT_TEXTURING).build(false));
     }
 }

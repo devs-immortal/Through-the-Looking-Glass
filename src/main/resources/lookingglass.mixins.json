@@ -8,11 +8,11 @@
     "EntityRetainedShapeContextMixin",
     "FishKillMixin",
     "LightningEntityMixin",
-    "LithiumBlockEntityListMixin",
     "LivingEntityLootMixin",
     "PlayerEntityMixin",
     "RecipeManagerMixin",
     "RecipeMapAccessor",
+    "RenderLayerMixin",
     "TextureUnregister"
   ],
   "client": [
@@ -22,6 +22,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "plugin": "azzy.fabric.lookingglass.mixin.Plugin"
+  }
 }

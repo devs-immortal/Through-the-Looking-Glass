@@ -107,7 +107,7 @@ public class BlockInductorBlock extends AbstractInductorBlock implements FalseIn
                         world.setBlockState(offPos, state);
                     }
                     else {
-                        BlockEntityMover.tryMoveEntity(world, probePos, facing);
+                        BlockEntityMover.tryMoveEntity((ServerWorld) world, probePos, facing);
                     }
                 }
             }

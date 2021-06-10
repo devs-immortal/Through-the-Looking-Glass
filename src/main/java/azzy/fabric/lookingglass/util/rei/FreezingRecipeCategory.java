@@ -5,9 +5,9 @@ import azzy.fabric.lookingglass.recipe.FreezingRecipe;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.widgets.Widgets;
-import me.shedaniel.rei.gui.widget.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widget;
+import me.shedaniel.rei.api.client.gui.widgets.Widgets;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import java.util.List;
 public class FreezingRecipeCategory extends AbstractLookingGlassRecipeCategory<FreezingRecipe> {
 
     public FreezingRecipeCategory() {
-        super(LookingGlassRecipes.FREEZING_RECIPE, EntryStack.create(LookingGlassItems.FREEZER_UPGRADE_ITEM));
+        super(LookingGlassRecipes.FREEZING_RECIPE, EntryStacks.of(LookingGlassItems.FREEZER_UPGRADE_ITEM));
     }
 
     @Override
-    public @NotNull List<Widget> setupDisplay(LookingGlassRecipeDisplay<FreezingRecipe> recipeDisplay, Rectangle bounds) {
+    public @NotNull List<Widget> setupDisplay(LookingGlassREIisplay<FreezingRecipe> recipeDisplay, Rectangle bounds) {
         List<Widget> widgets = new ArrayList<>();
         Point start = new Point(bounds.getCenterX() - 41, bounds.y + 10);
         widgets.add(Widgets.createCategoryBase(bounds));
