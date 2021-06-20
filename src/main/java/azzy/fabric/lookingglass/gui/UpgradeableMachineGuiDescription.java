@@ -6,6 +6,7 @@ import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WBar;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
+import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,6 +29,7 @@ public abstract class UpgradeableMachineGuiDescription extends SyncedGuiDescript
         this.powerIndex = powerIndex;
         root = new WPlainPanel();
         root.setSize(162, 72);
+        root.setInsets(Insets.ROOT_PANEL);
         setRootPanel(root);
 
         draw(root);

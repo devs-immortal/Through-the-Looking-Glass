@@ -5,6 +5,7 @@ import azzy.fabric.lookingglass.util.GeneralNetworking;
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
+import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,6 +35,7 @@ public class NewProjectorGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel root = new WPlainPanel();
         root.setSize(162, 200);
+        root.setInsets(Insets.ROOT_PANEL);
         setRootPanel(root);
 
         root.add(this.createPlayerInventoryPanel(), 1, 212);

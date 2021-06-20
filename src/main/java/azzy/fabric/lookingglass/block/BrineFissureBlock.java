@@ -39,7 +39,8 @@ public class BrineFissureBlock extends BlockWithEntity implements BlockEntityPro
         return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);
     }
 
-    public void onSteppedOn(World world, BlockPos pos, Entity entity) {
+    @Override
+    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
         if (!entity.isFireImmune() && entity instanceof LivingEntity && !(entity instanceof WaterCreatureEntity) && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
             entity.damage(DamageSource.HOT_FLOOR, 10.0F);
         }
@@ -67,6 +68,11 @@ public class BrineFissureBlock extends BlockWithEntity implements BlockEntityPro
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return LookingGlassBE::tickStatic;
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 
     @Nullable

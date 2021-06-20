@@ -27,17 +27,7 @@ public class BrineFissureEntity extends BlockEntity implements LookingGlassTicka
                     if(random.nextInt(200) == 0) {
                         for (int k = 0; k < random.nextInt(2); k++) {
                             if(world.isWater(testPos) && random.nextInt(testPos.getManhattanDistance(basePos) / 2 + 1) == 0) {
-                                BlockPos steamPos = world.getTopPosition(Heightmap.Type.WORLD_SURFACE, testPos).down();
-                                BlockPos bubblePos = steamPos;
-                                int height = 0;
-                                while(world.isWater(bubblePos.down())) {
-                                    bubblePos = bubblePos.down();
-                                    height++;
-                                }
-                                world.addImportantParticle(ParticleTypes.BUBBLE_COLUMN_UP, true, bubblePos.getX() + random.nextFloat(), bubblePos.getY() + ((random.nextFloat() / 1.01F) * height), bubblePos.getZ() + random.nextFloat(), 0, Math.abs(random.nextGaussian() / 13), 0);
-                                if(random.nextInt(14) == 0) {
-                                    world.addImportantParticle(ParticleTypes.CLOUD, true, steamPos.getX() + random.nextFloat(), steamPos.getY() + 1.05, steamPos.getZ() + random.nextFloat(), 0, Math.abs(random.nextGaussian() / 12), 0);
-                                }
+                                world.addImportantParticle(ParticleTypes.BUBBLE_COLUMN_UP, true, testPos.getX() + random.nextFloat(), testPos.getY() + (random.nextFloat() / 1.01F), testPos.getZ() + random.nextFloat(), 0, Math.abs(random.nextGaussian() / 13), 0);
                             }
                         }
                     }

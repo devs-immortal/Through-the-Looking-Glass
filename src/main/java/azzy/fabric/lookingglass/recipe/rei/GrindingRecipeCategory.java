@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util.rei;
+package azzy.fabric.lookingglass.recipe.rei;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.recipe.GrindingRecipe;
@@ -7,7 +7,6 @@ import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.text.LiteralText;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util.rei;
+package azzy.fabric.lookingglass.recipe.rei;
 
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipe;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LookingGlassREIisplay<R extends LookingGlassRecipe<?>> implements Display {
 
@@ -23,7 +24,7 @@ public class LookingGlassREIisplay<R extends LookingGlassRecipe<?>> implements D
     public LookingGlassREIisplay(R recipe) {
         this.recipe = recipe;
         this.inputs = CollectionUtils.map(recipe.getInputs(), stack -> EntryIngredients.ofItemStacks(stack.getStacks()));
-        this.outputs = Collections.singletonList(EntryIngredients.ofItemStacks(recipe.getOutputs()));
+        this.outputs = recipe.getOutputs().stream().map(EntryIngredients::of).collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")

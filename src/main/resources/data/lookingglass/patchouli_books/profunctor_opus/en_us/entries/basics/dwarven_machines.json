@@ -1,11 +1,11 @@
 {
   "name": "Questionably Dwarven",
-  "category": "basics",
+  "category": "lookingglass:basics",
   "icon": "lookingglass:dwarven_clay",
   "pages": [
     {
       "type": "text",
-      "text": "Who were they, how did they live, did they even exist? There are many questions to ask about the dwarves, none of which will be answered as we are here to exploit what is left of  them."
+      "text": "Who were they, how did they live, did they even exist? There are many questions to ask about the dwarves, none of which will be answered as we are here to exploit what is left of them."
     },
     {
       "type": "spotlight",

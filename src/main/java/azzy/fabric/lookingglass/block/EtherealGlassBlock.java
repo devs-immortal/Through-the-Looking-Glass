@@ -6,6 +6,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractGlassBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +15,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+
+import java.util.Optional;
 
 public class EtherealGlassBlock extends AbstractGlassBlock {
     public GlassBlockTypes glassBlockTypes;
@@ -34,21 +37,27 @@ public class EtherealGlassBlock extends AbstractGlassBlock {
      */
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView blockView, BlockPos pos, ShapeContext context) {
-        ShapeContextMixinInterface shapeContextInterface = (ShapeContextMixinInterface) context;
-        Entity collidingEntity = shapeContextInterface.getEntity();
+        if(context instanceof EntityShapeContext) {
+            Optional<Entity> optional = ((EntityShapeContext) context).getEntity();
 
-        // Ghost glass allows everyone to pass through.
-        if (GlassBlockTypes.GHOST_GLASS.equals(glassBlockTypes) || GlassBlockTypes.DARK_GHOST_GLASS.equals(glassBlockTypes))
-            return VoxelShapes.empty();
+            if(optional.isEmpty())
+                return super.getCollisionShape(state, blockView, pos, context);
 
-        if (collidingEntity instanceof PlayerEntity) {
-            // If the glass is ethereal type glass, it allows players to pass through.
-            if (GlassBlockTypes.ETHEREAL.equals(glassBlockTypes) || GlassBlockTypes.DARK_ETHEREAL.equals(glassBlockTypes))
+            Entity collidingEntity = optional.get();
+
+            // Ghost glass allows everyone to pass through.
+            if (GlassBlockTypes.GHOST_GLASS.equals(glassBlockTypes) || GlassBlockTypes.DARK_GHOST_GLASS.equals(glassBlockTypes))
                 return VoxelShapes.empty();
-        } else {
-            // The entity is not a player entity.  Allow non-players to pass through for reverse ethereal glass types.
-            if (GlassBlockTypes.REVERSE_ETHEREAL.equals(glassBlockTypes) || GlassBlockTypes.DARK_REVERSE_ETHEREAL.equals(glassBlockTypes))
-                return VoxelShapes.empty();
+
+            if (collidingEntity instanceof PlayerEntity) {
+                // If the glass is ethereal type glass, it allows players to pass through.
+                if (GlassBlockTypes.ETHEREAL.equals(glassBlockTypes) || GlassBlockTypes.DARK_ETHEREAL.equals(glassBlockTypes))
+                    return VoxelShapes.empty();
+            } else {
+                // The entity is not a player entity.  Allow non-players to pass through for reverse ethereal glass types.
+                if (GlassBlockTypes.REVERSE_ETHEREAL.equals(glassBlockTypes) || GlassBlockTypes.DARK_REVERSE_ETHEREAL.equals(glassBlockTypes))
+                    return VoxelShapes.empty();
+            }
         }
 
         return super.getCollisionShape(state, blockView, pos, context);

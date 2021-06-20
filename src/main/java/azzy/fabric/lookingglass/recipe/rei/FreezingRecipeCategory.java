@@ -1,4 +1,4 @@
-package azzy.fabric.lookingglass.util.rei;
+package azzy.fabric.lookingglass.recipe.rei;
 
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.FreezingRecipe;

@@ -1,5 +1,6 @@
 package azzy.fabric.lookingglass;
 
+import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.entity.EntitySpawnPacket;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.entity.model.FlarefinKoiModel;
@@ -90,6 +91,9 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), WOODEN_SPIKE_BLOCK, IRON_SPIKE_BLOCK, DIAMOND_SPIKE_BLOCK, NETHERITE_SPIKE_BLOCK, UNSTABLE_ALTAR_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), CORN_PLANT, RED_SEAGRASS, TALL_RED_SEAGRASS, ECLIPSE_ROSE);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), CREATIVE_ENERGY_SOURCE_BLOCK, PINK_GEL_BLOCK, DARK_GLASS, DARK_GHOST_GLASS, DARK_ETHEREAL_GLASS, REVERSE_DARK_ETHEREAL_GLASS, GLOW_GLASS);
+
+        //Clientside init
+        ECLIPSE_ROSE.initClient();
 
         LookingGlassParticles.init();
         LookingGlassGUIs.initClient();

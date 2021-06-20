@@ -1,6 +1,6 @@
 {
   "name": "Crystal EEPROM",
-  "category": "basics",
+  "category": "lookingglass:basics",
   "icon": "lookingglass:data_shard",
   "pages": [
     {

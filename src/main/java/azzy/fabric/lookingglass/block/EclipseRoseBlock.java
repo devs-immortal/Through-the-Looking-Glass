@@ -40,6 +40,10 @@ public class EclipseRoseBlock extends WitherRoseBlock {
 
     public EclipseRoseBlock(StatusEffect effect, Settings settings) {
         super(effect, settings);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void initClient() {
         ClientTickEvents.START_WORLD_TICK.register(this::eclipsePhaseTick);
         ClientTickEvents.START_CLIENT_TICK.register(client -> eclipseRadiusCheckTick());
     }

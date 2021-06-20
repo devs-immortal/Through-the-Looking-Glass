@@ -11,5 +11,5 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class BackgroundTypes {
 
-    public static final BackgroundType DWARVEN = new BackgroundType(BackgroundPainter.createNinePatch(new Texture(new Identifier(LookingGlassCommon.MODID, "textures/gui/background/dwarven.png")), identifierBuilder -> identifierBuilder.cornerSize(8)), "textures/gui/energy/lumen_bar_dwarven.png");
+    public static final BackgroundType DWARVEN = new BackgroundType(BackgroundPainter.createNinePatch(new Identifier(LookingGlassCommon.MODID, "textures/gui/background/dwarven.png")), "textures/gui/energy/lumen_bar_dwarven.png");
 }

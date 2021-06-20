@@ -30,7 +30,7 @@ public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
         this.torso = root.getChild("torso");
         this.leftFin = torso.getChild("left_fin");
         this.rightFin = torso.getChild("right_fin");
-        this.torso = torso.getChild("tail");
+        this.tail = torso.getChild("tail");
     }
 
     private float curPitch = 0;
@@ -43,7 +43,7 @@ public class FlarefinKoiModel extends EntityModel<FlarefinKoiEntity> {
                 "torso",
                 ModelPartBuilder.create()
                     .uv(0, 0).cuboid(0, -3.5f, -6f, 0, 2, 8)
-                    .uv(0, 19).cuboid(-1, -1.5f, -8f, 2, 2, 10)
+                    .uv(0, 19).cuboid(-1, -1.5f, -8f, 2, 3, 10)
                     .uv(0, 0).cuboid(-1, 1.5f, -8f, 0, 1, 1)
                     .cuboid(1, 1.5f, -8f, 0, 1, 1),
                 ModelTransform.pivot(0, 21.5f, 0)

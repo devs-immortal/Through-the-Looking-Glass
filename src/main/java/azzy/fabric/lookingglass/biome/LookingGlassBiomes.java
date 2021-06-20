@@ -25,11 +25,11 @@ public class LookingGlassBiomes {
         Registry.register(BuiltinRegistries.BIOME, BRINE_CRAGS_KEY.getValue(), BrineOceanBiome.BRINE_CRAGS);
         Registry.register(BuiltinRegistries.BIOME, BRINE_CHASM_KEY.getValue(), BrineOceanBiome.BRINE_CHASM);
 
-        OverworldBiomes.addBiomeVariant(BiomeKeys.OCEAN, BRINE_OCEAN_KEY, 0.2);
-        OverworldBiomes.addBiomeVariant(BiomeKeys.DEEP_OCEAN, BRINE_CHASM_KEY, 0.15);
+        OverworldBiomes.addBiomeVariant(BiomeKeys.OCEAN, BRINE_OCEAN_KEY, 0.1);
+        OverworldBiomes.addBiomeVariant(BiomeKeys.DEEP_OCEAN, BRINE_CHASM_KEY, 0.125);
         OverworldBiomes.addEdgeBiome(BRINE_OCEAN_KEY, BRINE_DELTA_KEY, 3);
-        OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_CRAGS_KEY, 0.2);
-        OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_DELTA_KEY, 0.3);
+        OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_CRAGS_KEY, 0.3);
+        OverworldBiomes.addHillsBiome(BRINE_OCEAN_KEY, BRINE_DELTA_KEY, 0.35);
         OverworldBiomes.addHillsBiome(BRINE_CHASM_KEY, BRINE_OCEAN_KEY, 0.06);
     }
 }

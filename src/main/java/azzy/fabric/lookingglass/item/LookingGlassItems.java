@@ -65,6 +65,7 @@ public class LookingGlassItems {
     //Materials
     public static final Item ENRICHED_CHARCOAL = registerGeneratedItem("enriched_charcoal", new Item(defaultSettings()));
     public static final Item IRON_DUST = registerGeneratedItem("iron_dust", new Item(defaultSettings()));
+    public static final Item COPPER_DUST = registerGeneratedItem("copper_dust", new Item(defaultSettings()));
     public static final Item GOLD_DUST = registerGeneratedItem("gold_dust", new Item(defaultSettings()));
     public static final Item ANCIENT_DEBRIS_DUST = registerGeneratedItem("ancient_debris_dust", new Item(defaultSettings()));
     public static final Item NETHERITE_DUST = registerGeneratedItem("netherite_dust", new Item(defaultSettings()));

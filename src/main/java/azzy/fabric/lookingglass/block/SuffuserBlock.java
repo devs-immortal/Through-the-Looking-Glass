@@ -30,6 +30,11 @@ public class SuffuserBlock extends HorizontalMachineBlock {
     }
 
     @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return null;
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if(player.isSneaking()) {
             if(!world.isClient())

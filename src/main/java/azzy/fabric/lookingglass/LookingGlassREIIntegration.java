@@ -3,7 +3,7 @@ package azzy.fabric.lookingglass;
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
 import azzy.fabric.lookingglass.recipe.*;
-import azzy.fabric.lookingglass.util.rei.*;
+import azzy.fabric.lookingglass.recipe.rei.*;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;

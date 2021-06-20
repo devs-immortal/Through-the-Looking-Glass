@@ -11,19 +11,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityShapeContext.class)
 public class EntityRetainedShapeContextMixin implements ShapeContextMixinInterface {
+
     @Unique
-    public Entity entity;
+    public Entity cachedEntity;
 
     @Inject(method = "<init>(Lnet/minecraft/entity/Entity;)V", at = @At("TAIL"))
     public void init(Entity entity, CallbackInfo callbackInfo) {
-        this.entity = entity;
+        this.cachedEntity = entity;
     }
 
-    public Entity getEntity() {
-        return entity;
+    public Entity getCachedEntity() {
+        return cachedEntity;
     }
 
     public Entity setEntity(Entity storedEntity) {
-        return this.entity = storedEntity;
+        return this.cachedEntity = storedEntity;
     }
 }

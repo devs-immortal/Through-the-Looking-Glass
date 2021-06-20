@@ -21,7 +21,7 @@ public abstract class TTLGRenderLayers extends RenderLayer{
                 .builder()
                 .texture(new RenderPhase.Texture(texture, true, true))
                 .transparency(TRANSLUCENT_TRANSPARENCY)
-                .shader(Shader.NO_SHADER)
+                .shader(Shader.BLOCK_SHADER)
                 .lightmap(ENABLE_LIGHTMAP)
                 .overlay(DISABLE_OVERLAY_COLOR)
                 .build(true);
@@ -31,7 +31,7 @@ public abstract class TTLGRenderLayers extends RenderLayer{
                 VertexFormat.DrawMode.QUADS, 256, false, true, parameters);
     }
 
-    public static final RenderLayer FLAT_BLOOM = RenderLayerConstructor.buildMultiPhase("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).shader(Shader.NO_SHADER).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
+    public static final RenderLayer FLAT_BLOOM = RenderLayerConstructor.buildMultiPhase("lookingglass:flat_bloom", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, false, true, RenderLayer.MultiPhaseParameters.builder().texture(new RenderPhase.Texture(new Identifier(LookingGlassCommon.MODID, "textures/special/flat.png"), false, false)).shader(Shader.BLOCK_SHADER).transparency(TRANSLUCENT_TRANSPARENCY).target(RenderPhase.ITEM_TARGET).lightmap(DISABLE_LIGHTMAP).layering(RenderPhase.VIEW_OFFSET_Z_LAYERING).writeMaskState(ALL_MASK).build(true));
 
     public static RenderLayer getPortalLayer(Identifier texture, int blendMode) {
         Transparency transparency2;

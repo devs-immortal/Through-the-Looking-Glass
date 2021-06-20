@@ -2,6 +2,7 @@ package azzy.fabric.lookingglass.biome;
 
 import azzy.fabric.lookingglass.block.LookingGlassBlocks;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
@@ -47,6 +48,7 @@ public class BrineOceanBiome {
             generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, LookingGlassConfiguredFeatures.RED_SEAGRASS.getFeature());
 
             spawnSettings.spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, 35, 5, 12));
+            spawnSettings.spawn(SpawnGroup.UNDERGROUND_WATER_CREATURE, new SpawnSettings.SpawnEntry(EntityType.AXOLOTL, 8, 1, 3));
             DefaultBiomeFeatures.addWarmOceanMobs(spawnSettings, 8, 3);
         }
         else {
