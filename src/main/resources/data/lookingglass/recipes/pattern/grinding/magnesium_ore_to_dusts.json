@@ -1,5 +1,6 @@
 {
   "type": "lookingglass:grinding",
+  "optional": "true",
   "input": {
     "ingredient": [
       {
@@ -9,11 +10,11 @@
   },
   "output": {
     "tag": "c:magnesium_dusts",
-    "count": 2
+    "count": 3
   },
   "secondary": {
     "tag": "c:sphalerite_dusts",
     "count": 1
   },
-  "chance": 0.2
+  "chance": 0.4
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "lookingglass:base/base_pipe_arm",
+  "textures": {
+    "all": "lookingglass:block/rose_cable"
+  }
+}

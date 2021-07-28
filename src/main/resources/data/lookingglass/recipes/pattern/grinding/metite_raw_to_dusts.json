@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_metite_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:metite_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:lunum_dusts",
+    "count": 1
+  },
+  "chance": 0.06666667
+}

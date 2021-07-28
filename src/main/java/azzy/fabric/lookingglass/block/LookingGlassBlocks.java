@@ -4,7 +4,6 @@ import azzy.fabric.incubus_core.datagen.BSJsonGen;
 import azzy.fabric.incubus_core.datagen.LootGen;
 import azzy.fabric.incubus_core.datagen.ModelJsonGen;
 import azzy.fabric.incubus_core.datagen.RecipeJsonGen;
-import azzy.fabric.lookingglass.block.LookingGlassBlocks.SingletType;
 import azzy.fabric.lookingglass.blockentity.*;
 import azzy.fabric.lookingglass.util.LookingGlassSounds;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
@@ -30,7 +29,6 @@ import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import static azzy.fabric.lookingglass.LookingGlassCommon.*;
 
@@ -91,26 +89,19 @@ public class LookingGlassBlocks {
     public static final Block SUFFUSER_BLOCK = registerBlock("suffuser", new SuffuserBlock(dwarvenMachine()), basicItem());
     public static final Block ENCHANTER_BLOCK = registerBlock("enchanter", new EnchanterBlock(dwarvenMachine()), basicItem());
 
-    // Vector plates move entities around.
-    public static final Block SLOW_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "slow_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 0.15F));
-    public static final Block NORMAL_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "normal_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 0.25F));
-    public static final Block FAST_VECTOR_PLATE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "fast_vector_plate"), new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), 0.35F));
+    public static final Block SLOW_VECTOR_PLATE_BLOCK = registerBlock("slow_vector_plate", new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 0.15F), basicItem());
+    public static final Block NORMAL_VECTOR_PLATE_BLOCK = registerBlock("normal_vector_plate", new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 0.25F), basicItem());
+    public static final Block FAST_VECTOR_PLATE_BLOCK = registerBlock("fast_vector_plate", new VectorPlateBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK), 0.35F), basicItem());
 
     //Power
     public static final Block CREATIVE_ENERGY_SOURCE_BLOCK = registerBlock("creative_energy_source", new CreativeEnergySourceBlock(paleMachine().nonOpaque().luminance(7).emissiveLighting((state, world, pos) -> true)), genericItem(WORLDFORGE_RARITY, 1));
-    public static final Block SILICON_CABLE_BLOCK = registerBlock("silicon_cable", new SiliconCableBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque()), basicItem());
-    public static final Block GUILDED_CABLE_BLOCK = registerBlock("guilded_cable", new GuildedCableBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque()), genericItem(Rarity.UNCOMMON, 64));
-    public static final Block ENCHANTED_CABLE_BLOCK = registerBlock("enchanted_cable", new EnchantedCableBlock(hardenedMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), genericItem(Rarity.RARE, 64));
-    public static final Block NULL_CABLE_BLOCK = registerBlock("null_cable", new NullCableBlock(eldenMachine().nonOpaque().sounds(BlockSoundGroup.CHAIN)), genericItem(ELDENMETAL_RARITY, 64));
+    public static final Block ROSE_CABLE_BLOCK = registerBlock("rose_cable", new PowerConduitBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque(), 64, PowerConduitEntity.Rose::new), basicItem());
+    public static final Block ENCHANTED_CABLE_BLOCK = registerBlock("enchanted_cable", new PowerConduitBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque(), 128, PowerConduitEntity.Enchanted::new), basicItem());
+    public static final Block BRIMSTEEL_CABLE_BLOCK = registerBlock("brimsteel_cable", new PowerConduitBlock(basicMachine(BlockSoundGroup.CHAIN).nonOpaque(), 512, PowerConduitEntity.Brimsteel::new), genericItem(Rarity.UNCOMMON, 64));
 
     //Devices
     public static final Block FISH_BREEDER_BLOCK = registerBlock("fish_breeder", new FishBreederBlock(woodenMachine(1).nonOpaque().ticksRandomly()), basicItem());
     public static final Block CRATE_BLOCK = registerBlock("crate", new CrateBlock(woodenMachine(1)), basicItem());
-    public static final Block WOODEN_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "wooden_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OAK_WOOD)));
-    public static final Block IRON_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "iron_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
-    public static final Block DIAMOND_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "diamond_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)));
-    public static final Block NETHERITE_SPIKE_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "netherite_spike"), new SpikesBlock(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)));
-
     public static final Block DIODE = registerBlock("diode", new DiodeBlock(FabricBlockSettings.copyOf(Blocks.REPEATER)), basicItem());
 
     //Farming
@@ -176,13 +167,9 @@ public class LookingGlassBlocks {
     public static final Block ANGEL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "angel_block"), new AngelBlock(FabricBlockSettings.copyOf(Blocks.DIRT).sounds(BlockSoundGroup.SHROOMLIGHT).breakInstantly()));
     public static final Block LOAM = registerGeneratedBlock("loam", new Block(FabricBlockSettings.copyOf(Blocks.DIRT)), null, null, basicItem(), SingletType.BLOCK);
     public static final Block LOAM_FARMLAND = registerBlock("loam_farmland", new LoamFarmlandBlock(FabricBlockSettings.copyOf(Blocks.FARMLAND)), basicItem(), false);
-    public static final Block CURSED_EARTH_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "cursed_earth"), new CursedEarthBlock(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).ticksRandomly()));
     public static final EclipseRoseBlock ECLIPSE_ROSE = Registry.register(Registry.BLOCK, new Identifier(MODID, "eclipse_rose"), new EclipseRoseBlock(StatusEffects.WITHER, FabricBlockSettings.of(Material.PLANT).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.GRASS)));
     public static final Block TINY_TATER = registerBlock("tiny_tater", new TinyTaterBlock(FabricBlockSettings.copyOf(Blocks.PUMPKIN).nonOpaque()), genericItem(Rarity.EPIC, 16).equipmentSlot(stack -> EquipmentSlot.HEAD));
 
-    // Unstable Blocks
-    public static final Block UNSTABLE_ALTAR_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "unstable_altar"), new UnstableAltarBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
-    public static final Block DISPLAY_PEDESTAL_BLOCK = Registry.register(Registry.BLOCK, new Identifier(MODID, "display_pedestal"), new DisplayPedestalBlock(FabricBlockSettings.copyOf(Blocks.ENCHANTING_TABLE)));
 
     //  BLOCK ENTITIES
     //Machines
@@ -202,10 +189,9 @@ public class LookingGlassBlocks {
 
     //Power
     public static final BlockEntityType<CreativeEnergySourceEntity> CREATIVE_ENERGY_SOURCE_ENTITY = registerEntity("creative_energy_source_entity", CreativeEnergySourceEntity::new, CREATIVE_ENERGY_SOURCE_BLOCK);
-    public static final BlockEntityType<SiliconCableEntity> SILICON_CABLE_ENTITY = registerEntity("silicon_cable_entity", SiliconCableEntity::new, SILICON_CABLE_BLOCK);
-    public static final BlockEntityType<GuildedCableEntity> GUILDED_CABLE_ENTITY = registerEntity("guilded_cable_entity", GuildedCableEntity::new, GUILDED_CABLE_BLOCK);
-    public static final BlockEntityType<EnchantedCableEntity> ENCHANTED_CABLE_ENTITY = registerEntity("enchanted_cable_entity", EnchantedCableEntity::new, ENCHANTED_CABLE_BLOCK);
-    public static final BlockEntityType<NullCableEntity> NULL_CABLE_ENTITY = registerEntity("null_cable_entity", NullCableEntity::new, NULL_CABLE_BLOCK);
+    public static final BlockEntityType<PowerConduitEntity> ROSE_CABLE_ENTITY = registerEntity("rose_cable_entity", PowerConduitEntity.Rose::new, ROSE_CABLE_BLOCK);
+    public static final BlockEntityType<PowerConduitEntity> ENCHANTED_CABLE_ENTITY = registerEntity("enchanted_cable_entity", PowerConduitEntity.Enchanted::new, ENCHANTED_CABLE_BLOCK);
+    public static final BlockEntityType<PowerConduitEntity> BRIMSTEEL_CABLE_ENTITY = registerEntity("brimsteel_cable_entity", PowerConduitEntity.Brimsteel::new, BRIMSTEEL_CABLE_BLOCK);
 
     //Devices
     public static final BlockEntityType<FishBreederEntity> FISH_BREEDER_ENTITY = registerEntity("fish_breeder_entity", FishBreederEntity::new, FISH_BREEDER_BLOCK);
@@ -217,17 +203,12 @@ public class LookingGlassBlocks {
 
     //Misc
     public static final BlockEntityType<BrineFissureEntity> BRINE_FISSURE_ENTITY = registerEntity("brine_fissure_entity", BrineFissureEntity::new, BRINE_FISSURE);
-    public static final BlockEntityType<DisplayPedestalEntity> DISPLAY_PEDESTAL_ENTITY = registerEntity("display_pedestal_entity", DisplayPedestalEntity::new, DISPLAY_PEDESTAL_BLOCK);
-    public static final BlockEntityType<UnstableAltarEntity> UNSTABLE_ALTAR_ENTITY = registerEntity("unstable_altar_entity", UnstableAltarEntity::new, UNSTABLE_ALTAR_BLOCK);
     public static final BlockEntityType<EnchantedSaltLampEntity> ENCHANTED_SALT_LAMP_ENTITY = registerEntity("enchanted_salt_lamp_entity", EnchantedSaltLampEntity::new, ENCHANTED_SALT_LAMP);
 
 
     public static void init() {
-        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> {
-            if (!((PowerPipeEntity) blockEntity).powered())
-                return (EnergyIo) blockEntity;
-            return null;
-        }, SILICON_CABLE_ENTITY, GUILDED_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, NULL_CABLE_ENTITY);
+        EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
+                ROSE_CABLE_ENTITY, ENCHANTED_CABLE_ENTITY, BRIMSTEEL_CABLE_ENTITY);
 
         EnergyApi.SIDED.registerForBlockEntities((blockEntity, direction) -> (EnergyIo) blockEntity,
                 CREATIVE_ENERGY_SOURCE_ENTITY, POWERED_FURNACE_ENTITY, ALLOY_FURNACE_ENTITY, GRINDER_ENTITY, MIXER_ENTITY, SUFFUSER_ENTITY);

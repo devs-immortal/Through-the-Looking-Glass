@@ -144,9 +144,14 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
         public GrindingRecipe read(Identifier id, JsonObject json) {
             IngredientStack input;
             OptionalStack output, secondary;
+            boolean optional = false;
             float chance = 0;
 
             try {
+                if(json.has("optional")) {
+                    optional = json.get("optional").getAsBoolean();
+                }
+
                 if(!(json.has("output") && json.has("input")))
                     throw new MalformedJsonException("Invalid Grinding Recipe Json");
                 input = JsonUtils.ingredientFromJson(json.getAsJsonObject("input"));
@@ -160,7 +165,7 @@ public class GrindingRecipe implements LookingGlassRecipe<GrinderEntity> {
                     chance = json.get("chance").getAsFloat();
 
             } catch (Exception e) {
-                if(e instanceof JsonSyntaxException)
+                if(optional && e instanceof JsonSyntaxException)
                     return EMPTY;
                 FFLog.error("Exception found while loading Grinding recipe json " + id.toString() + " ", e);
                 return null;

@@ -1,5 +1,6 @@
 {
   "type": "lookingglass:grinding",
+  "optional": "true",
   "input": {
     "ingredient": [
       {

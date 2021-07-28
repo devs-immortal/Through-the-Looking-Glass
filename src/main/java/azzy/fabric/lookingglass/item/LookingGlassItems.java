@@ -96,21 +96,9 @@ public class LookingGlassItems {
     //Unique Weapons
     public static final Item STEELHEAD_TROUT = registerItem("steelhead_trout", new FishWeaponItem(false, 8, defaultSettings().rarity(Rarity.UNCOMMON).fireproof().food(STEELHEAD)));
     public static final Item PRISMATIC_SHIMMERFIN = registerItem("shimmerfin", new FishWeaponItem(true, 199, defaultSettings().rarity(WORLDFORGE_RARITY).fireproof().food(SHIMMERFIN)));
-    public static final Item MARKSMAN_REVOLVER = registerItem("marksman_revolver", new RevolverItem(defaultSettings().rarity(WORLDFORGE_RARITY).fireproof()));
-    public static final Item COIN = registerItem("coin", new CoinItem(defaultSettings().fireproof()));
 
     //Registry shenanigans
     public static final Item ANGEL_BLOCK = registerItem("angel_block", new AngelBlockItem(LookingGlassBlocks.ANGEL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS).fireproof()));
-    public static final Item CURSED_EARTH_BLOCK = registerItem("cursed_earth", new CursedEarthBlockItem(LookingGlassBlocks.CURSED_EARTH_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item WOODEN_SPIKE_BLOCK = registerItem("wooden_spike", new WoodenSpikeBlockItem(LookingGlassBlocks.WOODEN_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item IRON_SPIKE_BLOCK = registerItem("iron_spike", new IronSpikeBlockItem(LookingGlassBlocks.IRON_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item DIAMOND_SPIKE_BLOCK = registerItem("diamond_spike", new DiamondSpikeBlockItem(LookingGlassBlocks.DIAMOND_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item NETHERITE_SPIKE_BLOCK = registerItem("netherite_spike", new NetheriteSpikeBlockItem(LookingGlassBlocks.NETHERITE_SPIKE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item SLOW_VECTOR_PLATE_BLOCK = registerItem("slow_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.SLOW_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item NORMAL_VECTOR_PLATE_BLOCK = registerItem("normal_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.NORMAL_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item FAST_VECTOR_PLATE_BLOCK = registerItem("fast_vector_plate", new VectorPlateBlockItem(LookingGlassBlocks.FAST_VECTOR_PLATE_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item UNSTABLE_ENCHANTER_BLOCK = registerItem("unstable_altar", new UnstableAltarBlockItem(LookingGlassBlocks.UNSTABLE_ALTAR_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
-    public static final Item DISPLAY_PEDESTAL_BLOCK = registerItem("display_pedestal", new DisplayPedestalBlockItem(LookingGlassBlocks.DISPLAY_PEDESTAL_BLOCK, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
     public static final Item ECLIPSE_ROSE_BLOCK = registerItem("eclipse_rose", new EclipseRoseBlockItem(LookingGlassBlocks.ECLIPSE_ROSE, new FabricItemSettings().group(LOOKINGGLASS_BLOCKS)));
 
     private static Item registerItem(String name, Item item) {

@@ -1,5 +1,6 @@
 {
   "type": "lookingglass:grinding",
+  "optional": "true",
   "input": {
     "ingredient": [
       {
@@ -9,11 +10,11 @@
   },
   "output": {
     "tag": "c:brass_dusts",
-    "count": 2
+    "count": 3
   },
   "secondary": {
     "tag": "c:none_dusts",
     "count": 1
   },
-  "chance": 0
+  "chance": 0.0
 }

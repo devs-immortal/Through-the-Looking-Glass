@@ -122,9 +122,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
                     LookingGlassCommon.FFLog.warn("(" + currBlockPos.getX() + ", " + currBlockPos.getY() + ", " + currBlockPos.getZ() + "): " + currBlock.toString());
 
-                    if (CURSING_ELIGIBLE_BLOCKS.contains(currBlock)) {
-                        serverWorld.setBlockState(currBlockPos, LookingGlassBlocks.CURSED_EARTH_BLOCK.getDefaultState());
-                    }
                 }
             }
         }

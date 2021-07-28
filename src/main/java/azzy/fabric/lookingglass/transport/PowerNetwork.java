@@ -1,14 +1,15 @@
 package azzy.fabric.lookingglass.transport;
 
+import azzy.fabric.lookingglass.block.PowerConduitBlock;
+import azzy.fabric.lookingglass.blockentity.PowerConduitEntity;
 import dev.technici4n.fasttransferlib.api.Simulation;
-import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.level.LevelProperties;
@@ -19,7 +20,8 @@ import java.util.stream.Collectors;
 public class PowerNetwork implements EnergyIo {
 
     public final UUID networkId;
-    public final List<BlockPos> invalidCables = new ArrayList<>();
+    public final List<BlockPos> invalidCables;
+    public final PowerConduitBlock cableType;
 
     private final List<BlockPos> cables;
     private final World world;
@@ -28,16 +30,20 @@ public class PowerNetwork implements EnergyIo {
     private boolean revalidationCached;
     private boolean revalidationRequestTick;
 
-    public PowerNetwork(World world, UUID networkId) {
+    public PowerNetwork(World world, PowerConduitBlock cableType, UUID networkId) {
         this.world = world;
         this.networkId = networkId;
+        this.cableType = cableType;
         cables = new ArrayList<>();
+        invalidCables = new ArrayList<>();
     }
 
     public PowerNetwork(World world, NbtCompound nbt) {
         this.world = world;
-        this.networkId = nbt.getUuid("id");
+        this.networkId = nbt.getUuid("networkId");
         cables = Arrays.stream(nbt.getLongArray("cables")).mapToObj(BlockPos::fromLong).collect(Collectors.toList());
+        invalidCables = Arrays.stream(nbt.getLongArray("invalid")).mapToObj(BlockPos::fromLong).collect(Collectors.toList());
+        cableType = (PowerConduitBlock) Registry.BLOCK.get(Identifier.tryParse(nbt.getString("cableType")));
         energy = nbt.getDouble("energy");
         cachedMaxEnergy = nbt.getDouble("maxEnergy");
         revalidationCached = nbt.getBoolean("revalidating");
@@ -47,6 +53,7 @@ public class PowerNetwork implements EnergyIo {
         if(revalidationCached && !revalidationRequestTick) {
             revalidateCables();
             revalidateEnergyCapacity();
+            revalidationCached = false;
         }
 
         if(revalidationRequestTick) {
@@ -62,7 +69,7 @@ public class PowerNetwork implements EnergyIo {
     public void revalidateCables() {
         List<BlockPos> invalidatedCables = cables
                 .stream()
-                .filter(pos -> TransportComponentValidator.isPowerCable(world.getBlockState(pos).getBlock()))
+                .filter(pos -> !world.getBlockState(pos).isOf(cableType))
                 .collect(Collectors.toList());
 
         if(!invalidatedCables.isEmpty()) {
@@ -70,7 +77,8 @@ public class PowerNetwork implements EnergyIo {
                 int adjacency = 0;
 
                 for (Direction direction : Direction.values()) {
-                    if(TransportComponentValidator.isPowerCable(world.getBlockState(cable.offset(direction)).getBlock())) {
+                    BlockEntity entity = world.getBlockEntity(cable.offset(direction));
+                    if(entity instanceof PowerConduitEntity && entity.getCachedState().isOf(cableType)) {
                         adjacency++;
                     }
                 }
@@ -80,27 +88,47 @@ public class PowerNetwork implements EnergyIo {
                 }
                 cables.remove(cable);
             }
+
         }
 
 
     }
 
     public void revalidateEnergyCapacity() {
-        cachedMaxEnergy = cables
-                .stream()
-                .map(pos -> EnergyApi.SIDED.find(world, pos, Direction.DOWN))
-                .filter(Objects::nonNull)
-                .mapToDouble(EnergyIo::getEnergyCapacity)
-                .sum();
+        cachedMaxEnergy = cables.size() * cableType.transferRate;
+
+        if(energy > cachedMaxEnergy)
+            energy = cachedMaxEnergy;
     }
 
-    public boolean appendCable(BlockPos pos, EnergyIo cable) {
+    public void yieldTo(PowerNetwork newNetwork, NetworkManager manager) {
+        manager.managedNetworks.remove(networkId);
+        cables.stream()
+                .map(world::getBlockEntity)
+                .filter(Objects::nonNull)
+                .forEach(conduit -> {
+                    ((PowerConduitEntity) conduit).switchNetwork(newNetwork, manager);
+                    newNetwork.appendCable(conduit.getPos());
+                });
+        newNetwork.energy += energy;
+        cables.clear();
+    }
+
+    public boolean appendCable(BlockPos pos) {
         if(!cables.contains(pos)) {
             cables.add(pos);
-            cachedMaxEnergy += cable.getEnergyCapacity();
+            cachedMaxEnergy += cableType.transferRate;
             return true;
         }
         return false;
+    }
+
+    public boolean containsCable(BlockPos pos, PowerConduitBlock cableType) {
+        return this.cableType == cableType && cables.contains(pos);
+    }
+
+    public boolean isEmpty() {
+        return cables.isEmpty();
     }
 
     public int getConnectedCables() {
@@ -115,6 +143,18 @@ public class PowerNetwork implements EnergyIo {
     @Override
     public double getEnergy() {
         return energy;
+    }
+
+    public boolean isEnergyFull() {
+        if(energy > cachedMaxEnergy)
+            energy = cachedMaxEnergy;
+        return energy >= cachedMaxEnergy;
+    }
+
+    public boolean isEnergyEmpty() {
+        if(energy < 0.0)
+            energy = 0.0;
+        return energy <= 0.0;
     }
 
     public double insertInternal(double amount, double cap, Simulation simulation) {
@@ -147,7 +187,14 @@ public class PowerNetwork implements EnergyIo {
     }
 
     public NbtCompound writeNbt(NbtCompound nbt) {
-        return null;
+        nbt.putUuid("networkId", networkId);
+        nbt.putLongArray("cables", cables.stream().mapToLong(BlockPos::asLong).toArray());
+        nbt.putLongArray("invalid", invalidCables.stream().mapToLong(BlockPos::asLong).toArray());
+        nbt.putString("cableType", Registry.BLOCK.getId(cableType).toString());
+        nbt.putDouble("energy", energy);
+        nbt.putDouble("maxEnergy", cachedMaxEnergy);
+        nbt.putBoolean("revalidating", revalidationCached);
+        return nbt;
     }
 
     @Override

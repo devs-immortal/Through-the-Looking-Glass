@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_galena_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:galena_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:lead_dusts",
+    "count": 1
+  },
+  "chance": 0.3
+}

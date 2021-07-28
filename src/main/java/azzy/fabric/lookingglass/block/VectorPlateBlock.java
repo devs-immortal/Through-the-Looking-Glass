@@ -1,16 +1,12 @@
 package azzy.fabric.lookingglass.block;
 
-import azzy.fabric.lookingglass.util.SpikeUtility;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -23,23 +19,18 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.ref.WeakReference;
 
 public class VectorPlateBlock extends LookingGlassBlock {
-    public static final IntProperty SPIKE_UPGRADE = IntProperty.of("spike_upgrade", 0, 4);
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
-    private final WeakReference<ServerPlayerEntity> fakePlayer = null;
-    private final ServerPlayerEntity fakePlayerEntity = null;
     private final float velocity;
 
     public VectorPlateBlock(FabricBlockSettings settings, float velocity) {
         super(settings, false);
         BlockState defaultState = getStateManager().getDefaultState();
-        setDefaultState(defaultState.with(SPIKE_UPGRADE, 0));
         this.velocity = velocity;
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(Properties.HORIZONTAL_FACING);
-        builder.add(SPIKE_UPGRADE);
         super.appendProperties(builder);
     }
 
@@ -103,7 +94,6 @@ public class VectorPlateBlock extends LookingGlassBlock {
         Direction facingDirection = state.get(Properties.HORIZONTAL_FACING);
 
         // Here is the spike damage of the codebase.
-        int spikeUpgrade = state.get(SPIKE_UPGRADE);
         switch (facingDirection) {
             case NORTH: {
                 // North (-z) direction
@@ -134,15 +124,6 @@ public class VectorPlateBlock extends LookingGlassBlock {
                     entity.addVelocity(-velocity, 0, 0);
                 break;
             }
-        }
-
-        // We move items, but we don't damage them - bad karma!
-        if (!(entity instanceof LivingEntity))
-            return;
-
-        // If the vector plate has a spike upgrade, call this method to bring the hurt!
-        if (spikeUpgrade > 0) {
-            SpikeUtility.damageEntity(entity, world, spikeUpgrade);
         }
     }
 }

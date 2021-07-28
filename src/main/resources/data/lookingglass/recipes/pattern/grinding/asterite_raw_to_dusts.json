@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_asterite_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:asterite_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:none_dusts",
+    "count": 1
+  },
+  "chance": 0.0
+}

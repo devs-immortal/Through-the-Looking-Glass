@@ -1,5 +1,6 @@
 {
   "type": "lookingglass:alloying",
+  "optional": "true",
   "inputs": [
     {
       "ingredient": [

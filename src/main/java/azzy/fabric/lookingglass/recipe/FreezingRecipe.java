@@ -113,8 +113,13 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
 
             IngredientStack input;
             OptionalStack output;
+            boolean optional = false;
 
             try {
+                if(json.has("optional")) {
+                    optional = json.get("optional").getAsBoolean();
+                }
+
                 if(!(json.has("input") && json.has("output")))
                     throw new MalformedJsonException("Invalid Freezing Recipe Json");
                 input = JsonUtils.ingredientFromJson(json.getAsJsonObject("input"));
@@ -124,7 +129,7 @@ public class FreezingRecipe implements LookingGlassRecipe<PoweredFurnaceEntity> 
                     return EMPTY;
 
             } catch (Exception e) {
-                if(e instanceof JsonSyntaxException)
+                if(optional && e instanceof JsonSyntaxException)
                     return EMPTY;
                 FFLog.error("Exception found while loading Freezing recipe json " + id.toString() + " ", e);
                 return null;

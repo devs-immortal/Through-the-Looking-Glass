@@ -1,8 +1,9 @@
 package azzy.fabric.lookingglass.item;
 
 import azzy.fabric.lookingglass.blockentity.LookingGlassUpgradeableMachine;
-import azzy.fabric.lookingglass.blockentity.PowerPipeEntity;
+import azzy.fabric.lookingglass.blockentity.PowerConduitEntity;
 import azzy.fabric.lookingglass.blockentity.SuffuserEntity;
+import azzy.fabric.lookingglass.transport.PowerNetwork;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.technici4n.fasttransferlib.api.energy.EnergyApi;
 import dev.technici4n.fasttransferlib.api.energy.EnergyIo;
@@ -21,6 +22,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class EnergyProbeItem extends Item {
 
     public EnergyProbeItem(Settings settings) {
@@ -38,14 +41,14 @@ public class EnergyProbeItem extends Item {
             if(stack.getOrCreateTag().contains("mode") && stack.getOrCreateTag().getBoolean("mode")) {
                 if(io instanceof LookingGlassUpgradeableMachine) {
                     if(io instanceof SuffuserEntity) {
-                        ((SuffuserEntity) io).updateEnchantingPower();
                         message = "enchanting power - " + ((SuffuserEntity) io).getEnchantingPower();
                     } else {
                         message = "process time - " + ((LookingGlassUpgradeableMachine) io).getProcessTime() + " ticks";
                     }
                 }
-                else if(io instanceof PowerPipeEntity) {
-                    message = "network size - " + ((PowerPipeEntity) io).getNeighbours().size() +" cables";
+                else if(io instanceof PowerConduitEntity) {
+                    Optional<PowerNetwork> parent = ((PowerConduitEntity) io).getParentNetwork();
+                    message += "network id - " + parent.map(network -> network.networkId.toString()).orElse("NONE") + " - network size - " + parent.map(PowerNetwork::getConnectedCables).orElse(-1);
                 }
             }
             else {
@@ -61,8 +64,8 @@ public class EnergyProbeItem extends Item {
 
                     message += " | drain " + String.format("%.1f", ((LookingGlassUpgradeableMachine) io).getPowerUsage()) + " Lu";
                 }
-                else if(io instanceof PowerPipeEntity) {
-                    message += " | trans " + ((PowerPipeEntity) io).getTransferRate() + " Lu";
+                else if(io instanceof PowerConduitEntity) {
+                    message += " | trans " + ((PowerConduitEntity) io).transferRate + " Lu";
                 }
             }
             context.getPlayer().sendMessage(new LiteralText(message), true);

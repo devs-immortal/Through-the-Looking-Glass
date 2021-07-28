@@ -31,7 +31,7 @@ public class SuffuserBlock extends HorizontalMachineBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return null;
+        return LookingGlassBE::tickStatic;
     }
 
     @Override

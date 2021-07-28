@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_iron_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:iron_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:nickel_dusts",
+    "count": 1
+  },
+  "chance": 0.10000001
+}

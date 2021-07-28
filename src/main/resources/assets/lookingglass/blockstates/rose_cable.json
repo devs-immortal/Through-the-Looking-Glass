@@ -1,0 +1,93 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "center": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_core"
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "axis": "z"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_straight"
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "axis": "x"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_straight",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "center": "false",
+        "axis": "y"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_straight",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm_inverse"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm_inverse",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm",
+        "x": -90
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "lookingglass:block/rose_cable_arm_inverse",
+        "x": -90
+      }
+    }
+  ]
+}

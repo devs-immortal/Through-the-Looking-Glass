@@ -70,8 +70,6 @@ public class LookingGlassClient implements ClientModInitializer {
         //Registering renderers
         BlockEntityRendererRegistry.INSTANCE.register(PROJECTORENTITY, ProjectorRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(CHUNKLOADER_ENTITY, ChunkAnchorRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(DISPLAY_PEDESTAL_ENTITY, DisplayPedestalRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(UNSTABLE_ALTAR_ENTITY, UnstableAltarRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(WORMHOLE_ENTITY, WormholeRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(BLOCK_TESSERACT_ENTITY, TesseractRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(FISH_BREEDER_ENTITY, FishBreederRenderer::new);
@@ -79,8 +77,6 @@ public class LookingGlassClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(SUFFUSER_ENTITY, SuffuserRenderer::new);
 
         EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.FLAREFIN_KOI_ENTITY_TYPE, FlarefinKoiRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.REVOLVER_SHOT_ENTITY_TYPE, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(LookingGlassEntities.TOSSED_COIN_ENTITY_TYPE, FlyingItemEntityRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FlarefinKoiModel.LAYER, FlarefinKoiModel::getTexturedModelData);
 
@@ -88,7 +84,6 @@ public class LookingGlassClient implements ClientModInitializer {
 
         //Render layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), FISH_BREEDER_BLOCK, BLOCK_TESSERACT_BLOCK, GHOST_GLASS, ETHEREAL_GLASS, REVERSE_ETHEREAL_GLASS, RED_GLASS);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), WOODEN_SPIKE_BLOCK, IRON_SPIKE_BLOCK, DIAMOND_SPIKE_BLOCK, NETHERITE_SPIKE_BLOCK, UNSTABLE_ALTAR_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(), CORN_PLANT, RED_SEAGRASS, TALL_RED_SEAGRASS, ECLIPSE_ROSE);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), CREATIVE_ENERGY_SOURCE_BLOCK, PINK_GEL_BLOCK, DARK_GLASS, DARK_GHOST_GLASS, DARK_ETHEREAL_GLASS, REVERSE_DARK_ETHEREAL_GLASS, GLOW_GLASS);
 

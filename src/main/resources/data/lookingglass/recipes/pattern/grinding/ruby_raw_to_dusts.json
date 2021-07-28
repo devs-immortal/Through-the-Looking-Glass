@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_ruby_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:ruby_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:garnet_dusts",
+    "count": 1
+  },
+  "chance": 0.33333334
+}

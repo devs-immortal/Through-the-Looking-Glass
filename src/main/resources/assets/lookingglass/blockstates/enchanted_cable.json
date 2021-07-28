@@ -11,7 +11,7 @@
     {
       "when": {
         "center": "false",
-        "facing": "north"
+        "axis": "z"
       },
       "apply": {
         "model": "lookingglass:block/enchanted_cable_straight"
@@ -20,27 +20,7 @@
     {
       "when": {
         "center": "false",
-        "facing": "south"
-      },
-      "apply": {
-        "model": "lookingglass:block/enchanted_cable_straight",
-        "y": 180
-      }
-    },
-    {
-      "when": {
-        "center": "false",
-        "facing": "east"
-      },
-      "apply": {
-        "model": "lookingglass:block/enchanted_cable_straight",
-        "y": 270
-      }
-    },
-    {
-      "when": {
-        "center": "false",
-        "facing": "west"
+        "axis": "x"
       },
       "apply": {
         "model": "lookingglass:block/enchanted_cable_straight",
@@ -50,21 +30,11 @@
     {
       "when": {
         "center": "false",
-        "facing": "up"
+        "axis": "y"
       },
       "apply": {
         "model": "lookingglass:block/enchanted_cable_straight",
         "x": 90
-      }
-    },
-    {
-      "when": {
-        "center": "false",
-        "facing": "down"
-      },
-      "apply": {
-        "model": "lookingglass:block/enchanted_cable_straight",
-        "x": -90
       }
     },
     {

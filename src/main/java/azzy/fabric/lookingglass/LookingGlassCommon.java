@@ -9,7 +9,7 @@ import azzy.fabric.lookingglass.effects.LookingGlassEffects;
 import azzy.fabric.lookingglass.entity.LookingGlassEntities;
 import azzy.fabric.lookingglass.gui.LookingGlassGUIs;
 import azzy.fabric.lookingglass.item.LookingGlassItems;
-import azzy.fabric.lookingglass.recipe.LookingGlassCompat;
+import azzy.fabric.lookingglass.recipe.RecipeCompat;
 import azzy.fabric.lookingglass.recipe.LookingGlassRecipes;
 import azzy.fabric.lookingglass.util.GeneralNetworking;
 import azzy.fabric.lookingglass.util.json.LookingGlassJsonManager;
@@ -64,7 +64,7 @@ public class LookingGlassCommon implements ModInitializer {
 		LookingGlassBiomes.init();
 		LookingGlassGUIs.initCommon();
 		LookingGlassRecipes.init();
-		LookingGlassCompat.init();
+		RecipeCompat.init();
 		GeneralNetworking.init();
 
 		ResourceManagerHelperImpl.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleSynchronousResourceReloadListener() {

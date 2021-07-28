@@ -11,15 +11,15 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-public class SuffuserEntity extends LookingGlassUpgradeableMachine implements EnergyIo {
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class SuffuserEntity extends LookingGlassUpgradeableMachine implements EnergyIo, LookingGlassTickable {
 
     private int range;
-    private int enchantingPower;
 
     public SuffuserEntity(BlockPos pos, BlockState state) {
         super(LookingGlassBlocks.SUFFUSER_ENTITY, pos, state, null, MachineTier.ADVANCED, 1, 1, 5000, 1);
     }
-
 
     @Nullable
     @Override
@@ -27,20 +27,23 @@ public class SuffuserEntity extends LookingGlassUpgradeableMachine implements En
         return null;
     }
 
-    public void updateEnchantingPower() {
-        enchantingPower = 0;
-        if(world != null) {
-            int radious = (int) (range * 0.75);
-            BlockPos.iterate(pos.add(-radious, -radious, -radious), pos.add(radious + 1, radious + 1, radious + 1)).forEach(pos -> {
-                if(!world.isAir(pos)) {
-                    enchantingPower += LookingGlassJsonManager.BLOCK_ENCHANTING_POWER.getOrDefault(world.getBlockState(pos).getBlock(), 0);
-                }
-            });
-        }
+    @Override
+    public void tick() {
     }
 
     public int getEnchantingPower() {
-        return enchantingPower;
+        if(world != null) {
+            int radious = (int) (range * 0.75);
+            return BlockPos.stream(pos.add(-radious, -radious, -radious), pos.add(radious + 1, radious + 1, radious + 1))
+                    .mapToInt(pos -> {
+                        if(!world.isAir(pos)) {
+                            return LookingGlassJsonManager.BLOCK_ENCHANTING_POWER.getOrDefault(world.getBlockState(pos).getBlock(), 0);
+                        }
+                        return 0;
+                    })
+                    .sum();
+        }
+        return 0;
     }
 
     public void setRange(int range) {
@@ -56,7 +59,18 @@ public class SuffuserEntity extends LookingGlassUpgradeableMachine implements En
     @Override
     public void readNbt(NbtCompound tag) {
         range = tag.getInt("range");
-        updateEnchantingPower();
         super.readNbt(tag);
+    }
+
+    @Override
+    public NbtCompound toClientTag(NbtCompound tag) {
+        tag.putInt("range", range);
+        return super.toClientTag(tag);
+    }
+
+    @Override
+    public void fromClientTag(NbtCompound tag) {
+        range = tag.getInt("range");
+        super.fromClientTag(tag);
     }
 }

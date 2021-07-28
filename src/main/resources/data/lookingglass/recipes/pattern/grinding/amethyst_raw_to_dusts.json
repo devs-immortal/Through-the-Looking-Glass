@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_amethyst_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:amethyst_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:quartz_dusts",
+    "count": 1
+  },
+  "chance": 0.10000001
+}

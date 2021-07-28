@@ -1,5 +1,6 @@
 {
   "type": "lookingglass:mixing",
+  "optional": "true",
   "inputs": [
       {
         "ingredient": [

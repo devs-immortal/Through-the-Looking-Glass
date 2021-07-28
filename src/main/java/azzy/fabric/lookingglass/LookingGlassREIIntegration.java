@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 public class LookingGlassREIIntegration implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        registry.registerFiller(LookingGlassRecipe.class, LookingGlassREIisplay::new);
+        registry.registerFiller(LookingGlassRecipe.class, recipe -> !recipe.isEmpty() , LookingGlassREIisplay::new);
         //recipeHelper.registerRecipes(LookingGlassRecipes.ALLOYING_RECIPE.getId(), generateRecipeConditional(AlloyingRecipe.class), LookingGlassRecipeDisplay::new);
         //recipeHelper.registerRecipes(LookingGlassRecipes.INDUCTION_RECIPE.getId(), generateRecipeConditional(InductionRecipe.class), LookingGlassRecipeDisplay::new);
         //recipeHelper.registerRecipes(LookingGlassRecipes.FREEZING_RECIPE.getId(), generateRecipeConditional(FreezingRecipe.class), LookingGlassRecipeDisplay::new);

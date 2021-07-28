@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_lead_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:lead_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:silver_dusts",
+    "count": 1
+  },
+  "chance": 0.33333334
+}

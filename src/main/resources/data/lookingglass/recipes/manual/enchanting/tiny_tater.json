@@ -1,0 +1,37 @@
+{
+  "type": "lookingglass:enchanting",
+  "inputs": [
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:potato"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:potato"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:potato"
+        }
+      ]
+    },
+    {
+      "ingredient": [
+        {
+          "item": "minecraft:potato"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "item": "lookingglass:tiny_tater"
+  },
+  "minEnchantingPower": 0
+}

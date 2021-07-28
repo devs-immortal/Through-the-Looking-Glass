@@ -117,10 +117,16 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
 
             List<IngredientStack> ingredients;
             OptionalStack output;
+            boolean optional = false;
 
             try {
+                if(json.has("optional")) {
+                    optional = json.get("optional").getAsBoolean();
+                }
+
                 if(!(json.has("inputs") && json.has("output")))
                     throw new MalformedJsonException("Invalid Alloying Recipe Json");
+
                 ingredients = JsonUtils.ingredientsFromJson(json.getAsJsonArray("inputs"), 2);
                 output = JsonUtils.optionalStackFromJson(json.getAsJsonObject("output"));
 
@@ -128,7 +134,7 @@ public class AlloyingRecipe implements LookingGlassRecipe<AlloyFurnaceEntity> {
                     return EMPTY;
 
             } catch (Exception e) {
-                if(e instanceof JsonSyntaxException)
+                if(optional && e instanceof JsonSyntaxException)
                     return EMPTY;
                 FFLog.error("Exception found while loading Alloying recipe json " + id.toString() + " ", e);
                 return null;

@@ -1,0 +1,20 @@
+{
+  "type": "lookingglass:grinding",
+  "optional": "true",
+  "input": {
+    "ingredient": [
+      {
+        "tag": "c:raw_quartz_ores"
+      }
+    ]
+  },
+  "output": {
+    "tag": "c:quartz_dusts",
+    "count": 2
+  },
+  "secondary": {
+    "tag": "c:silicon_dusts",
+    "count": 1
+  },
+  "chance": 0.083333336
+}
